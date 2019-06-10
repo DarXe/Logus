@@ -880,7 +880,7 @@ int main(int argc, char** argv)
         }
     plik.close();
 
-    SetConsoleTitleA("Logus 19.6.10");
+    SetConsoleTitleA("Logus 19.6.11");
     srand(time(NULL));
 
     console();
@@ -1193,7 +1193,7 @@ void wersja() //ver
     cout<<" |     Autor     |"<<endl;
     cout<<" |     DarXe     |"<<endl;
     cout<<" |_______________|"<<endl;
-    cout<<" |Wersja 19.6.10 |"<<endl;
+    cout<<" |Wersja 19.6.11 |"<<endl;
     cout<<endl;
     cout<<" PLANY: "<<endl;
     cout<<" Czyszczenie pliku console.log - na ktorym dziala LiveChat i zachowanie przy tym logow (optymalizacja)"<<endl;
