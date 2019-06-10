@@ -1,5 +1,7 @@
 // Logus Copyright 2018-2019 (C) DarXe
 
+//test
+
 #include <iostream>
 #include <fstream> // fstream
 //#include <cstdlib> // system("cls") || jest w windows.h
