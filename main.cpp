@@ -880,7 +880,7 @@ int main(int argc, char** argv)
         }
     plik.close();
 
-    SetConsoleTitleA("Logus 19.5.29");
+    SetConsoleTitleA("Logus 19.6.10");
     srand(time(NULL));
 
     console();
@@ -1193,11 +1193,11 @@ void wersja() //ver
     cout<<" |     Autor     |"<<endl;
     cout<<" |     DarXe     |"<<endl;
     cout<<" |_______________|"<<endl;
-    cout<<" |Wersja  19.6.2 |"<<endl;
+    cout<<" |Wersja 19.6.10 |"<<endl;
     cout<<endl;
     cout<<" PLANY: "<<endl;
     cout<<" Czyszczenie pliku console.log - na ktorym dziala LiveChat i zachowanie przy tym logow (optymalizacja)"<<endl;
-    cout<<" Znalezienie przyczyny braku polskich znakow na systemach win7"<<endl;
+    cout<<" znalezienie przyczyny braku polskich znakow na systemach win7"<<endl;
     cout<<" mozliwosc zmiany dlugosci dzwieku dla powiadomien"<<endl;
     cout<<" mozliwosc zmiany ilosci dzwiekow dla powiadomien"<<endl;
     cout<<" opracowanie funkcji liczacej sume i sredni zarobek z dostarczonych kursow"<<endl;
