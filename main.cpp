@@ -1201,6 +1201,7 @@ void wersja() //ver
     cout<<" mozliwosc zmiany dlugosci dzwieku dla powiadomien"<<endl;
     cout<<" mozliwosc zmiany ilosci dzwiekow dla powiadomien"<<endl;
     cout<<" opracowanie funkcji liczacej sume i sredni zarobek z dostarczonych kursow"<<endl;
+    cout<<" Dodanie ikony programu"<<endl;
     cout<<" Wcisnij klawisz, aby kontynuowac"<<endl; getch();
     cout<<endl;
     cout<<" CO NOWEGO?"<<endl;
