@@ -21,7 +21,7 @@ bool fLockPW = 0;
 bool fLockKomunikat = 0;
 bool fLockNick = 0;
 bool menuGlowne = 1;
-bool chatSound = 1; //the sound of any chat message
+bool chatSound = 0; //the sound of any chat message
 string kolorGlowny = "A";
 int wyswietlaneWiersze = 15;
 int refresh = 200;
@@ -31,7 +31,7 @@ string nick = "PodajSwojNick";
 bool dynamicRefresh = 0;
 vector<string> nicknames;
 
-int tempRefresh = 0; //do zrobienia
+int tempRefresh = 0; 
 short gt = 33; //główny tekst
 int leng = 0; //wyk. w funkcje
 fstream plik;
@@ -49,8 +49,13 @@ string ostatniaLinia3 = ""; //trzecia od dołu
 string ostatniaLinia4 = ""; //czwarta od dołu
 string ostatniaLinia5 = ""; //piata od dołu
 int temp = 0; //pomocnicza zmienna iloscLinijek w LiveChat
+int temp2 = 0; //pomocnicza2 w LiveChat
 int errors = 0; //liczenie błędów, jeśli liczba linijek przekroczy 5;
 string s_temp = ""; //string temp
+int timer = 0; //odliczanie czasu do rozładowania
+bool isTimer = 0; //pomocnicza zmienna - czy timer ma odliczac
+int czas = 90; //ustalony przez gracza czas w sekundach ładowania/rozładowywania danego towaru
+bool random = 0; //losowy rozładunek, jeśli nie to 'sam wybiore'
 
 //func
 
@@ -175,6 +180,7 @@ int teamsay(string nazwa, int nrPliku);
 int pw(string nazwa, int nrPliku);
 int przelewy(string nazwa, int nrPliku);
 string randomColor();
+void idzdoxy(int x, int y);
 
 //Ogolne
 int losuj(int od, int doo)
@@ -258,7 +264,9 @@ void zapis(){ //save
         plik<<"wyciszenie_komunikatu_raport(0/1): "<<fLockKomunikat<<"\n";
         plik<<"wyciszenie_komunikatu_nick(0/1): "<<fLockNick<<"\n";
         plik<<"dźwięk_każdej_nowej_wiadomości_czatu: "<<chatSound<<"\n";
-        plik<<"dynamiczne_odświeżanie: "<<dynamicRefresh<<endl;
+        plik<<"dynamiczne_odświeżanie: "<<dynamicRefresh<<"\n";
+        plik<<"czas_rozładowywania_towaru: "<<czas<<"\n";
+        plik<<"cel_trasy_skrypt: "<<random<<"\n";
         plik<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
         plik<<"//W tym miejscu znajduje sie lista zapisanych graczy."<<endl;
         plik<<"//Aby poprawnie dodać gracza przez plik należy ustalić też ilość graczy."<<endl;
@@ -299,6 +307,8 @@ void odczyt()
         plik>>s_temp>>fLockNick;
         plik>>s_temp>>chatSound;
         plik>>s_temp>>dynamicRefresh;
+        plik>>s_temp>>czas;
+        plik>>s_temp>>random;
         for(int i = 0; i < 11; i++)
         {
             getline(plik,s_temp);
@@ -317,7 +327,7 @@ void odczyt()
 
 void console()
 {
-    SetConsoleOutputCP(65001);
+    SetConsoleOutputCP(65001); //kodowanie utf-8
     wersja();
     string a = "console.log";
     string b = "console.log.1";
@@ -333,7 +343,7 @@ void console()
         Beep(dzwiekGlowny,100);
         color(kolorGlowny);
 
-        /*
+        /* sprawdzanie polskich znaków
         system("chcp");
         system("chcp 1250");
         cout<<"ę e"<<endl;
@@ -439,7 +449,7 @@ void console()
         {
             cls();
             cout<<"Oczekiwanie na nowy wpis na czacie, czekaj. . ."<<endl;
-            cout<<"                                : X"<<endl;
+            cout<<"           Oczekiwanie na nowy wpis na czacie, czekaj. . ."<<endl;
             
             liveChat(wyswietlaneWiersze); //uruchomienie funkcji liveChat
 
@@ -464,8 +474,10 @@ void console()
                 cout<<" [3] Dynamiczne odswiezanie: "; if(dynamicRefresh) cout<<"TAK"; else cout<<"NIE";cout<<endl;
                 cout<<" [4] Czestotliwosc dzwieku(50-10000): "; cout<<dzwiekGlowny<<endl;
                 cout<<" [5] Przerwa miedzy dzwiekami(50-1000): "; cout<<interval<<endl;
+                cout<<" [6] Czas rozladowywania towaru(minut:sekund) - "; cout<<czas/60; if(czas%60<10) cout<<":0"; else cout<<":"; cout<<czas%60; cout<<endl;
+                cout<<" [7] Sam wybiore / Skrypt: "; if(random) cout<<"5min - Skrypt"; else cout<<"6min - Sam wybiore"; cout<<endl;
                 cout<<endl;
-                cout<<" [6] Nicknames - baza danych wybranych nickow"<<endl;
+                cout<<" [b] Nicknames - baza danych wybranych nickow"<<endl;
                 cout<<" [n] Nickname: "<<nick<<endl;
                 cout<<" _____________________________________________________________________"<<endl;
                 cout<<"                         [ESC] Powrot i zapis                        "<<endl;
@@ -604,6 +616,23 @@ void console()
                     case '6':
                     {
                         cls();
+                        cout<<"Podaj minuty: "; cin>>temp;
+                        cout<<"Podaj sekundy: "; cin>>temp2;
+                        czas = (temp*60) + temp2;
+                        break;
+                    }
+                    case '7':
+                    {
+                        cls();
+                        if(random)
+                            random = 0;
+                        else
+                            random = 1;
+                        break;
+                    }
+                    case 'b':
+                    {
+                        cls();
                         while(true)
                         {
                             Beep(dzwiekGlowny,100);
@@ -612,6 +641,7 @@ void console()
                             cout<<" [1] Dodaj nowego gracza"<<endl;
                             cout<<" [2] Usun ostatnio dodanego gracza"<<endl;
                             cout<<" [3] Wyswietl liste dodanych graczy"<<endl;
+                            cout<<" [4] Usun gracza o danym id z listy\n"<<endl;
                             cout<<" [r] Wykonaj odczyt z pliku, jesli gracz zostal dodany w logus.ini"<<endl;
                             cout<<" [x] Usun wszystkich graczy"<<endl;
                             cout<<" ________________________________________________________________"<<endl;
@@ -650,7 +680,6 @@ void console()
                                         cout<<"(INFO) Lista graczy jest pusta"<<endl;
                                     else
                                     {   
-                                        cls();
                                         cout<<"Usunieto gracza "<<nicknames.back()<<endl;
                                         nicknames.pop_back();
                                     }
@@ -670,6 +699,21 @@ void console()
                                     }
                                     break;
                                 }
+                                case '4':
+                                {
+                                    cls();
+                                    if(nicknames.empty())
+                                        cout<<"(INFO) Lista graczy jest pusta"<<endl;
+                                    else
+                                    {   
+                                        cls();
+                                        cout<<"Podaj id, takie jakie jest w liscie pod opcja nr3: ";
+                                        cin>>temp;
+                                        cout<<"Usunieto gracza "<<nicknames.at(temp-1)<<endl;
+                                        nicknames.erase(nicknames.begin()+temp-1);
+                                    }
+                                    break;
+                                }
                                 case 'r':
                                 {
                                     cls();
@@ -679,6 +723,8 @@ void console()
                                 case 'x':
                                 {
                                     cls();
+                                    cout<<"CZY NA PEWNO CHCESZ TO ZROBIĆ? ESC - Anuluj | Inny klawisz - zgoda"<<endl;
+                                    if(getch() == 27) break;
                                     nicknames.clear();
                                     cout<<"Usunieto wszystkich graczy"<<endl;
                                     break;
@@ -799,16 +845,19 @@ void ftest(){
     plik.close();
 }
 
-void liveChatBeep(string ostatniaLinia) //bee
+int liveChatBeep(string ostatniaLinia) //bee
 {
+    int temp = 0;
     //wiadomość pw
     if(!fLockPW){
         if(fPwOd(ostatniaLinia, ang))
         {
             Beep(dzwiekGlowny,300);
             Beep(0,interval);
+            temp+=interval; temp+=300;
             Beep(dzwiekGlowny,300);
             Beep(0,interval);
+            temp+=interval; temp+=300;
             //refresh = tempRefresh;
         }
     }
@@ -819,8 +868,10 @@ void liveChatBeep(string ostatniaLinia) //bee
         {
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
+            temp+=interval; temp+=150;
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
+            temp+=interval; temp+=150;
             //refresh = tempRefresh;
         }
     }
@@ -831,10 +882,13 @@ void liveChatBeep(string ostatniaLinia) //bee
         {
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
+            temp+=interval; temp+=150;
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
+            temp+=interval; temp+=150;
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
+            temp+=interval; temp+=150;
             //refresh = tempRefresh;
         }
     }
@@ -845,9 +899,11 @@ void liveChatBeep(string ostatniaLinia) //bee
         {
             Beep(dzwiekGlowny,300);
             Beep(0,interval);
+            temp+=interval; temp+=300;
             //refresh = tempRefresh;
         }
     }
+    return temp;
 }
 
 int main(int argc, char** argv)
@@ -880,7 +936,7 @@ int main(int argc, char** argv)
         }
     plik.close();
 
-    SetConsoleTitleA("Logus 19.6.11");
+    SetConsoleTitleA("Logus 19.6.14");
     srand(time(NULL));
 
     console();
@@ -917,13 +973,39 @@ void liveChat(int wyswietlaneWiersze) //LC //ilosc wierszy wyswietlanych
 {
     while(true)
     {   
+        temp2 = 0;
         //t1 = clock(); // start
         if(kbhit())
         {
-            getch(); //przechwycenie znaku, żeby nie została wywołana opcja z menu
-            cls();
+            wyb = getch();
+            if(wyb == 27) { cls(); break;}
+            switch (wyb)
+            {
+            case 't':
+                {
+                    Beep(dzwiekGlowny, 100);
+                    timer = czas*1000;
+                    if(random) timer += 300000; else timer += 360000;
+                    isTimer = 1;
+                    idzdoxy(0,1); cout<<"                                                                       ";
+                }
+                break;
+            case 'c':
+                {
+                    Beep(dzwiekGlowny, 100);
+                    isTimer = 0;
+                    idzdoxy(0,1); cout<<" [t] Timer                                                                       ";
+                }
+                break;
+            
+            default:
+                {
+                    def();
+                    cout<<"\n czekaj.."<<endl;
+                }
+            }
+             //przechwycenie znaku, żeby nie została wywołana opcja z menu
             //refresh = tempRefresh;
-            break;
         }
 
         iloscLinijek = 0; //unfortunately :D Tak, to tylko jedna linijka bugowała :)
@@ -953,20 +1035,54 @@ void liveChat(int wyswietlaneWiersze) //LC //ilosc wierszy wyswietlanych
 
         //t1 = clock() - t1;
         if(dynamicRefresh && refresh<5000) refresh+=10;
+        if(isTimer)
+        {
+            if(timer>0) 
+            {
+                timer -= refresh;
+            }
+            else
+            {
+                Beep(dzwiekGlowny,150);
+                Beep(0,interval);
+                Beep(dzwiekGlowny,150);
+                Beep(0,interval);
+                Beep(dzwiekGlowny,150);
+                Beep(0,interval);
+                isTimer = 0;
+                idzdoxy(0,1); cout<<"                                                                       ";
+            }
+        }
         temp = iloscLinijek-temp; //różnica linijek
         //jeśli po odczekaniu czasu ilości się różnią to znaczy, że ktoś coś napisał
         
+        idzdoxy(0, 0);
+        if(refresh<1000) cout<<" "; cout<<"   Refresh "<<refresh<<"ms"; if(iloscLinijek<1000) cout<<" "; cout<<"  Wierszy "<<iloscLinijek-1<<" | Errors "<<errors<<"  [ESC] - return to MENU  "<<endl;
+        if(isTimer)
+        {
+            cout<<" Timer "<<timer/1000/60;
+            if((timer/1000)%60<10) cout<<":0"; else cout<<":";
+            cout<<(timer/1000)%60<<" [c] Stop Timer                                                       ";
+        }
+        else cout<<" [t] Timer";
+        cout<<"\n -------------------------------+--------------------------------------"<<endl;
+
         if(temp)
         {
-            if(dynamicRefresh && refresh>100) refresh-=100;
+            if(dynamicRefresh && refresh>100) refresh-=100; //jeśli pojawi się nowa wiadomość to zmniejsz częstotliwość odświeżania o 100ms
             cls();
-            if(refresh<1000) cout<<" "; cout<<"   Refresh "<<refresh<<"ms";if(iloscLinijek<1000) cout<<" "; cout<<"  Wierszy "<<iloscLinijek-1<<" | Errors "<<errors<<"  Powrot - dowolny klawisz"<<endl;
-            cout<<" -------------------------------+--------------------------------------"<<endl;
-            if(chatSound)
-                Beep(750,50); //dzwięk każdej nowej wiadomości czatu
+            if(refresh<1000) cout<<" "; cout<<"   Refresh "<<refresh<<"ms"; if(iloscLinijek<1000) cout<<" "; cout<<"  Wierszy "<<iloscLinijek-1<<" | Errors "<<errors<<"  [ESC] - return to MENU  "<<endl;
+            if(isTimer)
+            {
+                cout<<" Timer "<<timer/1000/60;
+                if((timer/1000)%60<10) cout<<":0"; else cout<<":";
+                cout<<(timer/1000)%60<<" [c] Stop Timer";
+            }
+            else cout<<" [t] Timer";
+            cout<<"\n -------------------------------+--------------------------------------"<<endl;
+            if(chatSound) {Beep(750,50); timer -= 50;} //dzwięk każdej nowej wiadomości czatu
 
             //t2 = clock();
-            //no to czas zacząć imprezkę - czas dowiedzieć się co ma nam do powiedzenia ta nowa informacja
            
             plik.open("console.log");
             for(int i = 0; i < iloscLinijek-5; i++)
@@ -979,7 +1095,6 @@ void liveChat(int wyswietlaneWiersze) //LC //ilosc wierszy wyswietlanych
             getline(plik, ostatniaLinia); //przechwycenie ostatniej linii
             plik.close();
 
-            //wyświetlanie linii w konsoli //??
             //pobranie linii, które nie mają być wyświetlone
             plik.open("console.log");
             for(int i = 0; i < iloscLinijek-wyswietlaneWiersze-1; i++)
@@ -999,32 +1114,33 @@ void liveChat(int wyswietlaneWiersze) //LC //ilosc wierszy wyswietlanych
 
             //19.5.29 rozwinięcie sprawdzania, do 5 ostatnich linii
             if(temp == 1){
-                liveChatBeep(ostatniaLinia);
+                temp2=liveChatBeep(ostatniaLinia);
             }
             else if(temp == 2){
-                liveChatBeep(ostatniaLinia2);
-                liveChatBeep(ostatniaLinia);
+                temp2=liveChatBeep(ostatniaLinia2);
+                temp2+=liveChatBeep(ostatniaLinia);
             }
             else if(temp == 3){
-                liveChatBeep(ostatniaLinia3);
-                liveChatBeep(ostatniaLinia2);
-                liveChatBeep(ostatniaLinia);
+                temp2=liveChatBeep(ostatniaLinia3);
+                temp2+=liveChatBeep(ostatniaLinia2);
+                temp2+=liveChatBeep(ostatniaLinia);
             }
             else if(temp == 4){
-                liveChatBeep(ostatniaLinia4);
-                liveChatBeep(ostatniaLinia3);
-                liveChatBeep(ostatniaLinia2);
-                liveChatBeep(ostatniaLinia);
+                temp2=liveChatBeep(ostatniaLinia4);
+                temp2+=liveChatBeep(ostatniaLinia3);
+                temp2+=liveChatBeep(ostatniaLinia2);
+                temp2+=liveChatBeep(ostatniaLinia);
             }
             else if(temp == 5){
-                liveChatBeep(ostatniaLinia5);
-                liveChatBeep(ostatniaLinia4);
-                liveChatBeep(ostatniaLinia3);
-                liveChatBeep(ostatniaLinia2);
-                liveChatBeep(ostatniaLinia);
+                temp2=liveChatBeep(ostatniaLinia5);
+                temp2+=liveChatBeep(ostatniaLinia4);
+                temp2+=liveChatBeep(ostatniaLinia3);
+                temp2+=liveChatBeep(ostatniaLinia2);
+                temp2+=liveChatBeep(ostatniaLinia);
             }
             else errors++;
             
+            timer -= temp2;
         }//if
     }//while
 }//liveChat()
@@ -1170,8 +1286,9 @@ string randomColor()
     }
     return zwroc;
 }
-
-/*void idzdoxy(int x, int y){
+//jakas funkcja z neta, może się przydać kiedyś do czyszczenia w inny sposób w LiveChat
+//i się przydała :)
+void idzdoxy(int x, int y){
     HANDLE hCon;
     COORD dwPos;
 
@@ -1180,7 +1297,7 @@ string randomColor()
 
     hCon = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleCursorPosition(hCon, dwPos);
-}*/
+}
 
 void wersja() //ver
 {
@@ -1193,7 +1310,7 @@ void wersja() //ver
     cout<<" |     Autor     |"<<endl;
     cout<<" |     DarXe     |"<<endl;
     cout<<" |_______________|"<<endl;
-    cout<<" |Wersja 19.6.11 |"<<endl;
+    cout<<" |Wersja 19.6.14 |"<<endl;
     cout<<endl;
     cout<<" PLANY: "<<endl;
     cout<<" Czyszczenie pliku console.log - na ktorym dziala LiveChat i zachowanie przy tym logow (optymalizacja)"<<endl;
@@ -1206,6 +1323,18 @@ void wersja() //ver
     cout<<endl;
     cout<<" CO NOWEGO?"<<endl;
     cout<<" Naprawienie powiadomienia po rozladowanym towarze w wersji ang"<<endl;
+    cout<<" Dodanie potwierdzenie przy usuwaniu wszystkich graczy z listy Nicknames"<<endl;
+    cout<<" Od teraz powrot do menu z LiveChat nastepuje po nacisnieciu ESC"<<endl;
+    cout<<" Dodanie Timera, ktory wskazuje czas do konca rozladowania towaru - w LiveChat uruchamia się go pod 't'"<<endl;
+    cout<<"     Nalezy podac w ustawieniach czas, w jakim laduje sie towar oraz wybrac rodzaj celu - losowy, czy 'sam wybiore'"<<endl;
+    cout<<"     W LiveChat mozna tez zatrzymac Timer - klawisz 'c'"<<endl;
+    cout<<" Zmieniono domyslna wartosc opcji 'Dzwiek kazdej wiadmosci na czacie' na 0(off)"<<endl;
+    cout<<endl;
+    cout<<" USTAWIENIA"<<endl;
+    cout<<" Zmiana czasu rozladowywania kursu, opcja [6]"<<endl;
+    cout<<" Wybor potrzebny do Timera - wozimy skrypt, czy sam wybiore [7]"<<endl;
+    cout<<" Zmieniono klawisz opcji 'Nicknames - baza danych wybranych nickow' na [b]"<<endl;
+    cout<<" W ustawieniach Nicknames dodano nowa opcje [4], usuwanie gracza po id"<<endl;
     cout<<endl;
     cout<<" Wcisnij klawisz, aby wyswietlic MENU"<<endl;
     getch();
