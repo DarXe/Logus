@@ -137,8 +137,15 @@ bool fKomunikat(string linia, bool ang)
         else return 0;
     }
 }
+void co(string n, int s){
+    cout<<n<<": "<<s<<endl;
+}
+int test = ' ';
+int test2= 0;
+int mnoz = 1000;
 bool fTransport(string linia)
 {
+    linia = "[2019-05-24 17:02:41] [Output] : Pieniądze za transport 2191$ zostały przelane na konto firmy.";
     //                                 You've earned $3118. It has been transfered to your company's account.
     //[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
     if(ang)
@@ -149,11 +156,21 @@ bool fTransport(string linia)
     }
     else
     {
+        for(int i = 57; i<61; i++){
+            test = linia[i];
+            test -=48;
+            cout<<test<<" ";
+            test2+=test*mnoz;
+            mnoz/=10;
+        }
+        test2+=10000;
+        cout<<"\n"<<test2<<endl;
+        cout<<"pauza, klawisz..";
+        getch();
         if(linia[gt]=='P'&&linia[gt+1]=='i'&&linia[gt+2]=='e'&&linia[gt+3]=='n'&&linia[gt+4]=='i')
             return 1;
         else return 0;
     }
-    
 }
 //Otrzymałeś
 //0123456789
@@ -287,8 +304,10 @@ void zapis(){ //save
     cout<<"(INFO) Ustawienia zostaly zapisane."<<endl;
 }
 
-void odczyt()
+void odczyt() //read
 {
+    int kasatest = 5;
+    bool kasatestb = 1;
     fstream plik;
     plik.open("logus.ini");
         for(int i(0); i<6; i++) getline(plik,s_temp);// :)
@@ -309,10 +328,30 @@ void odczyt()
         plik>>s_temp>>dynamicRefresh;
         plik>>s_temp>>czas;
         plik>>s_temp>>random;
-        for(int i = 0; i < 11; i++)
+    plik.close();
+
+    plik.open("logus.ini");
+        /*
+        try
+        {
+            cin>>kasatest;
+            if(kasatest == 0){
+                string e = "nie dziel przez 0";
+                throw e;
+            }
+            cout<<5/kasatest;
+        }
+        catch(string obsluga) //obsluga bledu
+        {
+            cerr << obsluga << '\n';
+        }
+        */
+        
+        do //naprawa błędu po aktualizacji (błędne wczytanie z listy Nicknames)
         {
             getline(plik,s_temp);
-        }
+        } while (s_temp[0]!='L');
+        
         plik>>s_temp;
         plik>>leng;
         nicknames.clear();
@@ -323,11 +362,14 @@ void odczyt()
         }
         cout<<"(INFO) Wczytano ustawienia."<<endl;
     plik.close();
+    zapis();
 }
 
 void console()
 {
     SetConsoleOutputCP(65001); //kodowanie utf-8
+    SetConsoleCP(65001);
+    liveChat(wyswietlaneWiersze);
     wersja();
     string a = "console.log";
     string b = "console.log.1";
@@ -1310,7 +1352,7 @@ void wersja() //ver
     cout<<" |     Autor     |"<<endl;
     cout<<" |     DarXe     |"<<endl;
     cout<<" |_______________|"<<endl;
-    cout<<" |Wersja 19.6.14 |"<<endl;
+    cout<<" |Wersja 19.6.17 |"<<endl;
     cout<<endl;
     cout<<" PLANY: "<<endl;
     cout<<" Czyszczenie pliku console.log - na ktorym dziala LiveChat i zachowanie przy tym logow (optymalizacja)"<<endl;
@@ -1322,13 +1364,9 @@ void wersja() //ver
     cout<<" Wcisnij klawisz, aby kontynuowac"<<endl; getch();
     cout<<endl;
     cout<<" CO NOWEGO?"<<endl;
-    cout<<" Naprawienie powiadomienia po rozladowanym towarze w wersji ang"<<endl;
-    cout<<" Dodanie potwierdzenie przy usuwaniu wszystkich graczy z listy Nicknames"<<endl;
-    cout<<" Od teraz powrot do menu z LiveChat nastepuje po nacisnieciu ESC"<<endl;
-    cout<<" Dodanie Timera, ktory wskazuje czas do konca rozladowania towaru - w LiveChat uruchamia się go pod 't'"<<endl;
-    cout<<"     Nalezy podac w ustawieniach czas, w jakim laduje sie towar oraz wybrac rodzaj celu - losowy, czy 'sam wybiore'"<<endl;
-    cout<<"     W LiveChat mozna tez zatrzymac Timer - klawisz 'c'"<<endl;
-    cout<<" Zmieniono domyslna wartosc opcji 'Dzwiek kazdej wiadmosci na czacie' na 0(off)"<<endl;
+    cout<<" Naprawienie bledu po aktualizacji - lista zapisanych graczy Nicknames nie wczytywala sie"<<endl;
+    cout<<"     Bylo to spowodowane dodaniem kolejnego ustawienia, po nowej aktualizacji"<<endl;
+    cout<<"     Od teraz przy odczycie ustawienia zostana tez zapisane, aby uniknac bledu przy aktualizowaniu"<<endl;
     cout<<endl;
     cout<<" USTAWIENIA"<<endl;
     cout<<" Zmiana czasu rozladowywania kursu, opcja [6]"<<endl;
