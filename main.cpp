@@ -178,15 +178,43 @@ void co(string s, int n)//pomocnicze wyświetlenie tagu i zmiennej
     cout<<s<<": "<<n<<endl;
 }
 
-bool fTransport(string linia)
+bool fTransport(string linia, bool ang)
 {
     //linia = "[2019-05-24 17:02:41] [Output] : Pieniądze za transport 2191$ zostały przelane na konto firmy.";
-    //                                        You've earned $3118. It has been transfered to your company's account.
+    //[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
     //[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
     if(ang)
     {
         if(linia[gt]=='Y'&&linia[gt+4]=='v'&&linia[gt+14]=='$')
+        {
+            if(linia[gt+19] == '.')
+            {
+                int liczba, mnoz=1000;
+                for(int i = 48; i<52; i++)//57 58 59 60 61 xxxx$
+                {
+                    liczba = linia[i];
+                    liczba -= 48;
+                    money += liczba*mnoz;
+                    mnoz /= 10;
+                }
+                courses++;
+                zapis();
+            }
+            else if(linia[gt+18] == '.')
+            {
+                int liczba, mnoz=100;
+                for(int i = 48; i<51; i++)//57 58 59 60 xxx$
+                {
+                    liczba = linia[i];
+                    liczba -= 48;
+                    money += liczba*mnoz;
+                    mnoz /= 10;
+                }
+                courses++;
+                zapis();
+            }
             return 1;
+        }
         else return 0;
     }
     else
@@ -204,6 +232,7 @@ bool fTransport(string linia)
                     mnoz /= 10;
                 }
                 courses++;
+                zapis();
             }
             else if(linia[60] == '$')
             {
@@ -216,8 +245,8 @@ bool fTransport(string linia)
                     mnoz /= 10;
                 }
                 courses++;
+                zapis();
             }
-            zapis();//auto-save po dostarczonym kursie
             return 1;
         }
         else return 0;
@@ -664,7 +693,7 @@ int console() //con
                 Beep(dzwiekGlowny,100);
                 cout<<" ________________________Ustawienia - LiveChat________________________"<<endl;
                 cout<<" (INFO) Mozesz tez zmienic ustawienia recznie - w pliku logus.ini"<<endl;
-                cout<<" [a] Jezyk angielski na PTS: "<<((ang)?"TAK":"NIE")<<endl;
+                cout<<" [a] Flaga na PTS: "<<((ang)?"ANG":"PL")<<endl;
                 cout<<" [p] Dzwiek wiadomosci PW: "<<((!fLockPW)?"TAK":"NIE")<<endl;
                 cout<<" [t] Dzwiek wiadomosci teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<endl;
                 cout<<" [s] Dzwiek komunikatow(raport, transport): "<<((!fLockKomunikat)?"TAK":"NIE")<<endl;
@@ -1185,7 +1214,7 @@ int liveChatBeep(string ostatniaLinia) //bee
     //dostarczenie towaru, raport z frakcji
     if(!fLockKomunikat)
     {
-        if(fTransport(ostatniaLinia)||fKomunikat(ostatniaLinia, ang))
+        if(fTransport(ostatniaLinia, ang)||fKomunikat(ostatniaLinia, ang))
         {
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
@@ -1712,7 +1741,7 @@ void wersja() //verr ver
     cout<<" |     Autor     |"<<endl;
     cout<<" |     DarXe     |"<<endl;
     cout<<" |_______________|"<<endl;
-    cout<<" |Wersja 19.6.28 |"<<endl;
+    cout<<" |Wersja 19.6.28p|"<<endl;
     cout<<endl;
     cout<<" PLANY: "<<endl;
     
