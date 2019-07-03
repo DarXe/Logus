@@ -74,7 +74,7 @@ int avg = 0; //courses calculator - average
 
 int console();
 void liveChat(int &wyswietlaneWiersze);
-int liveChatBeep(string &ostatniaLinia);
+void liveChatBeep(string &ostatniaLinia);
 int all(string &nazwa, int nrPliku);
 int teamsay(string &nazwa, int nrPliku);
 int pw(string &nazwa, int nrPliku);
@@ -181,6 +181,68 @@ void co(string s, int n)//pomocnicze wyświetlenie tagu i zmiennej
     cout<<s<<": "<<n<<endl;
 }
 
+void salaryForTransport(string &linia, bool &ang)
+{
+    if(ang)
+    {
+        if(linia[gt+19] == '.')
+        {
+            int liczba, mnoz=1000;
+            for(int i = 48; i<52; i++)//57 58 59 60 61 $xxxx
+            {
+                liczba = linia[i];
+                liczba -= 48;
+                money += liczba*mnoz;
+                mnoz /= 10;
+            }
+            courses++;
+            zapis();
+        }
+        else if(linia[gt+18] == '.')
+        {
+            int liczba, mnoz=100;
+            for(int i = 48; i<51; i++)//57 58 59 60 $xxx
+            {
+                liczba = linia[i];
+                liczba -= 48;
+                money += liczba*mnoz;
+                mnoz /= 10;
+            }
+            courses++;
+            zapis();
+        }
+    }
+    else
+    {
+        if(linia[61] == '$')
+        {
+            int liczba, mnoz=1000;
+            for(int i = 57; i<61; i++)//57 58 59 60 61 xxxx$
+            {
+                liczba = linia[i];
+                liczba -= 48;
+                money += liczba*mnoz;
+                mnoz /= 10;
+            }
+            courses++;
+            zapis();
+        }
+        else if(linia[60] == '$')
+        {
+            int liczba, mnoz=100;
+            for(int i = 57; i<60; i++)//57 58 59 60 xxx$
+            {
+                liczba = linia[i];
+                liczba -= 48;
+                money += liczba*mnoz;
+                mnoz /= 10;
+            }
+            courses++;
+            zapis();
+        }
+    }
+}
+
 bool fTransport(string &linia, bool &ang)
 {
     //linia = "[2019-05-24 17:02:41] [Output] : Pieniądze za transport 2191$ zostały przelane na konto firmy.";
@@ -189,69 +251,13 @@ bool fTransport(string &linia, bool &ang)
     if(ang)
     {
         if(linia[gt]=='Y'&&linia[gt+4]=='v'&&linia[gt+14]=='$')
-        {
-            if(linia[gt+19] == '.')
-            {
-                int liczba, mnoz=1000;
-                for(int i = 48; i<52; i++)//57 58 59 60 61 $xxxx
-                {
-                    liczba = linia[i];
-                    liczba -= 48;
-                    money += liczba*mnoz;
-                    mnoz /= 10;
-                }
-                courses++;
-                zapis();
-            }
-            else if(linia[gt+18] == '.')
-            {
-                int liczba, mnoz=100;
-                for(int i = 48; i<51; i++)//57 58 59 60 $xxx
-                {
-                    liczba = linia[i];
-                    liczba -= 48;
-                    money += liczba*mnoz;
-                    mnoz /= 10;
-                }
-                courses++;
-                zapis();
-            }
             return 1;
-        }
         else return 0;
     }
     else
     {
         if(linia[gt]=='P'&&linia[gt+1]=='i'&&linia[gt+2]=='e'&&linia[gt+3]=='n'&&linia[gt+4]=='i')
-        {
-            if(linia[61] == '$')
-            {
-                int liczba, mnoz=1000;
-                for(int i = 57; i<61; i++)//57 58 59 60 61 xxxx$
-                {
-                    liczba = linia[i];
-                    liczba -= 48;
-                    money += liczba*mnoz;
-                    mnoz /= 10;
-                }
-                courses++;
-                zapis();
-            }
-            else if(linia[60] == '$')
-            {
-                int liczba, mnoz=100;
-                for(int i = 57; i<60; i++)//57 58 59 60 xxx$
-                {
-                    liczba = linia[i];
-                    liczba -= 48;
-                    money += liczba*mnoz;
-                    mnoz /= 10;
-                }
-                courses++;
-                zapis();
-            }
             return 1;
-        }
         else return 0;
     }
 }
@@ -1290,19 +1296,18 @@ void ftest(){
     plik.close();
 }
 
-int liveChatBeep(string &ostatniaLinia) //bee
+void liveChatBeep(string &ostatniaLinia) //bee
 {
-    int temp = 0;
     //wiadomość pw
     if(!fLockPW){
         if(fPwOd(ostatniaLinia, ang))
         {
             Beep(dzwiekGlowny,300);
             Beep(0,interval);
-            temp+=interval; temp+=300;
+            timer-=interval; timer-=300;
             Beep(dzwiekGlowny,300);
             Beep(0,interval);
-            temp+=interval; temp+=300;
+            timer-=interval; timer-=300;
             //refresh = tempRefresh;
         }
     }
@@ -1313,10 +1318,10 @@ int liveChatBeep(string &ostatniaLinia) //bee
         {
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            temp+=interval; temp+=150;
+            timer-=interval; timer-=150;
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            temp+=interval; temp+=150;
+            timer-=interval; timer-=150;
             //refresh = tempRefresh;
         }
     }
@@ -1325,15 +1330,19 @@ int liveChatBeep(string &ostatniaLinia) //bee
     {
         if(fTransport(ostatniaLinia, ang)||fKomunikat(ostatniaLinia, ang))
         {
+            if(fTransport(ostatniaLinia, ang))
+            {
+                salaryForTransport(ostatniaLinia, ang);
+            }
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            temp+=interval; temp+=150;
+            timer-=interval; timer-=150;
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            temp+=interval; temp+=150;
+            timer-=interval; timer-=150;
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            temp+=interval; temp+=150;
+            timer-=interval; timer-=150;
             //refresh = tempRefresh;
         }
     }
@@ -1344,7 +1353,7 @@ int liveChatBeep(string &ostatniaLinia) //bee
         {
             Beep(dzwiekGlowny,300);
             Beep(0,interval);
-            temp+=interval; temp+=300;
+            timer-=interval; timer-=300;
             //refresh = tempRefresh;
         }
     }
@@ -1352,9 +1361,8 @@ int liveChatBeep(string &ostatniaLinia) //bee
     {
         Beep(dzwiekGlowny,100);
         Beep(0,interval);
-        temp+=interval; temp+=500;
+        timer-=interval; timer-=500;
     }
-    return temp;
 }
 
 int all(string &nazwa, int nr)
@@ -1379,12 +1387,13 @@ void getChat(int &iloscLinijek)
     pos.X=0; pos.Y=4; SetConsoleCursorPosition(h, pos);
 
     plik.open("console.log");
-    //pobranie linii, które nie mają być wyświetlone
+        //pobranie linii, które nie mają być wyświetlone
         for(int i = 0; i < iloscLinijek-wyswietlaneWiersze-1; i++)
         {
             getline(plik, linia);
         }
         SetConsoleTextAttribute(h, 10);
+
         //wyświetlenie pozostałych linii
         for(int i = 0; i < wyswietlaneWiersze; i++)
         {
@@ -1505,13 +1514,11 @@ void liveChat(int &wyswietlaneWiersze) //lc //ilosc wierszy wyswietlanych
                         {
                             Beep(dzwiekGlowny,150);
                             Beep(0,interval);
-                            timer-=interval; timer-=150;
                             Beep(dzwiekGlowny+50,150);
                             Beep(0,interval);
-                            timer-=interval; timer-=150;
                             Beep(dzwiekGlowny+100,150);
                             Beep(0,interval);
-                            timer-=interval; timer-=150;
+                            timer-=(interval*3); timer-=450;
                             isCzas = 0;
                         }
                     }
@@ -1521,13 +1528,11 @@ void liveChat(int &wyswietlaneWiersze) //lc //ilosc wierszy wyswietlanych
                         {
                             Beep(dzwiekGlowny,150);
                             Beep(0,interval);
-                            timer-=interval; timer-=150;
                             Beep(dzwiekGlowny+50,150);
                             Beep(0,interval);
-                            timer-=interval; timer-=150;
                             Beep(dzwiekGlowny+100,150);
                             Beep(0,interval);
-                            timer-=interval; timer-=150;
+                            timer-=(interval*3); timer-=450;
                             isCzas = 0;
                         }
                     }
@@ -1612,34 +1617,45 @@ void liveChat(int &wyswietlaneWiersze) //lc //ilosc wierszy wyswietlanych
             //t2 = clock() - t2;
 
             //19.5.29 rozwinięcie sprawdzania, do 5 ostatnich linii
-            if(temp == 1){
-                temp2=liveChatBeep(ostatniaLinia);
+            switch (temp)
+            {
+            case 1:
+                liveChatBeep(ostatniaLinia);
+                break;
+            case 2:
+            {
+                liveChatBeep(ostatniaLinia2);
+                liveChatBeep(ostatniaLinia);
+                break;
             }
-            else if(temp == 2){
-                temp2=liveChatBeep(ostatniaLinia2);
-                temp2+=liveChatBeep(ostatniaLinia);
+            case 3:
+            {
+                liveChatBeep(ostatniaLinia3);
+                liveChatBeep(ostatniaLinia2);
+                liveChatBeep(ostatniaLinia);
+                break;
             }
-            else if(temp == 3){
-                temp2=liveChatBeep(ostatniaLinia3);
-                temp2+=liveChatBeep(ostatniaLinia2);
-                temp2+=liveChatBeep(ostatniaLinia);
+            case 4:
+            {
+                liveChatBeep(ostatniaLinia4);
+                liveChatBeep(ostatniaLinia3);
+                liveChatBeep(ostatniaLinia2);
+                liveChatBeep(ostatniaLinia);
+                break;
+            }       
+            case 5:
+            {
+                liveChatBeep(ostatniaLinia5);
+                liveChatBeep(ostatniaLinia4);
+                liveChatBeep(ostatniaLinia3);
+                liveChatBeep(ostatniaLinia2);
+                liveChatBeep(ostatniaLinia);
+                break;
             }
-            else if(temp == 4){
-                temp2=liveChatBeep(ostatniaLinia4);
-                temp2+=liveChatBeep(ostatniaLinia3);
-                temp2+=liveChatBeep(ostatniaLinia2);
-                temp2+=liveChatBeep(ostatniaLinia);
+            default:
+                errors++;
+                break;
             }
-            else if(temp == 5){
-                temp2=liveChatBeep(ostatniaLinia5);
-                temp2+=liveChatBeep(ostatniaLinia4);
-                temp2+=liveChatBeep(ostatniaLinia3);
-                temp2+=liveChatBeep(ostatniaLinia2);
-                temp2+=liveChatBeep(ostatniaLinia);
-            }
-            else errors++;
-            
-            timer -= temp2;
         }//if
     }//while
 }//liveChat()
