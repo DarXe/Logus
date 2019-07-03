@@ -386,7 +386,7 @@ int main(int argc, char** argv) //maa main
         }
     plik.close();
 
-    SetConsoleTitle("Logus 19.7.2");
+    SetConsoleTitle("Logus 19.7.3");
 
     srand(time(NULL));
 
@@ -1913,7 +1913,7 @@ void wersja() //verr ver
     cout<<" |     Autor     |"<<endl;
     cout<<" |     DarXe     |"<<endl;
     cout<<" |_______________|"<<endl;
-    cout<<" | Wersja 19.7.2 |"<<endl;
+    cout<<" | Wersja 19.7.3 |"<<endl;
     Beep(0,300);
     cout<<endl;
     cout<<" PLANY: "<<endl;
@@ -1934,47 +1934,11 @@ void wersja() //verr ver
     cls();
     cout<<endl;
     cout<<" CO NOWEGO?"<<endl;
-    cout<<" Naprawienie bledu po aktualizacji - lista zapisanych graczy Nicknames nie wczytywala sie"<<endl;
-    cout<<"     Bylo to spowodowane dodaniem kolejnego ustawienia, po nowej aktualizacji"<<endl;
-    cout<<" Naprawiono blad przy wyszukiwaniu wiadomosci (team) wyslanych przez siebie"<<endl;
-    cout<<"     Spowodowany byl wylaczeniem powiadomienia dzwiekowego na wlasny nick"<<endl;
-    cout<<" Naprawiono buga przy podawaniu litery zamiast liczby - potrzebny restart programu"<<endl;
-    cout<<" Zmieniono sposob wyswietlania przeszukiwanych logow na zasadzie 'stron'"<<endl;
-    cout<<"     Dowolny klawisz - nastepne 30 wierszy. [ESC] przejscie do nastepnego pliku"<<endl;
-    cout<<" Od teraz przy pierwszym uruchomieniu programu po aktualizacji pojawi sie info o tym"<<endl;
-    cout<<" Zrealizowano pomysl gracza Niventill - dodano mozliwosc odpalenia Logusa razem z serwerem PTS"<<endl;
-    cout<<" Gracz ten podsunal tez pomysl szybkiego startu - pomijanie info o wersji, wybranie LiveChat"<<endl;
-    cout<<"     wszystko to powiazane bedzie z opcja odpalenia Logusa wraz z MTA"<<endl;
-    cout<<" Opracowanie algorytmu liczacego sume i sredni zarobek z dostarczonych kursow"<<endl;
-    cout<<"     Liczenie kursow trwa tylko przy dzialajacej funkcji LiveChat, gdy rozladujemy towar"<<endl;
-    cout<<" Czyszczenie pliku console.log - na ktorym dziala LiveChat i zachowanie przy tym logow (optymalizacja)"<<endl;
-    cout<<"     Logi zachowuja sie w oddzielnym pliku jako archiwum - logus.log"<<endl;
-    cout<<"     opcja jest dostepna w funkcji LiveChat pod klawiszem[m]"<<endl;
-    cout<<" Opracowanie funkcji czytajacej konsole z mta (F8, tylda)"<<endl;
-    cout<<"     Polecenia nalezy wyslac w tej konsoli, bez znaku '/'. 2 nowe polecenia:"<<endl;
-    cout<<"     t - start timera, od teraz nie trzeba go uruchamiac przez konsole"<<endl;
-    cout<<"     r - zwykly /reconnect"<<endl;
-    cout<<" Dodano auto-zapis po kazdym dostarczonym kursie"<<endl;
-    cout<<" Nowy wyglad naglowka w LiveChat wraz z kolorem"<<endl;
-    cout<<" Wyroznianie powiadomienia innym kolorem w LiveChat"<<endl;
-    cout<<" Nowy wyglad menu - dodano kolory dla lepszej czytelnosci"<<endl;
-    cout<<" Polskie ogonki zostaly dodane do pozostalych dwoch menu"<<endl;
-    cout<<"     Jesli nie dzialaja, to mozna te znaki wylaczyc w glownym menu"<<endl;
-    cout<<" W ustawieniach Nicknames dodano wyswietlenie aktualnej listy graczy przy usuwaniu po id z tej listy"<<endl;
-    cout<<endl;
-    cout<<" Wcisnij klawisz, aby kontynuowac"<<endl; getch();
-    cls();
-    cout<<endl;
-    cout<<" USTAWIENIA"<<endl;
-    cout<<"     Szybki start w MENU glownym, opcja [s]"<<endl;
-    cout<<"     *Posiada ona 3 tryby uruchamiania Logusa"<<endl;
-    cout<<" LiveChat"<<endl;
-    cout<<"     Zmiana klawisza stopu Timera z [c] na [s]"<<endl;
-    cout<<"     Ustawianie aktualnego F4, opcja [8]"<<endl;
-    cout<<"     Ustawianie aktualnej ilosci kursow, opcja [9]"<<endl;
-    cout<<"     Wyzeruj stan F4 i ilosc kursow, opcja [0]"<<endl;
-    cout<<"     Przywracanie ustawien domyslnych [r]"<<endl;
-    cout<<"     Wspomniana opcja [m], sluzy do przenoszenia logow do oddzielnego pliku z pliku console.log"<<endl;
+    cout<<" Naprawienie blednego liczenia kursow i wynagrodzenia za nie"<<endl;
+    cout<<"     Bylo to spowodowane kolorowaniem powiadomienia transportu"<<endl;
+    cout<<"     Algorytm liczacy zostal oddzielony do oddzielnej funkcji"<<endl;
+    cout<<" Drobna poprawka dotyczaca odejmowania czasu ms od Timera"<<endl;
+    cout<<"     Funkcja zostala zmieniona na procedure, program wykona mniej operacji"<<endl;
     cout<<endl;
     cout<<" Wcisnij klawisz, aby wyswietlic MENU"<<endl;
     getch();
