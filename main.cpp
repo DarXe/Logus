@@ -52,7 +52,7 @@ string f = "console.log.5";
 string L = "logus.log";
 
 //liveChat
-//clock_t t1 = 0, t2 = 0; //pomiary delay
+clock_t delay = 0, delay2 = 0; //pomiary delay
 int iloscLinijek = 0;
 string ostatniaLinia[11]; //ostatnie linie
 int temp = 0; //aux var; pomocnicza zmienna iloscLinijek w LiveChat
@@ -64,7 +64,7 @@ bool isTimer = 0; //TIMER aux var; pomocnicza zmienna - czy timer ma odliczac
 bool isCzas = 0; //TIMER aux var; pomocnicza zmienna - czas po zaladowaniu, odliczanie
 int avg = 0; //courses calculator - average; średnia kursów
 bool timestamps = 0; //show timestamps in LiveChat; pokaż date obok logów w LiveChat
-string track[5] = {"########","AP1-LOT1","LOT2-AP1","AP2-LOT2","LOT1-AP2"};
+string track[5] = {"############","(AP1 - LOT1)","(LOT2 - AP1)","(AP2 - LOT2)","(LOT1 - AP2)"};
 short trackId = 0;
 
 int console();
@@ -292,6 +292,7 @@ bool fNick(string &wyraz)
 
 void startTimer(short getSeconds)
 {
+    delay = clock();
     if(getSeconds)
     {
         timer = getSeconds*1000;
@@ -299,7 +300,6 @@ void startTimer(short getSeconds)
     else
     {
         timer = czas*1000;
-        timer += refresh;
         if(random) timer += 300000; else timer += 360000;
         isCzas = 1;
     }
@@ -310,7 +310,7 @@ void startTimer(short getSeconds)
 }
 
 //[2019-06-28 11:58:25] [Input]  : test
-bool fConsoleInput(string &linia)
+bool fConsoleInput(string &linia)//fci
 {
     if(linia[gt-10]=='I')
     {
@@ -322,12 +322,20 @@ bool fConsoleInput(string &linia)
         }
         else if(linia[gt]=='t'&&linia[gt+1]!='e') //t START TIMER
         {
-            startTimer(0);
+            if(linia[gt+1] == 't')
+            {
+                startTimer(0);
+                int temp;
+                temp = czas * 1000 / 1.1;
+                temp = czas * 1000 - temp;
+                timer -= temp;
+            }
+            else startTimer(0);
             return 1;
         }
         else if(linia[gt]=='s'&&linia[gt+1]=='e'&&linia[gt+2]=='t')
         {
-            if(linia[gt+4]=='t'&&linia[gt+5]=='r') //set tr xx SET TRACK
+            if(linia[gt+4]=='t'&&linia[gt+5]=='r') //set tr xx //SET TRACK
             {
                 if(linia[gt+7]=='0')
                 {
@@ -348,7 +356,7 @@ bool fConsoleInput(string &linia)
                 }
                 return 0;
             }
-            else if(linia[gt+4]=='t') //set t m:ss || set t m ss SET TIMER M:SS
+            else if(linia[gt+4]=='t') //set t m:ss || set t m ss //SET TIMER
             {
                 int liczba; int temp;
                 liczba = linia[gt+6];//min
@@ -406,7 +414,7 @@ void intError()
 {
     cerr<<"\nERRROR! Podales litere/y!"<<endl;
     cout<<"Program wylaczy sie, uruchom go ponownie"<<endl;
-    if(fastStart)
+    if(fastStart == 1)
     {
         cout<<"\nMasz wlaczona funkcje fastStart!"<<endl;
         cout<<"Program automatycznie wylaczy funkcje 'szybki start' w celu uniknienia"<<endl;
@@ -419,21 +427,6 @@ void intError()
 
 int main(int argc, char** argv) //maa main
 {
-    /* int charr;
-    while(true)
-    {
-        charr = getch();
-        cout<<charr<<endl;
-        if(charr == 27) break;
-    }
-    return 0;
-    fstream plik11;
-    string z[5];
-    plik11.open("console.log");
-    plik11>>z[0]>>z[1];
-    cout<<z;
-    plik11.close();
-    return 0;*/
     fstream plik;
     plik.open("console.log");
         while(!plik.good())
@@ -462,7 +455,7 @@ int main(int argc, char** argv) //maa main
         }
     plik.close();
 
-    SetConsoleTitle("Logus 19.7.6-pre");
+    SetConsoleTitle("Logus 19.7.12-pre");
 
     srand(time(NULL));
 
@@ -511,6 +504,7 @@ void zapis(){ //saa save
         plik<<"ilość_kursów: "<<courses<<"\n";
         plik<<"szybki_start: "<<fastStart<<"\n";
         plik<<"kodowanie852: "<<codePage852<<"\n";
+        plik<<"trasa: "<<trackId<<"\n";
         plik<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
         plik<<"//W tym miejscu znajduje sie lista zapisanych graczy."<<endl;
         plik<<"//Aby poprawnie dodać gracza przez plik należy ustalić też ilość graczy."<<endl;
@@ -558,6 +552,7 @@ void odczyt() //re read
         plik>>s_temp>>courses;
         plik>>s_temp>>fastStart;
         plik>>s_temp>>codePage852;
+        plik>>s_temp>>trackId;
     plik.close();
 
     plik.open("logus.ini");
@@ -643,6 +638,7 @@ void readDefault()
     courses = 0;
     fastStart = 0;
     codePage852 = 0;
+    trackId = 0;
 }
 
 int console() //con
@@ -678,6 +674,7 @@ int console() //con
 
     while(true)
     {
+        if(isTimer) delay2 = clock();
         color(kolorGlowny);
         Beep(dzwiekGlowny,100);
 
@@ -791,6 +788,7 @@ int console() //con
         case 't':
         {
             cls();
+            if(isTimer) timer -= (clock()-delay2);
             liveChat(wyswietlaneWiersze); //run LiveChat
             break;
         } //set1    (ustawienia)
@@ -1364,10 +1362,8 @@ void liveChatBeep(string &ostatniaLinia) //bee
         {
             Beep(dzwiekGlowny,300);
             Beep(0,interval);
-            timer-=interval; timer-=300;
             Beep(dzwiekGlowny,300);
             Beep(0,interval);
-            timer-=interval; timer-=300;
         }
     }
 
@@ -1378,10 +1374,8 @@ void liveChatBeep(string &ostatniaLinia) //bee
         {
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            timer-=interval; timer-=150;
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            timer-=interval; timer-=150;
         }
     }
 
@@ -1401,13 +1395,10 @@ void liveChatBeep(string &ostatniaLinia) //bee
             }
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            timer-=interval; timer-=150;
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            timer-=interval; timer-=150;
             Beep(dzwiekGlowny,150);
             Beep(0,interval);
-            timer-=interval; timer-=150;
         }
     }
 
@@ -1418,7 +1409,6 @@ void liveChatBeep(string &ostatniaLinia) //bee
         {
             Beep(dzwiekGlowny,300);
             Beep(0,interval);
-            timer-=interval; timer-=300;
         }
     }
 
@@ -1426,7 +1416,6 @@ void liveChatBeep(string &ostatniaLinia) //bee
     {
         Beep(dzwiekGlowny,100);
         Beep(0,interval);
-        timer-=interval; timer-=100;
     }
 }
 
@@ -1468,7 +1457,7 @@ void getChat(int &iloscLinijek)
     }
     if(money&&courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
     else      cout<<"Dostarczone kursy: "<<courses<<"                                             ";
-    cout<<"\n#########################################"<<track[trackId]<<"#[m]moveLogs()#####"<<endl;
+    cout<<"\n##[Tab]Timestamps################"<<track[trackId]<<"#####[m]moveLogs()#####"<<endl;
 
     plik.open("console.log");
         //pobranie linii, które nie mają być wyświetlone
@@ -1517,6 +1506,7 @@ void getChat(int &iloscLinijek)
 
 void liveChat(int &wyswietlaneWiersze) //lc
 {
+    if(isTimer) delay = clock();
     iloscLinijek = 0;
     plik.open("console.log");
         while(!plik.eof())
@@ -1527,9 +1517,11 @@ void liveChat(int &wyswietlaneWiersze) //lc
         plik.close();
 
     getChat(iloscLinijek);
-
+    if(isTimer) timer -= (clock()-delay);
     while(true)
     {   
+        if(isTimer) delay = clock();
+        
         iloscLinijek = 0;
         //zliczanie linijek w pliku z logami
         plik.open("console.log");
@@ -1539,14 +1531,15 @@ void liveChat(int &wyswietlaneWiersze) //lc
             ++iloscLinijek;
         }
         plik.close();
-
-        //zapisanie informacji w pomocniczej zmiennej, wyzerowanie licznika i odczekanie czasu
+        //zapisanie informacji w pomocniczej zmiennej i odczekanie czasu
         temp = iloscLinijek;
-        for(int i(0); i<20; i++)
+
+        for(int i(0); i<20; i++) //odczekanie czasu
         {
             Sleep(refresh/20);
             if(kbhit()) break;
         }
+
         if(dynamicRefresh && refresh<2000 && !kbhit()) refresh+=10;
 
         if(kbhit())
@@ -1565,6 +1558,8 @@ void liveChat(int &wyswietlaneWiersze) //lc
                 {
                     Beep(dzwiekGlowny, 100);
                     isTimer = 0;
+                    isCzas = 0;
+                    timer = 0;
                     pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
                     SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
                     cout<<" [t]Timer                     ";
@@ -1585,9 +1580,14 @@ void liveChat(int &wyswietlaneWiersze) //lc
                     cls(); getChat(iloscLinijek);
                 }
                 break;
-            case 127:
+            case 48:
                 {
                     trackId = ((trackId)?0:1);
+                }
+                break;
+            case 'q':
+                {
+                    errors = 0;
                 }
                 break;
             
@@ -1595,11 +1595,10 @@ void liveChat(int &wyswietlaneWiersze) //lc
                 {
                     def();
                     getChat(iloscLinijek);
-                    break;
                 }
+                break;
             }
         }
-
         iloscLinijek = 0;
         //zliczanie linijek w pliku z logami po odstępie czasowym
         plik.open("console.log");
@@ -1614,7 +1613,8 @@ void liveChat(int &wyswietlaneWiersze) //lc
         {
             if(timer>0) 
             {
-                timer -= refresh;
+                timer -= (clock()-delay);
+                delay = clock();
                 if(isCzas)
                 {
                     if(random)
@@ -1627,7 +1627,6 @@ void liveChat(int &wyswietlaneWiersze) //lc
                             Beep(0,interval);
                             Beep(dzwiekGlowny+100,150);
                             Beep(0,interval);
-                            timer-=(interval*3); timer-=450;
                             isCzas = 0;
                         }
                     }
@@ -1641,7 +1640,6 @@ void liveChat(int &wyswietlaneWiersze) //lc
                             Beep(0,interval);
                             Beep(dzwiekGlowny+100,150);
                             Beep(0,interval);
-                            timer-=(interval*3); timer-=450;
                             isCzas = 0;
                         }
                     }
@@ -1662,12 +1660,13 @@ void liveChat(int &wyswietlaneWiersze) //lc
         }
         temp = iloscLinijek-temp; //różnica linijek
         //jeśli po odczekaniu czasu ilości się różnią to znaczy, że ktoś coś napisał
-        //he-ad
+
+        //he ad
         pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
         SetConsoleTextAttribute(h, 12);
         cout<<"##############################LiveChat##############################"<<endl;
         SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-        cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<iloscLinijek-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU"<<endl;
+        cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<iloscLinijek-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<endl;
         if(isTimer)
         {
             SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
@@ -1682,11 +1681,14 @@ void liveChat(int &wyswietlaneWiersze) //lc
         }
         if(money&&courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
         else      cout<<"Dostarczone kursy: "<<courses<<"                                             ";
-        cout<<"\n#########################################"<<track[trackId]<<"#[m]moveLogs()#####"<<endl;
+        cout<<"\n##[Tab]Timestamps################"<<track[trackId]<<"#####[m]moveLogs()#####"<<endl;
         pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
+        
+        if(isTimer) timer -= (clock()-delay);
 
         if(temp)
         {
+            if(isTimer) delay = clock();
             if(dynamicRefresh && refresh>500) refresh-=100; //jeśli pojawi się nowa wiadomość to zmniejsz częstotliwość odświeżania o 100ms
             cls();
 
@@ -1766,6 +1768,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
             }
             break;
             }
+            if(isTimer) timer -= (clock()-delay);
         }//if
     }//while
 }//liveChat()
@@ -2057,7 +2060,7 @@ void wersja() //verr ver
     cout<<" |     Autor     |"<<endl;
     cout<<" |     DarXe     |"<<endl;
     cout<<" |_______________|"<<endl;
-    cout<<" | Wersja 19.7.6p|"<<endl;
+    cout<<" |Wersja 19.7.12p|"<<endl;
     Beep(0,300);
     cout<<endl;
     cout<<" PLANY: "<<endl;
@@ -2078,20 +2081,26 @@ void wersja() //verr ver
     cls();
     cout<<endl;
     cout<<" CO NOWEGO?"<<endl;
-    cout<<" Naprawienie powiadomien - nie bylo ich, jesli bylo mniej niz 5(10) wierszy w logu"<<endl;
+    cout<<" Naprawiono powiadomienia - nie bylo ich, jesli bylo mniej niz 5(10) wierszy w logu"<<endl;
     cout<<"     (moment po przeniesieniu logow)"<<endl;
-    cout<<" Uporzadkowanie zmiennych \"ostatniaLinia\", stworzenie tablicy"<<endl;
+    cout<<" Uporzadkowano zmienne \"ostatniaLinia\", stworzenie tablicy"<<endl;
     cout<<"     to pozwolilo z latwoscia powiekszyc sprawdzanie wierszy do 10 linii"<<endl;
     cout<<"     pokazanie sie erroru jest praktycznie niemozliwe"<<endl;
-    cout<<" Nowa funkcja w LiveChat! Timestamps - ukrywanie daty i godziny logu"<<endl;
+    cout<<" Nowa funkcja w LiveChat: Timestamps - ukrywanie daty i godziny logu"<<endl;
     cout<<"     Dziala to na podobnej zasadzie co /timestamp na samp"<<endl;
     cout<<"     Klawisz [Tab] Ukrywa/pokazuje te znaczniki czasu"<<endl;
-    cout<<" Naprawienie opoznien podczas korzystania z LiveChat - opcje wykonywane sa prawie natychmiastowo"<<endl;
+    cout<<" Naprawiono opoznienia podczas korzystania z LiveChat - opcje wykonywane sa prawie natychmiastowo"<<endl;
     cout<<"     Przy odswiezaniu 1000ms opcja wykonuje sie po 50ms, po prostu dzielone jest przez 20"<<endl;
-    cout<<" Naprawienie krytycznego bledu, po wdrozeniu Timestamps"<<endl;
+    cout<<" Naprawiono krytyczny blad, po wdrozeniu Timestamps"<<endl;
     cout<<"     Dodanie funkcji Timestamps spowodowalo, ze jesli plik console.log byl pusty to"<<endl;
-    cout<<"     sprawdzane byly puste linie, teraz sprawdza tyle linii, ile jest w pliku"<<endl;
+    cout<<"     sprawdzane byly puste linie, teraz sprawdza tyle linii, ile jest w pliku."<<endl;
     cout<<"     (az osiagnie ilosc ustawionych wyswietlonych wierszy)"<<endl;
+    cout<<" Kolejna nowosc w LiveChat: Wyswietlanie aktualnej trasy i aktualizowanie jej po rozladunku."<<endl;
+    cout<<"     Magazyny nie zrobia sie puste, jesli rozladowujemy tam skad wczesniej zaladowalismy."<<endl;
+    cout<<"     Jest to opcja dla tych ktorzy jezdza stale trasy. Wystarczy zapamietac ktory rozladunek jest ktory."<<endl;
+    cout<<" Naprawiono opoznienia odliczania timera. Potrafil mylic sie do 2 sekund na minute."<<endl;
+    cout<<"     Zostaly odjete opoznienia dotyczace czasu algorytmow. Czas teraz odlicza co do 1ms."<<endl;
+    cout<<" "<<endl;
     cout<<endl;
     cout<<" Wcisnij klawisz, aby wyswietlic MENU"<<endl;
     getch();
