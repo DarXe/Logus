@@ -273,7 +273,7 @@ int console() //con
 					SetConsoleTextAttribute(h, 7);
 					cout<<" [8] F4/zarobione pieniadze od ostatniego wyzerowania: $"<<money<<endl;
 					cout<<" [9] Liczba dostarczonych kursow: "<<courses<<endl;
-					cout<<" [0] Ranga(%): "<<grade*100<<"%"<<endl;
+					cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<endl;
 					cout<<" # # Wyplata wynosi "<<"$"<<((money*0.87)-3500)*grade<<endl;
 					if(courses) cout<<" # # Srednia na kurs wynosi $"<<money/courses<<endl;
 					cout<<" [x] Wyzeruj stan F4 i kursow"<<endl;
