@@ -43,7 +43,6 @@ void wersja();
 
 int main(int argc, char** argv) //maa main
 {
-	srand(time(NULL));
 	fstream plik;
 	plik.open("console.log");
 		while(!plik.good())
@@ -75,16 +74,9 @@ int main(int argc, char** argv) //maa main
 		}
 	plik.close();
 
-	SetConsoleTitle("Logus 19.7.21");
-
+	SetConsoleTitle("Logus 19.7.23-pre");
 	srand(time(NULL));
 
-	console();
-	return 0;
-}
-
-int console() //con
-{
 	color(kolorGlowny);
 	if(codePage852)
 	{
@@ -114,6 +106,13 @@ int console() //con
 		break;
 	}
 
+	console();
+
+	return 0;
+}
+
+int console() //con
+{
 	while(true)
 	{
 		if(isTimer) delay2 = clock();
@@ -271,7 +270,7 @@ int console() //con
 					cout<<" [6] Czas rozladowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<endl;
 					cout<<" [7] Sam wybiore / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiore")<<endl;
 					SetConsoleTextAttribute(h, 7);
-					cout<<" [8] F4/zarobione pieniadze od ostatniego wyzerowania: $"<<money<<endl;
+					cout<<" [8] F4 / zarobione pieniadze od ostatniego wyzerowania: $"<<money<<endl;
 					cout<<" [9] Liczba dostarczonych kursow: "<<courses<<endl;
 					cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<endl;
 					cout<<" # # Wyplata wynosi "<<"$"<<((money*0.87)-3500)*grade<<endl;
@@ -308,7 +307,7 @@ int console() //con
 					cout<<" [6] Czas rozładowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<endl;
 					cout<<" [7] Sam wybiorę / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiorę")<<endl;
 					SetConsoleTextAttribute(h, 7);
-					cout<<" [8] F4/zarobione pieniądze od ostatniego wyzerowania: $"<<money<<endl;
+					cout<<" [8] F4 / zarobione pieniądze od ostatniego wyzerowania: $"<<money<<endl;
 					cout<<" [9] Liczba dostarczonych kursów: "<<courses<<endl;
 					cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<endl;
 					cout<<" # # Wypłata wynosi "<<"$"<<((money*0.87)-3500)*grade<<endl;
@@ -339,58 +338,41 @@ int console() //con
 						readDefault();
 						cout<<"Ustawienia domyslne programu zostaly przywrocone!"<<endl;
 					}
+					break;
 					case 'a':
 					{
 						cls();
-						if(ang)
-							ang = 0;
-						else
-							ang = 1;
+						ang = (ang)?0:1;
 						break;
 					}
 					case 'p':
 					{
 						cls();
-						if(fLockPW)
-							fLockPW = 0;
-						else
-							fLockPW = 1;
+						fLockPW = (fLockPW)?0:1;
 						break;
 					}
 					case 't':
 					{
 						cls();
-						if(fLockTeam)
-							fLockTeam = 0;
-						else
-							fLockTeam = 1;
+						fLockTeam = (fLockTeam)?0:1;
 						break;
 					}
 					case 's':
 					{
 						cls();
-						if(fLockKomunikat)
-							fLockKomunikat = 0;
-						else
-							fLockKomunikat = 1;
+						fLockKomunikat = (fLockKomunikat)?0:1;
 						break;
 					}
 					case 'k':
 					{
 						cls();
-						if(fLockNick)
-							fLockNick = 0;
-						else
-							fLockNick = 1;
+						fLockNick = (fLockNick)?0:1;
 						break;
 					}
 					case 'c':
 					{
 						cls();
-						if(chatSound)
-							chatSound = 0;
-						else
-							chatSound = 1;
+						chatSound = (chatSound)?0:1;
 						break;
 					}
 					case '1':
@@ -434,10 +416,7 @@ int console() //con
 					case '3':
 					{
 						cls();
-						if(dynamicRefresh)
-							dynamicRefresh = 0;
-						else
-							dynamicRefresh = 1;
+						dynamicRefresh = (dynamicRefresh)?0:1;
 						break;
 					}
 					case '4':
@@ -522,10 +501,7 @@ int console() //con
 					case '7':
 					{
 						cls();
-						if(random)
-							random = 0;
-						else
-							random = 1;
+						random = (random)?0:1;
 						break;
 					}
 					case '8':
@@ -932,30 +908,35 @@ int all(string &nazwa, int nr)
 	return iloscLinijek;
 }
 
-void getChat(int &iloscLinijek)
+void getChat(int &iloscLinijek)//gc
 {
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
-	cout<<"##############################LiveChat##############################"<<endl;
+	cout<<"###############################LiveChat###############################"<<endl;
 	SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-	cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<iloscLinijek-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU"<<endl;
+	cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<iloscLinijek-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<endl;
 	if(isTimer)
 	{
 		SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
 		cout<<" Timer "<<timer/1000/60;
 		if((timer/1000)%60<10) cout<<":0"; else cout<<":";
-		cout<<(timer/1000)%60<<"  [s]Stop Timer    ";
+		cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
 	}
 	else 
 	{
 		SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-		cout<<" [t]Timer                     ";
+		cout<<" [t]Timer                  # F4 ";
 	}
-	if(money&&courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
+	if(courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
 	else      cout<<"Dostarczone kursy: "<<courses<<"                                             ";
 	SetConsoleTextAttribute(h, 204); cout<<"\n "; SetConsoleTextAttribute(h, 12);
-	cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<((money*0.87)-3500)*grade;
-	cout<<"\n#############################################"<<"#####[m]moveLogs()#####"<<endl;
+	cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<((money)?((money*0.87)-3500)*grade:0);
+	SetConsoleTextAttribute(h, 204);
+	pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); cout<<" ";
+	pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); cout<<" ";
+	pos.X=69; pos.Y=3; SetConsoleCursorPosition(h, pos); cout<<" ";
+	SetConsoleTextAttribute(h, 12);
+	cout<<"\n################################################"<<"#####[m]moveLogs()####"<<endl;
 
 	plik.open("console.log");
 		//pobranie linii, które nie mają być wyświetlone
@@ -1005,6 +986,7 @@ void getChat(int &iloscLinijek)
 void liveChat(int &wyswietlaneWiersze) //lc
 {
 	if(isTimer) delay = clock();
+
 	iloscLinijek = 0;
 	plik.open("console.log");
 		while(!plik.eof())
@@ -1013,8 +995,8 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			++iloscLinijek;
 		}
 		plik.close();
-
 	getChat(iloscLinijek);
+
 	if(isTimer) timer -= (clock()-delay);
 	while(true)
 	{   
@@ -1060,7 +1042,6 @@ void liveChat(int &wyswietlaneWiersze) //lc
 					timer = 0;
 					pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
 					SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-					cout<<" [t]Timer                     ";
 				}
 				break;
 			case 'm':
@@ -1157,7 +1138,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		//he ad
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 		SetConsoleTextAttribute(h, 12);
-		cout<<"##############################LiveChat##############################"<<endl;
+		cout<<"###############################LiveChat###############################"<<endl;
 		SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
 		cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<iloscLinijek-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<endl;
 		if(isTimer)
@@ -1165,18 +1146,23 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
 			cout<<" Timer "<<timer/1000/60;
 			if((timer/1000)%60<10) cout<<":0"; else cout<<":";
-			cout<<(timer/1000)%60<<"  [s]Stop Timer    ";
+			cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
 		}
 		else 
 		{
 			SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-			cout<<" [t]Timer                     ";
+			cout<<" [t]Timer                  # F4 ";
 		}
-		if(money&&courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
+		if(courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
 		else      cout<<"Dostarczone kursy: "<<courses<<"                                             ";
 		SetConsoleTextAttribute(h, 204); cout<<"\n "; SetConsoleTextAttribute(h, 12);
-		cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<((money*0.87)-3500)*grade;
-		cout<<"\n#############################################"<<"#####[m]moveLogs()#####"<<endl;
+		cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<((money)?((money*0.87)-3500)*grade:0);
+		SetConsoleTextAttribute(h, 204);
+		pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); cout<<" ";
+		pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); cout<<" ";
+		pos.X=69; pos.Y=3; SetConsoleCursorPosition(h, pos); cout<<" ";
+		SetConsoleTextAttribute(h, 12);
+		cout<<"\n################################################"<<"#####[m]moveLogs()####"<<endl;
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 		
 		if(isTimer) timer -= (clock()-delay);
@@ -1260,7 +1246,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				if(temp>10) errors++;
 				break;
 			}
-
+			
 			if(autoMoveLogs && iloscLinijek > autoMoveLogs) moveLogs();
 			if(isTimer) timer -= (clock()-delay);
 		}//if
@@ -1430,36 +1416,35 @@ void moveLogs() //clean and move logs from console.log to logus.log
 	plik2.close();
 	plik.open("console.log", ios::out);
 	plik.close();
+	pos.X=2; pos.Y=5; SetConsoleCursorPosition(h, pos);
+	SetConsoleTextAttribute(h, 15);
+	cout<<"Brak wierszy po przeniesieniu logow!";
 }
 
 void wersja() //verr ver
 {
 	cout<<endl;
 	cout<<"  Witaj "<<nick<<" !"<<endl;
-	Beep(0,300);
+	Sleep(300);
 	cout<<"  _________________"<<endl;
 	cout<<" |      Autor      |"<<endl;
 	cout<<" |      DarXe      |"<<endl;
 	cout<<" |_________________|"<<endl;
-	cout<<" | Wersja  19.7.21 |"<<endl;
-	Beep(0,300);
-	cout<<endl;
+	cout<<" | Wersja 19.7.23p |"<<endl;
+	Sleep(300); cout<<endl;
 	cout<<" PLANY: "<<endl;
 	cout<<" Kreator wlasnych powiadomien"<<endl;
 	cout<<" Wyszukiwanie wiadomosci tylko wybranych przez siebie graczy"<<endl;
 	cout<<" Wyszukiwanie po tagach, ktore bedzie sie tworzylo(wysylalo) w konsoli mta"<<endl;
 	cout<<" Naprawienie problemu z polskimi znakami na systemach win7"<<endl;
 	cout<<" Wykonanie i dodanie ikony programu"<<endl;
-	Beep(0,300);
-	cout<<endl;
+	Sleep(300); cout<<endl;
 	cout<<" Nie zapomnij zagladnac na githuba - znajdziesz tam informacje o tym-"<<endl;
 	cout<<" -jak korzystac z programu (sa tam opisane wszystkie opcje)"<<endl;
 	cout<<" https://github.com/DarXe/Logus/issues\n"<<endl;
-	Beep(0,500);
-	Beep(dzwiekGlowny,150);
-	cout<<" Wcisnij klawisz, aby kontynuowac"<<endl; getch();
-	cls();
-	cout<<endl;
+	Sleep(500); Beep(dzwiekGlowny,150);
+	cout<<" Wcisnij klawisz, aby wyswietlic nowosci"<<endl; getch();
+	cls(); cout<<endl;
 	cout<<" CO NOWEGO?"<<endl;
 	SetConsoleTextAttribute(h, 7);
 	cout<<" PTS TOTOLOTEK - Lotto Logus Beta"<<endl;
@@ -1483,7 +1468,7 @@ void wersja() //verr ver
 	cout<<" LiveChat: Liczenie i wyswietlanie wyplaty w naglowku LC"<<endl;
 	cout<<" * Nalezy podac % rangi stanowiska oraz F4 (aktualizuje sie po dostarczeniu towaru)"<<endl;
 	cout<<" Do MENU zostala dodana nowa opcja - [Enter] Uruchom MTA i polacz z PTS / Polacz ponownie"<<endl;
-	cout<<" Wcisnij klawisz, aby kontynuowac"<<endl; getch();
+	cout<<" Wcisnij klawisz, aby wyswietlic poprawki"<<endl; getch();
 	cls();
 	cout<<" POPRAWKI"<<endl;
 	cout<<" Naprawiono powiadomienia - nie bylo ich, jesli bylo mniej niz 5(10) wierszy w logu"<<endl;
@@ -1543,7 +1528,7 @@ void menu()
 	cout<<" [i] INFO"<<endl;
 	SetConsoleTextAttribute(h, 10);
 	cout<<" __________________________________________________________________________________"<<endl;
-	cout<<"                                [ESC] Wyjscie i zapis                              "<<endl;
+	cout<<"                                [ESC] Wyjście i zapis                              "<<endl;
 }
 
 void menuBezPL()
@@ -1587,4 +1572,26 @@ void menuBezPL()
 	SetConsoleTextAttribute(h, 10);
 	cout<<" __________________________________________________________________________________"<<endl;
 	cout<<"                                [ESC] Wyjscie i zapis                              "<<endl;
+}
+
+void preNews()
+{
+	cout<<" Zmiany"<<endl;
+	cout<<" Naprawiono wyswietlanie wyplaty, ktora byla na minusie przy malym F4."<<endl;
+	cout<<" Dodano komunikat. Po przeniesieniu logow w konsoli pojawi sie bialy napis"<<endl;
+	cout<<" Dorobiono prawą scianę do naglówka w LiveChat. Bob budowniczy.. :D"<<endl;
+	cout<<" Zmiana nazwy programu z Logus-v19.x.x na samo Logus"<<endl;
+	cout<<" Od teraz nie trzeba bedzie robic kolejnych skrotow do programu"<<endl;
+	cout<<"   * Wystarczy zrobic to ostatni raz, po tej aktualizacji"<<endl;
+	cout<<"   * Dodatkowo wklejając do logow nową wersje nadpisujemy starą - nie trzeba kasowac"<<endl;
+	cout<<" Porada: Jak szybko zaktualizowac Logusa?"<<endl;
+	cout<<" Jesli nie masz jeszcze skrotu to wykorzystaj ten sposob przy next aktualizacji"<<endl;
+	cout<<"   * Wystarczy miec skrot do Logusa na pulpicie - zaznaczamy ją jednym kliknieciem"<<endl;
+	cout<<"   * wciskamy kombinacje Alt+Enter, a po pojawieniu sie okna kombinacje Alt+T"<<endl;
+	cout<<"   * ii.. jestesmy w katalogu z logami. Wklejamy tutaj pobranego Logusa."<<endl;
+	SetConsoleTextAttribute(h, 15);
+	cout<<"Brak wierszy po przeniesieniu logow!";
+	SetConsoleTextAttribute(h, 7);
+	cout<<" "<<endl;
+	cout<<"   * "<<endl;
 }
