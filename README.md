@@ -14,4 +14,5 @@ https://github.com/DarXe/Logus/releases/download/v19.7.21/Logus-v19.7.21.exe
 
 > Ustawienia https://github.com/DarXe/Logus/issues/4
 ---
+# Pre
 > Logus v19.7.23-pre https://github.com/DarXe/Logus/raw/master/Logus.exe
