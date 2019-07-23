@@ -8,6 +8,7 @@ https://github.com/DarXe/Logus/releases
 https://github.com/DarXe/Logus/releases/download/v19.7.21/Logus-v19.7.21.exe
 
 # Poradniki
+> Instalacja programu https://github.com/DarXe/Logus/issues/6
 > MENU https://github.com/DarXe/Logus/issues/5
 
 > LiveChat https://github.com/DarXe/Logus/issues/3
