@@ -67,7 +67,7 @@ int main(int argc, char** argv) //maa main
 		}
 	plik.close();
 
-	SetConsoleTitle("Logus 19.8.4");
+	SetConsoleTitle("Logus 19.8.5");
 	srand(time(NULL));
 
 	color(kolorGlowny);
@@ -895,9 +895,25 @@ void liveChat(int &wyswietlaneWiersze) //lc
 					cls(); getChat(iloscLinijek);
 				}
 				break;
-			case 48:
+			case 48: //48? it's funny, because it's 0 :D
 				{
 					trackId = ((trackId)?0:1);
+				}
+				break;
+			case 'v': //save
+				{
+					pos.X=10; pos.Y=0; SetConsoleCursorPosition(h, pos);
+					Beep(dzwiekGlowny, 100);
+					cout<<"ZAPISANO!"; Sleep(500);
+					zapis();
+				}
+				break;
+			case 'r': //read
+				{
+					pos.X=10; pos.Y=0; SetConsoleCursorPosition(h, pos);
+					Beep(dzwiekGlowny, 100);
+					cout<<"WCZYTANO!"; Sleep(500);
+					odczyt();
 				}
 				break;
 			
@@ -1041,6 +1057,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 								error<<"TYPE: PRE\n";
 								error<<"ROWS: "<<iloscLinijek<<"\n";
 								error<<"Refresh: "<<refresh<<"\n";
+								error<<"Temp: "<<temp<<"\n";
 								error<<"Lck: "<<fLockTeam<<fLockPW<<fLockKomunikat<<fLockNick<<chatSound<<"\n";
 								error<<"LAST(9)\n";
 								for (size_t i = 9; i >= 1; i--)
@@ -1103,6 +1120,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 						error<<"TYPE: POST\n";
 						error<<"ROWS: "<<iloscLinijek<<"\n";
 						error<<"Refresh: "<<refresh<<"\n";
+						error<<"Temp: "<<temp<<"\n";
 						error<<"Lck: "<<fLockTeam<<fLockPW<<fLockKomunikat<<fLockNick<<chatSound<<"\n";
 						error<<"LAST(10)\n";
 						for (size_t i = 10; i >= 1; i--)
@@ -1120,7 +1138,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		}//if
 	}//while
 }//liveChat()
-
+void preNews();
 void wersja() //verr ver
 {
 	cout<<endl;
@@ -1130,7 +1148,7 @@ void wersja() //verr ver
 	cout<<" |      Autor      |"<<endl;
 	cout<<" |      DarXe      |"<<endl;
 	cout<<" |_________________|"<<endl;
-	cout<<" |  Wersja 19.8.4  |"<<endl;
+	cout<<" |  Wersja 19.8.5  |"<<endl;
 	Sleep(300); cout<<endl;
 	cout<<" PLANY: "<<endl;
 	cout<<" Kreator wlasnych powiadomien"<<endl;
@@ -1141,47 +1159,12 @@ void wersja() //verr ver
 	Sleep(300); cout<<endl;
 	cout<<" Nie zapomnij zagladnac na githuba - znajdziesz tam informacje o tym-"<<endl;
 	cout<<" -jak korzystac z programu (sa tam opisane wszystkie opcje)"<<endl;
-	cout<<" https://github.com/DarXe/Logus/issues\n"<<endl;
+	cout<<" https://github.com/DarXe/Logus/blob/master/README.md\n"<<endl;
 	Sleep(500); Beep(dzwiekGlowny,150);
 	cout<<" Wcisnij klawisz, aby wyswietlic nowosci"<<endl; getch();
-	cls(); cout<<endl;
-	cout<<" CO NOWEGO?"<<endl;
-	SetConsoleTextAttribute(h, 7);
-	cout<<" PTS TOTOLOTEK - Lotto Logus Beta"<<endl;
-	cout<<" Projekt zostal rozpoczety 16 lipca. Posiada funkcje:"<<endl;
-	cout<<"	* dodania graczy do listy"<<endl;
-	cout<<"	* usunięcia jednego, wszystkich"<<endl;
-	cout<<"	* testowe wypelnienie listy literami"<<endl;
-	cout<<"	* jednorazowego losowania"<<endl;
-	cout<<"	* wielokrotnego obejrzenia replay'u z losowania"<<endl;
-	SetConsoleTextAttribute(h, 10);
-	cout<<" LiveChat: Timestamps - ukrywanie daty i godziny logu"<<endl;
-	cout<<" * Dziala to na podobnej zasadzie co /timestamp na samp"<<endl;
-	cout<<" * Klawisz [Tab] Ukrywa/pokazuje te znaczniki czasu"<<endl;
-	cout<<" LiveChat: Wyswietlanie aktualnej trasy i aktualizowanie jej po rozladunku."<<endl;
-	cout<<" * Magazyny nie zrobia sie puste, jesli rozladowujemy tam skad wczesniej zaladowalismy."<<endl;
-	cout<<" * Jest to opcja dla tych ktorzy jezdza stale trasy. Wystarczy zapamietac ktory rozladunek jest ktory."<<endl;
-	cout<<" Uporzadkowano zmienne \"ostatniaLinia\", stworzenie tablicy"<<endl;
-	cout<<" * to pozwolilo z latwoscia powiekszyc sprawdzanie wierszy do 10 linii-"<<endl;
-	cout<<" * pokazanie sie erroru jest praktycznie niemozliwe"<<endl;
-	cout<<" LiveChat: Automatyczne przenoszenie logow, gdy ich ilosc osiagnie ustalona wartosc(zalecane 500)"<<endl;
-	cout<<" LiveChat: Liczenie i wyswietlanie wyplaty w naglowku LC"<<endl;
-	cout<<" * Nalezy podac % rangi stanowiska oraz F4 (aktualizuje sie po dostarczeniu towaru)"<<endl;
-	cout<<" Do MENU zostala dodana nowa opcja - [Enter] Uruchom MTA i polacz z PTS / Polacz ponownie"<<endl;
-	cout<<" Wcisnij klawisz, aby wyswietlic poprawki"<<endl; getch();
 	cls();
-	cout<<" POPRAWKI"<<endl;
-	cout<<" Naprawiono powiadomienia - nie bylo ich, jesli bylo mniej niz 5(10) wierszy w logu"<<endl;
-	cout<<" * (moment po przeniesieniu logow)"<<endl;
-	cout<<" Naprawiono opoznienia podczas korzystania z LiveChat - opcje wykonywane sa prawie natychmiastowo"<<endl;
-	cout<<" * Przy odswiezaniu 1000ms opcja wykonuje sie po 50ms, po prostu dzielone jest przez 20"<<endl;
-	cout<<" Naprawiono krytyczny blad, po wdrozeniu Timestamps"<<endl;
-	cout<<" * Dodanie funkcji Timestamps spowodowalo, ze jesli plik console.log byl pusty to"<<endl;
-	cout<<" * sprawdzane byly puste linie, teraz sprawdza tyle linii, ile jest w pliku."<<endl;
-	cout<<" * (az osiagnie ilosc ustawionych wyswietlonych wierszy)"<<endl;
-	cout<<" Naprawiono opoznienia odliczania timera. Potrafil mylic sie do 2 sekund na minute."<<endl;
-	cout<<" * Zostaly odjete opoznienia dotyczace czasu algorytmow. Czas teraz odlicza co do 1ms."<<endl;
-	cout<<" Naprawiono zle odczytywanie logow po ich przenoszeniu"<<endl;
+	cout<<" CO NOWEGO?"<<endl;
+	preNews();
 	cout<<endl;
 	cout<<" Wcisnij klawisz, aby wyswietlic MENU"<<endl;
 	getch();
@@ -1276,29 +1259,36 @@ void menuBezPL()
 
 void preNews()
 {
-	cout<<" lottoLogus"<<endl;
-	cout<<" Dodano nowa opcje, dzieki ktorej mozna sprawdzic % szanse wygranej gracza i pustego losu"<<endl;
-	cout<<" Losuje 4 graczy z dodanych graczy i generuje 10000 losowan liczac % szanse dla kazdego gracza"<<endl;
-	cout<<" Lekko zmieniono animacje oraz edytowano napisy w losowaniu, powtorce losowania"<<endl;
+	SetConsoleTextAttribute(h, 7);
+	cout<<" Lotto Logus"<<endl;
+	cout<<" * Dodano nowa opcje, dzieki ktorej mozna sprawdzic % szanse wygranej gracza i pustego losu"<<endl;
+	cout<<" * Losuje 4 nicki z listy dodanych graczy i generuje 10000 losowan liczac % szanse dla kazdego gracza"<<endl;
+	cout<<" * Lekko zmieniono animacje oraz edytowano napisy w losowaniu, powtorce losowania\n"<<endl;
+	SetConsoleTextAttribute(h, 10);
 	cout<<" Zmiany"<<endl;
 	cout<<" Naprawiono wyswietlanie wyplaty, ktora byla na minusie przy zerowym F4."<<endl;
+	cout<<"   * Przy niskim zarobku wyplata bedzie wyswietlana na minusie"<<endl;
 	cout<<" Dodano komunikat. Po przeniesieniu logow w konsoli pojawi sie bialy napis"<<endl;
 	SetConsoleTextAttribute(h, 15);
-	cout<<" Brak wierszy po przeniesieniu logow!";
-	SetConsoleTextAttribute(h, 7);
-	cout<<" Dorobiono prawą scianę do naglówka w LiveChat. Bob budowniczy.. :D"<<endl;
+	cout<<" Brak wierszy po przeniesieniu logow!"<<endl;
+	SetConsoleTextAttribute(h, 10);
+	cout<<" Dorobiono prawą scianę do naglówka w LiveChat."<<endl;
 	cout<<" Zmiana nazwy programu z Logus-v19.x.x na samo Logus"<<endl;
 	cout<<" Od teraz nie trzeba bedzie robic kolejnych skrotow do programu"<<endl;
 	cout<<"   * Wystarczy zrobic to ostatni raz, po tej aktualizacji"<<endl;
 	cout<<"   * Dodatkowo wklejając do logow nową wersje nadpisujemy starą - nie trzeba kasowac"<<endl;
+	SetConsoleTextAttribute(h, 7);
 	cout<<" Porada: Jak szybko zaktualizowac Logusa?"<<endl;
 	cout<<" Jesli nie masz jeszcze skrotu to wykorzystaj ten sposob przy next aktualizacji"<<endl;
 	cout<<"   * Wystarczy miec skrot do Logusa na pulpicie - zaznaczamy ją jednym kliknieciem"<<endl;
 	cout<<"   * wciskamy kombinacje Alt+Enter, a po pojawieniu sie okna kombinacje Alt+T"<<endl;
 	cout<<"   * ii.. jestesmy w katalogu z logami. Wklejamy tutaj pobranego Logusa."<<endl;
 	cout<<" Zoptymalizowano przenoszenie logow ( bez uzycia push_back() )"<<endl;
+	SetConsoleTextAttribute(h, 10);
 	cout<<" Dodano generowanie informacji na temat bledow do pliku logusError.log (tam gdzie Logus)"<<endl;
+	cout<<" Dodano 2 opcje w LiveChat - [v]Zapis [r]Odczyt"<<endl;
+	cout<<"   * Sluzy to do szybkiej edycji ustawien i ich zapisu, bez wychodzienia z LC"<<endl;
+	cout<<"   * Nalezy zapisac [v], dodac recznie ustawienia w logus.ini i pozniej wczytac [r]"<<endl;
 	cout<<" Ciag dalszy poszukiwan problemu z pomijaniem niektorych komunikatow"<<endl;
-	cout<<"   * Jak na razie przesunieto kod w celu najlepszej wydajnosci przy sprawdzaniu"<<endl;
-	cout<<"   * "<<endl;
+	cout<<"   * Jak na razie przenioslem odpowiednio kod w celu najlepszej wydajnosci przy sprawdzaniu"<<endl;
 }

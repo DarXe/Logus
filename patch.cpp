@@ -64,7 +64,8 @@ void zapis(){ //saa save
 }
 
 void odczyt() //re read
-{
+{	
+	int temp;
 	fstream plik;
 	plik.open("logus.ini");
 		for(int i(0); i<6; i++) getline(plik,s_temp);

@@ -404,11 +404,20 @@ void lottoLogusStats(vector <string> &nicknames)
 
         int licznik = 1;
         const int start = 1000;
-		randoms.push_back(losuj(1, nicknames.size()-1));
-		randoms.push_back(losuj(1, nicknames.size()-1));
-		randoms.push_back(losuj(1, nicknames.size()-1));
-		randoms.push_back(losuj(1, nicknames.size()-1));
-		randoms.push_back(6);
+		int los;
+		
+		while(randoms.size()<4)
+		{
+			los = losuj(1, nicknames.size()-1);
+			for (int i : randoms)
+			{
+				if(i == los) los = 0;
+			}
+			if(los%6 != 0 && los)
+				randoms.push_back(los);
+		}
+		randoms.push_back(6); //"pusty los"
+
         float srednia; float Msrednia=0; float msrednia=1000;
         float srednia2; float Msrednia2=0; float msrednia2=1000;
         clock_t t = clock();
