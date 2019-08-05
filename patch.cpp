@@ -142,6 +142,7 @@ void patch() //pat
 		plik>>s_temp>>codePage852;
 		plik>>s_temp>>trackId;
 		plik>>s_temp>>autoMoveLogs;
+		plik>>s_temp>>grade;
 	plik.close();
 
 	plik.open("logus.ini");

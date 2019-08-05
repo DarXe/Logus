@@ -87,68 +87,6 @@ bool fKomunikat(string &linia, bool &ang)
 	}
 }
 
-void salaryForTransport(string &linia, bool &ang)
-{
-	if(ang)
-	{
-		if(linia[gt+19] == '.')
-		{
-			int liczba, mnoz=1000;
-			for(int i = 48; i<52; i++)//57 58 59 60 61 $xxxx
-			{
-				liczba = linia[i];
-				liczba -= 48;
-				money += liczba*mnoz;
-				mnoz /= 10;
-			}
-			courses++;
-			zapis();
-		}
-		else if(linia[gt+18] == '.')
-		{
-			int liczba, mnoz=100;
-			for(int i = 48; i<51; i++)//57 58 59 60 $xxx
-			{
-				liczba = linia[i];
-				liczba -= 48;
-				money += liczba*mnoz;
-				mnoz /= 10;
-			}
-			courses++;
-			zapis();
-		}
-	}
-	else
-	{
-		if(linia[61] == '$')
-		{
-			int liczba, mnoz=1000;
-			for(int i = 57; i<61; i++)//57 58 59 60 61 xxxx$
-			{
-				liczba = linia[i];
-				liczba -= 48;
-				money += liczba*mnoz;
-				mnoz /= 10;
-			}
-			courses++;
-			zapis();
-		}
-		else if(linia[60] == '$')
-		{
-			int liczba, mnoz=100;
-			for(int i = 57; i<60; i++)//57 58 59 60 xxx$
-			{
-				liczba = linia[i];
-				liczba -= 48;
-				money += liczba*mnoz;
-				mnoz /= 10;
-			}
-			courses++;
-			zapis();
-		}
-	}
-}
-
 bool fTransport(string &linia, bool &ang)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
@@ -311,6 +249,182 @@ bool fConsoleInput(string &linia)//fci
 		else return 0;
 	}
 	else return 0;
+}
+
+void cls()
+{
+	system("cls");
+}
+
+void nrPliku(int nr)
+{
+	if(nr != 10)
+	{
+		if(!nr)
+			cout<<">>>>>>>>>>>>>>>>>>>> logus.log <<<<<<<<<<<<<<<<<<<<"<<endl;
+		else
+			cout<<">>>>>>>>>>>>>>>>>>>> Plik nr "<<nr<<" <<<<<<<<<<<<<<<<<<<<"<<endl;
+	}
+}
+
+int all(string &nazwa, int nr)
+{
+	int iloscLinijek = 0;
+	nrPliku(nr);
+
+	fstream plik;
+	plik.open(nazwa.c_str());
+		while(!plik.eof())
+		{
+			getline(plik,linia);
+			iloscLinijek++;
+		}
+	plik.close();
+
+	return iloscLinijek;
+}
+
+int teamsay(string &nazwa, int nr)
+{
+	//randomColor();
+	int iloscLinijek = 0;
+	nrPliku(nr);
+
+	fstream plik;
+	plik.open(nazwa.c_str());
+		while(!plik.eof())
+		{
+			getline(plik,linia);
+			if(fTeam(linia, 1))
+			{
+				cout<<++iloscLinijek<<linia<<endl;
+				if(iloscLinijek%30 == 0)
+				{
+					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					if(getch() == 27)
+					{
+						cls();
+						while(!plik.eof())
+						{
+							getline(plik,linia);
+							if(fTeam(linia, 1)) iloscLinijek++;
+						}
+						break;
+					}
+					cls();
+				}
+			}
+		}
+	plik.close();
+
+	return iloscLinijek;
+}
+
+int pw(string &nazwa, int nr)
+{
+	//randomColor();
+	int iloscLinijek = 0;
+	nrPliku(nr);
+
+	fstream plik;
+	plik.open(nazwa.c_str());
+		while(!plik.eof())
+		{
+			getline(plik,linia);
+			if(fPwOd(linia, ang)||fPwDo(linia))
+			{
+				cout<<++iloscLinijek<<linia<<endl;
+				if(iloscLinijek%30 == 0)
+				{
+					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					if(getch() == 27)
+					{
+						cls();
+						while(!plik.eof())
+						{
+							getline(plik,linia);
+							if(fPwOd(linia, ang)||fPwDo(linia)) iloscLinijek++;
+						}
+						break;
+					}
+					cls();
+				}
+			}
+		}
+	plik.close();
+
+	return iloscLinijek;
+}
+
+int przelewy(string &nazwa, int nr)
+{
+	//randomColor();
+	int iloscLinijek = 0;
+	nrPliku(nr);
+
+	fstream plik;
+	plik.open(nazwa.c_str());
+		while(!plik.eof())
+		{
+			getline(plik,linia);
+			if(fPrzelewyOd(linia, ang)||fPrzelewyDo(linia, ang))
+			{
+				cout<<++iloscLinijek<<linia<<endl;
+				if(iloscLinijek%30 == 0)
+				{
+					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					if(getch() == 27)
+					{
+						cls();
+						while(!plik.eof())
+						{
+							getline(plik,linia);
+							if(fPrzelewyOd(linia, ang)||fPrzelewyDo(linia, ang)) iloscLinijek++;
+						}
+						break;
+					}
+					cls();
+				}
+			}
+		}
+	plik.close();
+
+	return iloscLinijek;
+}
+
+int nickname(string &nazwa, int nr)
+{
+	//randomColor();
+	int iloscLinijek = 0;
+	nrPliku(nr);
+	fstream plik;
+	plik.open(nazwa.c_str());
+		while(!plik.eof())
+		{
+			plik>>linia>>linia>>linia>>linia; //wyrazy
+			if(fNick(linia))
+			{
+				cout<<++iloscLinijek<<linia<<endl;
+				if(iloscLinijek%30 == 0)
+				{
+					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					if(getch() == 27)
+					{
+						cls();
+						while(!plik.eof())
+						{
+							getline(plik,linia);
+							if(fPrzelewyOd(linia, ang)||fPrzelewyDo(linia, ang)) iloscLinijek++;
+						}
+						break;
+					}
+					cls();
+				}
+			}
+		}
+	plik.close();
+
+	return iloscLinijek;
 }
 
 // HANDLE hIcon = LoadImage(NULL, "icon.ico",IMAGE_ICON, 32, 32, LR_LOADFROMFILE);

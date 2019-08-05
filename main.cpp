@@ -25,21 +25,14 @@ using namespace std;
 
 int console();
 void liveChat(int &wyswietlaneWiersze);
-void liveChatBeep(string &ostatniaLinia);
-int all(string &nazwa, int nrPliku);
-int teamsay(string &nazwa, int nrPliku);
-int pw(string &nazwa, int nrPliku);
-int przelewy(string &nazwa, int nrPliku);
-int nickname(string &nazwa, int nrPliku);
-void moveLogs();
 void menu();
 void menuBezPL();
 void wersja();
 
-#include "patch.cpp"
-#include "func.cpp"
-#include "proc.cpp"
-#include "randomLogus.cpp"
+#include "patch.cpp" //save, read, patch
+#include "func.cpp" //functions
+#include "proc.cpp" //procedures
+#include "randomLogus.cpp" //lottoLogus
 
 int main(int argc, char** argv) //maa main
 {
@@ -74,7 +67,7 @@ int main(int argc, char** argv) //maa main
 		}
 	plik.close();
 
-	SetConsoleTitle("Logus 19.7.23-pre");
+	SetConsoleTitle("Logus 19.8.4");
 	srand(time(NULL));
 
 	color(kolorGlowny);
@@ -245,7 +238,6 @@ int console() //con
 			cls();
 			while(true)
 			{
-				Beep(dzwiekGlowny,100);
 				if(menuGlowne)
 				{
 					SetConsoleTextAttribute(h, 10);
@@ -320,6 +312,7 @@ int console() //con
 					cout<<" _____________________________________________________________________"<<endl;
 					cout<<"                         [ESC] Powrót i zapis                         "<<endl;
 				}
+				Beep(dzwiekGlowny,100);
 				
 				wyb = wybor();
 				if(wyb == 27){
@@ -826,163 +819,6 @@ int console() //con
 	return 0;
 }
 
-void liveChatBeep(string &ostatniaLinia) //bee
-{
-	//wiadomość pw
-	if(!fLockPW){
-		if(fPwOd(ostatniaLinia, ang))
-		{
-			Beep(dzwiekGlowny,300);
-			Beep(0,interval);
-			Beep(dzwiekGlowny,300);
-			Beep(0,interval);
-		}
-	}
-
-	//wiadomość teamowa
-	if(!fLockTeam)
-	{
-		if(fTeam(ostatniaLinia, 0))
-		{
-			Beep(dzwiekGlowny,150);
-			Beep(0,interval);
-			Beep(dzwiekGlowny,150);
-			Beep(0,interval);
-		}
-	}
-
-	//dostarczenie towaru, raport z frakcji
-	if(!fLockKomunikat)
-	{
-		if(fTransport(ostatniaLinia, ang)||fKomunikat(ostatniaLinia, ang))
-		{
-			if(fTransport(ostatniaLinia, ang))
-			{
-				salaryForTransport(ostatniaLinia, ang);
-				if(trackId)
-				{
-					if(trackId == 4) trackId = 1;
-					else trackId++;
-				}
-			}
-			Beep(dzwiekGlowny,150);
-			Beep(0,interval);
-			Beep(dzwiekGlowny,150);
-			Beep(0,interval);
-			Beep(dzwiekGlowny,150);
-			Beep(0,interval);
-		}
-	}
-
-	//nick z czatu dodany do ulubionych
-	if(!fLockNick)
-	{
-		if(fNicknames(ostatniaLinia))
-		{
-			Beep(dzwiekGlowny,300);
-			Beep(0,interval);
-		}
-	}
-
-	if(fConsoleInput(ostatniaLinia))
-	{
-		Beep(dzwiekGlowny,100);
-		Beep(0,interval);
-	}
-}
-
-int all(string &nazwa, int nr)
-{
-	int iloscLinijek = 0;
-	nrPliku(nr);
-
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
-		{
-			getline(plik,linia);
-			iloscLinijek++;
-		}
-	plik.close();
-
-	return iloscLinijek;
-}
-
-void getChat(int &iloscLinijek)//gc
-{
-	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
-	SetConsoleTextAttribute(h, 12);
-	cout<<"###############################LiveChat###############################"<<endl;
-	SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-	cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<iloscLinijek-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<endl;
-	if(isTimer)
-	{
-		SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
-		cout<<" Timer "<<timer/1000/60;
-		if((timer/1000)%60<10) cout<<":0"; else cout<<":";
-		cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
-	}
-	else 
-	{
-		SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-		cout<<" [t]Timer                  # F4 ";
-	}
-	if(courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
-	else      cout<<"Dostarczone kursy: "<<courses<<"                                             ";
-	SetConsoleTextAttribute(h, 204); cout<<"\n "; SetConsoleTextAttribute(h, 12);
-	cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<((money)?((money*0.87)-3500)*grade:0);
-	SetConsoleTextAttribute(h, 204);
-	pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); cout<<" ";
-	pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); cout<<" ";
-	pos.X=69; pos.Y=3; SetConsoleCursorPosition(h, pos); cout<<" ";
-	SetConsoleTextAttribute(h, 12);
-	cout<<"\n################################################"<<"#####[m]moveLogs()####"<<endl;
-
-	plik.open("console.log");
-		//pobranie linii, które nie mają być wyświetlone
-		for(int i = 0; i < iloscLinijek-wyswietlaneWiersze-1; i++)
-		{
-			getline(plik, linia);
-		}
-		//bug fix
-		if((iloscLinijek-1)<=wyswietlaneWiersze)
-		{
-			temp2 = wyswietlaneWiersze;
-			wyswietlaneWiersze = iloscLinijek-1;
-		}
-		//wyświetlenie pozostałych linii
-		for(int i = 0; i < wyswietlaneWiersze; i++)
-		{
-			getline(plik, linia);
-			if(fNicknames(linia)||fTransport(linia,ang)||fKomunikat(linia,ang)||fPrzelewyOd(linia,ang)||fPwOd(linia,ang)||fTeam(linia,0))
-			{
-				if(timestamps)
-				{
-					SetConsoleTextAttribute(h, 160); cout<<" "<<linia<<endl;
-				}
-				else
-				{
-					SetConsoleTextAttribute(h, 10); cout<<"# ";
-					SetConsoleTextAttribute(h, 160); cout<<linia.substr(gt)<<endl;
-				}
-			}
-			else
-			{
-				if(timestamps)
-				{
-					SetConsoleTextAttribute(h, 170); cout<<" ";
-					SetConsoleTextAttribute(h, 10); cout<<linia<<endl;
-				}
-				else
-				{
-					SetConsoleTextAttribute(h, 10); cout<<"# "<<linia.substr(gt)<<endl;
-				}
-			}
-		}
-		if((iloscLinijek-1)<=wyswietlaneWiersze) wyswietlaneWiersze = temp2;//bug fix
-	plik.close();
-}
-
 void liveChat(int &wyswietlaneWiersze) //lc
 {
 	if(isTimer) delay = clock();
@@ -1073,15 +909,6 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				break;
 			}
 		}
-		iloscLinijek = 0;
-		//zliczanie linijek w pliku z logami po odstępie czasowym
-		plik.open("console.log");
-		while(!plik.eof())
-		{
-			getline(plik,linia);
-			++iloscLinijek;
-		}
-		plik.close();
 
 		if(isTimer)
 		{
@@ -1132,8 +959,6 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				cout<<"  [t]Timer                     ";
 			}
 		}
-		temp = iloscLinijek-temp; //różnica linijek
-		//jeśli po odczekaniu czasu ilości się różnią to znaczy, że ktoś coś napisał
 
 		//he ad
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
@@ -1165,16 +990,24 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		cout<<"\n################################################"<<"#####[m]moveLogs()####"<<endl;
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 		
-		if(isTimer) timer -= (clock()-delay);
+		iloscLinijek = 0;
+		//zliczanie linijek w pliku z logami po odstępie czasowym
+		plik.open("console.log");
+		while(!plik.eof())
+		{
+			getline(plik,linia);
+			++iloscLinijek;
+		}
+		plik.close();
 
-		if(temp)
+		temp = iloscLinijek-temp; //różnica linijek
+		//jeśli po odczekaniu czasu ilości się różnią to znaczy, że ktoś coś napisał
+
+		if(isTimer) timer -= (clock()-delay);
+		if(temp > 0)
 		{
 			if(isTimer) delay = clock();
-			if(dynamicRefresh && refresh > 500) refresh-=100; //jeśli pojawi się nowa wiadomość to zmniejsz częstotliwość odświeżania o 100ms
-			cls();
 
-			if(chatSound) {Beep(750,50); timer -= 50;} //dzwięk każdej nowej wiadomości czatu
-		   
 			plik.open("console.log");
 				if(iloscLinijek <= 10)
 				{
@@ -1200,7 +1033,23 @@ void liveChat(int &wyswietlaneWiersze) //lc
 						getline(plik, ostatniaLinia[1]);
 						break;
 					default:
-						errors++;
+						{
+							errors++;
+							fstream error;
+							error.open("logusErrors.log", ios::app);
+								error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<endl;
+								error<<"TYPE: PRE\n";
+								error<<"ROWS: "<<iloscLinijek<<"\n";
+								error<<"Refresh: "<<refresh<<"\n";
+								error<<"Lck: "<<fLockTeam<<fLockPW<<fLockKomunikat<<fLockNick<<chatSound<<"\n";
+								error<<"LAST(9)\n";
+								for (size_t i = 9; i >= 1; i--)
+								{
+									error<<i<<". "<<ostatniaLinia[i]<<endl;
+								}
+								cout<<endl;
+							error.close();
+						}
 						break;
 					}
 				}
@@ -1212,7 +1061,10 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				}
 			plik.close();
 
-			getChat(iloscLinijek); //wyswietlenie czatu
+			if(chatSound) {Beep(750,50); timer -= 50;} //dzwięk każdej nowej wiadomości czatu
+			if(dynamicRefresh && refresh > 500) refresh-=100; //jeśli pojawi się nowa wiadomość to zmniejsz częstotliwość odświeżania o 100ms
+
+			cls(); getChat(iloscLinijek); //wyswietlenie czatu
 
 			//19.05.29 rozwinięcie sprawdzania, do 5 ostatnich linii
 			//19.07.04 rozwinięcie sprawdzania, do 10 ostatnich linii
@@ -1243,7 +1095,23 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				liveChatBeep(ostatniaLinia[1]);
 				break;
 			default:
-				if(temp>10) errors++;
+				{
+					errors++;
+					fstream error;
+					error.open("logusErrors.log", ios::app);
+						error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<endl;
+						error<<"TYPE: POST\n";
+						error<<"ROWS: "<<iloscLinijek<<"\n";
+						error<<"Refresh: "<<refresh<<"\n";
+						error<<"Lck: "<<fLockTeam<<fLockPW<<fLockKomunikat<<fLockNick<<chatSound<<"\n";
+						error<<"LAST(10)\n";
+						for (size_t i = 10; i >= 1; i--)
+						{
+							error<<i<<". "<<ostatniaLinia[i]<<endl;
+						}
+						cout<<endl;
+					error.close();
+				}
 				break;
 			}
 			
@@ -1252,174 +1120,6 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		}//if
 	}//while
 }//liveChat()
-
-int teamsay(string &nazwa, int nr)
-{
-	//randomColor();
-	int iloscLinijek = 0;
-	nrPliku(nr);
-
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
-		{
-			getline(plik,linia);
-			if(fTeam(linia, 1))
-			{
-				cout<<++iloscLinijek<<linia<<endl;
-				if(iloscLinijek%30 == 0)
-				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
-					if(getch() == 27)
-					{
-						cls();
-						while(!plik.eof())
-						{
-							getline(plik,linia);
-							if(fTeam(linia, 1)) iloscLinijek++;
-						}
-						break;
-					}
-					cls();
-				}
-			}
-		}
-	plik.close();
-
-	return iloscLinijek;
-}
-
-int pw(string &nazwa, int nr)
-{
-	//randomColor();
-	int iloscLinijek = 0;
-	nrPliku(nr);
-
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
-		{
-			getline(plik,linia);
-			if(fPwOd(linia, ang)||fPwDo(linia))
-			{
-				cout<<++iloscLinijek<<linia<<endl;
-				if(iloscLinijek%30 == 0)
-				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
-					if(getch() == 27)
-					{
-						cls();
-						while(!plik.eof())
-						{
-							getline(plik,linia);
-							if(fPwOd(linia, ang)||fPwDo(linia)) iloscLinijek++;
-						}
-						break;
-					}
-					cls();
-				}
-			}
-		}
-	plik.close();
-
-	return iloscLinijek;
-}
-
-int przelewy(string &nazwa, int nr)
-{
-	//randomColor();
-	int iloscLinijek = 0;
-	nrPliku(nr);
-
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
-		{
-			getline(plik,linia);
-			if(fPrzelewyOd(linia, ang)||fPrzelewyDo(linia, ang))
-			{
-				cout<<++iloscLinijek<<linia<<endl;
-				if(iloscLinijek%30 == 0)
-				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
-					if(getch() == 27)
-					{
-						cls();
-						while(!plik.eof())
-						{
-							getline(plik,linia);
-							if(fPrzelewyOd(linia, ang)||fPrzelewyDo(linia, ang)) iloscLinijek++;
-						}
-						break;
-					}
-					cls();
-				}
-			}
-		}
-	plik.close();
-
-	return iloscLinijek;
-}
-
-int nickname(string &nazwa, int nr)
-{
-	//randomColor();
-	int iloscLinijek = 0;
-	nrPliku(nr);
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
-		{
-			plik>>linia>>linia>>linia>>linia; //wyrazy
-			if(fNick(linia))
-			{
-				cout<<++iloscLinijek<<linia<<endl;
-				if(iloscLinijek%30 == 0)
-				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
-					if(getch() == 27)
-					{
-						cls();
-						while(!plik.eof())
-						{
-							getline(plik,linia);
-							if(fPrzelewyOd(linia, ang)||fPrzelewyDo(linia, ang)) iloscLinijek++;
-						}
-						break;
-					}
-					cls();
-				}
-			}
-		}
-	plik.close();
-
-	return iloscLinijek;
-}
-
-void moveLogs() //clean and move logs from console.log to logus.log
-{
-	vector <string> logs;
-	fstream plik;
-	fstream plik2;
-	plik.open("console.log");
-		while(!plik.eof())
-		{
-			getline(plik, linia);
-			logs.push_back(linia);
-		}
-	plik.close();
-	plik2.open("logus.log", ios::app);
-		for(int i = 0; i<logs.size()-1; i++)
-		{
-			plik2<<logs.at(i)<<endl;
-		}
-	plik2.close();
-	plik.open("console.log", ios::out);
-	plik.close();
-	pos.X=2; pos.Y=5; SetConsoleCursorPosition(h, pos);
-	SetConsoleTextAttribute(h, 15);
-	cout<<"Brak wierszy po przeniesieniu logow!";
-}
 
 void wersja() //verr ver
 {
@@ -1430,7 +1130,7 @@ void wersja() //verr ver
 	cout<<" |      Autor      |"<<endl;
 	cout<<" |      DarXe      |"<<endl;
 	cout<<" |_________________|"<<endl;
-	cout<<" | Wersja 19.7.23p |"<<endl;
+	cout<<" |  Wersja 19.8.4  |"<<endl;
 	Sleep(300); cout<<endl;
 	cout<<" PLANY: "<<endl;
 	cout<<" Kreator wlasnych powiadomien"<<endl;
@@ -1494,7 +1194,7 @@ void menu()
 	cout<<" _______________________________________MENU_______________________________________"<<endl;
 	SetConsoleTextAttribute(h, 11);
 	cout<<" [Enter] Uruchom MTA i połącz z PTS / Połącz ponownie"<<endl;
-	cout<<" [L] PTS TOTOLOTEK - Lotto Logus Beta"<<endl;
+	cout<<" [L] PTS TOTOLOTEK - Lotto Logus"<<endl;
 	SetConsoleTextAttribute(h, 12);
 	cout<<" [s] Szybki start LiveChat + PTS: ";
 	switch (fastStart)
@@ -1537,7 +1237,7 @@ void menuBezPL()
 	cout<<" _______________________________________MENU_______________________________________"<<endl;
 	SetConsoleTextAttribute(h, 11);
 	cout<<" [Enter] Uruchom MTA i polacz z PTS / Polacz ponownie"<<endl;
-	cout<<" [L] PTS TOTOLOTEK - Lotto Logus Beta"<<endl;
+	cout<<" [L] PTS TOTOLOTEK - Lotto Logus"<<endl;
 	SetConsoleTextAttribute(h, 12);
 	cout<<" [s] Szybki start LiveChat + PTS: ";
 	switch (fastStart)
@@ -1576,9 +1276,16 @@ void menuBezPL()
 
 void preNews()
 {
+	cout<<" lottoLogus"<<endl;
+	cout<<" Dodano nowa opcje, dzieki ktorej mozna sprawdzic % szanse wygranej gracza i pustego losu"<<endl;
+	cout<<" Losuje 4 graczy z dodanych graczy i generuje 10000 losowan liczac % szanse dla kazdego gracza"<<endl;
+	cout<<" Lekko zmieniono animacje oraz edytowano napisy w losowaniu, powtorce losowania"<<endl;
 	cout<<" Zmiany"<<endl;
-	cout<<" Naprawiono wyswietlanie wyplaty, ktora byla na minusie przy malym F4."<<endl;
+	cout<<" Naprawiono wyswietlanie wyplaty, ktora byla na minusie przy zerowym F4."<<endl;
 	cout<<" Dodano komunikat. Po przeniesieniu logow w konsoli pojawi sie bialy napis"<<endl;
+	SetConsoleTextAttribute(h, 15);
+	cout<<" Brak wierszy po przeniesieniu logow!";
+	SetConsoleTextAttribute(h, 7);
 	cout<<" Dorobiono prawą scianę do naglówka w LiveChat. Bob budowniczy.. :D"<<endl;
 	cout<<" Zmiana nazwy programu z Logus-v19.x.x na samo Logus"<<endl;
 	cout<<" Od teraz nie trzeba bedzie robic kolejnych skrotow do programu"<<endl;
@@ -1589,9 +1296,9 @@ void preNews()
 	cout<<"   * Wystarczy miec skrot do Logusa na pulpicie - zaznaczamy ją jednym kliknieciem"<<endl;
 	cout<<"   * wciskamy kombinacje Alt+Enter, a po pojawieniu sie okna kombinacje Alt+T"<<endl;
 	cout<<"   * ii.. jestesmy w katalogu z logami. Wklejamy tutaj pobranego Logusa."<<endl;
-	SetConsoleTextAttribute(h, 15);
-	cout<<"Brak wierszy po przeniesieniu logow!";
-	SetConsoleTextAttribute(h, 7);
-	cout<<" "<<endl;
+	cout<<" Zoptymalizowano przenoszenie logow ( bez uzycia push_back() )"<<endl;
+	cout<<" Dodano generowanie informacji na temat bledow do pliku logusError.log (tam gdzie Logus)"<<endl;
+	cout<<" Ciag dalszy poszukiwan problemu z pomijaniem niektorych komunikatow"<<endl;
+	cout<<"   * Jak na razie przesunieto kod w celu najlepszej wydajnosci przy sprawdzaniu"<<endl;
 	cout<<"   * "<<endl;
 }

@@ -1,10 +1,5 @@
 // Copyright (C) 2018-2019  DarXe
 
-int losuj(int od, int doo)
-{
-	return rand()%(doo - od + 1)+od;
-}
-
 int lottoLogus()
 {
 	SetConsoleOutputCP(65001);
@@ -19,12 +14,13 @@ int lottoLogus()
 	{
 		SetConsoleTextAttribute(h, 112);
 		cls();
-		cout<<" ________________________$ Lotto Logus Beta $________________________"<<endl;
+		cout<<" ________________________$ Lotto Logus $________________________"<<endl;
 		cout<<" [1] Dodaj graczy"<<endl;
 		cout<<" [L] Losowanie"<<endl;
 		cout<<" [R] Replay losowania wygranych"<<endl;
+		cout<<" [S] Statystyki, % szansa wygranej"<<endl;
 		cout<<" [Esc] Exit"<<endl;
-		cout<<" ____________________________________________________________________\n"<<endl;
+		cout<<" _______________________________________________________________\n"<<endl;
 		wyb = wybor();
 		SetConsoleTextAttribute(h, 15);
 		switch (wyb)
@@ -34,8 +30,7 @@ int lottoLogus()
 			return 0;
 		case 's':
 		case 'S':
-			//cls();
-			//logusLottoStats(nicknames); //coming soon..
+			lottoLogusStats(nicknames);
 			break;
 
 		case '1':
@@ -150,13 +145,13 @@ int lottoLogus()
 						pos.X=0; pos.Y=3+temp; SetConsoleCursorPosition(h, pos);
 						cout<<" Zapisanych na PTS TOTOLOTEK: "<<nicknames.size()-1-((nicknames.size()-1)/6)<<"                           "<<endl;
 						Sleep(500); cout<<" Pustych losów: "<<(nicknames.size()-1)/6<<endl;
-						Sleep(500); cout<<" Tasowanie uczestników za 5"; Sleep(1000);
-						for(int i(4); i>0; i--)
+						Sleep(500); cout<<" Komora maszyny losującej jest pusta, zwolnienie blokady za ";
+						for(int i(5); i>0; i--)
 						{
-							pos.X=26; pos.Y=5+temp; SetConsoleCursorPosition(h, pos);
+							pos.X=60; pos.Y=5+temp; SetConsoleCursorPosition(h, pos);
 							cout<<i<<" "; Sleep(1000);
 						}
-						pos.X=26; pos.Y=5+temp; SetConsoleCursorPosition(h, pos);
+						pos.X=60; pos.Y=5+temp; SetConsoleCursorPosition(h, pos);
 						cout<<"0 \n\n";
 
 						playersId.push_back(0);
@@ -193,13 +188,19 @@ int lottoLogus()
 								cout<<nick<<"\t";
 								SetConsoleTextAttribute(h, 7);
 							}
-							Sleep(250);
+							Sleep(300);
 						}
 
 						Sleep(500);
 						SetConsoleTextAttribute(h, 15);
-						cout<<"\n\n Losowanie wygranych...\n\n";
-						Sleep(1500);
+						cout<<"\n\n i rozpoczynamy losowanie czterech wygranych";
+						for (size_t i = 0; i < 3; i++)
+						{
+							Sleep(500);
+							cout<<".";
+						}
+						Sleep(1000);
+						cout<<"\n\n";
 
 						//losowanie wygranych, bez powtórzen
 						while(winners.size()<4)
@@ -218,20 +219,20 @@ int lottoLogus()
 
 					SetConsoleTextAttribute(h, 14);
 					cout<<" 1. Miejsce, 60% puli wygrywa:\t ("<<winnersId.at(0)<<") "<<winners.at(0)<<"!\n\n";
-					Sleep(1000);
+					Sleep(1500);
 					SetConsoleTextAttribute(h, 8);
 					cout<<" 2. Miejsce, 25% puli wygrywa:\t ("<<winnersId.at(2)<<") "<<winners.at(1)<<"!\n\n";
-					Sleep(1000);
+					Sleep(1500);
 					SetConsoleTextAttribute(h, 4);
 					cout<<" 3. Miejsce, 15% puli wygrywa:\t ("<<winnersId.at(4)<<") "<<winners.at(2)<<"!\n\n";
-					Sleep(1000);
+					Sleep(1500);
 					SetConsoleTextAttribute(h, 7);
 					cout<<" 4. Miejsce, +1 los gratis:\t ("<<winnersId.at(6)<<") "<<winners.at(3)<<"!\n\n";
-					Sleep(1000);
+					Sleep(500);
 					SetConsoleTextAttribute(h, 15);
 					cout<<" Gratulacje!"<<endl;
+					getch();
 				}
-				getch();
 			}
 			break;
 		
