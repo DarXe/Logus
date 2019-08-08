@@ -15,10 +15,11 @@
 
 #include <iostream>
 #include <fstream>
-#include <time.h>
+#include <ctime>
 #include <conio.h>
 #include <windows.h>
 #include <vector>
+#define q(var) cout<<#var<<"="<<var<<endl //tests
 
 using namespace std;
 #include "var.hpp"
@@ -562,6 +563,8 @@ int console() //con
 						if(getch() == 27) break;
 						money = 0;
 						courses = 0;
+						cls();
+						cout<<"(INFO) Wyzerowano."<<endl;
 						break;
 					}
 					case 'b':
@@ -1073,8 +1076,8 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				else
 				{
 					for(int i = 0; i < iloscLinijek-10; i++) getline(plik, ostatniaLinia[10]);
-					for(int i = 9; i > 0; i--) getline(plik, ostatniaLinia[i]);
-					//przechwycenie ostatnich linii
+					for(int i = 9; i > 0; i--) {getline(plik, ostatniaLinia[i]);}
+					//przechwycenie ostatnich linii!
 				}
 			plik.close();
 
@@ -1086,7 +1089,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			//19.05.29 rozwinięcie sprawdzania, do 5 ostatnich linii
 			//19.07.04 rozwinięcie sprawdzania, do 10 ostatnich linii
 			//zmiana ostatniaLinia1..2..3.. na tablice ostatniaLinia[]
-			//19.07.21 usunięcie pętli, same case'y
+			//19.07.21 usunięcie pętli, same case'y!
 			
 			switch (temp)
 			{

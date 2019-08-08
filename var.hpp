@@ -1,5 +1,9 @@
 // Copyright (C) 2018-2019  DarXe
 
+#ifndef VAR_HPP_INCLUDED
+#define VAR_HPP_INCLUDED
+
+#endif
 //var (ZMIENNE)
 //logus.ini
 string mtasa = "185.62.189.174:22003"; //ip server
