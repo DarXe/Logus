@@ -19,6 +19,9 @@
 #include <conio.h>
 #include <windows.h>
 #include <vector>
+
+
+
 #define q(var) cout<<#var<<"="<<var<<endl //tests
 
 using namespace std;
@@ -33,7 +36,8 @@ void wersja();
 #include "patch.cpp" //save, read, patch
 #include "func.cpp" //functions
 #include "proc.cpp" //procedures
-#include "randomLogus.cpp" //lottoLogus
+#include "randomLogus.hpp"
+//#include "randomLogus.cpp" //lottoLogus
 
 int main(int argc, char** argv) //maa main
 {
