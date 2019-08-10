@@ -5,29 +5,21 @@
 #include <vector>
 #include <ctime>
 #include <fstream>
-#include "randomLogus.hpp"
-
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-COORD pos;
+#include "..\logus.hpp"
+#include "..\randomLogus.hpp"
 
 using namespace std;
-int losuj(int od, int doo)
-{
-	return rand()%(doo - od + 1)+od;
-}
-void cls()
-{
-	system("cls");
-}
-
 int lottoLogus()
 {
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD pos;
 	SetConsoleOutputCP(65001);
 	vector <string> nicknames;
 	vector <string> winners;
 	vector <short> winnersId;
 	vector <short> playersId; //lista do tasowania, losowanie wygranych bez powtorzen
 	string nick = "";
+	char wyb = ' ';
 	int temp(0);
 	
 	while(true)
@@ -270,6 +262,7 @@ int lottoLogus()
 
 void playerList(vector <string> &nicknames)
 {
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	cout<<" _________________________________________PTS TOTOLOTEK - lista zapisanych_________________________________________"<<endl;
 	if(nicknames.empty()) cout<<" Brak graczy";
 	else
@@ -295,7 +288,8 @@ void playerList(vector <string> &nicknames)
 
 void lottoLogusReplay(vector <string> &nicknames, vector <short> &playersId, vector <string> &winners, vector <short> &winnersId)
 {
-	
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD pos;
 	if(winners.empty()) {cout<<"Brak zapisu losowania!\a"; Sleep(500);}
 	else if(nicknames.size() != playersId.size()) {cout<<"Dokonano zmian w liście zapisanych!\a"; Sleep(500);} //fix crash program
 	else
@@ -526,6 +520,8 @@ void lottoLogusStats(vector <string> &nicknames)
 
 void testLos()
 {
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD pos;
 	int temp;
 	int a = 0;
 	int b5=0,b6=0,b7=0,b8=0,b9=0;
@@ -602,6 +598,7 @@ void testLos()
 	}
 	system("pause");
 }
+
 /*
 
 string randomColor()

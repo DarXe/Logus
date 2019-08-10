@@ -251,11 +251,6 @@ bool fConsoleInput(string &linia)//fci
 	else return 0;
 }
 
-void cls()
-{
-	system("cls");
-}
-
 void nrPliku(int nr)
 {
 	if(nr != 10)

@@ -1,17 +1,5 @@
 // Copyright (C) 2018-2019  DarXe
 
-char wybor()
-{
-	cout<<" Wybierz opcje : ";
-	return getch();
-}
-
-void def()
-{
-	cls();
-	cout<<"\a (INFO) Nie ma takiej opcji!"<<endl;
-}
-
 void intError()
 {
 	cerr<<"\n\aERRROR! Podales litere/y!"<<endl;

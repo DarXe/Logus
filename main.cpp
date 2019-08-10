@@ -19,8 +19,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <vector>
-
-
+#include "logus.hpp"
 
 #define q(var) cout<<#var<<"="<<var<<endl //tests
 
@@ -996,7 +995,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			if((timer/1000)%60<10) cout<<":0"; else cout<<":";
 			cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
 		}
-		else 
+		else
 		{
 			SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
 			cout<<" [t]Timer                  # F4 ";
