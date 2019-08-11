@@ -1,4 +1,5 @@
 // Copyright (C) 2018-2019  DarXe
+//#include "..\patch.hpp"
 
 int getVer()
 {
@@ -10,7 +11,8 @@ int getVer()
 	return temp;
 }
 
-void zapis(){ //saa save
+void zapis()
+{ //saa save
 	fstream plik;
 	plik.open("logus.ini", ios::out);
 		plik<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";

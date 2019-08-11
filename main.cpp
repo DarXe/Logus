@@ -20,23 +20,23 @@
 #include <windows.h>
 #include <vector>
 #include "logus.hpp"
+#include "randomLogus.hpp"
+
 
 #define q(var) cout<<#var<<"="<<var<<endl //tests
 
-using namespace std;
-#include "var.hpp"
 
+#include "var.hpp"
+using namespace std;
+#include "patch.cpp"
 int console();
 void liveChat(int &wyswietlaneWiersze);
 void menu();
 void menuBezPL();
 void wersja();
 
-#include "patch.cpp" //save, read, patch
 #include "func.cpp" //functions
 #include "proc.cpp" //procedures
-#include "randomLogus.hpp"
-//#include "randomLogus.cpp" //lottoLogus
 
 int main(int argc, char** argv) //maa main
 {
