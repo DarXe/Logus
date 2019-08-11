@@ -1,3 +1,4 @@
+// Copyright (C) 2018-2019  DarXe
 #include <iostream>
 #include <conio.h>
 #include "..\logus.hpp"

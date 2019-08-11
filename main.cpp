@@ -21,12 +21,14 @@
 #include <vector>
 #include "logus.hpp"
 #include "randomLogus.hpp"
+#include "var.hpp"
+#include "functions.hpp"
 
 
 #define q(var) cout<<#var<<"="<<var<<endl //tests
 
 
-#include "var.hpp"
+
 using namespace std;
 #include "patch.cpp"
 int console();
