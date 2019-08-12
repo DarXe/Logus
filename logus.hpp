@@ -15,4 +15,6 @@ char wybor();
 
 void def();
 
+//void intError();
+
 #endif

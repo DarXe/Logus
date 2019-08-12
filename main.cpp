@@ -22,12 +22,9 @@
 #include "logus.hpp"
 #include "randomLogus.hpp"
 #include "var.hpp"
-#include "functions.hpp"
-
+//#include "functions.hpp"
 
 #define q(var) cout<<#var<<"="<<var<<endl //tests
-
-
 
 using namespace std;
 #include "patch.cpp"
@@ -73,18 +70,18 @@ int main(int argc, char** argv) //maa main
 		}
 	plik.close();
 
-	SetConsoleTitle("Logus 19.8.5");
+	SetConsoleTitle("Logus 19.8.12-pre");
 	srand(time(NULL));
 
 	color(kolorGlowny);
 	if(codePage852)
 	{
-		SetConsoleOutputCP(852); //kodowanie 852
+		SetConsoleOutputCP(852); //code page 852
 		SetConsoleCP(852);
 	}
 	else
 	{
-		SetConsoleOutputCP(65001); //kodowanie utf-8
+		SetConsoleOutputCP(65001); //code page utf-8
 		SetConsoleCP(65001); 
 	}
 
@@ -136,7 +133,7 @@ int console() //con
 			break;
 		}
 
-		switch(wyb) //set0
+		switch(wyb) //set0 MENU
 		{
 		case '1':
 		{
@@ -231,15 +228,15 @@ int console() //con
 			if(isTimer) timer -= (clock()-delay2);
 			liveChat(wyswietlaneWiersze); //run LiveChat
 			break;
-		} //set1    (ustawienia)
+		} 
 		case 'l':
 		case 'L':
 		{
 			cls();
-			lottoLogus();
+			lottoLogus(); //run Lotto Logus
 			break;
 		}
-		case '5':
+		case '5': //set1    SETTINGS one
 		{
 			cls();
 			while(true)
@@ -619,7 +616,7 @@ int console() //con
 							}
 							switch(wyb)
 							{
-								case '1': //set2
+								case '1': //set2 SETTINGS two
 								{
 									cls();
 									while(true)
@@ -847,18 +844,18 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		if(isTimer) delay = clock();
 		
 		iloscLinijek = 0;
-		//zliczanie linijek w pliku z logami
+		//counting lines in a log file
 		plik.open("console.log");
-		while(!plik.eof())
-		{
-			getline(plik,linia);
-			++iloscLinijek;
-		}
+			while(!plik.eof())
+			{
+				getline(plik,linia);
+				++iloscLinijek;
+			}
 		plik.close();
-		//zapisanie informacji w pomocniczej zmiennej i odczekanie czasu
+		//saving information about the number of lines in an auxiliary variable
 		temp = iloscLinijek;
 
-		for(int i(0); i<20; i++) //odczekanie czasu
+		for(int i(0); i<20; i++) //wait time
 		{
 			Sleep(refresh/20);
 			if(kbhit()) break;
@@ -866,6 +863,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 
 		if(dynamicRefresh && refresh<2000 && !kbhit()) refresh+=10;
 
+		//if key pressed
 		if(kbhit())
 		{
 			wyb = getch();
@@ -934,9 +932,10 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			}
 		}
 
+		//timer countdown
 		if(isTimer)
 		{
-			if(timer>0) 
+			if(timer>0)
 			{
 				timer -= (clock()-delay);
 				delay = clock();
@@ -1015,24 +1014,27 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 		
 		iloscLinijek = 0;
-		//zliczanie linijek w pliku z logami po odstępie czasowym
+		//counting lines in a log file after a time interval
 		plik.open("console.log");
-		while(!plik.eof())
-		{
-			getline(plik,linia);
-			++iloscLinijek;
-		}
-		plik.close();
+			while(!plik.eof())
+			{
+				getline(plik,linia);
+				++iloscLinijek;
+			}
+			plik.clear();
+			plik.seekg(ios::beg); //instead of plik.close() and plik.open() go to begin line
+		//plik.close();
 
-		temp = iloscLinijek-temp; //różnica linijek
-		//jeśli po odczekaniu czasu ilości się różnią to znaczy, że ktoś coś napisał
+		temp = iloscLinijek-temp; //difference in the number of lines
+		//if it is different, it means that a new message has appeared
 
 		if(isTimer) timer -= (clock()-delay);
+
 		if(temp > 0)
 		{
 			if(isTimer) delay = clock();
 
-			plik.open("console.log");
+			//plik.open("console.log");
 				if(iloscLinijek <= 10)
 				{
 					switch (iloscLinijek) //bug fix
@@ -1059,6 +1061,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 					default:
 						{
 							errors++;
+							//saving errors
 							fstream error;
 							error.open("logusErrors.log", ios::app);
 								error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<endl;
@@ -1081,21 +1084,17 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				else
 				{
 					for(int i = 0; i < iloscLinijek-10; i++) getline(plik, ostatniaLinia[10]);
+					//capturing last lines
 					for(int i = 9; i > 0; i--) {getline(plik, ostatniaLinia[i]);}
-					//przechwycenie ostatnich linii!
 				}
 			plik.close();
 
-			if(chatSound) {Beep(750,50); timer -= 50;} //dzwięk każdej nowej wiadomości czatu
-			if(dynamicRefresh && refresh > 500) refresh-=100; //jeśli pojawi się nowa wiadomość to zmniejsz częstotliwość odświeżania o 100ms
+			if(chatSound) {Beep(750,50); timer -= 50;} //the sound of each new chat message
+			if(dynamicRefresh && refresh > 500) refresh-=100; //if a new message appears, reduce the refresh rate by 100ms
 
-			cls(); getChat(iloscLinijek); //wyswietlenie czatu
+			cls(); getChat(iloscLinijek); //chat display
 
-			//19.05.29 rozwinięcie sprawdzania, do 5 ostatnich linii
-			//19.07.04 rozwinięcie sprawdzania, do 10 ostatnich linii
-			//zmiana ostatniaLinia1..2..3.. na tablice ostatniaLinia[]
-			//19.07.21 usunięcie pętli, same case'y!
-			
+			//19.07.21 loops removed, only cases
 			switch (temp)
 			{
 			case 10:
@@ -1144,6 +1143,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			if(autoMoveLogs && iloscLinijek > autoMoveLogs) moveLogs();
 			if(isTimer) timer -= (clock()-delay);
 		}//if
+		else plik.close(); //fix
 	}//while
 }//liveChat()
 void preNews();
@@ -1156,7 +1156,7 @@ void wersja() //verr ver
 	cout<<" |      Autor      |"<<endl;
 	cout<<" |      DarXe      |"<<endl;
 	cout<<" |_________________|"<<endl;
-	cout<<" |  Wersja 19.8.5  |"<<endl;
+	cout<<" |Wersja  19.8.12-p|"<<endl;
 	Sleep(300); cout<<endl;
 	cout<<" PLANY: "<<endl;
 	cout<<" Kreator wlasnych powiadomien"<<endl;

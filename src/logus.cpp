@@ -2,6 +2,7 @@
 #include <iostream>
 #include <conio.h>
 #include "..\logus.hpp"
+using namespace std;
 
 int losuj(int od, int doo)
 {
@@ -13,11 +14,11 @@ void cls()
 }
 char wybor()
 {
-	std::cout<<" Wybierz opcje : ";
+	cout<<" Wybierz opcje : ";
 	return getch();
 }
 void def()
 {
 	cls();
-	std::cout<<"\a (INFO) Nie ma takiej opcji!\n";
+	cout<<"\a (INFO) Nie ma takiej opcji!\n";
 }
