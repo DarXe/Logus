@@ -3,209 +3,209 @@
 
 int getVer()
 {
-	fstream plik;
-	plik.open("logus.ini");
-		for(int i(0); i<6; i++) getline(plik,s_temp);
-		plik>>s_temp>>temp;
-	plik.close();
+	fstream file;
+	file.open("logus.ini");
+		for(int i(0); i<6; i++) getline(file,s_temp);
+		file>>s_temp>>temp;
+	file.close();
 	return temp;
 }
 
 void zapis()
 { //saa save
-	fstream plik;
-	plik.open("logus.ini", ios::out);
-		plik<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		plik<<"//Witaj w pliku konfiguracyjnym. Aby ręcznie skonfigurować ustawienia, podmień liczbę na inną.\n";
-		plik<<"//Pomiędzy nazwą ustawienia a wartością musi być odstęp spacji, np. nazwa_ustawienia: wartość.\n";
-		plik<<"//Nie edytuj linii posiadających komentarz '//', w ustawieniach edytuj tylko wartosci\n";
-		plik<<"//0 - fałsz, 1 - prawda, kolory: 1-9, A-F"<<endl;
-		plik<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		plik<<"wersja(nie_edytować): "<<ver<<"\n";
-		plik<<"IP_serwera_MTA: "<<mtasa<<"\n";
-		plik<<"język_ang_na_pts(0/1): "<<ang<<"\n";
-		plik<<"nick_na_pts: "<<nick<<"\n";
-		plik<<"dzwięk_główny: "<<dzwiekGlowny<<"\n";
-		plik<<"kolor_główny: "<<kolorGlowny<<"\n";
-		plik<<"menu_glówne_bez_polskich_znaków(0/1): "<<menuGlowne<<"\n";
-		plik<<"wyświetlane_wiersze: "<<wyswietlaneWiersze<<"\n";
-		plik<<"odświeżanie: "<<refresh<<"\n";
-		plik<<"przerwa_między_dźwiękami: "<<interval<<"\n";
-		plik<<"wyciszenie_komunikatu_team(0/1): "<<fLockTeam<<"\n";
-		plik<<"wyciszenie_komunikatu_pw(0/1): "<<fLockPW<<"\n";
-		plik<<"wyciszenie_komunikatu_raport(0/1): "<<fLockKomunikat<<"\n";
-		plik<<"wyciszenie_komunikatu_nick(0/1): "<<fLockNick<<"\n";
-		plik<<"dźwięk_każdej_nowej_wiadomości_czatu: "<<chatSound<<"\n";
-		plik<<"dynamiczne_odświeżanie: "<<dynamicRefresh<<"\n";
-		plik<<"czas_rozładowywania_towaru: "<<czas<<"\n";
-		plik<<"cel_trasy_skrypt: "<<random<<"\n";
-		plik<<"f4: "<<money<<"\n";
-		plik<<"ilość_kursów: "<<courses<<"\n";
-		plik<<"szybki_start: "<<fastStart<<"\n";
-		plik<<"kodowanie852: "<<codePage852<<"\n";
-		plik<<"trasa: "<<trackId<<"\n";
-		plik<<"automatyczne_przenoszenie_logów: "<<autoMoveLogs<<"\n";
-		plik<<"ranga(50%=0.5): "<<grade<<"\n";
-		plik<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		plik<<"//W tym miejscu znajduje sie lista zapisanych graczy."<<endl;
-		plik<<"//Aby poprawnie dodać gracza przez plik należy ustalić też ilość graczy."<<endl;
-		plik<<"//Zapisana jest ona po napisie 'ilość_graczy: ', po dwukropku musi być spacja."<<endl;
-		plik<<"//Przykład:"<<endl;
-		plik<<"//ilość_graczy: 2"<<endl;
-		plik<<"//1 ASL|DarXe"<<endl;
-		plik<<"//2 MERO4k"<<endl;
-		plik<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		plik<<"Lista zapisanych graczy: "<<endl;
-		plik<<"ilość_graczy: "<<nicknames.size()<<endl;
+	fstream file;
+	file.open("logus.ini", ios::out);
+		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
+		file<<"//Witaj w pliku konfiguracyjnym. Aby ręcznie skonfigurować ustawienia, podmień liczbę na inną.\n";
+		file<<"//Pomiędzy nazwą ustawienia a wartością musi być odstęp spacji, np. nazwa_ustawienia: wartość.\n";
+		file<<"//Nie edytuj linii posiadających komentarz '//', w ustawieniach edytuj tylko wartosci\n";
+		file<<"//0 - fałsz, 1 - prawda, kolory: 1-9, A-F"<<endl;
+		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
+		file<<"wersja(nie_edytować): "<<ver<<"\n";
+		file<<"IP_serwera_MTA: "<<mtasa<<"\n";
+		file<<"język_ang_na_pts(0/1): "<<ang<<"\n";
+		file<<"nick_na_pts: "<<nick<<"\n";
+		file<<"dzwięk_główny: "<<dzwiekGlowny<<"\n";
+		file<<"kolor_główny: "<<kolorGlowny<<"\n";
+		file<<"menu_glówne_bez_polskich_znaków(0/1): "<<menuGlowne<<"\n";
+		file<<"wyświetlane_wiersze: "<<wyswietlaneWiersze<<"\n";
+		file<<"odświeżanie: "<<refresh<<"\n";
+		file<<"przerwa_między_dźwiękami: "<<interval<<"\n";
+		file<<"wyciszenie_komunikatu_team(0/1): "<<fLockTeam<<"\n";
+		file<<"wyciszenie_komunikatu_pw(0/1): "<<fLockPW<<"\n";
+		file<<"wyciszenie_komunikatu_raport(0/1): "<<fLockKomunikat<<"\n";
+		file<<"wyciszenie_komunikatu_nick(0/1): "<<fLockNick<<"\n";
+		file<<"dźwięk_każdej_nowej_wiadomości_czatu: "<<chatSound<<"\n";
+		file<<"dynamiczne_odświeżanie: "<<dynamicRefresh<<"\n";
+		file<<"czas_rozładowywania_towaru: "<<czas<<"\n";
+		file<<"cel_trasy_skrypt: "<<random<<"\n";
+		file<<"f4: "<<money<<"\n";
+		file<<"ilość_kursów: "<<courses<<"\n";
+		file<<"szybki_start: "<<fastStart<<"\n";
+		file<<"kodowanie852: "<<codePage852<<"\n";
+		file<<"trasa: "<<trackId<<"\n";
+		file<<"automatyczne_przenoszenie_logów: "<<autoMoveLogs<<"\n";
+		file<<"ranga(50%=0.5): "<<grade<<"\n";
+		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
+		file<<"//W tym miejscu znajduje sie lista zapisanych graczy."<<endl;
+		file<<"//Aby poprawnie dodać gracza przez plik należy ustalić też ilość graczy."<<endl;
+		file<<"//Zapisana jest ona po napisie 'ilość_graczy: ', po dwukropku musi być spacja."<<endl;
+		file<<"//Przykład:"<<endl;
+		file<<"//ilość_graczy: 2"<<endl;
+		file<<"//1 ASL|DarXe"<<endl;
+		file<<"//2 MERO4k"<<endl;
+		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
+		file<<"Lista zapisanych graczy: "<<endl;
+		file<<"ilość_graczy: "<<nicknames.size()<<endl;
 		for(int i = 0; i < nicknames.size(); i++)
 		{
-			plik<<i+1<<" "<<nicknames.at(i)<<endl;
+			file<<i+1<<" "<<nicknames.at(i)<<endl;
 		}
-	plik.close();
+	file.close();
 	cout<<"(INFO) Ustawienia zostaly zapisane."<<endl;
 }
 
 void odczyt() //re read
 {	
 	int temp;
-	fstream plik;
-	plik.open("logus.ini");
-		for(int i(0); i<6; i++) getline(plik,s_temp);
-		plik>>s_temp>>temp;
-		plik>>s_temp>>mtasa;
-		plik>>s_temp>>ang;
-		plik>>s_temp>>nick;
-		plik>>s_temp>>dzwiekGlowny;
-		plik>>s_temp>>kolorGlowny;
-		plik>>s_temp>>menuGlowne;
-		plik>>s_temp>>wyswietlaneWiersze;
-		plik>>s_temp>>refresh;
-		plik>>s_temp>>interval;
-		plik>>s_temp>>fLockTeam;
-		plik>>s_temp>>fLockPW;
-		plik>>s_temp>>fLockKomunikat;
-		plik>>s_temp>>fLockNick;
-		plik>>s_temp>>chatSound;
-		plik>>s_temp>>dynamicRefresh;
-		plik>>s_temp>>czas;
-		plik>>s_temp>>random;
-		plik>>s_temp>>money;
-		plik>>s_temp>>courses;
-		plik>>s_temp>>fastStart;
-		plik>>s_temp>>codePage852;
-		plik>>s_temp>>trackId;
-		plik>>s_temp>>autoMoveLogs;
-		plik>>s_temp>>grade;
-	plik.close();
+	fstream file;
+	file.open("logus.ini");
+		for(int i(0); i<6; i++) getline(file,s_temp);
+		file>>s_temp>>temp;
+		file>>s_temp>>mtasa;
+		file>>s_temp>>ang;
+		file>>s_temp>>nick;
+		file>>s_temp>>dzwiekGlowny;
+		file>>s_temp>>kolorGlowny;
+		file>>s_temp>>menuGlowne;
+		file>>s_temp>>wyswietlaneWiersze;
+		file>>s_temp>>refresh;
+		file>>s_temp>>interval;
+		file>>s_temp>>fLockTeam;
+		file>>s_temp>>fLockPW;
+		file>>s_temp>>fLockKomunikat;
+		file>>s_temp>>fLockNick;
+		file>>s_temp>>chatSound;
+		file>>s_temp>>dynamicRefresh;
+		file>>s_temp>>czas;
+		file>>s_temp>>random;
+		file>>s_temp>>money;
+		file>>s_temp>>courses;
+		file>>s_temp>>fastStart;
+		file>>s_temp>>codePage852;
+		file>>s_temp>>trackId;
+		file>>s_temp>>autoMoveLogs;
+		file>>s_temp>>grade;
+	file.close();
 
-	plik.open("logus.ini");
+	file.open("logus.ini");
 		do //naprawa błędu po aktualizacji (błędne wczytanie z listy Nicknames)
 		{
-			getline(plik,s_temp);
+			getline(file,s_temp);
 		} while (s_temp[0]!='L');
 		
-		plik>>s_temp;
-		plik>>leng;
+		file>>s_temp;
+		file>>leng;
 		nicknames.clear();
 		for(int i = 0; i < leng; i++)
 		{
-			plik>>temp>>s_temp;
+			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
 		cout<<"(INFO) Wczytano ustawienia."<<endl;
-	plik.close();
+	file.close();
 }
 
 void patch() //pat
 {
-	fstream plik;
-	plik.open("logus.ini");
-		for(int i(0); i<6; i++) getline(plik,s_temp);
-		plik>>s_temp>>temp;
-		plik>>s_temp>>mtasa;
-		plik>>s_temp>>ang;
-		plik>>s_temp>>nick;
-		plik>>s_temp>>dzwiekGlowny;
-		plik>>s_temp>>kolorGlowny;
-		plik>>s_temp>>menuGlowne;
-		plik>>s_temp>>wyswietlaneWiersze;
-		plik>>s_temp>>refresh;
-		plik>>s_temp>>interval;
-		plik>>s_temp>>fLockTeam;
-		plik>>s_temp>>fLockPW;
-		plik>>s_temp>>fLockKomunikat;
-		plik>>s_temp>>fLockNick;
-		plik>>s_temp>>chatSound;
-		plik>>s_temp>>dynamicRefresh;
-		plik>>s_temp>>czas;
-		plik>>s_temp>>random;
-		plik>>s_temp>>money;
-		plik>>s_temp>>courses;
-		plik>>s_temp>>fastStart;
-		plik>>s_temp>>codePage852;
-		plik>>s_temp>>trackId;
-		plik>>s_temp>>autoMoveLogs;
-		plik>>s_temp>>grade;
-	plik.close();
+	fstream file;
+	file.open("logus.ini");
+		for(int i(0); i<6; i++) getline(file,s_temp);
+		file>>s_temp>>temp;
+		file>>s_temp>>mtasa;
+		file>>s_temp>>ang;
+		file>>s_temp>>nick;
+		file>>s_temp>>dzwiekGlowny;
+		file>>s_temp>>kolorGlowny;
+		file>>s_temp>>menuGlowne;
+		file>>s_temp>>wyswietlaneWiersze;
+		file>>s_temp>>refresh;
+		file>>s_temp>>interval;
+		file>>s_temp>>fLockTeam;
+		file>>s_temp>>fLockPW;
+		file>>s_temp>>fLockKomunikat;
+		file>>s_temp>>fLockNick;
+		file>>s_temp>>chatSound;
+		file>>s_temp>>dynamicRefresh;
+		file>>s_temp>>czas;
+		file>>s_temp>>random;
+		file>>s_temp>>money;
+		file>>s_temp>>courses;
+		file>>s_temp>>fastStart;
+		file>>s_temp>>codePage852;
+		file>>s_temp>>trackId;
+		file>>s_temp>>autoMoveLogs;
+		file>>s_temp>>grade;
+	file.close();
 
-	plik.open("logus.ini");
+	file.open("logus.ini");
 		do 
 		{
-			getline(plik,s_temp);
+			getline(file,s_temp);
 		} while (s_temp[0]!='L');
 		
-		plik>>s_temp;
-		plik>>leng;
+		file>>s_temp;
+		file>>leng;
 		nicknames.clear();
 		for(int i = 0; i < leng; i++)
 		{
-			plik>>temp>>s_temp;
+			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
 		cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<"."<<endl;
-	plik.close();
+	file.close();
 	zapis();
 }
 
 void patch_190622()
 {
-	fstream plik;
-	plik.open("logus.ini");
-		for(int i(0); i<6; i++) getline(plik,s_temp);
-		plik>>s_temp>>ang;
-		plik>>s_temp>>nick;
-		plik>>s_temp>>dzwiekGlowny;
-		plik>>s_temp>>kolorGlowny;
-		plik>>s_temp>>menuGlowne;
-		plik>>s_temp>>wyswietlaneWiersze;
-		plik>>s_temp>>refresh;
-		plik>>s_temp>>interval;
-		plik>>s_temp>>fLockTeam;
-		plik>>s_temp>>fLockPW;
-		plik>>s_temp>>fLockKomunikat;
-		plik>>s_temp>>fLockNick;
-		plik>>s_temp>>chatSound;
-		plik>>s_temp>>dynamicRefresh;
-		plik>>s_temp>>czas;
-		plik>>s_temp>>random;
-	plik.close();
+	fstream file;
+	file.open("logus.ini");
+		for(int i(0); i<6; i++) getline(file,s_temp);
+		file>>s_temp>>ang;
+		file>>s_temp>>nick;
+		file>>s_temp>>dzwiekGlowny;
+		file>>s_temp>>kolorGlowny;
+		file>>s_temp>>menuGlowne;
+		file>>s_temp>>wyswietlaneWiersze;
+		file>>s_temp>>refresh;
+		file>>s_temp>>interval;
+		file>>s_temp>>fLockTeam;
+		file>>s_temp>>fLockPW;
+		file>>s_temp>>fLockKomunikat;
+		file>>s_temp>>fLockNick;
+		file>>s_temp>>chatSound;
+		file>>s_temp>>dynamicRefresh;
+		file>>s_temp>>czas;
+		file>>s_temp>>random;
+	file.close();
 
-	plik.open("logus.ini");
+	file.open("logus.ini");
 		do 
 		{
-			getline(plik,s_temp);
+			getline(file,s_temp);
 		} while (s_temp[0]!='L');
 		
-		plik>>s_temp;
-		plik>>leng;
+		file>>s_temp;
+		file>>leng;
 		nicknames.clear();
 		for(int i = 0; i < leng; i++)
 		{
-			plik>>temp>>s_temp;
+			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
 		cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji 190622."<<endl;
-	plik.close();
+	file.close();
 	zapis();
 }
 

@@ -39,9 +39,9 @@ void wersja();
 
 int main(int argc, char** argv) //maa main
 {
-	fstream plik;
-	plik.open("console.log");
-		while(!plik.good())
+	fstream file;
+	file.open("console.log");
+		while(!file.good())
 		{
 			Beep(dzwiekGlowny,125);
 			Beep(0,interval);
@@ -56,10 +56,10 @@ int main(int argc, char** argv) //maa main
 			cout<<"Dowolny klawisz - zamknij okno\n"<<endl;
 			if(kbhit()) return 0;
 		}
-	plik.close();
+	file.close();
 
-	plik.open("logus.ini");
-		if(plik.good())
+	file.open("logus.ini");
+		if(file.good())
 		{
 			if(getVer()<190622) patch_190622();
 			else if(getVer() != ver) patch(); else odczyt();
@@ -68,7 +68,7 @@ int main(int argc, char** argv) //maa main
 		{
 			zapis();
 		}
-	plik.close();
+	file.close();
 
 	SetConsoleTitle("Logus 19.8.12-pre");
 	srand(time(NULL));
@@ -109,6 +109,8 @@ int main(int argc, char** argv) //maa main
 
 int console() //con
 {
+	int lineCount = 0;
+	int lineCountAll = 0;
 	while(true)
 	{
 		if(isTimer) delay2 = clock();
@@ -150,75 +152,75 @@ int console() //con
 		case '3':
 		{
 			cls();
-			iloscLinijek = 0;
-			iloscLinijekAll = 0;
-			iloscLinijekAll+=teamsay(f,6);
-			iloscLinijekAll+=teamsay(e,5);
-			iloscLinijekAll+=teamsay(d,4);
-			iloscLinijekAll+=teamsay(c,3);
-			iloscLinijekAll+=teamsay(b,2);
-			iloscLinijekAll+=teamsay(a,1);
-			iloscLinijek=teamsay(L,0);
-			cout<<"Wierszy w plikach MTA: "<<iloscLinijekAll<<endl;
-			cout<<"Wierszy w logus.log: "<<iloscLinijek<<endl;
+			lineCount = 0;
+			lineCountAll = 0;
+			lineCountAll+=teamsay(f,6);
+			lineCountAll+=teamsay(e,5);
+			lineCountAll+=teamsay(d,4);
+			lineCountAll+=teamsay(c,3);
+			lineCountAll+=teamsay(b,2);
+			lineCountAll+=teamsay(a,1);
+			lineCount=teamsay(L,0);
+			cout<<"Wierszy w plikach MTA: "<<lineCountAll<<endl;
+			cout<<"Wierszy w logus.log: "<<lineCount<<endl;
 			break;
 		}
 
 		case '4':
 		{
 			cls();
-			iloscLinijek = 0;
-			iloscLinijekAll = 0;
-			iloscLinijekAll+=pw(f,6);
-			iloscLinijekAll+=pw(e,5);
-			iloscLinijekAll+=pw(d,4);
-			iloscLinijekAll+=pw(c,3);
-			iloscLinijekAll+=pw(b,2);
-			iloscLinijekAll+=pw(a,1);
-			iloscLinijek=pw(L,0);
-			cout<<"Wierszy w plikach MTA: "<<iloscLinijekAll<<endl;
-			cout<<"Wierszy w logus.log: "<<iloscLinijek<<endl;
+			lineCount = 0;
+			lineCountAll = 0;
+			lineCountAll+=pw(f,6);
+			lineCountAll+=pw(e,5);
+			lineCountAll+=pw(d,4);
+			lineCountAll+=pw(c,3);
+			lineCountAll+=pw(b,2);
+			lineCountAll+=pw(a,1);
+			lineCount=pw(L,0);
+			cout<<"Wierszy w plikach MTA: "<<lineCountAll<<endl;
+			cout<<"Wierszy w logus.log: "<<lineCount<<endl;
 			break;
 		}
 		case 'p':
 		{
 			cls();
-			iloscLinijekAll = 0;
-			iloscLinijekAll+=przelewy(f,6);
-			iloscLinijekAll+=przelewy(e,5);
-			iloscLinijekAll+=przelewy(d,4);
-			iloscLinijekAll+=przelewy(c,3);
-			iloscLinijekAll+=przelewy(b,2);
-			iloscLinijekAll+=przelewy(a,1);
-			iloscLinijekAll+=przelewy(L,0);
-			cout<<"Wierszy: "<<iloscLinijekAll<<endl;
+			lineCountAll = 0;
+			lineCountAll+=przelewy(f,6);
+			lineCountAll+=przelewy(e,5);
+			lineCountAll+=przelewy(d,4);
+			lineCountAll+=przelewy(c,3);
+			lineCountAll+=przelewy(b,2);
+			lineCountAll+=przelewy(a,1);
+			lineCountAll+=przelewy(L,0);
+			cout<<"Wierszy: "<<lineCountAll<<endl;
 			break;
 		}
 		case 'n':
 		{
 			cls();
-			iloscLinijekAll = 0;
-			iloscLinijek = 0;
-			iloscLinijek=all(f,6);
-			iloscLinijekAll+=iloscLinijek;
-			cout<<"Wierszy: "<<iloscLinijek<<endl;
-			iloscLinijek=all(e,5);
-			iloscLinijekAll+=iloscLinijek;
-			cout<<"Wierszy: "<<iloscLinijek<<endl;
-			iloscLinijek=all(d,4);
-			iloscLinijekAll+=iloscLinijek;
-			cout<<"Wierszy: "<<iloscLinijek<<endl;
-			iloscLinijek=all(c,3);
-			iloscLinijekAll+=iloscLinijek;
-			cout<<"Wierszy: "<<iloscLinijek<<endl;
-			iloscLinijek=all(b,2);
-			iloscLinijekAll+=iloscLinijek;
-			cout<<"Wierszy: "<<iloscLinijek<<endl;
-			iloscLinijek=all(a,1);
-			iloscLinijekAll+=iloscLinijek;
-			cout<<"Wierszy: "<<iloscLinijek<<endl;
+			lineCountAll = 0;
+			lineCount = 0;
+			lineCount=all(f,6);
+			lineCountAll+=lineCount;
+			cout<<"Wierszy: "<<lineCount<<endl;
+			lineCount=all(e,5);
+			lineCountAll+=lineCount;
+			cout<<"Wierszy: "<<lineCount<<endl;
+			lineCount=all(d,4);
+			lineCountAll+=lineCount;
+			cout<<"Wierszy: "<<lineCount<<endl;
+			lineCount=all(c,3);
+			lineCountAll+=lineCount;
+			cout<<"Wierszy: "<<lineCount<<endl;
+			lineCount=all(b,2);
+			lineCountAll+=lineCount;
+			cout<<"Wierszy: "<<lineCount<<endl;
+			lineCount=all(a,1);
+			lineCountAll+=lineCount;
+			cout<<"Wierszy: "<<lineCount<<endl;
 			cout<<endl;
-			cout<<"Wierszy we wszystkich plikach MTA: "<<iloscLinijekAll<<endl;
+			cout<<"Wierszy we wszystkich plikach MTA: "<<lineCountAll<<endl;
 			cout<<"Ilosc wierszy w logus.log: "<<all(L,10)<<endl;
 			break;
 		}
@@ -826,34 +828,40 @@ int console() //con
 
 void liveChat(int &wyswietlaneWiersze) //lc
 {
+	string ostatniaLinia[11]; //ostatnie linie
+	
+	
+	int lineCount = 0;
+	fstream file;
+	string line;
+
 	if(isTimer) delay = clock();
 
-	iloscLinijek = 0;
-	plik.open("console.log");
-		while(!plik.eof())
+	file.open("console.log");
+		while(!file.eof())
 		{
-			getline(plik,linia);
-			++iloscLinijek;
+			getline(file,line);
+			++lineCount;
 		}
-		plik.close();
-	getChat(iloscLinijek);
+		file.close();
+	getChat(lineCount);
 
 	if(isTimer) timer -= (clock()-delay);
 	while(true)
 	{   
 		if(isTimer) delay = clock();
 		
-		iloscLinijek = 0;
+		lineCount = 0;
 		//counting lines in a log file
-		plik.open("console.log");
-			while(!plik.eof())
+		file.open("console.log");
+			while(!file.eof())
 			{
-				getline(plik,linia);
-				++iloscLinijek;
+				getline(file,line);
+				++lineCount;
 			}
-		plik.close();
+		file.close();
 		//saving information about the number of lines in an auxiliary variable
-		temp = iloscLinijek;
+		temp = lineCount;
 
 		for(int i(0); i<20; i++) //wait time
 		{
@@ -890,7 +898,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				{
 					cls();
 					cout<<"CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda"<<endl;
-					if(getch() == 27) {getChat(iloscLinijek); break;}
+					if(getch() == 27) {getChat(lineCount); break;}
 					moveLogs();
 				}
 				break;
@@ -898,7 +906,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				{
 					timestamps = ((timestamps)?0:1);
 					pos.X=0; pos.Y=4; SetConsoleCursorPosition(h, pos);
-					cls(); getChat(iloscLinijek);
+					cls(); getChat(lineCount);
 				}
 				break;
 			case 48: //48? it's funny, because it's 0 :D
@@ -926,7 +934,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			default:
 				{
 					def();
-					getChat(iloscLinijek);
+					getChat(lineCount);
 				}
 				break;
 			}
@@ -988,7 +996,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		SetConsoleTextAttribute(h, 12);
 		cout<<"###############################LiveChat###############################"<<endl;
 		SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-		cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<iloscLinijek-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<endl;
+		cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lineCount-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<endl;
 		if(isTimer)
 		{
 			SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
@@ -1013,19 +1021,19 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		cout<<"\n################################################"<<"#####[m]moveLogs()####"<<endl;
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 		
-		iloscLinijek = 0;
+		lineCount = 0;
 		//counting lines in a log file after a time interval
-		plik.open("console.log");
-			while(!plik.eof())
+		file.open("console.log");
+			while(!file.eof())
 			{
-				getline(plik,linia);
-				++iloscLinijek;
+				getline(file,line);
+				++lineCount;
 			}
-			plik.clear();
-			plik.seekg(ios::beg); //instead of plik.close() and plik.open() go to begin line
-		//plik.close();
+			file.clear();
+			file.seekg(ios::beg); //instead of file.close() and file.open() go to begin line
+		//file.close();
 
-		temp = iloscLinijek-temp; //difference in the number of lines
+		temp = lineCount-temp; //difference in the number of lines
 		//if it is different, it means that a new message has appeared
 
 		if(isTimer) timer -= (clock()-delay);
@@ -1034,29 +1042,29 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		{
 			if(isTimer) delay = clock();
 
-			//plik.open("console.log");
-				if(iloscLinijek <= 10)
+			//file.open("console.log");
+				if(lineCount <= 10)
 				{
-					switch (iloscLinijek) //bug fix
+					switch (lineCount) //bug fix
 					{
 					case 10:
-						getline(plik, ostatniaLinia[9]);
+						getline(file, ostatniaLinia[9]);
 					case 9:
-						getline(plik, ostatniaLinia[8]);
+						getline(file, ostatniaLinia[8]);
 					case 8:
-						getline(plik, ostatniaLinia[7]);
+						getline(file, ostatniaLinia[7]);
 					case 7:
-						getline(plik, ostatniaLinia[6]);
+						getline(file, ostatniaLinia[6]);
 					case 6:
-						getline(plik, ostatniaLinia[5]);
+						getline(file, ostatniaLinia[5]);
 					case 5:
-						getline(plik, ostatniaLinia[4]);
+						getline(file, ostatniaLinia[4]);
 					case 4:
-						getline(plik, ostatniaLinia[3]);
+						getline(file, ostatniaLinia[3]);
 					case 3:
-						getline(plik, ostatniaLinia[2]);
+						getline(file, ostatniaLinia[2]);
 					case 2:
-						getline(plik, ostatniaLinia[1]);
+						getline(file, ostatniaLinia[1]);
 						break;
 					default:
 						{
@@ -1066,7 +1074,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 							error.open("logusErrors.log", ios::app);
 								error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<endl;
 								error<<"TYPE: PRE\n";
-								error<<"ROWS: "<<iloscLinijek<<"\n";
+								error<<"ROWS: "<<lineCount<<"\n";
 								error<<"Refresh: "<<refresh<<"\n";
 								error<<"Temp: "<<temp<<"\n";
 								error<<"Lck: "<<fLockTeam<<fLockPW<<fLockKomunikat<<fLockNick<<chatSound<<"\n";
@@ -1083,16 +1091,16 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				}
 				else
 				{
-					for(int i = 0; i < iloscLinijek-10; i++) getline(plik, ostatniaLinia[10]);
+					for(int i = 0; i < lineCount-10; i++) getline(file, ostatniaLinia[10]);
 					//capturing last lines
-					for(int i = 9; i > 0; i--) {getline(plik, ostatniaLinia[i]);}
+					for(int i = 9; i > 0; i--) {getline(file, ostatniaLinia[i]);}
 				}
-			plik.close();
+			file.close();
 
 			if(chatSound) {Beep(750,50); timer -= 50;} //the sound of each new chat message
 			if(dynamicRefresh && refresh > 500) refresh-=100; //if a new message appears, reduce the refresh rate by 100ms
 
-			cls(); getChat(iloscLinijek); //chat display
+			cls(); getChat(lineCount); //chat display
 
 			//19.07.21 loops removed, only cases
 			switch (temp)
@@ -1125,7 +1133,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 					error.open("logusErrors.log", ios::app);
 						error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<endl;
 						error<<"TYPE: POST\n";
-						error<<"ROWS: "<<iloscLinijek<<"\n";
+						error<<"ROWS: "<<lineCount<<"\n";
 						error<<"Refresh: "<<refresh<<"\n";
 						error<<"Temp: "<<temp<<"\n";
 						error<<"Lck: "<<fLockTeam<<fLockPW<<fLockKomunikat<<fLockNick<<chatSound<<"\n";
@@ -1140,10 +1148,10 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				break;
 			}
 			
-			if(autoMoveLogs && iloscLinijek > autoMoveLogs) moveLogs();
+			if(autoMoveLogs && lineCount > autoMoveLogs) moveLogs();
 			if(isTimer) timer -= (clock()-delay);
 		}//if
-		else plik.close(); //fix
+		else file.close(); //fix
 	}//while
 }//liveChat()
 void preNews();

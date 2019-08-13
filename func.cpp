@@ -2,120 +2,120 @@
 
 //func
 //(team) [pts]nick
-bool fTeam(string &linia, bool e)
+bool fTeam(string &line, bool e)
 {
 	leng = nick.length();
-	if(linia[gt]=='('&&linia[gt+1]=='T'&&linia[gt+2]=='E'&&linia[gt+3]=='A'&&linia[gt+4]=='M')
+	if(line[gt]=='('&&line[gt+1]=='T'&&line[gt+2]=='E'&&line[gt+3]=='A'&&line[gt+4]=='M')
 	{
 		if(e) return 1;
-		if(linia[gt+6+leng]!=nick[leng-1]||linia[gt+5+leng]!=nick[leng-2]||linia[gt+4+leng]!=nick[leng-3])
+		if(line[gt+6+leng]!=nick[leng-1]||line[gt+5+leng]!=nick[leng-2]||line[gt+4+leng]!=nick[leng-3])
 			return 1;
 		else return 0;
 	}
 	else return 0;
 }
 
-bool fPwOd(string &linia, bool &ang)
+bool fPwOd(string &line, bool &ang)
 {
 	if(ang)
 	{
-		if(linia[gt]=='*'&&linia[gt+2]=='P'&&linia[gt+3]=='M')
+		if(line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='M')
 			return 1;
 		else return 0;
 	}
 	else
 	{
-		if(linia[gt]=='*'&&linia[gt+2]=='P'&&linia[gt+3]=='W')
+		if(line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='W')
 			return 1;
 		else return 0;
 	}
 }
 
-bool fPwDo(string &linia)
+bool fPwDo(string &line)
 {
-	if(linia[gt]=='-'&&linia[gt+1]=='>')
+	if(line[gt]=='-'&&line[gt+1]=='>')
 		return 1;
 	else return 0;
 }
 
-bool fPrzelewyOd(string &linia, bool &ang)
+bool fPrzelewyOd(string &line, bool &ang)
 {
-	leng = linia.length();
+	leng = line.length();
 	if(ang)
 	{
-		if(linia[gt]=='P'&&linia[gt+1]=='l'&&linia[gt+2]=='a'&&linia[gt+3]=='y'&&linia[gt+4]=='e'&&linia[gt+6]==' '&&linia[leng-2]!='d'&&linia[leng-1]=='.'&&(linia[leng-3]!=' '&&linia[leng-5]!='e'))
+		if(line[gt]=='P'&&line[gt+1]=='l'&&line[gt+2]=='a'&&line[gt+3]=='y'&&line[gt+4]=='e'&&line[gt+6]==' '&&line[leng-2]!='d'&&line[leng-1]=='.'&&(line[leng-3]!=' '&&line[leng-5]!='e'))
 			return 1;
 		else return 0;
 	}
 	else
 	{
-		if(linia[gt]=='G'&&linia[gt+1]=='r'&&linia[gt+2]=='a'&&linia[gt+3]=='c'&&linia[gt+4]=='z'&&linia[gt+5]==' '&&linia[leng-2]=='$'&&linia[leng-1]=='.')
+		if(line[gt]=='G'&&line[gt+1]=='r'&&line[gt+2]=='a'&&line[gt+3]=='c'&&line[gt+4]=='z'&&line[gt+5]==' '&&line[leng-2]=='$'&&line[leng-1]=='.')
 			return 1;
 		else return 0;
 	}
 }
 
-bool fPrzelewyDo(string &linia, bool &ang)
+bool fPrzelewyDo(string &line, bool &ang)
 {
 	if(ang)
 	{
-		if(linia[gt]=='Y'&&linia[gt+1]=='o'&&linia[gt+2]=='u'&&linia[gt+4]=='g'&&linia[gt+6]=='v')
+		if(line[gt]=='Y'&&line[gt+1]=='o'&&line[gt+2]=='u'&&line[gt+4]=='g'&&line[gt+6]=='v')
 			return 1;
 		else return 0;
 	}
 	else
 	{
-		if(linia[gt]=='P'&&linia[gt+1]=='r'&&linia[gt+2]=='z'&&linia[gt+3]=='e'&&linia[gt+5]=='a')
+		if(line[gt]=='P'&&line[gt+1]=='r'&&line[gt+2]=='z'&&line[gt+3]=='e'&&line[gt+5]=='a')
 			return 1;
 		else return 0;
 	}
 }
 
-bool fKomunikat(string &linia, bool &ang)
+bool fKomunikat(string &line, bool &ang)
 {
 	if(ang)
 	{
-		if(linia[gt]=='N'&&linia[gt+1]=='e'&&linia[gt+3]==' '&&linia[gt+8]=='r')
+		if(line[gt]=='N'&&line[gt+1]=='e'&&line[gt+3]==' '&&line[gt+8]=='r')
 			return 1;
 		else return 0;
 	}
 	else
 	{
-		if(linia[gt]=='N'&&linia[gt+1]=='o'&&linia[gt+3]=='y'&&linia[gt+4]==' '&&linia[gt+9]=='r')
+		if(line[gt]=='N'&&line[gt+1]=='o'&&line[gt+3]=='y'&&line[gt+4]==' '&&line[gt+9]=='r')
 			return 1;
 		else return 0;
 	}
 }
 
-bool fTransport(string &linia, bool &ang)
+bool fTransport(string &line, bool &ang)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 	if(ang)
 	{
-		if(linia[gt]=='Y'&&linia[gt+4]=='v'&&linia[gt+14]=='$')
+		if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$')
 			return 1;
 		else return 0;
 	}
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
 	else
 	{
-		if(linia[gt]=='P'&&linia[gt+1]=='i'&&linia[gt+2]=='e'&&linia[gt+3]=='n'&&linia[gt+4]=='i')
+		if(line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i')
 			return 1;
 		else return 0;
 	}
 }
 
-bool fNicknames(string &linia)
+bool fNicknames(string &line)
 {
 	for(int i = 0; i<nicknames.size(); i++)
 	{
 		s_temp = nicknames.at(i);
 		leng = s_temp.length() - 1;
-		if(linia[gt+leng]==s_temp[leng]&&linia[gt+leng-1]==s_temp[leng-1]&&linia[gt+leng-2]==s_temp[leng-2])
+		if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
 			return 1;
-		if(linia[gt]=='*'&&linia[gt+leng+2]==s_temp[leng]&&linia[gt+leng+1]==s_temp[leng-1]&&linia[gt+leng]==s_temp[leng-2])
+		if(line[gt]=='*'&&line[gt+leng+2]==s_temp[leng]&&line[gt+leng+1]==s_temp[leng-1]&&line[gt+leng]==s_temp[leng-2])
 			return 1;
-		if(linia[gt+5]==' '&&linia[gt+leng+6]==s_temp[leng]&&linia[gt+leng+5]==s_temp[leng-1]&&linia[gt+leng+4]==s_temp[leng-2])
+		if(line[gt+5]==' '&&line[gt+leng+6]==s_temp[leng]&&line[gt+leng+5]==s_temp[leng-1]&&line[gt+leng+4]==s_temp[leng-2])
 			return 1;
 	}
 	return 0;
@@ -128,13 +128,13 @@ bool fNicknames(string &linia)
 		s_temp = nicknames.at(i);
 		leng = s_temp.length() - 1;
 		//<nick>: message
-		if(linia[gt+leng]==s_temp[leng]&&linia[gt+leng-1]==s_temp[leng-1]&&linia[gt+leng-2]==s_temp[leng-2])
+		if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
 			return 1;
 		//* <nick> joined
-		if(linia[gt]=='*'&&linia[gt+leng+2]==s_temp[leng]&&linia[gt+leng+1]==s_temp[leng-1]&&linia[gt+leng]==s_temp[leng-2])
+		if(line[gt]=='*'&&line[gt+leng+2]==s_temp[leng]&&line[gt+leng+1]==s_temp[leng-1]&&line[gt+leng]==s_temp[leng-2])
 			return 1;
 		//Gracz <nick> <action>
-		if(linia[gt+5]==' '&&linia[gt+leng+6]==s_temp[leng]&&linia[gt+leng+5]==s_temp[leng-1]&&linia[gt+leng+4]==s_temp[leng-2])
+		if(line[gt+5]==' '&&line[gt+leng+6]==s_temp[leng]&&line[gt+leng+5]==s_temp[leng-1]&&line[gt+leng+4]==s_temp[leng-2])
 			return 1;
 	}
 	return 0;
@@ -161,19 +161,19 @@ void startTimer(short getSeconds)
 }
 
 //[2019-06-28 11:58:25] [Input]  : test
-bool fConsoleInput(string &linia)//fci
+bool fConsoleInput(string &line)//fci
 {
-	if(linia[gt-10]=='I')
+	if(line[gt-10]=='I')
 	{
-		if(linia[gt]=='r'&&linia[gt+1]!='e') //r /reconnect
+		if(line[gt]=='r'&&line[gt+1]!='e') //r /reconnect
 		{
 			s_temp = "start mtasa://"+mtasa;
 			system(s_temp.c_str());
 			return 1;
 		}
-		else if(linia[gt]=='t'&&linia[gt+1]!='e') //t START TIMER
+		else if(line[gt]=='t'&&line[gt+1]!='e') //t START TIMER
 		{
-			if(linia[gt+1] == 't')//tt START TIMER waga 100%
+			if(line[gt+1] == 't')//tt START TIMER waga 100%
 			{
 				startTimer(0);
 				int temp;
@@ -184,62 +184,62 @@ bool fConsoleInput(string &linia)//fci
 			else startTimer(0);
 			return 1;
 		}
-		else if(linia[gt]=='s'&&linia[gt+1]=='e'&&linia[gt+2]=='t')
+		else if(line[gt]=='s'&&line[gt+1]=='e'&&line[gt+2]=='t')
 		{
-			if(linia[gt+4]=='t'&&linia[gt+5]=='r') //set tr xx //SET TRACK
+			if(line[gt+4]=='t'&&line[gt+5]=='r') //set tr xx //SET TRACK
 			{
-				if(linia[gt+7]=='0')
+				if(line[gt+7]=='0')
 				{
 					trackId = 0;
 					return 1;
 				}
-				else if(linia[gt+7]=='a')
+				else if(line[gt+7]=='a')
 				{
-					if(linia[gt+8]=='1') trackId = 1;
+					if(line[gt+8]=='1') trackId = 1;
 					else trackId = 3;
 					return 1;
 				}
 				else
 				{
-					if(linia[gt+8]=='1') trackId = 4;
+					if(line[gt+8]=='1') trackId = 4;
 					else trackId = 2;
 					return 1;
 				}
 				return 0;
 			}
-			else if(linia[gt+4]=='t') //set t m:ss || set t m ss //SET TIMER
+			else if(line[gt+4]=='t') //set t m:ss || set t m ss //SET TIMER
 			{
 				int liczba; int temp;
-				if(linia[gt+5]=='t')
+				if(line[gt+5]=='t')
 				{
-					liczba = linia[gt+7];//min
+					liczba = line[gt+7];//min
 					liczba -= 48; temp = liczba*600;
-					liczba = linia[gt+8];//min
+					liczba = line[gt+8];//min
 					liczba -= 48; temp += liczba*60;
-					liczba = linia[gt+10];//sec
+					liczba = line[gt+10];//sec
 					liczba -= 48; temp += liczba*10;
-					liczba = linia[gt+11];//sec
+					liczba = line[gt+11];//sec
 					liczba -= 48; temp += liczba;
 				}
 				else
 				{
-					liczba = linia[gt+6];//min
+					liczba = line[gt+6];//min
 					liczba -= 48; temp = liczba*60;
-					liczba = linia[gt+8];//sec
+					liczba = line[gt+8];//sec
 					liczba -= 48; liczba *=10; temp += liczba;
-					liczba = linia[gt+9];//sec
+					liczba = line[gt+9];//sec
 					liczba -= 48; temp += liczba;
 				}
 				startTimer(temp);
 				return 1;
 			}
-			else if(linia[gt+4]=='n')
+			else if(line[gt+4]=='n')
 			{
-				if(linia[gt+6]=='a'&&linia[gt+7]=='d'&&linia[gt+8]=='d')
+				if(line[gt+6]=='a'&&line[gt+7]=='d'&&line[gt+8]=='d')
 				{
 					return 1;
 				}
-				else if(linia[gt+6]=='d'&&linia[gt+7]=='e'&&linia[gt+8]=='l')
+				else if(line[gt+6]=='d'&&line[gt+7]=='e'&&line[gt+8]=='l')
 				{
 					return 1;
 				}
@@ -265,45 +265,46 @@ void nrPliku(int nr)
 
 int all(string &nazwa, int nr)
 {
-	int iloscLinijek = 0;
+	string line;
+	int lineCount = 0;
 	nrPliku(nr);
 
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
+	fstream file;
+	file.open(nazwa.c_str());
+		while(!file.eof())
 		{
-			getline(plik,linia);
-			iloscLinijek++;
+			getline(file,line);
+			lineCount++;
 		}
-	plik.close();
+	file.close();
 
-	return iloscLinijek;
+	return lineCount;
 }
 
 int teamsay(string &nazwa, int nr)
 {
-	//randomColor();
-	int iloscLinijek = 0;
+	string line;
+	int lineCount = 0;
 	nrPliku(nr);
 
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
+	fstream file;
+	file.open(nazwa.c_str());
+		while(!file.eof())
 		{
-			getline(plik,linia);
-			if(fTeam(linia, 1))
+			getline(file,line);
+			if(fTeam(line, 1))
 			{
-				cout<<++iloscLinijek<<linia<<endl;
-				if(iloscLinijek%30 == 0)
+				cout<<++lineCount<<line<<endl;
+				if(lineCount%30 == 0)
 				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
 					if(getch() == 27)
 					{
 						cls();
-						while(!plik.eof())
+						while(!file.eof())
 						{
-							getline(plik,linia);
-							if(fTeam(linia, 1)) iloscLinijek++;
+							getline(file,line);
+							if(fTeam(line, 1)) lineCount++;
 						}
 						break;
 					}
@@ -311,35 +312,35 @@ int teamsay(string &nazwa, int nr)
 				}
 			}
 		}
-	plik.close();
+	file.close();
 
-	return iloscLinijek;
+	return lineCount;
 }
 
 int pw(string &nazwa, int nr)
 {
-	//randomColor();
-	int iloscLinijek = 0;
+	string line;
+	int lineCount = 0;
 	nrPliku(nr);
 
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
+	fstream file;
+	file.open(nazwa.c_str());
+		while(!file.eof())
 		{
-			getline(plik,linia);
-			if(fPwOd(linia, ang)||fPwDo(linia))
+			getline(file,line);
+			if(fPwOd(line, ang)||fPwDo(line))
 			{
-				cout<<++iloscLinijek<<linia<<endl;
-				if(iloscLinijek%30 == 0)
+				cout<<++lineCount<<line<<endl;
+				if(lineCount%30 == 0)
 				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
 					if(getch() == 27)
 					{
 						cls();
-						while(!plik.eof())
+						while(!file.eof())
 						{
-							getline(plik,linia);
-							if(fPwOd(linia, ang)||fPwDo(linia)) iloscLinijek++;
+							getline(file,line);
+							if(fPwOd(line, ang)||fPwDo(line)) lineCount++;
 						}
 						break;
 					}
@@ -347,35 +348,35 @@ int pw(string &nazwa, int nr)
 				}
 			}
 		}
-	plik.close();
+	file.close();
 
-	return iloscLinijek;
+	return lineCount;
 }
 
 int przelewy(string &nazwa, int nr)
 {
-	//randomColor();
-	int iloscLinijek = 0;
+	string line;
+	int lineCount = 0;
 	nrPliku(nr);
 
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
+	fstream file;
+	file.open(nazwa.c_str());
+		while(!file.eof())
 		{
-			getline(plik,linia);
-			if(fPrzelewyOd(linia, ang)||fPrzelewyDo(linia, ang))
+			getline(file,line);
+			if(fPrzelewyOd(line, ang)||fPrzelewyDo(line, ang))
 			{
-				cout<<++iloscLinijek<<linia<<endl;
-				if(iloscLinijek%30 == 0)
+				cout<<++lineCount<<line<<endl;
+				if(lineCount%30 == 0)
 				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
 					if(getch() == 27)
 					{
 						cls();
-						while(!plik.eof())
+						while(!file.eof())
 						{
-							getline(plik,linia);
-							if(fPrzelewyOd(linia, ang)||fPrzelewyDo(linia, ang)) iloscLinijek++;
+							getline(file,line);
+							if(fPrzelewyOd(line, ang)||fPrzelewyDo(line, ang)) lineCount++;
 						}
 						break;
 					}
@@ -383,34 +384,34 @@ int przelewy(string &nazwa, int nr)
 				}
 			}
 		}
-	plik.close();
+	file.close();
 
-	return iloscLinijek;
+	return lineCount;
 }
 
 /*int nickname(string &nazwa, int nr)
 {
-	//randomColor();
-	int iloscLinijek = 0;
+	string line;
+	int lineCount = 0;
 	nrPliku(nr);
-	fstream plik;
-	plik.open(nazwa.c_str());
-		while(!plik.eof())
+	fstream file;
+	file.open(nazwa.c_str());
+		while(!file.eof())
 		{
-			plik>>linia>>linia>>linia>>linia; //wyrazy
-			if(fNick(linia))
+			file>>line>>line>>line>>line; //wyrazy
+			if(fNick(line))
 			{
-				cout<<++iloscLinijek<<linia<<endl;
-				if(iloscLinijek%30 == 0)
+				cout<<++lineCount<<line<<endl;
+				if(lineCount%30 == 0)
 				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny plik")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
 					if(getch() == 27)
 					{
 						cls();
-						while(!plik.eof())
+						while(!file.eof())
 						{
-							getline(plik,linia);
-							if(fPrzelewyOd(linia, ang)||fPrzelewyDo(linia, ang)) iloscLinijek++;
+							getline(file,line);
+							if(fPrzelewyOd(line, ang)||fPrzelewyDo(line, ang)) lineCount++;
 						}
 						break;
 					}
@@ -418,9 +419,9 @@ int przelewy(string &nazwa, int nr)
 				}
 			}
 		}
-	plik.close();
+	file.close();
 
-	return iloscLinijek;
+	return lineCount;
 }
 */
 // HANDLE hIcon = LoadImage(NULL, "icon.ico",IMAGE_ICON, 32, 32, LR_LOADFROMFILE);

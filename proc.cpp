@@ -21,16 +21,16 @@ void color(string value)
 	system(value0.c_str());
 }
 
-void salaryForTransport(string &linia, bool &ang)
+void salaryForTransport(string &line, bool &ang)
 {
 	if(ang)
 	{
-		if(linia[gt+19] == '.')
+		if(line[gt+19] == '.')
 		{
 			int liczba, mnoz=1000;
 			for(int i = 48; i<52; i++)//57 58 59 60 61 $xxxx
 			{
-				liczba = linia[i];
+				liczba = line[i];
 				liczba -= 48;
 				money += liczba*mnoz;
 				mnoz /= 10;
@@ -38,12 +38,12 @@ void salaryForTransport(string &linia, bool &ang)
 			courses++;
 			zapis();
 		}
-		else if(linia[gt+18] == '.')
+		else if(line[gt+18] == '.')
 		{
 			int liczba, mnoz=100;
 			for(int i = 48; i<51; i++)//57 58 59 60 $xxx
 			{
-				liczba = linia[i];
+				liczba = line[i];
 				liczba -= 48;
 				money += liczba*mnoz;
 				mnoz /= 10;
@@ -54,12 +54,12 @@ void salaryForTransport(string &linia, bool &ang)
 	}
 	else
 	{
-		if(linia[61] == '$')
+		if(line[61] == '$')
 		{
 			int liczba, mnoz=1000;
 			for(int i = 57; i<61; i++)//57 58 59 60 61 xxxx$
 			{
-				liczba = linia[i];
+				liczba = line[i];
 				liczba -= 48;
 				money += liczba*mnoz;
 				mnoz /= 10;
@@ -67,12 +67,12 @@ void salaryForTransport(string &linia, bool &ang)
 			courses++;
 			zapis();
 		}
-		else if(linia[60] == '$')
+		else if(line[60] == '$')
 		{
 			int liczba, mnoz=100;
 			for(int i = 57; i<60; i++)//57 58 59 60 xxx$
 			{
-				liczba = linia[i];
+				liczba = line[i];
 				liczba -= 48;
 				money += liczba*mnoz;
 				mnoz /= 10;
@@ -148,13 +148,15 @@ void liveChatBeep(string &ostatniaLinia) //bee
 	}
 }
 
-void getChat(int &iloscLinijek)//gc
+void getChat(int &lineCount)//gc
 {
+	fstream flie;
+	string line;
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
 	cout<<"###############################LiveChat###############################"<<endl;
 	SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-	cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<iloscLinijek-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<endl;
+	cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lineCount-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<endl;
 	if(isTimer)
 	{
 		SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
@@ -178,32 +180,32 @@ void getChat(int &iloscLinijek)//gc
 	SetConsoleTextAttribute(h, 12);
 	cout<<"\n################################################"<<"#####[m]moveLogs()####"<<endl;
 
-	plik.open("console.log");
+	flie.open("console.log");
 		//pobranie linii, które nie mają być wyświetlone
-		for(int i = 0; i < iloscLinijek-wyswietlaneWiersze-1; i++)
+		for(int i = 0; i < lineCount-wyswietlaneWiersze-1; i++)
 		{
-			getline(plik, linia);
+			getline(flie, line);
 		}
 		//bug fix
-		if((iloscLinijek-1)<=wyswietlaneWiersze)
+		if((lineCount-1)<=wyswietlaneWiersze)
 		{
 			temp2 = wyswietlaneWiersze;
-			wyswietlaneWiersze = iloscLinijek-1;
+			wyswietlaneWiersze = lineCount-1;
 		}
 		//wyświetlenie pozostałych linii
 		for(int i = 0; i < wyswietlaneWiersze; i++)
 		{
-			getline(plik, linia);
-			if(fNicknames(linia)||fTransport(linia,ang)||fKomunikat(linia,ang)||fPrzelewyOd(linia,ang)||fPwOd(linia,ang)||fTeam(linia,0))
+			getline(flie, line);
+			if(fNicknames(line)||fTransport(line,ang)||fKomunikat(line,ang)||fPrzelewyOd(line,ang)||fPwOd(line,ang)||fTeam(line,0))
 			{
 				if(timestamps)
 				{
-					SetConsoleTextAttribute(h, 160); cout<<" "<<linia<<endl;
+					SetConsoleTextAttribute(h, 160); cout<<" "<<line<<endl;
 				}
 				else
 				{
 					SetConsoleTextAttribute(h, 10); cout<<"# ";
-					SetConsoleTextAttribute(h, 160); cout<<linia.substr(gt)<<endl;
+					SetConsoleTextAttribute(h, 160); cout<<line.substr(gt)<<endl;
 				}
 			}
 			else
@@ -211,42 +213,43 @@ void getChat(int &iloscLinijek)//gc
 				if(timestamps)
 				{
 					SetConsoleTextAttribute(h, 170); cout<<" ";
-					SetConsoleTextAttribute(h, 10); cout<<linia<<endl;
+					SetConsoleTextAttribute(h, 10); cout<<line<<endl;
 				}
 				else
 				{
-					SetConsoleTextAttribute(h, 10); cout<<"# "<<linia.substr(gt)<<endl;
+					SetConsoleTextAttribute(h, 10); cout<<"# "<<line.substr(gt)<<endl;
 				}
 			}
 		}
-		if((iloscLinijek-1)<=wyswietlaneWiersze) wyswietlaneWiersze = temp2;//bug fix
-	plik.close();
+		if((lineCount-1)<=wyswietlaneWiersze) wyswietlaneWiersze = temp2;//bug fix
+	flie.close();
 }
 
 void moveLogs()//mv clean and move logs from console.log to logus.log
 {
 	fstream from;
 	fstream to;
+	string line;
 	int count = 0;
 
 	from.open("console.log");
 		while(!from.eof())
 		{
-			getline(from, linia);
+			getline(from, line);
 			count++;
 		}
 		count--;
-	from.close();
+		from.clear();
+		from.seekg(ios::beg);
 
-	vector <string> logs(count);
-	from.open("console.log");
-	to.open("logus.log", ios::app);
-		for(string linia : logs)
-		{
-			getline(from, linia);
-			to<<linia<<endl;
-		}
-	to.close();
+		vector <string> logs(count);
+		to.open("logus.log", ios::app);
+			for(string line : logs)
+			{
+				getline(from, line);
+				to<<line<<endl;
+			}
+		to.close();
 	from.close();
 
 	from.open("console.log", ios::out);
