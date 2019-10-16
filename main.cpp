@@ -11,7 +11,7 @@
 #include "var.hpp"
 //#include "functions.hpp"
 
-#define q(var) cout<<#var<<"="<<var<<endl //tests
+#define q(var) cout<<#var<<"="<<var<<endl
 
 using namespace std;
 #include "patch.cpp"
