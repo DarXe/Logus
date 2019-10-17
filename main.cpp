@@ -9,7 +9,6 @@
 #include "logus.hpp"
 #include "randomLogus.hpp"
 #include "var.hpp"
-//#include "functions.hpp"
 
 #define q(var) cout<<#var<<"="<<var<<endl
 
