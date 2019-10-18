@@ -259,5 +259,3 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 	SetConsoleTextAttribute(h, 15);
 	cout<<"Brak wierszy po przeniesieniu logow!";
 }
-
-

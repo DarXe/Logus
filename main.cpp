@@ -1017,7 +1017,6 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			}
 			file.clear();
 			file.seekg(ios::beg); //instead of file.close() and file.open() go to begin line
-		//file.close();
 
 		temp = lineCount-temp; //difference in the number of lines
 		//if it is different, it means that a new message has appeared
@@ -1028,7 +1027,6 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		{
 			if(isTimer) delay = clock();
 
-			//file.open("console.log");
 				if(lineCount <= 10)
 				{
 					switch (lineCount) //bug fix
@@ -1150,7 +1148,7 @@ void wersja() //verr ver
 	cout<<" |      Autor      |"<<endl;
 	cout<<" |      DarXe      |"<<endl;
 	cout<<" |_________________|"<<endl;
-	cout<<" |Wersja  19.8.12-p|"<<endl;
+	cout<<" |Wersja  19.10.19 |"<<endl;
 	Sleep(300); cout<<endl;
 	cout<<" PLANY: "<<endl;
 	cout<<" Kreator wlasnych powiadomien"<<endl;
@@ -1268,29 +1266,6 @@ void preNews()
 	cout<<" * Lekko zmieniono animacje oraz edytowano napisy w losowaniu, powtorce losowania\n"<<endl;
 	SetConsoleTextAttribute(h, 10);
 	cout<<" Zmiany"<<endl;
-	cout<<" Naprawiono wyswietlanie wyplaty, ktora byla na minusie przy zerowym F4."<<endl;
-	cout<<"   * Przy niskim zarobku wyplata bedzie wyswietlana na minusie"<<endl;
-	cout<<" Dodano komunikat. Po przeniesieniu logow w konsoli pojawi sie bialy napis"<<endl;
-	SetConsoleTextAttribute(h, 15);
-	cout<<" Brak wierszy po przeniesieniu logow!"<<endl;
-	SetConsoleTextAttribute(h, 10);
-	cout<<" Dorobiono prawą scianę do naglówka w LiveChat."<<endl;
-	cout<<" Zmiana nazwy programu z Logus-v19.x.x na samo Logus"<<endl;
-	cout<<" Od teraz nie trzeba bedzie robic kolejnych skrotow do programu"<<endl;
-	cout<<"   * Wystarczy zrobic to ostatni raz, po tej aktualizacji"<<endl;
-	cout<<"   * Dodatkowo wklejając do logow nową wersje nadpisujemy starą - nie trzeba kasowac"<<endl;
-	SetConsoleTextAttribute(h, 7);
-	cout<<" Porada: Jak szybko zaktualizowac Logusa?"<<endl;
-	cout<<" Jesli nie masz jeszcze skrotu to wykorzystaj ten sposob przy next aktualizacji"<<endl;
-	cout<<"   * Wystarczy miec skrot do Logusa na pulpicie - zaznaczamy ją jednym kliknieciem"<<endl;
-	cout<<"   * wciskamy kombinacje Alt+Enter, a po pojawieniu sie okna kombinacje Alt+T"<<endl;
-	cout<<"   * ii.. jestesmy w katalogu z logami. Wklejamy tutaj pobranego Logusa."<<endl;
-	cout<<" Zoptymalizowano przenoszenie logow ( bez uzycia push_back() )"<<endl;
-	SetConsoleTextAttribute(h, 10);
-	cout<<" Dodano generowanie informacji na temat bledow do pliku logusError.log (tam gdzie Logus)"<<endl;
-	cout<<" Dodano 2 opcje w LiveChat - [v]Zapis [r]Odczyt"<<endl;
-	cout<<"   * Sluzy to do szybkiej edycji ustawien i ich zapisu, bez wychodzienia z LC"<<endl;
-	cout<<"   * Nalezy zapisac [v], dodac recznie ustawienia w logus.ini i pozniej wczytac [r]"<<endl;
-	cout<<" Ciag dalszy poszukiwan problemu z pomijaniem niektorych komunikatow"<<endl;
-	cout<<"   * Jak na razie przenioslem odpowiednio kod w celu najlepszej wydajnosci przy sprawdzaniu"<<endl;
+	cout<<" Jeszcze w sierpniu zmieniono system sprawdzania nowych linii"<<endl;
+	cout<<" Od 12 sierpnia prace nad programem zostały wstrzymane"<<endl;
 }
