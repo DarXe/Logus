@@ -56,7 +56,7 @@ int main(int argc, char** argv) //maa main
 		}
 	file.close();
 
-	SetConsoleTitle("Logus 19.8.12-pre");
+	SetConsoleTitle("Logus 20.1.2-pre");
 	srand(time(NULL));
 
 	color(kolorGlowny);
@@ -1148,14 +1148,13 @@ void wersja() //verr ver
 	cout<<" |      Autor      |"<<endl;
 	cout<<" |      DarXe      |"<<endl;
 	cout<<" |_________________|"<<endl;
-	cout<<" |Wersja  19.10.19 |"<<endl;
-	Sleep(300); cout<<endl;
+	cout<<" | Wersja 20.1.2-p |"<<endl;
+	/*Sleep(300); cout<<endl;
 	cout<<" PLANY: "<<endl;
 	cout<<" Kreator wlasnych powiadomien"<<endl;
 	cout<<" Wyszukiwanie wiadomosci tylko wybranych przez siebie graczy"<<endl;
 	cout<<" Wyszukiwanie po tagach, ktore bedzie sie tworzylo(wysylalo) w konsoli mta"<<endl;
-	cout<<" Naprawienie problemu z polskimi znakami na systemach win7"<<endl;
-	cout<<" Wykonanie i dodanie ikony programu"<<endl;
+	cout<<" Naprawienie problemu z polskimi znakami na systemach win7"<<endl;*/
 	Sleep(300); cout<<endl;
 	cout<<" Nie zapomnij zagladnac na githuba - znajdziesz tam informacje o tym-"<<endl;
 	cout<<" -jak korzystac z programu (sa tam opisane wszystkie opcje)"<<endl;
@@ -1259,13 +1258,12 @@ void menuBezPL()
 
 void preNews()
 {
-	SetConsoleTextAttribute(h, 7);
-	cout<<" Lotto Logus"<<endl;
-	cout<<" * Dodano nowa opcje, dzieki ktorej mozna sprawdzic % szanse wygranej gracza i pustego losu"<<endl;
-	cout<<" * Losuje 4 nicki z listy dodanych graczy i generuje 10000 losowan liczac % szanse dla kazdego gracza"<<endl;
-	cout<<" * Lekko zmieniono animacje oraz edytowano napisy w losowaniu, powtorce losowania\n"<<endl;
 	SetConsoleTextAttribute(h, 10);
+	cout<<" Od 12 sierpnia prace nad programem zostały wstrzymane"<<endl;
+	cout<<" Nowy Rok, nowe wyzwania - kontynuacja rozwoju programu :)"<<endl;
+	SetConsoleTextAttribute(h, 7);
 	cout<<" Zmiany"<<endl;
 	cout<<" Jeszcze w sierpniu zmieniono system sprawdzania nowych linii"<<endl;
-	cout<<" Od 12 sierpnia prace nad programem zostały wstrzymane"<<endl;
+	cout<<" Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames"<<endl;
+	cout<<" * Pozostaje powiadomienie na wejscie i wyjscie z serwera oraz na status AFK danego gracza"<<endl;
 }
