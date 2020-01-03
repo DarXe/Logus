@@ -1267,3 +1267,4 @@ void preNews()
 	cout<<" Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames"<<endl;
 	cout<<" * Pozostaje powiadomienie na wejscie i wyjscie z serwera oraz na status AFK danego gracza"<<endl;
 }
+//g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static
