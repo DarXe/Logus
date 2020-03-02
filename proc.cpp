@@ -21,6 +21,11 @@ void color(string value)
 	system(value0.c_str());
 }
 
+void infoOuput()
+{
+	
+}
+
 void salaryForTransport(string &line, bool &ang)
 {
 	if(ang)
@@ -93,6 +98,11 @@ void liveChatBeep(string &ostatniaLinia) //bee
 			Beep(0,interval);
 			Beep(dzwiekGlowny,300);
 			Beep(0,interval);
+
+			fstream info;
+			info.open("logusInfoOutput.log", ios::app);
+				info<<ostatniaLinia<<endl;
+			info.close();
 		}
 	}
 
@@ -105,22 +115,24 @@ void liveChatBeep(string &ostatniaLinia) //bee
 			Beep(0,interval);
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
+			
+			fstream info;
+			info.open("logusInfoOutput.log", ios::app);
+				info<<ostatniaLinia<<endl;
+			info.close();
 		}
 	}
 
 	//dostarczenie towaru, raport z frakcji
 	if(!fLockKomunikat)
 	{
-		if(fTransport(ostatniaLinia, ang)||fKomunikat(ostatniaLinia, ang))
+		if(fTransport(ostatniaLinia, ang))
 		{
-			if(fTransport(ostatniaLinia, ang))
+			salaryForTransport(ostatniaLinia, ang);
+			if(trackId)
 			{
-				salaryForTransport(ostatniaLinia, ang);
-				if(trackId)
-				{
-					if(trackId == 4) trackId = 1;
-					else trackId++;
-				}
+				if(trackId == 4) trackId = 1;
+				else trackId++;
 			}
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
@@ -128,6 +140,25 @@ void liveChatBeep(string &ostatniaLinia) //bee
 			Beep(0,interval);
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
+			
+			fstream info;
+			info.open("logusInfoOutput.log", ios::app);
+				info<<ostatniaLinia<<endl;
+			info.close();
+		}
+		else if(fKomunikat(ostatniaLinia, ang))
+		{
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			
+			fstream info;
+			info.open("logusInfoOutput.log", ios::app);
+				info<<ostatniaLinia<<endl;
+			info.close();
 		}
 	}
 
@@ -150,7 +181,7 @@ void liveChatBeep(string &ostatniaLinia) //bee
 
 void getChat(int &lineCount)//gc
 {
-	fstream flie;
+	fstream file;
 	string line;
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
@@ -164,7 +195,7 @@ void getChat(int &lineCount)//gc
 		if((timer/1000)%60<10) cout<<":0"; else cout<<":";
 		cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
 	}
-	else 
+	else
 	{
 		SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
 		cout<<" [t]Timer                  # F4 ";
@@ -172,7 +203,8 @@ void getChat(int &lineCount)//gc
 	if(courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
 	else      cout<<"Dostarczone kursy: "<<courses<<"                                             ";
 	SetConsoleTextAttribute(h, 204); cout<<"\n "; SetConsoleTextAttribute(h, 12);
-	cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<((money)?((money*0.87)-3500)*grade:0);
+	int payment(0); payment = ((money>0)?((money*0.87)-3500)*grade:0);
+	cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<payment;
 	SetConsoleTextAttribute(h, 204);
 	pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); cout<<" ";
 	pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); cout<<" ";
@@ -180,11 +212,11 @@ void getChat(int &lineCount)//gc
 	SetConsoleTextAttribute(h, 12);
 	cout<<"\n################################################"<<"#####[m]moveLogs()####"<<endl;
 
-	flie.open("console.log");
+	file.open("console.log");
 		//pobranie linii, które nie mają być wyświetlone
 		for(int i = 0; i < lineCount-wyswietlaneWiersze-1; i++)
 		{
-			getline(flie, line);
+			getline(file, line);
 		}
 		//bug fix
 		if((lineCount-1)<=wyswietlaneWiersze)
@@ -195,7 +227,7 @@ void getChat(int &lineCount)//gc
 		//wyświetlenie pozostałych linii
 		for(int i = 0; i < wyswietlaneWiersze; i++)
 		{
-			getline(flie, line);
+			getline(file, line);
 			if(fNicknames(line)||fTransport(line,ang)||fKomunikat(line,ang)||fPrzelewyOd(line,ang)||fPwOd(line,ang)||fTeam(line,0))
 			{
 				if(timestamps)
@@ -204,8 +236,19 @@ void getChat(int &lineCount)//gc
 				}
 				else
 				{
-					SetConsoleTextAttribute(h, 10); cout<<"# ";
-					SetConsoleTextAttribute(h, 160); cout<<line.substr(gt)<<endl;
+					SetConsoleTextAttribute(h, 160); cout<<"=>";
+					SetConsoleTextAttribute(h, 10);
+					line = line.substr(gt);
+					for (size_t i = 0; i < line.length(); i++)
+					{
+						if(line[i] == ':')
+						{
+							cout<<line[i];
+							SetConsoleTextAttribute(h, 15);
+							continue;
+						}
+						cout<<line[i];
+					} cout<<"\n";
 				}
 			}
 			else
@@ -217,12 +260,33 @@ void getChat(int &lineCount)//gc
 				}
 				else
 				{
-					SetConsoleTextAttribute(h, 10); cout<<"# "<<line.substr(gt)<<endl;
+					line = line.substr(gt);
+					/*
+					if(line[line.length()-1] == '!' || line[0] == '*')
+					{
+						SetConsoleTextAttribute(h, 14);
+						cout<<line<<endl;
+					}
+					else
+					{*/
+						SetConsoleTextAttribute(h, 10);
+						for (size_t i = 0; i < line.length(); i++)
+						{
+							//if(i == 0) {cout<<line[i]; continue;}
+							if(line[i] == ':')
+							{
+								cout<<line[i];
+								SetConsoleTextAttribute(h, 15);
+								continue;
+							}
+							cout<<line[i];
+						} cout<<"\n";
+					//}
 				}
 			}
 		}
 		if((lineCount-1)<=wyswietlaneWiersze) wyswietlaneWiersze = temp2;//bug fix
-	flie.close();
+	file.close();
 }
 
 void moveLogs()//mv clean and move logs from console.log to logus.log
@@ -258,4 +322,13 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 	pos.X=2; pos.Y=5; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 15);
 	cout<<"Brak wierszy po przeniesieniu logow!";
+}
+
+void runLiveChat()//flc
+{
+	s_temp = "start mtasa://"+mtasa;
+	system(s_temp.c_str());
+	cls();
+	Beep(dzwiekGlowny,100);
+	liveChat(wyswietlaneWiersze);
 }

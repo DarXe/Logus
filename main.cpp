@@ -56,7 +56,7 @@ int main(int argc, char** argv) //maa main
 		}
 	file.close();
 
-	SetConsoleTitle("Logus 20.1.2-pre");
+	SetConsoleTitle("Logus 20.3 Pre-Release"); //verr
 	srand(time(NULL));
 
 	color(kolorGlowny);
@@ -78,11 +78,7 @@ int main(int argc, char** argv) //maa main
 		break;
 	case 1:
 		{
-			s_temp = "start mtasa://"+mtasa;
-			system(s_temp.c_str());
-			cls();
-			Beep(dzwiekGlowny,100);
-			liveChat(wyswietlaneWiersze);
+			runLiveChat();
 		}
 	default:
 		break;
@@ -256,7 +252,8 @@ int console() //con
 					cout<<" [8] F4 / zarobione pieniadze od ostatniego wyzerowania: $"<<money<<endl;
 					cout<<" [9] Liczba dostarczonych kursow: "<<courses<<endl;
 					cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<endl;
-					cout<<" # # Wyplata wynosi "<<"$"<<((money*0.87)-3500)*grade<<endl;
+					int payment(0); payment = ((money*0.87)-3500)*grade;
+					cout<<" # # Wyplata wynosi "<<"$"<<payment<<endl;
 					if(courses) cout<<" # # Srednia na kurs wynosi $"<<money/courses<<endl;
 					cout<<" [x] Wyzeruj stan F4 i kursow"<<endl;
 					SetConsoleTextAttribute(h, 14);
@@ -293,7 +290,8 @@ int console() //con
 					cout<<" [8] F4 / zarobione pieniądze od ostatniego wyzerowania: $"<<money<<endl;
 					cout<<" [9] Liczba dostarczonych kursów: "<<courses<<endl;
 					cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<endl;
-					cout<<" # # Wypłata wynosi "<<"$"<<((money*0.87)-3500)*grade<<endl;
+					int payment(0); payment = ((money*0.87)-3500)*grade;
+					cout<<" # # Wyplata wynosi "<<"$"<<payment<<endl;
 					if(courses) cout<<" # # Średnia na kurs wynosi $"<<money/courses<<endl;
 					cout<<" [x] Wyzeruj stan F4 i kursów"<<endl;
 					SetConsoleTextAttribute(h, 14);
@@ -801,8 +799,7 @@ int console() //con
 		case 13:
 		{
 			cls();
-			s_temp = "start mtasa://"+mtasa;
-			system(s_temp.c_str());
+			runLiveChat();
 			break;
 		}
 		default:
@@ -895,7 +892,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 					cls(); getChat(lineCount);
 				}
 				break;
-			case 48: //48? it's funny, because it's 0 :D
+			case 48: //48? it's funny, because it's 0 :D //clear track
 				{
 					trackId = ((trackId)?0:1);
 				}
@@ -998,7 +995,8 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		if(courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
 		else      cout<<"Dostarczone kursy: "<<courses<<"                                             ";
 		SetConsoleTextAttribute(h, 204); cout<<"\n "; SetConsoleTextAttribute(h, 12);
-		cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<((money)?((money*0.87)-3500)*grade:0);
+		int payment(0); payment = ((money>0)?((money*0.87)-3500)*grade:0);
+		cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<payment;
 		SetConsoleTextAttribute(h, 204);
 		pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); cout<<" ";
 		pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); cout<<" ";
@@ -1132,23 +1130,23 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				break;
 			}
 			
-			if(autoMoveLogs && lineCount > autoMoveLogs) moveLogs();
+			if(autoMoveLogs && (lineCount > autoMoveLogs)) moveLogs();
 			if(isTimer) timer -= (clock()-delay);
 		}//if
 		else file.close(); //fix
 	}//while
 }//liveChat()
 void preNews();
-void wersja() //verr ver
+void wersja()
 {
 	cout<<endl;
 	cout<<"  Witaj "<<nick<<" !"<<endl;
 	Sleep(300);
-	cout<<"  _________________"<<endl;
-	cout<<" |      Autor      |"<<endl;
-	cout<<" |      DarXe      |"<<endl;
-	cout<<" |_________________|"<<endl;
-	cout<<" | Wersja 20.1.2-p |"<<endl;
+	cout<<"  ___________________"<<endl;
+	cout<<" |       Autor       |"<<endl;
+	cout<<" |       DarXe       |"<<endl;
+	cout<<" |___________________|"<<endl;
+	cout<<" |  Wersja 20.3-Pre  |"<<endl; //verr
 	/*Sleep(300); cout<<endl;
 	cout<<" PLANY: "<<endl;
 	cout<<" Kreator wlasnych powiadomien"<<endl;
@@ -1259,18 +1257,32 @@ void menuBezPL()
 void preNews()
 {
 	SetConsoleTextAttribute(h, 10);
-	cout<<" Od 12 sierpnia prace nad programem zostały wstrzymane"<<endl;
+	cout<<" Od 12 sierpnia '19 prace nad programem zostały wstrzymane"<<endl;
 	cout<<" Nowy Rok, nowe wyzwania - kontynuacja rozwoju programu :)"<<endl;
 	SetConsoleTextAttribute(h, 7);
 	cout<<" Zmiany"<<endl;
 	cout<<" Jeszcze w sierpniu zmieniono system sprawdzania nowych linii"<<endl;
-	cout<<" Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames"<<endl;
+	cout<<" 201_2 Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames"<<endl;
 	cout<<" * Pozostaje powiadomienie na wejscie i wyjscie z serwera oraz na status AFK danego gracza"<<endl;
+	cout<<" 202_13 Poprawiono blad przy wyswietlaniu wyplaty wiekszej niz $1000000 w LiveChat oraz ustawieniach"<<endl;
+	cout<<" * Dodatkowo juz nie bedzie wyswietlana wyplata mniejsza niz 0"<<endl;
+	cout<<" 202_13 Zmodyfikowano sprawdzanie warunków przy dostarczonym towarze"<<endl;
+	cout<<" * Jest to kolejna próba testów z serii 'co powoduje pomijanie zapisu niektórych kursów'"<<endl;
+	cout<<" 202_13 Po wciśnięciu entera wraz z uruchomieniem serwera włączy się funkcja LiveChat"<<endl;
+	
+	cout<<" 203_1 Zmieniono polecenie reconnect z 'r' na 'rr'"<<endl;
+	cout<<" 203_1 Dodano nowy plik .log, aby mieć szybszy dostęp do logów z powiadomień(PW, TEAM, TOWAR)"<<endl;
+	cout<<" * Po wyłączeniu komunikatu dźwiękowego w opcjach linijka z logiem nie pojawi się w tym pliku"<<endl;
+	cout<<" * Plik znajduje się w folderze logs, logusInfoOutput.log"<<endl;
+	cout<<" 203_1 Zmieniono kolorystykę czatu w LiveChat oddzielając wiadomość od nazwy gracza"<<endl;
+	cout<<" * Jak na razie zmiany zostały wprowadzone w trybie bez daty(Timestamps)"<<endl;
 }
 
 //
 //todo
-//console - komenda "r", dodać wyjątek, 2 znak musi być spacja
 //console - wychodzenie przez quit ma tez wylaczac Logusa
+//baza graczy - wybieranie powiadomien dla kazdego gracza (join, quit, afk, chat)
 //
-//g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static
+//g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static gg
+
+//g++ -g main.cpp src\*.cpp -o Logus-pre.exe

@@ -168,13 +168,13 @@ bool fConsoleInput(string &line)//fci
 {
 	if(line[gt-10]=='I')
 	{
-		if(line[gt]=='r'&&line[gt+1]!='e') //r /reconnect
+		if(line[gt]=='r'&&line[gt+1]=='r') //rr /reconnect
 		{
 			s_temp = "start mtasa://"+mtasa;
 			system(s_temp.c_str());
 			return 1;
 		}
-		else if(line[gt]=='t'&&line[gt+1]!='e') //t START TIMER
+		else if(line[gt]=='t'||line[gt]=='\'') //t START TIMER
 		{
 			if(line[gt+1] == 't')//tt START TIMER waga 100%
 			{
