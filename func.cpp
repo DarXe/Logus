@@ -26,7 +26,10 @@ bool fPwOd(string &line, bool &ang)
 	else
 	{
 		if(line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='W')
+		{
+			if(line[line.length()-1] == 32 && line[line.length()-2] == 32) {s_temp = "start mtasa://"+mtasa; system(s_temp.c_str());}
 			return 1;
+		}
 		else return 0;
 	}
 }
