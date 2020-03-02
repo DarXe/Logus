@@ -1276,6 +1276,8 @@ void preNews()
 	cout<<" * Plik znajduje się w folderze logs, logusInfoOutput.log"<<endl;
 	cout<<" 203_1 Zmieniono kolorystykę czatu w LiveChat oddzielając wiadomość od nazwy gracza"<<endl;
 	cout<<" * Jak na razie zmiany zostały wprowadzone w trybie bez daty(Timestamps)"<<endl;
+	cout<<" 203_2 Został dodany kolor żółty dla powiadomień zakończonych na '!' oraz zaczynających '*'"<<endl;
+	cout<<" * Bindy oraz inne wiadomości zawierające wykrzyknik też są kolorowane"<<endl;
 }
 
 //

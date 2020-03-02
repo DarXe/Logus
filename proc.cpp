@@ -261,18 +261,16 @@ void getChat(int &lineCount)//gc
 				else
 				{
 					line = line.substr(gt);
-					/*
 					if(line[line.length()-1] == '!' || line[0] == '*')
 					{
 						SetConsoleTextAttribute(h, 14);
 						cout<<line<<endl;
 					}
 					else
-					{*/
+					{
 						SetConsoleTextAttribute(h, 10);
 						for (size_t i = 0; i < line.length(); i++)
 						{
-							//if(i == 0) {cout<<line[i]; continue;}
 							if(line[i] == ':')
 							{
 								cout<<line[i];
@@ -281,7 +279,7 @@ void getChat(int &lineCount)//gc
 							}
 							cout<<line[i];
 						} cout<<"\n";
-					//}
+					}
 				}
 			}
 		}
