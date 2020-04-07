@@ -1,4 +1,4 @@
-// Copyright (C) 2018-2019  DarXe
+// Copyright (C) 2018-2020  DarXe
 
 #include <iostream>
 #include <fstream>
@@ -25,6 +25,9 @@ void wersja();
 
 int main(int argc, char** argv) //maa main
 {
+	int mnoz(pow(10,2));
+	cout<<mnoz;
+	getch();
 	fstream file;
 	file.open("console.log");
 		while(!file.good())
@@ -42,6 +45,13 @@ int main(int argc, char** argv) //maa main
 			cout<<"Dowolny klawisz - zamknij okno\n"<<endl;
 			if(kbhit()) return 0;
 		}
+		fstream fileInit;
+		fileInit.open("logusInfoOutput.log", ios::app);
+		fileInit.close();
+		fileInit.open("logus.log", ios::app);
+		fileInit.close();
+		
+
 	file.close();
 
 	file.open("logus.ini");
@@ -1278,6 +1288,10 @@ void preNews()
 	cout<<" * Jak na razie zmiany zostały wprowadzone w trybie bez daty(Timestamps)"<<endl;
 	cout<<" 203_2 Został dodany kolor żółty dla powiadomień zakończonych na '!' oraz zaczynających '*'"<<endl;
 	cout<<" * Bindy oraz inne wiadomości zawierające wykrzyknik też są kolorowane"<<endl;
+	cout<<" 203_3 Dodano nową komendę - ustawienie F4 z poziomu konsoli MTA"<<endl;
+	cout<<" * Wpisując w konsoli 'set m KWOTA', F4 ustawi się na podaną wartość"<<endl;
+	cout<<" * Dodano też komendę na ustawienie ilości kursów - set c KURSY"<<endl;
+	cout<<" 203_3 Usunięto kolorowanie powiadomień z wykrzyknikami"<<endl;
 }
 
 //
@@ -1288,3 +1302,51 @@ void preNews()
 //g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static gg
 
 //g++ -g main.cpp src\*.cpp -o Logus-pre.exe
+Ogłoszenie #13
+
+Cześć. Od dwóch dni na pięknym ptysiu znajduje się już pseudo-filia w AP. Ze względu na jej gabaryty nie będzie raczej problemu z manewrowaniem, choć problemem może być położenie bazy (jest to, no, woda). Z tego też powodu zalecam pracownikom upewnianie się, że pojazd jest zfreezowany i w miarę możliwości omijanie automatu z jedzeniem - ze względu na specyfikę działania, tj. je się po wciśnięciu F lub Enter pojazd zaparkowany w pobliżu (nie, nie odfreezujesz pojazdu komuś) potrafi się odfreezować.
+
+Kolejną nowością dostępną od dzisiaj jest zwiększona stawka za paliwo, która wynosi teraz $0,51/l zamiast $0,25/l. W skrócie - za każde 4 000 dm³ zamiast $800 dostaniecie $1 600. Oczywiście żeby firma nie miała za łatwo z zarobkiem najbliższe wypłaty będą już szły nowym "systemem".
+
+W celu dostosowania regulaminu do zmian korekty uległa norma, która mam nadzieję jest teraz w miarę zrozumiała i wiadomo, że hajs i paliwo wliczają się do jednej normy:
+
+ 
+
+8. Pracownik ma obowiązek wyrobienia normy w wysokości $35 000 w okresie jednego tygodnia po zsumowaniu zarobionych pieniędzy i uzupełnionego paliwa.
+
+a. Uzupełnione paliwo wlicza się do powyższej normy po uprzednim pomnożeniu dm³ przez 0,51. 70 000 dm³ odpowiada $35 700.
+
+A także premia:
+
+5. Premia za uzupełnione dm³:
+
+a. W przypadku wyrobienia normy: za każde 10 000 dm³ - $4 000.
+
+b. W przypadku niewyrobienia normy: za każde 10 000 dm³ - $2 000.
+
+Dodatkowo korekty uległ próg minimalny premii:
+
+4. Pracownik otrzymuje premie po ukończeniu kryteriów podanych poniżej:
+
+a. Premie zostaną przyznane tylko wtedy, gdy pracownik wyrobi $105 000 (premia pieniężna) lub/i 100 000 dm³ (premia paliwowa). Tylko jeden pracownik może otrzymać premię z danej kategorii (pieniądze i paliwo).
+
+Wkrótce zmianom ulegnie również abonament na stacje, choć to powinno już być zmartwieniem (hehe) firm, a nie pracowników.
+
+Pozdrawiam cieplutko.
+
+Translation for my dear KuBu:
+
+  Ukryj zawartość
+Hey. The branch in AP is here for 2 days. Due to it's size maneuvering shouldn't be a problem, though because of it's location it can cause some weird bugs like cars going off to the water. Because of that, I suggest to make sure that your car is frozen and to avoid eating close to your car since when you eat you press F or Enter and it can cause unfreeze of the vehicle.
+
+The next novelty is increased bid for gas - now it's $0,51/l instead of $0,25/l. TL;DR you get twice as much money for refueling stations.
+
+Due to above changes the norm is corrected a bit. Now dm³ from refueling stations are accounted into the "main norm (which is $35 000)" after prior multiplying it by 0,51 (70 000 dm³ is equivalent to $35 700).
+
+Stuff below is not that important for you so I'll not waste my time translating it.
+
+A lot of kisses. :*
+
+ 
+
+ 
