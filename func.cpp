@@ -1,4 +1,5 @@
 // Copyright (C) 2018-2019  DarXe
+#include <cmath>
 
 //func
 //(team) [pts]nick
@@ -126,7 +127,6 @@ bool fNicknames(string &line)
 	}
 	return 0;
 }
-
 /*bool fNick(string &wyraz)
 {
 	for(int i = 0; i<nicknames.size(); i++)
@@ -173,8 +173,7 @@ bool fConsoleInput(string &line)//fci
 	{
 		if(line[gt]=='r'&&line[gt+1]=='r') //rr /reconnect
 		{
-			s_temp = "start mtasa://"+mtasa;
-			system(s_temp.c_str());
+			serverConnect();
 			return 1;
 		}
 		else if(line[gt]=='t'||line[gt]=='\'') //t START TIMER
@@ -251,6 +250,37 @@ bool fConsoleInput(string &line)//fci
 				}
 				else return 0;
 			}
+			else if(line[gt+4]=='m') //set m x xx xxx.. //SET MONEY (f4)
+			{//[2020-03-01 02:16:00] [Input]  : set m x
+				money = 0;
+				int tempMoney(0);
+				int temp(line.length()-gt-6);
+				int mnoz = pow(10,2);
+
+				for (size_t i = 0; i < temp; i++)
+				{
+					tempMoney = line[gt+6+i];
+					tempMoney -= 48;
+					money += tempMoney*mnoz;
+					mnoz /= 10;
+				}
+				return 1;
+			}
+			else if(line[gt+4]=='c') //set c x //SET COURSES
+			{//[2020-03-01 02:16:00] [Input]  : set c x
+				courses = 0;
+				int tempC(0);
+				int temp(line.length()-gt-6);
+				int mnoz(pow(10,temp-1));
+				for (size_t i = 0; i < temp; i++)
+				{
+					tempC = line[gt+6+i];
+					tempC -= 48;
+					courses += tempC*mnoz;
+					mnoz /= 10;
+				}
+				return 1;
+			}
 			else return 0;
 		}
 		else return 0;
@@ -266,6 +296,24 @@ void nrPliku(int nr)
 			cout<<">>>>>>>>>>>>>>>>>>>> logus.log <<<<<<<<<<<<<<<<<<<<"<<endl;
 		else
 			cout<<">>>>>>>>>>>>>>>>>>>> Plik nr "<<nr<<" <<<<<<<<<<<<<<<<<<<<"<<endl;
+	}
+}
+
+bool fPlayerCount(string &line, bool &ang)
+{
+	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
+	if(ang)
+	{
+		if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$')
+			return 1;
+		else return 0;
+	}
+	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
+	else
+	{
+		if(line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i')
+			return 1;
+		else return 0;
 	}
 }
 

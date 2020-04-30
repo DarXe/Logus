@@ -261,7 +261,7 @@ void getChat(int &lineCount)//gc
 				else
 				{
 					line = line.substr(gt);
-					if(line[line.length()-1] == '!' || line[0] == '*')
+					if(line[0] == '*')
 					{
 						SetConsoleTextAttribute(h, 14);
 						cout<<line<<endl;
@@ -287,7 +287,7 @@ void getChat(int &lineCount)//gc
 	file.close();
 }
 
-void moveLogs()//mv clean and move logs from console.log to logus.log
+void moveLogs()//mv clean and move logs mtasarom console.log to logus.log
 {
 	fstream from;
 	fstream to;
@@ -329,4 +329,10 @@ void runLiveChat()//flc
 	cls();
 	Beep(dzwiekGlowny,100);
 	liveChat(wyswietlaneWiersze);
+}
+
+void serverConnect()//flc
+{
+	s_temp = "start mtasa://"+mtasa;
+	system(s_temp.c_str());
 }

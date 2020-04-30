@@ -10,7 +10,7 @@
 #include "randomLogus.hpp"
 #include "var.hpp"
 
-#define q(var) cout<<#var<<"="<<var<<endl
+#define q(var) std::cout<<#var<<"="<<var<<std::endl
 
 using namespace std;
 #include "patch.cpp"
@@ -25,9 +25,6 @@ void wersja();
 
 int main(int argc, char** argv) //maa main
 {
-	int mnoz(pow(10,2));
-	cout<<mnoz;
-	getch();
 	fstream file;
 	file.open("console.log");
 		while(!file.good())
@@ -35,23 +32,21 @@ int main(int argc, char** argv) //maa main
 			Beep(dzwiekGlowny,125);
 			Beep(0,interval);
 			Beep(dzwiekGlowny,125);
-			cout<<"Error, nie odnaleziono pliku!"<<endl;
-			cout<<"Program Logus musi znajdowac sie w folderze z logami MTA."<<endl;
+			std::cout<<"Error, nie odnaleziono pliku!"<<std::endl;
+			std::cout<<"Program Logus musi znajdowac sie w folderze z logami MTA."<<std::endl;
 			Sleep(500);
-			cout<<"..\\MTA San Andreas 1.5\\MTA\\logs\\(tutaj wklej program)"<<endl;
+			std::cout<<"..\\MTA San Andreas 1.5\\MTA\\logs\\(tutaj wklej program)"<<std::endl;
 			Sleep(500);
-			cout<<"Nastepnie uruchom go ponownie\n"<<endl;
+			std::cout<<"Nastepnie uruchom go ponownie\n"<<std::endl;
 			Sleep(1000);
-			cout<<"Dowolny klawisz - zamknij okno\n"<<endl;
+			std::cout<<"Dowolny klawisz - zamknij okno\n"<<std::endl;
 			if(kbhit()) return 0;
 		}
-		fstream fileInit;
+		{fstream fileInit;
 		fileInit.open("logusInfoOutput.log", ios::app);
 		fileInit.close();
 		fileInit.open("logus.log", ios::app);
-		fileInit.close();
-		
-
+		fileInit.close();}
 	file.close();
 
 	file.open("logus.ini");
@@ -65,9 +60,9 @@ int main(int argc, char** argv) //maa main
 			zapis();
 		}
 	file.close();
-
-	SetConsoleTitle("Logus 20.3 Pre-Release"); //verr
-	srand(time(NULL));
+	string _versionName_ = "Logus 20.3 Pre-Release";
+	SetConsoleTitleA(_versionName_.c_str()); //verr
+	std::srand(time(NULL));
 
 	color(kolorGlowny);
 	if(codePage852)
@@ -119,9 +114,9 @@ int console() //con
 		if(wyb == 27){
 			cls();
 			zapis();
-			cout<<"\nBye bye";
+			std::cout<<"\nBye bye";
 			for(int i = 0; i<3; i++){
-				cout<<".";
+				std::cout<<".";
 				Sleep(400);
 			}
 			break;
@@ -153,8 +148,8 @@ int console() //con
 			lineCountAll+=teamsay(b,2);
 			lineCountAll+=teamsay(a,1);
 			lineCount=teamsay(L,0);
-			cout<<"Wierszy w plikach MTA: "<<lineCountAll<<endl;
-			cout<<"Wierszy w logus.log: "<<lineCount<<endl;
+			std::cout<<"Wierszy w plikach MTA: "<<lineCountAll<<std::endl;
+			std::cout<<"Wierszy w logus.log: "<<lineCount<<std::endl;
 			break;
 		}
 
@@ -170,8 +165,8 @@ int console() //con
 			lineCountAll+=pw(b,2);
 			lineCountAll+=pw(a,1);
 			lineCount=pw(L,0);
-			cout<<"Wierszy w plikach MTA: "<<lineCountAll<<endl;
-			cout<<"Wierszy w logus.log: "<<lineCount<<endl;
+			std::cout<<"Wierszy w plikach MTA: "<<lineCountAll<<std::endl;
+			std::cout<<"Wierszy w logus.log: "<<lineCount<<std::endl;
 			break;
 		}
 		case 'p':
@@ -185,7 +180,7 @@ int console() //con
 			lineCountAll+=przelewy(b,2);
 			lineCountAll+=przelewy(a,1);
 			lineCountAll+=przelewy(L,0);
-			cout<<"Wierszy: "<<lineCountAll<<endl;
+			std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
 			break;
 		}
 		case 'n':
@@ -195,25 +190,25 @@ int console() //con
 			lineCount = 0;
 			lineCount=all(f,6);
 			lineCountAll+=lineCount;
-			cout<<"Wierszy: "<<lineCount<<endl;
+			std::cout<<"Wierszy: "<<lineCount<<std::endl;
 			lineCount=all(e,5);
 			lineCountAll+=lineCount;
-			cout<<"Wierszy: "<<lineCount<<endl;
+			std::cout<<"Wierszy: "<<lineCount<<std::endl;
 			lineCount=all(d,4);
 			lineCountAll+=lineCount;
-			cout<<"Wierszy: "<<lineCount<<endl;
+			std::cout<<"Wierszy: "<<lineCount<<std::endl;
 			lineCount=all(c,3);
 			lineCountAll+=lineCount;
-			cout<<"Wierszy: "<<lineCount<<endl;
+			std::cout<<"Wierszy: "<<lineCount<<std::endl;
 			lineCount=all(b,2);
 			lineCountAll+=lineCount;
-			cout<<"Wierszy: "<<lineCount<<endl;
+			std::cout<<"Wierszy: "<<lineCount<<std::endl;
 			lineCount=all(a,1);
 			lineCountAll+=lineCount;
-			cout<<"Wierszy: "<<lineCount<<endl;
-			cout<<endl;
-			cout<<"Wierszy we wszystkich plikach MTA: "<<lineCountAll<<endl;
-			cout<<"Ilosc wierszy w logus.log: "<<all(L,10)<<endl;
+			std::cout<<"Wierszy: "<<lineCount<<std::endl;
+			std::cout<<std::endl;
+			std::cout<<"Wierszy we wszystkich plikach MTA: "<<lineCountAll<<std::endl;
+			std::cout<<"Ilosc wierszy w logus.log: "<<all(L,10)<<std::endl;
 			break;
 		}
 		case 't':
@@ -238,78 +233,78 @@ int console() //con
 				if(menuGlowne)
 				{
 					SetConsoleTextAttribute(h, 10);
-					cout<<" ________________________Ustawienia - LiveChat________________________"<<endl;
+					std::cout<<" ________________________Ustawienia - LiveChat________________________"<<std::endl;
 					SetConsoleTextAttribute(h, 7);
-					cout<<" [r] Przywroc ustawienia domyslne"<<endl;
-					cout<<" [a] Flaga na PTS: "<<((ang)?"ANG":"PL")<<endl;
+					std::cout<<" [r] Przywroc ustawienia domyslne"<<std::endl;
+					std::cout<<" [a] Flaga na PTS: "<<((ang)?"ANG":"PL")<<std::endl;
 					SetConsoleTextAttribute(h, 14);
-					cout<<" [p] Dzwiek wiadomosci PW: "<<((!fLockPW)?"TAK":"NIE")<<endl;
-					cout<<" [t] Dzwiek wiadomosci teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<endl;
-					cout<<" [s] Dzwiek komunikatow(raport, transport): "<<((!fLockKomunikat)?"TAK":"NIE")<<endl;
-					cout<<" [k] Powiadomienia na czacie - wybrane nicki: "<<((!fLockNick)?"TAK":"NIE")<<endl;
-					cout<<" [c] Dzwiek kazdej wiadmosci na czacie: "<<((chatSound)?"TAK":"NIE")<<endl;
+					std::cout<<" [p] Dzwiek wiadomosci PW: "<<((!fLockPW)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [t] Dzwiek wiadomosci teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [s] Dzwiek komunikatow(raport, transport): "<<((!fLockKomunikat)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [k] Powiadomienia na czacie - wybrane nicki: "<<((!fLockNick)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [c] Dzwiek kazdej wiadmosci na czacie: "<<((chatSound)?"TAK":"NIE")<<std::endl;
 					SetConsoleTextAttribute(h, 7);
-					cout<<" [1] Liczba wyswietlanych wierszy: "<<wyswietlaneWiersze<<endl;
-					cout<<" [2] Czestotliwosc odswiezania(100-5000): "<<refresh<<endl;
-					cout<<" [3] Dynamiczne odswiezanie: "<<((dynamicRefresh)?"TAK":"NIE")<<endl;
-					cout<<" [4] Czestotliwosc dzwieku(50-10000): "<<dzwiekGlowny<<endl;
-					cout<<" [5] Przerwa miedzy dzwiekami(50-1000): "<<interval<<endl;
-					cout<<" [m] Automatyczne przenoszenie logow: "; if(autoMoveLogs) cout<<"TAK, przy "<<autoMoveLogs<<" wierszach"; else cout<<"NIE"; cout<<endl;
+					std::cout<<" [1] Liczba wyswietlanych wierszy: "<<wyswietlaneWiersze<<std::endl;
+					std::cout<<" [2] Czestotliwosc odswiezania(100-5000): "<<refresh<<std::endl;
+					std::cout<<" [3] Dynamiczne odswiezanie: "<<((dynamicRefresh)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [4] Czestotliwosc dzwieku(50-10000): "<<dzwiekGlowny<<std::endl;
+					std::cout<<" [5] Przerwa miedzy dzwiekami(50-1000): "<<interval<<std::endl;
+					std::cout<<" [m] Automatyczne przenoszenie logow: "; if(autoMoveLogs) std::cout<<"TAK, przy "<<autoMoveLogs<<" wierszach"; else std::cout<<"NIE"; std::cout<<std::endl;
 					SetConsoleTextAttribute(h, 14);
-					cout<<" [6] Czas rozladowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<endl;
-					cout<<" [7] Sam wybiore / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiore")<<endl;
+					std::cout<<" [6] Czas rozladowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<std::endl;
+					std::cout<<" [7] Sam wybiore / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiore")<<std::endl;
 					SetConsoleTextAttribute(h, 7);
-					cout<<" [8] F4 / zarobione pieniadze od ostatniego wyzerowania: $"<<money<<endl;
-					cout<<" [9] Liczba dostarczonych kursow: "<<courses<<endl;
-					cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<endl;
+					std::cout<<" [8] F4 / zarobione pieniadze od ostatniego wyzerowania: $"<<money<<std::endl;
+					std::cout<<" [9] Liczba dostarczonych kursow: "<<courses<<std::endl;
+					std::cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<std::endl;
 					int payment(0); payment = ((money*0.87)-3500)*grade;
-					cout<<" # # Wyplata wynosi "<<"$"<<payment<<endl;
-					if(courses) cout<<" # # Srednia na kurs wynosi $"<<money/courses<<endl;
-					cout<<" [x] Wyzeruj stan F4 i kursow"<<endl;
+					std::cout<<" # # Wyplata wynosi "<<"$"<<payment<<std::endl;
+					if(courses) std::cout<<" # # Srednia na kurs wynosi $"<<money/courses<<std::endl;
+					std::cout<<" [x] Wyzeruj stan F4 i kursow"<<std::endl;
 					SetConsoleTextAttribute(h, 14);
-					cout<<" [b] Nicknames - baza danych wybranych nickow"<<endl;
-					cout<<" [n] Nickname: "<<nick<<endl;
+					std::cout<<" [b] Nicknames - baza danych wybranych nickow"<<std::endl;
+					std::cout<<" [n] Nickname: "<<nick<<std::endl;
 					SetConsoleTextAttribute(h, 10);
-					cout<<" _____________________________________________________________________"<<endl;
-					cout<<"                         [ESC] Powrot i zapis                         "<<endl;
+					std::cout<<" _____________________________________________________________________"<<std::endl;
+					std::cout<<"                         [ESC] Powrot i zapis                         "<<std::endl;
 				}
 				else
 				{
 					SetConsoleTextAttribute(h, 10);
-					cout<<" ________________________Ustawienia - LiveChat________________________"<<endl;
+					std::cout<<" ________________________Ustawienia - LiveChat________________________"<<std::endl;
 					SetConsoleTextAttribute(h, 7);
-					cout<<" [r] Przywróć ustawienia domyślne"<<endl;
-					cout<<" [a] Flaga na PTS: "<<((ang)?"ANG":"PL")<<endl;
+					std::cout<<" [r] Przywróć ustawienia domyślne"<<std::endl;
+					std::cout<<" [a] Flaga na PTS: "<<((ang)?"ANG":"PL")<<std::endl;
 					SetConsoleTextAttribute(h, 14);
-					cout<<" [p] Dźwięk wiadomości PW: "<<((!fLockPW)?"TAK":"NIE")<<endl;
-					cout<<" [t] Dźwięk wiadomości teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<endl;
-					cout<<" [s] Dźwięk komunikatow(raport, transport): "<<((!fLockKomunikat)?"TAK":"NIE")<<endl;
-					cout<<" [k] Powiadomienia na czacie - wybrane nicki: "<<((!fLockNick)?"TAK":"NIE")<<endl;
-					cout<<" [c] Dźwięk każdej wiadomości na czacie: "<<((chatSound)?"TAK":"NIE")<<endl;
+					std::cout<<" [p] Dźwięk wiadomości PW: "<<((!fLockPW)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [t] Dźwięk wiadomości teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [s] Dźwięk komunikatow(raport, transport): "<<((!fLockKomunikat)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [k] Powiadomienia na czacie - wybrane nicki: "<<((!fLockNick)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [c] Dźwięk każdej wiadomości na czacie: "<<((chatSound)?"TAK":"NIE")<<std::endl;
 					SetConsoleTextAttribute(h, 7);
-					cout<<" [1] Liczba wyświetlanych wierszy: "<<wyswietlaneWiersze<<endl;
-					cout<<" [2] Częstotliwość odświeżania(100-5000): "<<refresh<<endl;
-					cout<<" [3] Dynamiczne odświeżanie: "<<((dynamicRefresh)?"TAK":"NIE")<<endl;
-					cout<<" [4] Częstotliwość dźwięku(50-10000): "<<dzwiekGlowny<<endl;
-					cout<<" [5] Przerwa między dźwiękami(50-1000): "<<interval<<endl;
-					cout<<" [m] Automatyczne przenoszenie logów: "; if(autoMoveLogs) cout<<"TAK, przy "<<autoMoveLogs<<" wierszach"; else cout<<"NIE"; cout<<endl;
+					std::cout<<" [1] Liczba wyświetlanych wierszy: "<<wyswietlaneWiersze<<std::endl;
+					std::cout<<" [2] Częstotliwość odświeżania(100-5000): "<<refresh<<std::endl;
+					std::cout<<" [3] Dynamiczne odświeżanie: "<<((dynamicRefresh)?"TAK":"NIE")<<std::endl;
+					std::cout<<" [4] Częstotliwość dźwięku(50-10000): "<<dzwiekGlowny<<std::endl;
+					std::cout<<" [5] Przerwa między dźwiękami(50-1000): "<<interval<<std::endl;
+					std::cout<<" [m] Automatyczne przenoszenie logów: "; if(autoMoveLogs) std::cout<<"TAK, przy "<<autoMoveLogs<<" wierszach"; else std::cout<<"NIE"; std::cout<<std::endl;
 					SetConsoleTextAttribute(h, 14);
-					cout<<" [6] Czas rozładowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<endl;
-					cout<<" [7] Sam wybiorę / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiorę")<<endl;
+					std::cout<<" [6] Czas rozładowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<std::endl;
+					std::cout<<" [7] Sam wybiorę / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiorę")<<std::endl;
 					SetConsoleTextAttribute(h, 7);
-					cout<<" [8] F4 / zarobione pieniądze od ostatniego wyzerowania: $"<<money<<endl;
-					cout<<" [9] Liczba dostarczonych kursów: "<<courses<<endl;
-					cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<endl;
+					std::cout<<" [8] F4 / zarobione pieniądze od ostatniego wyzerowania: $"<<money<<std::endl;
+					std::cout<<" [9] Liczba dostarczonych kursów: "<<courses<<std::endl;
+					std::cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<std::endl;
 					int payment(0); payment = ((money*0.87)-3500)*grade;
-					cout<<" # # Wyplata wynosi "<<"$"<<payment<<endl;
-					if(courses) cout<<" # # Średnia na kurs wynosi $"<<money/courses<<endl;
-					cout<<" [x] Wyzeruj stan F4 i kursów"<<endl;
+					std::cout<<" # # Wyplata wynosi "<<"$"<<payment<<std::endl;
+					if(courses) std::cout<<" # # Średnia na kurs wynosi $"<<money/courses<<std::endl;
+					std::cout<<" [x] Wyzeruj stan F4 i kursów"<<std::endl;
 					SetConsoleTextAttribute(h, 14);
-					cout<<" [b] Nicknames - baza danych wybranych nicków"<<endl;
-					cout<<" [n] Nickname: "<<nick<<endl;
+					std::cout<<" [b] Nicknames - baza danych wybranych nicków"<<std::endl;
+					std::cout<<" [n] Nickname: "<<nick<<std::endl;
 					SetConsoleTextAttribute(h, 10);
-					cout<<" _____________________________________________________________________"<<endl;
-					cout<<"                         [ESC] Powrót i zapis                         "<<endl;
+					std::cout<<" _____________________________________________________________________"<<std::endl;
+					std::cout<<"                         [ESC] Powrót i zapis                         "<<std::endl;
 				}
 				Beep(dzwiekGlowny,100);
 				
@@ -325,10 +320,10 @@ int console() //con
 					case 'r':
 					{
 						cls();
-						cout<<"CZY NA PEWNO CHCESZ TO ZROBIC? ESC - Anuluj | Inny klawisz - zgoda"<<endl;
+						std::cout<<"CZY NA PEWNO CHCESZ TO ZROBIC? ESC - Anuluj | Inny klawisz - zgoda"<<std::endl;
 						if(getch() == 27) break;
 						readDefault();
-						cout<<"Ustawienia domyslne programu zostaly przywrocone!"<<endl;
+						std::cout<<"Ustawienia domyslne programu zostaly przywrocone!"<<std::endl;
 					}
 					break;
 					case 'a':
@@ -372,14 +367,14 @@ int console() //con
 						cls();
 						while(true)
 						{
-							cout<<"Podaj nowa ilosc wyswietlanych wierszy: ";
+							std::cout<<"Podaj nowa ilosc wyswietlanych wierszy: ";
 							if(!(cin>>wyswietlaneWiersze))
 							{
 								intError();
 								return 0;
 							}
 							if(wyswietlaneWiersze < 1 || wyswietlaneWiersze > 100)
-								cout<<"MIN 1; MAX 100"<<endl;
+								std::cout<<"MIN 1; MAX 100"<<std::endl;
 							else
 								break;
 						}
@@ -391,14 +386,14 @@ int console() //con
 						cls();
 						while(true)
 						{
-							cout<<"Podaj nowa czestotliwosc odswiezania: ";
+							std::cout<<"Podaj nowa czestotliwosc odswiezania: ";
 							if(!(cin>>refresh))
 							{
 								intError();
 								return 0;
 							}
 							if(refresh < 100 || refresh > 5000)
-								cout<<"MIN 100(0,1s); MAX 5000(5s)"<<endl;
+								std::cout<<"MIN 100(0,1s); MAX 5000(5s)"<<std::endl;
 							else
 								break;
 						}
@@ -416,14 +411,14 @@ int console() //con
 						cls();
 						while(true)
 						{
-							cout<<"Podaj nowa czestotliwosc dzwieku: ";
+							std::cout<<"Podaj nowa czestotliwosc dzwieku: ";
 							if(!(cin>>dzwiekGlowny))
 							{
 								intError();
 								return 0;
 							}
 							if(dzwiekGlowny < 50 || dzwiekGlowny > 10000)
-								cout<<"MIN 50; MAX 10000"<<endl;
+								std::cout<<"MIN 50; MAX 10000"<<std::endl;
 							else
 								break;
 						}
@@ -435,14 +430,14 @@ int console() //con
 						cls();
 						while(true)
 						{
-							cout<<"Podaj nowy odstep miedzy dzwiekami: ";
+							std::cout<<"Podaj nowy odstep miedzy dzwiekami: ";
 							if(!(cin>>interval))
 							{
 								intError();
 								return 0;
 							}
 							if(interval < 50 || interval > 1000)
-								cout<<"MIN 50; MAX 1000"<<endl;
+								std::cout<<"MIN 50; MAX 1000"<<std::endl;
 							else
 								break;
 						}
@@ -457,14 +452,14 @@ int console() //con
 							{
 								while(true)
 								{
-									cout<<"Podaj ilosc wierszy, od jakiej maja byc przenoszone logi: ";
+									std::cout<<"Podaj ilosc wierszy, od jakiej maja byc przenoszone logi: ";
 									if(!(cin>>autoMoveLogs))
 									{
 										intError();
 										return 0;
 									}
 									if(autoMoveLogs < 50 || autoMoveLogs > 1500)
-										cout<<"MIN 50; MAX 1500"<<endl;
+										std::cout<<"MIN 50; MAX 1500"<<std::endl;
 									else
 										break;
 								}
@@ -475,13 +470,13 @@ int console() //con
 					case '6':
 					{
 						cls();
-						cout<<"Podaj minuty: ";
+						std::cout<<"Podaj minuty: ";
 						if(!(cin>>temp))
 						{
 							intError();
 							return 0;
 						}
-						cout<<"Podaj sekundy: ";
+						std::cout<<"Podaj sekundy: ";
 						if(!(cin>>temp2))
 						{
 							intError();
@@ -501,14 +496,14 @@ int console() //con
 						cls();
 						while(true)
 						{
-							cout<<"Podaj nowa ilosc $(sama liczba): ";
+							std::cout<<"Podaj nowa ilosc $(sama liczba): ";
 							if(!(cin>>money))
 							{
 								intError();
 								return 0;
 							}
 							if(money < 0 || money > 9999999)
-								cout<<"MIN 0; MAX 9999999"<<endl;
+								std::cout<<"MIN 0; MAX 9999999"<<std::endl;
 							else
 								break;
 						}
@@ -520,14 +515,14 @@ int console() //con
 						cls();
 						while(true)
 						{
-							cout<<"Podaj nowa ilosc kursow: ";
+							std::cout<<"Podaj nowa ilosc kursow: ";
 							if(!(cin>>courses))
 							{
 								intError();
 								return 0;
 							}
 							if(courses < 0 || courses > 9999)
-								cout<<"MIN 0; MAX 9999"<<endl;
+								std::cout<<"MIN 0; MAX 9999"<<std::endl;
 							else
 								break;
 						}
@@ -539,14 +534,14 @@ int console() //con
 						cls();
 						while(true)
 						{
-							cout<<"Podaj wartosc rangi(sama liczba, bez znaku %): ";
+							std::cout<<"Podaj wartosc rangi(sama liczba, bez znaku %): ";
 							if(!(cin>>grade))
 							{
 								intError();
 								return 0;
 							}
 							if(grade < 20 || grade > 100)
-								cout<<"MIN 20; MAX 100"<<endl;
+								std::cout<<"MIN 20; MAX 100"<<std::endl;
 							else
 								break;
 						}
@@ -557,12 +552,12 @@ int console() //con
 					case 'x':
 					{
 						cls();
-						cout<<"CZY NA PEWNO CHCESZ TO ZROBIC? ESC - Anuluj | Inny klawisz - zgoda"<<endl;
+						std::cout<<"CZY NA PEWNO CHCESZ TO ZROBIC? ESC - Anuluj | Inny klawisz - zgoda"<<std::endl;
 						if(getch() == 27) break;
 						money = 0;
 						courses = 0;
 						cls();
-						cout<<"(INFO) Wyzerowano."<<endl;
+						std::cout<<"(INFO) Wyzerowano."<<std::endl;
 						break;
 					}
 					case 'b':
@@ -574,35 +569,35 @@ int console() //con
 							Beep(dzwiekGlowny,100);
 							if(menuGlowne)
 							{
-								cout<<" _____________________Ustawienia - Nicknames_____________________"<<endl;
-								cout<<" (INFO) Mozesz tez wpisywac nazwy recznie w pliku logus.ini"<<endl;
+								std::cout<<" _____________________Ustawienia - Nicknames_____________________"<<std::endl;
+								std::cout<<" (INFO) Mozesz tez wpisywac nazwy recznie w pliku logus.ini"<<std::endl;
 								SetConsoleTextAttribute(h, 14);
-								cout<<" [1] Dodaj nowego gracza"<<endl;
-								cout<<" [2] Usun ostatnio dodanego gracza"<<endl;
-								cout<<" [3] Wyswietl liste dodanych graczy"<<endl;
-								cout<<" [4] Usun gracza o danym id z listy"<<endl;
+								std::cout<<" [1] Dodaj nowego gracza"<<std::endl;
+								std::cout<<" [2] Usun ostatnio dodanego gracza"<<std::endl;
+								std::cout<<" [3] Wyswietl liste dodanych graczy"<<std::endl;
+								std::cout<<" [4] Usun gracza o danym id z listy"<<std::endl;
 								SetConsoleTextAttribute(h, 7);
-								cout<<" [r] Wykonaj odczyt z pliku, jesli gracz zostal dodany w logus.ini"<<endl;
-								cout<<" [x] Usun wszystkich graczy"<<endl;
+								std::cout<<" [r] Wykonaj odczyt z pliku, jesli gracz zostal dodany w logus.ini"<<std::endl;
+								std::cout<<" [x] Usun wszystkich graczy"<<std::endl;
 								SetConsoleTextAttribute(h, 10);
-								cout<<" ________________________________________________________________"<<endl;
-								cout<<"                       [ESC] Powrot i zapis                      "<<endl;
+								std::cout<<" ________________________________________________________________"<<std::endl;
+								std::cout<<"                       [ESC] Powrot i zapis                      "<<std::endl;
 							}
 							else
 							{
-								cout<<" _____________________Ustawienia - Nicknames_____________________"<<endl;
-								cout<<" (INFO) Możesz też wpisywać nazwy ręcznie w pliku logus.ini"<<endl;
+								std::cout<<" _____________________Ustawienia - Nicknames_____________________"<<std::endl;
+								std::cout<<" (INFO) Możesz też wpisywać nazwy ręcznie w pliku logus.ini"<<std::endl;
 								SetConsoleTextAttribute(h, 14);
-								cout<<" [1] Dodaj nowego gracza"<<endl;
-								cout<<" [2] Usuń ostatnio dodanego gracza"<<endl;
-								cout<<" [3] Wyświetl listę dodanych graczy"<<endl;
-								cout<<" [4] Usuń gracza o danym id z listy"<<endl;
+								std::cout<<" [1] Dodaj nowego gracza"<<std::endl;
+								std::cout<<" [2] Usuń ostatnio dodanego gracza"<<std::endl;
+								std::cout<<" [3] Wyświetl listę dodanych graczy"<<std::endl;
+								std::cout<<" [4] Usuń gracza o danym id z listy"<<std::endl;
 								SetConsoleTextAttribute(h, 7);
-								cout<<" [r] Wykonaj odczyt z pliku, jeśli gracz został dodany w logus.ini"<<endl;
-								cout<<" [x] Usuń wszystkich graczy"<<endl;
+								std::cout<<" [r] Wykonaj odczyt z pliku, jeśli gracz został dodany w logus.ini"<<std::endl;
+								std::cout<<" [x] Usuń wszystkich graczy"<<std::endl;
 								SetConsoleTextAttribute(h, 10);
-								cout<<" ________________________________________________________________"<<endl;
-								cout<<"                       [ESC] Powrot i zapis                      "<<endl;
+								std::cout<<" ________________________________________________________________"<<std::endl;
+								std::cout<<"                       [ESC] Powrot i zapis                      "<<std::endl;
 							}
 							wyb = wybor();
 							if(wyb == 27){
@@ -617,15 +612,15 @@ int console() //con
 									cls();
 									while(true)
 									{
-										cout<<"Podaj dokladna nazwe gracza: ";
+										std::cout<<"Podaj dokladna nazwe gracza: ";
 										cin>>s_temp;
 										if(s_temp.length()<3)
-											cout<<"Minimum 3 znaki!"<<endl;
+											std::cout<<"Minimum 3 znaki!"<<std::endl;
 										else
 										{   
 											cls();
 											nicknames.push_back(s_temp);
-											cout<<"Dodano gracza "<<s_temp<<endl;
+											std::cout<<"Dodano gracza "<<s_temp<<std::endl;
 											break;
 										}
 									}
@@ -635,10 +630,10 @@ int console() //con
 								{
 									cls();
 									if(nicknames.empty())
-										cout<<"(INFO) Lista graczy jest pusta"<<endl;
+										std::cout<<"(INFO) Lista graczy jest pusta"<<std::endl;
 									else
 									{   
-										cout<<"Usunieto gracza "<<nicknames.back()<<endl;
+										std::cout<<"Usunieto gracza "<<nicknames.back()<<std::endl;
 										nicknames.pop_back();
 									}
 									break;
@@ -647,12 +642,12 @@ int console() //con
 								{
 									cls();
 									if(nicknames.empty())
-										cout<<"(INFO) Lista graczy jest pusta"<<endl;
+										std::cout<<"(INFO) Lista graczy jest pusta"<<std::endl;
 									else
 									{   
 										for(int i = 0; i < nicknames.size(); i++)
 										{
-											cout<<i+1<<". "<<nicknames.at(i)<<endl;
+											std::cout<<i+1<<". "<<nicknames.at(i)<<std::endl;
 										}
 									}
 									break;
@@ -661,21 +656,21 @@ int console() //con
 								{
 									cls();
 									if(nicknames.empty())
-										cout<<"(INFO) Lista graczy jest pusta"<<endl;
+										std::cout<<"(INFO) Lista graczy jest pusta"<<std::endl;
 									else
 									{   
 										cls();
 										for(int i = 0; i < nicknames.size(); i++)
 										{
-											cout<<i+1<<". "<<nicknames.at(i)<<endl;
+											std::cout<<i+1<<". "<<nicknames.at(i)<<std::endl;
 										}
-										cout<<"Podaj id gracza, ktorego chcesz usunac: ";
+										std::cout<<"Podaj id gracza, ktorego chcesz usunac: ";
 										if(!(cin>>temp))
 										{
 											intError();
 											return 0;
 										}
-										cout<<"Usunieto gracza "<<nicknames.at(temp-1)<<endl;
+										std::cout<<"Usunieto gracza "<<nicknames.at(temp-1)<<std::endl;
 										nicknames.erase(nicknames.begin()+temp-1);
 									}
 									break;
@@ -690,10 +685,10 @@ int console() //con
 								case 'x':
 								{
 									cls();
-									cout<<"CZY NA PEWNO CHCESZ TO ZROBIC? ESC - Anuluj | Inny klawisz - zgoda"<<endl;
+									std::cout<<"CZY NA PEWNO CHCESZ TO ZROBIC? ESC - Anuluj | Inny klawisz - zgoda"<<std::endl;
 									if(getch() == 27) break;
 									nicknames.clear();
-									cout<<"Usunieto wszystkich graczy"<<endl;
+									std::cout<<"Usunieto wszystkich graczy"<<std::endl;
 									break;
 								}
 								default: def();
@@ -704,14 +699,14 @@ int console() //con
 					case 'n':
 					{
 						cls();
-						cout<<"Nazwa nicku potrzebna jest do poprawnego dzialania LiveChat"<<endl;
+						std::cout<<"Nazwa nicku potrzebna jest do poprawnego dzialania LiveChat"<<std::endl;
 						while(true)
 						{
-							cout<<"Podaj swoj nowy nick: ";
+							std::cout<<"Podaj swoj nowy nick: ";
 							cin>>nick;
 							if(nick.length()<3)
 							{
-								cout<<"MINIMUM 3 znaki"<<endl;
+								std::cout<<"MINIMUM 3 znaki"<<std::endl;
 							}
 							else break;
 						}
@@ -731,14 +726,14 @@ int console() //con
 				codePage852 = 0;
 				SetConsoleOutputCP(65001);
 				SetConsoleCP(65001); 
-				cout<<"Kodowanie UTF-8"<<endl;
+				std::cout<<"Kodowanie UTF-8"<<std::endl;
 			}
 			else
 			{
 				codePage852 = 1;
 				SetConsoleOutputCP(852);
 				SetConsoleCP(852); 
-				cout<<"Kodowanie 852"<<endl;
+				std::cout<<"Kodowanie 852"<<std::endl;
 			}
 			break;
 		}
@@ -748,12 +743,12 @@ int console() //con
 			if(menuGlowne)
 			{
 				menuGlowne = 0;
-				cout<<"Menu z polskimi ogonkami"<<endl;
+				std::cout<<"Menu z polskimi ogonkami"<<std::endl;
 			}
 			else
 			{
 				menuGlowne = 1;
-				cout<<"Menu bez polskich ogonkow"<<endl;
+				std::cout<<"Menu bez polskich ogonkow"<<std::endl;
 			}
 			break;
 		}
@@ -761,7 +756,7 @@ int console() //con
 		{
 			cls();
 			dzwiekGlowny = losuj(50,10000);
-			cout<<dzwiekGlowny<<endl;
+			std::cout<<dzwiekGlowny<<std::endl;
 			break;
 		}
 
@@ -772,8 +767,8 @@ int console() //con
 			{
 				Beep(dzwiekGlowny,500);
 				system("ping google.pl -n 2");
-				cout<<endl;
-				cout<<"POWROT - DOWOLNY KLAWISZ"<<endl;
+				std::cout<<std::endl;
+				std::cout<<"POWROT - DOWOLNY KLAWISZ"<<std::endl;
 				if(kbhit())
 				{
 					getch();
@@ -823,7 +818,6 @@ void liveChat(int &wyswietlaneWiersze) //lc
 {
 	string ostatniaLinia[11]; //ostatnie linie
 	
-	
 	int lineCount = 0;
 	fstream file;
 	string line;
@@ -862,7 +856,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			if(kbhit()) break;
 		}
 
-		if(dynamicRefresh && refresh<2000 && !kbhit()) refresh+=10;
+		if(dynamicRefresh && refresh<950 && !kbhit()) refresh+=7;
 
 		//if key pressed
 		if(kbhit())
@@ -884,13 +878,13 @@ void liveChat(int &wyswietlaneWiersze) //lc
 					isCzas = 0;
 					timer = 0;
 					pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
-					SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
+					SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
 				}
 				break;
 			case 'm':
 				{
 					cls();
-					cout<<"CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda"<<endl;
+					std::cout<<"CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda"<<std::endl;
 					if(getch() == 27) {getChat(lineCount); break;}
 					moveLogs();
 				}
@@ -911,7 +905,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				{
 					pos.X=10; pos.Y=0; SetConsoleCursorPosition(h, pos);
 					Beep(dzwiekGlowny, 100);
-					cout<<"ZAPISANO!"; Sleep(500);
+					std::cout<<"ZAPISANO!"; Sleep(500);
 					zapis();
 				}
 				break;
@@ -919,7 +913,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				{
 					pos.X=10; pos.Y=0; SetConsoleCursorPosition(h, pos);
 					Beep(dzwiekGlowny, 100);
-					cout<<"WCZYTANO!"; Sleep(500);
+					std::cout<<"WCZYTANO!"; Sleep(500);
 					odczyt();
 				}
 				break;
@@ -980,39 +974,39 @@ void liveChat(int &wyswietlaneWiersze) //lc
 				Beep(0,interval);
 				isTimer = 0;
 				pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
-				cout<<"  [t]Timer                     ";
+				std::cout<<"  [t]Timer                     ";
 			}
 		}
 
 		//he ad
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 		SetConsoleTextAttribute(h, 12);
-		cout<<"###############################LiveChat###############################"<<endl;
-		SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-		cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lineCount-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<endl;
+		std::cout<<"###############################LiveChat###############################"<<std::endl;
+		SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
+		std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lineCount-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<std::endl;
 		if(isTimer)
 		{
-			SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
-			cout<<" Timer "<<timer/1000/60;
-			if((timer/1000)%60<10) cout<<":0"; else cout<<":";
-			cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
+			SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
+			std::cout<<" Timer "<<timer/1000/60;
+			if((timer/1000)%60<10) std::cout<<":0"; else std::cout<<":";
+			std::cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
 		}
 		else
 		{
-			SetConsoleTextAttribute(h, 204); cout<<" "; SetConsoleTextAttribute(h, 12);
-			cout<<" [t]Timer                  # F4 ";
+			SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
+			std::cout<<" [t]Timer                  # F4 ";
 		}
-		if(courses) cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
-		else      cout<<"Dostarczone kursy: "<<courses<<"                                             ";
-		SetConsoleTextAttribute(h, 204); cout<<"\n "; SetConsoleTextAttribute(h, 12);
+		if(courses) std::cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
+		else      std::cout<<"Dostarczone kursy: "<<courses<<"                                             ";
+		SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
 		int payment(0); payment = ((money>0)?((money*0.87)-3500)*grade:0);
-		cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<payment;
+		std::cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<payment;
 		SetConsoleTextAttribute(h, 204);
-		pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); cout<<" ";
-		pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); cout<<" ";
-		pos.X=69; pos.Y=3; SetConsoleCursorPosition(h, pos); cout<<" ";
+		pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); std::cout<<" ";
+		pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); std::cout<<" ";
+		pos.X=69; pos.Y=3; SetConsoleCursorPosition(h, pos); std::cout<<" ";
 		SetConsoleTextAttribute(h, 12);
-		cout<<"\n################################################"<<"#####[m]moveLogs()####"<<endl;
+		std::cout<<"\n################################################"<<"#####[m]moveLogs()####"<<std::endl;
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 		
 		lineCount = 0;
@@ -1064,7 +1058,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 							//saving errors
 							fstream error;
 							error.open("logusErrors.log", ios::app);
-								error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<endl;
+								error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<std::endl;
 								error<<"TYPE: PRE\n";
 								error<<"ROWS: "<<lineCount<<"\n";
 								error<<"Refresh: "<<refresh<<"\n";
@@ -1073,9 +1067,9 @@ void liveChat(int &wyswietlaneWiersze) //lc
 								error<<"LAST(9)\n";
 								for (size_t i = 9; i >= 1; i--)
 								{
-									error<<i<<". "<<ostatniaLinia[i]<<endl;
+									error<<i<<". "<<ostatniaLinia[i]<<std::endl;
 								}
-								cout<<endl;
+								std::cout<<std::endl;
 							error.close();
 						}
 						break;
@@ -1123,7 +1117,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 					errors++;
 					fstream error;
 					error.open("logusErrors.log", ios::app);
-						error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<endl;
+						error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<std::endl;
 						error<<"TYPE: POST\n";
 						error<<"ROWS: "<<lineCount<<"\n";
 						error<<"Refresh: "<<refresh<<"\n";
@@ -1132,9 +1126,9 @@ void liveChat(int &wyswietlaneWiersze) //lc
 						error<<"LAST(10)\n";
 						for (size_t i = 10; i >= 1; i--)
 						{
-							error<<i<<". "<<ostatniaLinia[i]<<endl;
+							error<<i<<". "<<ostatniaLinia[i]<<std::endl;
 						}
-						cout<<endl;
+						std::cout<<std::endl;
 					error.close();
 				}
 				break;
@@ -1149,31 +1143,31 @@ void liveChat(int &wyswietlaneWiersze) //lc
 void preNews();
 void wersja()
 {
-	cout<<endl;
-	cout<<"  Witaj "<<nick<<" !"<<endl;
+	std::cout<<std::endl;
+	std::cout<<"  Witaj "<<nick<<" !"<<std::endl;
 	Sleep(300);
-	cout<<"  ___________________"<<endl;
-	cout<<" |       Autor       |"<<endl;
-	cout<<" |       DarXe       |"<<endl;
-	cout<<" |___________________|"<<endl;
-	cout<<" |  Wersja 20.3-Pre  |"<<endl; //verr
-	/*Sleep(300); cout<<endl;
-	cout<<" PLANY: "<<endl;
-	cout<<" Kreator wlasnych powiadomien"<<endl;
-	cout<<" Wyszukiwanie wiadomosci tylko wybranych przez siebie graczy"<<endl;
-	cout<<" Wyszukiwanie po tagach, ktore bedzie sie tworzylo(wysylalo) w konsoli mta"<<endl;
-	cout<<" Naprawienie problemu z polskimi znakami na systemach win7"<<endl;*/
-	Sleep(300); cout<<endl;
-	cout<<" Nie zapomnij zagladnac na githuba - znajdziesz tam informacje o tym-"<<endl;
-	cout<<" -jak korzystac z programu (sa tam opisane wszystkie opcje)"<<endl;
-	cout<<" https://github.com/DarXe/Logus/blob/master/README.md\n"<<endl;
+	std::cout<<"  ___________________"<<std::endl;
+	std::cout<<" |       Autor       |"<<std::endl;
+	std::cout<<" |       DarXe       |"<<std::endl;
+	std::cout<<" |___________________|"<<std::endl;
+	std::cout<<" |  Wersja 20.3-Pre  |"<<std::endl; //verr
+	/*Sleep(300); std::cout<<std::endl;
+	std::cout<<" PLANY: "<<std::endl;
+	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;
+	std::cout<<" Wyszukiwanie wiadomosci tylko wybranych przez siebie graczy"<<std::endl;
+	std::cout<<" Wyszukiwanie po tagach, ktore bedzie sie tworzylo(wysylalo) w konsoli mta"<<std::endl;
+	std::cout<<" Naprawienie problemu z polskimi znakami na systemach win7"<<std::endl;*/
+	Sleep(300); std::cout<<std::endl;
+	std::cout<<" Nie zapomnij zagladnac na githuba - znajdziesz tam informacje o tym-"<<std::endl;
+	std::cout<<" -jak korzystac z programu (sa tam opisane wszystkie opcje)"<<std::endl;
+	std::cout<<" https://github.com/DarXe/Logus/blob/master/README.md\n"<<std::endl;
 	Sleep(500); Beep(dzwiekGlowny,150);
-	cout<<" Wcisnij klawisz, aby wyswietlic nowosci"<<endl; getch();
+	std::cout<<" Wcisnij klawisz, aby wyswietlic nowosci"<<std::endl; getch();
 	cls();
-	cout<<" CO NOWEGO?"<<endl;
+	std::cout<<" CO NOWEGO?"<<std::endl;
 	preNews();
-	cout<<endl;
-	cout<<" Wcisnij klawisz, aby wyswietlic MENU"<<endl;
+	std::cout<<std::endl;
+	std::cout<<" Wcisnij klawisz, aby wyswietlic MENU"<<std::endl;
 	getch();
 	cls();
 }
@@ -1181,124 +1175,129 @@ void wersja()
 void menu()
 {
 	SetConsoleTextAttribute(h, 10);
-	cout<<" _______________________________________MENU_______________________________________"<<endl;
+	std::cout<<" _______________________________________MENU_______________________________________"<<std::endl;
 	SetConsoleTextAttribute(h, 11);
-	cout<<" [Enter] Uruchom MTA i połącz z PTS / Połącz ponownie"<<endl;
-	cout<<" [L] PTS TOTOLOTEK - Lotto Logus"<<endl;
+	std::cout<<" [Enter] Uruchom MTA i połącz z PTS / Połącz ponownie"<<std::endl;
+	std::cout<<" [L] PTS TOTOLOTEK - Lotto Logus"<<std::endl;
 	SetConsoleTextAttribute(h, 12);
-	cout<<" [s] Szybki start LiveChat + PTS: ";
+	std::cout<<" [s] Szybki start LiveChat + PTS: ";
 	switch (fastStart)
 	{
 	case 0:
-		cout<<"Nie, ale wyświetl info o wersji";
+		std::cout<<"Nie, ale wyświetl info o wersji";
 		break;
 	case 1:
-		cout<<"Tak, uruchom MTA:PTS przy starcie Logusa";
+		std::cout<<"Tak, uruchom MTA:PTS przy starcie Logusa";
 		break;
 	default:
-		cout<<"Nie uruchamiaj, ani nie wyświetlaj info o wersji";
+		std::cout<<"Nie uruchamiaj, ani nie wyświetlaj info o wersji";
 		break;
 	}
-	cout<<endl;
-	cout<<" [t] LiveChat - czat z gry w konsoli z komunikatami dźwiękowymi"<<endl;
-	cout<<" [5] LiveChat - ustawienia"<<endl;
+	std::cout<<std::endl;
+	std::cout<<" [t] LiveChat - czat z gry w konsoli z komunikatami dźwiękowymi"<<std::endl;
+	std::cout<<" [5] LiveChat - ustawienia"<<std::endl;
 	SetConsoleTextAttribute(h, 11);
-	cout<<" [1] Szukaj wiadomości teamowych w console.log"<<endl;
-	cout<<" [2] Szukaj PW oraz odpowiedzi w console.log"<<endl;
-	cout<<" [3] Szukaj wiadomości teamowych we wszystkich plikach .log"<<endl;
-	cout<<" [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log"<<endl;
+	std::cout<<" [1] Szukaj wiadomości teamowych w console.log"<<std::endl;
+	std::cout<<" [2] Szukaj PW oraz odpowiedzi w console.log"<<std::endl;
+	std::cout<<" [3] Szukaj wiadomości teamowych we wszystkich plikach .log"<<std::endl;
+	std::cout<<" [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log"<<std::endl;
 	SetConsoleTextAttribute(h, 12);
-	cout<<" [p] Szukaj przelewów od i do graczy we wszystkich plikach"<<endl;
-	cout<<" [n] Ilość wierszy w plikach"<<endl;
+	std::cout<<" [p] Szukaj przelewów od i do graczy we wszystkich plikach"<<std::endl;
+	std::cout<<" [n] Ilość wierszy w plikach"<<std::endl;
 	SetConsoleTextAttribute(h, 11);
-	cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet"<<endl;
-	cout<<" [j] Menu bez polskich znaków"<<endl;
-	cout<<" [9] Zmiana dźwięku na losowy"<<endl;
-	cout<<" [0] Kodowanie: "<<((codePage852)?"852":"UTF-8")<<endl;
-	cout<<" [i] INFO"<<endl;
+	std::cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet"<<std::endl;
+	std::cout<<" [j] Menu bez polskich znaków"<<std::endl;
+	std::cout<<" [9] Zmiana dźwięku na losowy"<<std::endl;
+	std::cout<<" [0] Kodowanie: "<<((codePage852)?"852":"UTF-8")<<std::endl;
+	std::cout<<" [i] INFO"<<std::endl;
 	SetConsoleTextAttribute(h, 10);
-	cout<<" __________________________________________________________________________________"<<endl;
-	cout<<"                                [ESC] Wyjście i zapis                              "<<endl;
+	std::cout<<" __________________________________________________________________________________"<<std::endl;
+	std::cout<<"                                [ESC] Wyjście i zapis                              "<<std::endl;
 }
 
 void menuBezPL()
 {
 	SetConsoleTextAttribute(h, 10);
-	cout<<" _______________________________________MENU_______________________________________"<<endl;
+	std::cout<<" _______________________________________MENU_______________________________________"<<std::endl;
 	SetConsoleTextAttribute(h, 11);
-	cout<<" [Enter] Uruchom MTA i polacz z PTS / Polacz ponownie"<<endl;
-	cout<<" [L] PTS TOTOLOTEK - Lotto Logus"<<endl;
+	std::cout<<" [Enter] Uruchom MTA i polacz z PTS / Polacz ponownie"<<std::endl;
+	std::cout<<" [L] PTS TOTOLOTEK - Lotto Logus"<<std::endl;
 	SetConsoleTextAttribute(h, 12);
-	cout<<" [s] Szybki start LiveChat + PTS: ";
+	std::cout<<" [s] Szybki start LiveChat + PTS: ";
 	switch (fastStart)
 	{
 	case 0:
-		cout<<"Nie, ale wyswietl info o wersji";
+		std::cout<<"Nie, ale wyswietl info o wersji";
 		break;
 	case 1:
-		cout<<"Tak, uruchom MTA:PTS przy starcie Logusa";
+		std::cout<<"Tak, uruchom MTA:PTS przy starcie Logusa";
 		break;
 	default:
-		cout<<"Nie uruchamiaj, ani nie wyswietlaj info o wersji";
+		std::cout<<"Nie uruchamiaj, ani nie wyswietlaj info o wersji";
 		break;
 	}
-	cout<<endl;
-	cout<<" [t] LiveChat - czat z gry w konsoli z komunikatami dzwiekowymi"<<endl;
-	cout<<" [5] LiveChat - ustawienia"<<endl;
+	std::cout<<std::endl;
+	std::cout<<" [t] LiveChat - czat z gry w konsoli z komunikatami dzwiekowymi"<<std::endl;
+	std::cout<<" [5] LiveChat - ustawienia"<<std::endl;
 	SetConsoleTextAttribute(h, 11);
-	cout<<" [1] Szukaj wiadomosci teamowych w console.log"<<endl;
-	cout<<" [2] Szukaj PW oraz odpowiedzi w console.log"<<endl;
-	cout<<" [3] Szukaj wiadomosci teamowych we wszystkich plikach .log"<<endl;
-	cout<<" [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log"<<endl;
+	std::cout<<" [1] Szukaj wiadomosci teamowych w console.log"<<std::endl;
+	std::cout<<" [2] Szukaj PW oraz odpowiedzi w console.log"<<std::endl;
+	std::cout<<" [3] Szukaj wiadomosci teamowych we wszystkich plikach .log"<<std::endl;
+	std::cout<<" [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log"<<std::endl;
 	SetConsoleTextAttribute(h, 12);
-	cout<<" [p] Szukaj przelewow od i do graczy we wszystkich plikach"<<endl;
-	cout<<" [n] Ilosc wierszy w plikach"<<endl;
+	std::cout<<" [p] Szukaj przelewow od i do graczy we wszystkich plikach"<<std::endl;
+	std::cout<<" [n] Ilosc wierszy w plikach"<<std::endl;
 	SetConsoleTextAttribute(h, 11);
-	cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet"<<endl;
-	cout<<" [j] Menu z polskimi znakami"<<endl;
-	cout<<" [9] Zmiana dzwieku na losowy"<<endl;
-	cout<<" [0] Kodowanie: "<<((codePage852)?"852":"UTF-8")<<endl;
-	cout<<" [i] INFO"<<endl;
+	std::cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet"<<std::endl;
+	std::cout<<" [j] Menu z polskimi znakami"<<std::endl;
+	std::cout<<" [9] Zmiana dzwieku na losowy"<<std::endl;
+	std::cout<<" [0] Kodowanie: "<<((codePage852)?"852":"UTF-8")<<std::endl;
+	std::cout<<" [i] INFO"<<std::endl;
 	SetConsoleTextAttribute(h, 10);
-	cout<<" __________________________________________________________________________________"<<endl;
-	cout<<"                                [ESC] Wyjscie i zapis                              "<<endl;
+	std::cout<<" __________________________________________________________________________________"<<std::endl;
+	std::cout<<"                                [ESC] Wyjscie i zapis                              "<<std::endl;
 }
 
 void preNews()
 {
 	SetConsoleTextAttribute(h, 10);
-	cout<<" Od 12 sierpnia '19 prace nad programem zostały wstrzymane"<<endl;
-	cout<<" Nowy Rok, nowe wyzwania - kontynuacja rozwoju programu :)"<<endl;
+	std::cout<<" Od 12 sierpnia '19 prace nad programem zostały wstrzymane"<<std::endl;
+	std::cout<<" Nowy Rok, nowe wyzwania - kontynuacja rozwoju programu :)"<<std::endl;
 	SetConsoleTextAttribute(h, 7);
-	cout<<" Zmiany"<<endl;
-	cout<<" Jeszcze w sierpniu zmieniono system sprawdzania nowych linii"<<endl;
-	cout<<" 201_2 Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames"<<endl;
-	cout<<" * Pozostaje powiadomienie na wejscie i wyjscie z serwera oraz na status AFK danego gracza"<<endl;
-	cout<<" 202_13 Poprawiono blad przy wyswietlaniu wyplaty wiekszej niz $1000000 w LiveChat oraz ustawieniach"<<endl;
-	cout<<" * Dodatkowo juz nie bedzie wyswietlana wyplata mniejsza niz 0"<<endl;
-	cout<<" 202_13 Zmodyfikowano sprawdzanie warunków przy dostarczonym towarze"<<endl;
-	cout<<" * Jest to kolejna próba testów z serii 'co powoduje pomijanie zapisu niektórych kursów'"<<endl;
-	cout<<" 202_13 Po wciśnięciu entera wraz z uruchomieniem serwera włączy się funkcja LiveChat"<<endl;
+	std::cout<<" Zmiany"<<std::endl;
+	std::cout<<" Jeszcze w sierpniu zmieniono system sprawdzania nowych linii"<<std::endl;
+	std::cout<<" 201_2 Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames"<<std::endl;
+	std::cout<<" * Pozostaje powiadomienie na wejscie i wyjscie z serwera oraz na status AFK danego gracza"<<std::endl;
+	std::cout<<" 202_13 Poprawiono blad przy wyswietlaniu wyplaty wiekszej niz $1000000 w LiveChat oraz ustawieniach"<<std::endl;
+	std::cout<<" * Dodatkowo juz nie bedzie wyswietlana wyplata mniejsza niz 0"<<std::endl;
+	std::cout<<" 202_13 Zmodyfikowano sprawdzanie warunków przy dostarczonym towarze"<<std::endl;
+	std::cout<<" * Jest to kolejna próba testów z serii 'co powoduje pomijanie zapisu niektórych kursów'"<<std::endl;
+	std::cout<<" 202_13 Po wciśnięciu entera wraz z uruchomieniem serwera włączy się funkcja LiveChat"<<std::endl;
 	
-	cout<<" 203_1 Zmieniono polecenie reconnect z 'r' na 'rr'"<<endl;
-	cout<<" 203_1 Dodano nowy plik .log, aby mieć szybszy dostęp do logów z powiadomień(PW, TEAM, TOWAR)"<<endl;
-	cout<<" * Po wyłączeniu komunikatu dźwiękowego w opcjach linijka z logiem nie pojawi się w tym pliku"<<endl;
-	cout<<" * Plik znajduje się w folderze logs, logusInfoOutput.log"<<endl;
-	cout<<" 203_1 Zmieniono kolorystykę czatu w LiveChat oddzielając wiadomość od nazwy gracza"<<endl;
-	cout<<" * Jak na razie zmiany zostały wprowadzone w trybie bez daty(Timestamps)"<<endl;
-	cout<<" 203_2 Został dodany kolor żółty dla powiadomień zakończonych na '!' oraz zaczynających '*'"<<endl;
-	cout<<" * Bindy oraz inne wiadomości zawierające wykrzyknik też są kolorowane"<<endl;
-	cout<<" 203_3 Dodano nową komendę - ustawienie F4 z poziomu konsoli MTA"<<endl;
-	cout<<" * Wpisując w konsoli 'set m KWOTA', F4 ustawi się na podaną wartość"<<endl;
-	cout<<" * Dodano też komendę na ustawienie ilości kursów - set c KURSY"<<endl;
-	cout<<" 203_3 Usunięto kolorowanie powiadomień z wykrzyknikami"<<endl;
+	std::cout<<" 203_1 Zmieniono polecenie reconnect z 'r' na 'rr'"<<std::endl;
+	std::cout<<" 203_1 Dodano nowy plik .log, aby mieć szybszy dostęp do logów z powiadomień(PW, TEAM, TOWAR)"<<std::endl;
+	std::cout<<" * Po wyłączeniu komunikatu dźwiękowego w opcjach linijka z logiem nie pojawi się w tym pliku"<<std::endl;
+	std::cout<<" * Plik znajduje się w folderze logs, logusInfoOutput.log"<<std::endl;
+	std::cout<<" 203_1 Zmieniono kolorystykę czatu w LiveChat oddzielając wiadomość od nazwy gracza"<<std::endl;
+	std::cout<<" * Jak na razie zmiany zostały wprowadzone w trybie bez daty(Timestamps)"<<std::endl;
+	std::cout<<" 203_2 Został dodany kolor żółty dla powiadomień zakończonych na '!' oraz zaczynających '*'"<<std::endl;
+	std::cout<<" * Bindy oraz inne wiadomości zawierające wykrzyknik też są kolorowane"<<std::endl;
+	std::cout<<" 203_3 Dodano nową komendę - ustawienie F4 z poziomu konsoli MTA"<<std::endl;
+	std::cout<<" * Wpisując w konsoli 'set m KWOTA', F4 ustawi się na podaną wartość"<<std::endl;
+	std::cout<<" * Dodano też komendę na ustawienie ilości kursów - set c KURSY"<<std::endl;
+	std::cout<<" 203_3 Usunięto kolorowanie powiadomień z wykrzyknikami"<<std::endl;
+	std::cout<<" 204_9 **"<<std::endl;
 }
 
 //
-//todo
+//todo: Wer-Dar 6:37, to były czasy
 //console - wychodzenie przez quit ma tez wylaczac Logusa
 //baza graczy - wybieranie powiadomien dla kazdego gracza (join, quit, afk, chat)
 //
 //g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static gg
 
 //g++ -g main.cpp src\*.cpp -o Logus-pre.exe
+//* HydroMoon has left the game (Quit)
+//* HydroMoon has joined the game
+//grimmy: STAĆ POLICJA! | STOP POLICE! Zjedź na pobocze! | Pull over!
+//30 kwietnia 2020
