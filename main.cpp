@@ -1262,7 +1262,7 @@ void menuBezPL()
 	std::cout<<"                                [ESC] Wyjscie i zapis                              "<<std::endl;
 }
 
-void preNews()
+void preNews() //news
 {
 	SetConsoleTextAttribute(h, 10);
 	std::cout<<" Od 12 sierpnia '19 prace nad programem zostały wstrzymane"<<std::endl;
@@ -1299,6 +1299,8 @@ void preNews()
 	std::cout<<" * Jeśli takich plików nie ma to Logus sam je zainicjuje (pliki log.1 log.2 itd.)"<<std::endl;
 	std::cout<<" 205_6 Zmieniono animacje wyłączenia programu"<<std::endl;
 	std::cout<<" * Dodano dźwięki, tekst jest różny w zależności od powodu zamknięcia programu"<<std::endl;
+	std::cout<<" 205_61 Dodano komendę na reset kursów i $ z poziomu konsoli mta"<<std::endl;
+	std::cout<<" * 'set reset', 'set re'"<<std::endl;
 }
 
 //
