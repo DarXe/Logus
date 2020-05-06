@@ -88,7 +88,7 @@ void salaryForTransport(string &line, bool &ang)
 	}
 }
 
-void liveChatBeep(string &ostatniaLinia) //bee
+bool liveChatBeep(string &ostatniaLinia) //bee
 {
 	//wiadomość pw
 	if(!fLockPW){
@@ -172,11 +172,15 @@ void liveChatBeep(string &ostatniaLinia) //bee
 		}
 	}
 
-	if(fConsoleInput(ostatniaLinia))
+	char _quit = fConsoleInput(ostatniaLinia);
+	if(_quit)
 	{
 		Beep(dzwiekGlowny,100);
 		Beep(0,interval);
+		if(_quit == 2) return 0; //close Logus
 	}
+
+	return 1;
 }
 
 void getChat(int &lineCount)//gc
@@ -322,17 +326,34 @@ void moveLogs()//mv clean and move logs mtasarom console.log to logus.log
 	cout<<"Brak wierszy po przeniesieniu logow!";
 }
 
-void runLiveChat()//flc
+bool runLiveChat()//flc
 {
 	s_temp = "start mtasa://"+mtasa;
 	system(s_temp.c_str());
 	cls();
 	Beep(dzwiekGlowny,100);
-	liveChat(wyswietlaneWiersze);
+	bool _quit = liveChat(wyswietlaneWiersze);
+	if(!_quit) return 0;
+	return 1;
 }
 
 void serverConnect()//flc
 {
 	s_temp = "start mtasa://"+mtasa;
 	system(s_temp.c_str());
+}
+
+bool closeLogus(string text = "Bye bye")
+{
+	cls();
+	zapis();
+	Beep(dzwiekGlowny-100,250);
+	std::cout<<"\n"<<text;
+	for(int i = 0; i<5; i++){
+		std::cout<<".";
+		if(i == 2) {Beep(dzwiekGlowny,200); continue;}
+		Sleep(400);
+	}
+	Beep(dzwiekGlowny+100,250);
+	return 0;
 }

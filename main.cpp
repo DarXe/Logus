@@ -10,12 +10,12 @@
 #include "randomLogus.hpp"
 #include "var.hpp"
 
-#define q(var) std::cout<<#var<<"="<<var<<std::endl
+#define q(var) cout<<#var<<"="<<var<<endl
 
 using namespace std;
 #include "patch.cpp"
 int console();
-void liveChat(int &wyswietlaneWiersze);
+bool liveChat(int &wyswietlaneWiersze);
 void menu();
 void menuBezPL();
 void wersja();
@@ -42,11 +42,19 @@ int main(int argc, char** argv) //maa main
 			std::cout<<"Dowolny klawisz - zamknij okno\n"<<std::endl;
 			if(kbhit()) return 0;
 		}
-		{fstream fileInit;
-		fileInit.open("logusInfoOutput.log", ios::app);
-		fileInit.close();
-		fileInit.open("logus.log", ios::app);
-		fileInit.close();}
+		
+		{
+			fstream fileInit;
+			fileInit.open("console.log", ios::app); fileInit.close();
+			fileInit.open("console.log.1", ios::app); fileInit.close();
+			fileInit.open("console.log.2", ios::app); fileInit.close();
+			fileInit.open("console.log.3", ios::app); fileInit.close();
+			fileInit.open("console.log.4", ios::app); fileInit.close();
+			fileInit.open("console.log.5", ios::app); fileInit.close();
+			fileInit.open("logusInfoOutput.log", ios::app); fileInit.close();
+			fileInit.open("logus.log", ios::app); fileInit.close();
+		}
+
 	file.close();
 
 	file.open("logus.ini");
@@ -60,7 +68,7 @@ int main(int argc, char** argv) //maa main
 			zapis();
 		}
 	file.close();
-	string _versionName_ = "Logus 20.3 Pre-Release";
+	string _versionName_ = "Logus 20.5 Pre-Release";
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
 
@@ -83,7 +91,8 @@ int main(int argc, char** argv) //maa main
 		break;
 	case 1:
 		{
-			runLiveChat();
+			bool _quit = runLiveChat();
+			if(!_quit) return closeLogus("Zamykanie MTA i programu"); //close Logus
 		}
 	default:
 		break;
@@ -112,14 +121,7 @@ int console() //con
 
 		wyb = wybor();
 		if(wyb == 27){
-			cls();
-			zapis();
-			std::cout<<"\nBye bye";
-			for(int i = 0; i<3; i++){
-				std::cout<<".";
-				Sleep(400);
-			}
-			break;
+			return closeLogus("Zamykanie programu");
 		}
 
 		switch(wyb) //set0 MENU
@@ -215,7 +217,8 @@ int console() //con
 		{
 			cls();
 			if(isTimer) timer -= (clock()-delay2);
-			liveChat(wyswietlaneWiersze); //run LiveChat
+			bool _quit = liveChat(wyswietlaneWiersze); //run LiveChat
+			if(!_quit) return closeLogus("Zamykanie MTA i programu"); //close Logus
 			break;
 		} 
 		case 'l':
@@ -804,7 +807,8 @@ int console() //con
 		case 13:
 		{
 			cls();
-			runLiveChat();
+			bool _quit = runLiveChat();
+			if(!_quit) return closeLogus("Zamykanie MTA i programu"); //close Logus
 			break;
 		}
 		default:
@@ -814,10 +818,9 @@ int console() //con
 	return 0;
 }
 
-void liveChat(int &wyswietlaneWiersze) //lc
+bool liveChat(int &wyswietlaneWiersze) //lc
 {
 	string ostatniaLinia[11]; //ostatnie linie
-	
 	int lineCount = 0;
 	fstream file;
 	string line;
@@ -1092,25 +1095,25 @@ void liveChat(int &wyswietlaneWiersze) //lc
 			switch (temp)
 			{
 			case 10:
-				liveChatBeep(ostatniaLinia[10]);
+				if(!liveChatBeep(ostatniaLinia[10])) return 0;
 			case 9:
-				liveChatBeep(ostatniaLinia[9]);
+				if(!liveChatBeep(ostatniaLinia[9])) return 0;
 			case 8:
-				liveChatBeep(ostatniaLinia[8]);
+				if(!liveChatBeep(ostatniaLinia[8])) return 0;
 			case 7:
-				liveChatBeep(ostatniaLinia[7]);
+				if(!liveChatBeep(ostatniaLinia[7])) return 0;
 			case 6:
-				liveChatBeep(ostatniaLinia[6]);
+				if(!liveChatBeep(ostatniaLinia[6])) return 0;
 			case 5:
-				liveChatBeep(ostatniaLinia[5]);
+				if(!liveChatBeep(ostatniaLinia[5])) return 0;
 			case 4:
-				liveChatBeep(ostatniaLinia[4]);
+				if(!liveChatBeep(ostatniaLinia[4])) return 0;
 			case 3:
-				liveChatBeep(ostatniaLinia[3]);
+				if(!liveChatBeep(ostatniaLinia[3])) return 0;
 			case 2:
-				liveChatBeep(ostatniaLinia[2]);
+				if(!liveChatBeep(ostatniaLinia[2])) return 0;
 			case 1:
-				liveChatBeep(ostatniaLinia[1]);
+				if(!liveChatBeep(ostatniaLinia[1])) return 0;
 				break;
 			default:
 				{
@@ -1139,6 +1142,7 @@ void liveChat(int &wyswietlaneWiersze) //lc
 		}//if
 		else file.close(); //fix
 	}//while
+	return 1;
 }//liveChat()
 void preNews();
 void wersja()
@@ -1150,7 +1154,7 @@ void wersja()
 	std::cout<<" |       Autor       |"<<std::endl;
 	std::cout<<" |       DarXe       |"<<std::endl;
 	std::cout<<" |___________________|"<<std::endl;
-	std::cout<<" |  Wersja 20.3-Pre  |"<<std::endl; //verr
+	std::cout<<" |  Wersja 20.5-Pre  |"<<std::endl; //verr
 	/*Sleep(300); std::cout<<std::endl;
 	std::cout<<" PLANY: "<<std::endl;
 	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;
@@ -1286,7 +1290,15 @@ void preNews()
 	std::cout<<" * Wpisując w konsoli 'set m KWOTA', F4 ustawi się na podaną wartość"<<std::endl;
 	std::cout<<" * Dodano też komendę na ustawienie ilości kursów - set c KURSY"<<std::endl;
 	std::cout<<" 203_3 Usunięto kolorowanie powiadomień z wykrzyknikami"<<std::endl;
-	std::cout<<" 204_9 **"<<std::endl;
+
+	std::cout<<" 205_6 Dodano dodatkowy warunek sprawdzający nick"<<std::endl;
+	std::cout<<" * Teraz Logus bierze pod uwagę długość nicku zmniejszając szanse na błędny komunikat"<<std::endl;
+	std::cout<<" 205_6 Przypisano dodatkowe działanie komendzie 'quit' z mta"<<std::endl;
+	std::cout<<" * Logus wyłączy się automatycznie wraz z grą (zapisując ustawienia)"<<std::endl;
+	std::cout<<" 205_6 Naprawiono problem z odczytywaniem plików log, jeśli nie zostały stworzone przez mta"<<std::endl;
+	std::cout<<" * Jeśli takich plików nie ma to Logus sam je zainicjuje (pliki log.1 log.2 itd.)"<<std::endl;
+	std::cout<<" 205_6 Zmieniono animacje wyłączenia programu"<<std::endl;
+	std::cout<<" * Dodano dźwięki, tekst jest różny w zależności od powodu zamknięcia programu"<<std::endl;
 }
 
 //

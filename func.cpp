@@ -3,6 +3,8 @@
 
 //func
 //(team) [pts]nick
+void serverConnect();
+
 bool fTeam(string &line, bool e)
 {
 	leng = nick.length();
@@ -119,10 +121,10 @@ bool fNicknames(string &line)
 		if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
 			return 0;
 		//join
-		if(line[gt]=='*'&&line[gt+leng+2]==s_temp[leng]&&line[gt+leng+1]==s_temp[leng-1]&&line[gt+leng]==s_temp[leng-2])
+		if(line[gt]=='*' && line[gt+leng+3]==' ' && line[gt+leng+2]==s_temp[leng] && line[gt+leng+1]==s_temp[leng-1] && line[gt+leng]==s_temp[leng-2])
 			return 1;
 		//afk
-		if(line[gt+5]==' '&&line[gt+leng+6]==s_temp[leng]&&line[gt+leng+5]==s_temp[leng-1]&&line[gt+leng+4]==s_temp[leng-2])
+		if(line[gt+5]==' ' && line[gt+leng+7]==' ' && line[gt+leng+6]==s_temp[leng] && line[gt+leng+5]==s_temp[leng-1] && line[gt+leng+4]==s_temp[leng-2])
 			return 1;
 	}
 	return 0;
@@ -167,7 +169,7 @@ void startTimer(short getSeconds)
 }
 
 //[2019-06-28 11:58:25] [Input]  : test
-bool fConsoleInput(string &line)//fci
+char fConsoleInput(string &line)//fci
 {
 	if(line[gt-10]=='I')
 	{
@@ -175,6 +177,14 @@ bool fConsoleInput(string &line)//fci
 		{
 			serverConnect();
 			return 1;
+		}
+		else if(line[gt]=='q'&&line[gt+1]=='u'&&line[gt+2]=='i'&&line[gt+3]=='t') //quit /close mta & Logus
+		{
+			return 2;
+		}
+		else if(line[gt]=='e'&&line[gt+1]=='x'&&line[gt+2]=='i'&&line[gt+3]=='t') //quit /close mta & Logus
+		{
+			return 2;
 		}
 		else if(line[gt]=='t'||line[gt]=='\'') //t START TIMER
 		{
