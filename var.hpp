@@ -32,7 +32,7 @@ short trackId = 0;
 int autoMoveLogs = 0;
 float grade = 0;
 
-short gt = 33; //auxiliary variable
+const short gt = 33; //auxiliary variable
 int leng = 0; //length
 char wyb = ' '; //auxiliary variable //wybór w menu, tymczasowa w fTransport
 int iloscLinijekAll = 0; //number of lines
