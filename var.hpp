@@ -3,7 +3,6 @@
 #ifndef VAR_HPP_INCLUDED
 #define VAR_HPP_INCLUDED
 
-#endif
 //var (ZMIENNE)
 //logus.ini
 string mtasa = "185.62.189.174:22003"; //ip server
@@ -33,14 +32,10 @@ short trackId = 0;
 int autoMoveLogs = 0;
 float grade = 0;
 
-short gt = 33; //auxiliary variable
+const short gt = 33; //auxiliary variable
 int leng = 0; //length
-fstream plik;
-string linia = " ";
 char wyb = ' '; //auxiliary variable //wybór w menu, tymczasowa w fTransport
 int iloscLinijekAll = 0; //number of lines
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-COORD pos;
 string a = "console.log";
 string b = "console.log.1";
 string c = "console.log.2";
@@ -48,11 +43,11 @@ string d = "console.log.3";
 string e = "console.log.4";
 string f = "console.log.5";
 string L = "logus.log";
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+COORD pos;
 
-//liveChat
+string track[5] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
 clock_t delay = 0, delay2 = 0; //pomiary delay
-int iloscLinijek = 0;
-string ostatniaLinia[11]; //ostatnie linie
 int temp = 0; //aux var //pomocnicza zmienna iloscLinijek w LiveChat
 int temp2 = 0; //aux var //pomocnicza2 w LiveChat
 int errors = 0; //the number of errors //liczenie błędów, jeśli liczba linijek przekroczy 10
@@ -62,4 +57,5 @@ bool isTimer = 0; //TIMER aux var //pomocnicza zmienna - czy timer ma odliczac
 bool isCzas = 0; //TIMER aux var //pomocnicza zmienna - czas po zaladowaniu, odliczanie
 int avg = 0; //courses calculator - average //średnia kursów
 bool timestamps = 0; //show timestamps in LiveChat //pokaż date obok logów w LiveChat
-string track[5] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
+
+#endif
