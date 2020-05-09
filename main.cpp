@@ -1303,7 +1303,6 @@ void preNews() //news
 	std::cout<<" 205_91 Usunięto Logus-pre, od teraz Logus.exe na masterze jest aktualnym wydaniem Pre-Realease"<<std::endl;
 }
 
-//
 //todo: Wer-Dar 6:37, to były czasy
 //console - wychodzenie przez quit ma tez wylaczac Logusa
 //baza graczy - wybieranie powiadomien dla kazdego gracza (join, quit, afk, chat)
