@@ -1300,7 +1300,7 @@ void preNews() //news
 	std::cout<<" 205_61 Dodano komendę na reset kursów i $ z poziomu konsoli mta"<<std::endl;
 	std::cout<<" * 'set reset', 'set re'"<<std::endl;
 	std::cout<<" 205_9 Edytowano zmianę wartości ms dynamicznym odświeżaniu"<<std::endl;
-	
+	std::cout<<" 205_91 Usunięto Logus-pre, od teraz Logus.exe na masterze jest aktualnym wydaniem Pre-Realease"<<std::endl;
 }
 
 //
@@ -1311,7 +1311,7 @@ void preNews() //news
 //g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static gg
 
 //g++ -g main.cpp src\*.cpp -o Logus-pre.exe -static
-//g++  main.cpp src\*.cpp -o Logus.exe -static -s -Os
+//g++ -g main.cpp src\*.cpp -o "Logus 20.5-pre.exe" -static
 //* HydroMoon has left the game (Quit)
 //* HydroMoon has joined the game
 //30 kwietnia 2020
