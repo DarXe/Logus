@@ -1308,9 +1308,9 @@ void preNews() //news
 //console - wychodzenie przez quit ma tez wylaczac Logusa
 //baza graczy - wybieranie powiadomien dla kazdego gracza (join, quit, afk, chat)
 //
-//g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static gg
+//g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static
 
-//g++ -g main.cpp src\*.cpp -o Logus-pre.exe -static
+//g++ main.cpp src\*.cpp -o Logus.exe -static -s -Os
 //g++ -g main.cpp src\*.cpp -o "Logus 20.5-pre.exe" -static
 //* HydroMoon has left the game (Quit)
 //* HydroMoon has joined the game
