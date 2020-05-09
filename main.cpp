@@ -9,9 +9,8 @@
 #include "logus.hpp"
 #include "randomLogus.hpp"
 #include "var.hpp"
-
+//g++  main.cpp src\*.cpp
 #define q(var) cout<<#var<<"="<<var<<endl
-
 using namespace std;
 #include "patch.cpp"
 int console();
@@ -71,7 +70,6 @@ int main(int argc, char** argv) //maa main
 	string _versionName_ = "Logus 20.5 Pre-Release";
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
-
 	color(kolorGlowny);
 	if(codePage852)
 	{
@@ -859,7 +857,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			if(kbhit()) break;
 		}
 
-		if(dynamicRefresh && refresh<950 && !kbhit()) refresh+=7;
+		if(dynamicRefresh && refresh<950 && !kbhit()) refresh+=5;
 
 		//if key pressed
 		if(kbhit())
@@ -1087,7 +1085,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			file.close();
 
 			if(chatSound) {Beep(750,50); timer -= 50;} //the sound of each new chat message
-			if(dynamicRefresh && refresh > 500) refresh-=100; //if a new message appears, reduce the refresh rate by 100ms
+			if(dynamicRefresh && refresh > 300) refresh-=50; //if a new message appears, reduce the refresh rate by 100ms
 
 			cls(); getChat(lineCount); //chat display
 
@@ -1301,6 +1299,8 @@ void preNews() //news
 	std::cout<<" * Dodano dźwięki, tekst jest różny w zależności od powodu zamknięcia programu"<<std::endl;
 	std::cout<<" 205_61 Dodano komendę na reset kursów i $ z poziomu konsoli mta"<<std::endl;
 	std::cout<<" * 'set reset', 'set re'"<<std::endl;
+	std::cout<<" 205_9 Edytowano zmianę wartości ms dynamicznym odświeżaniu"<<std::endl;
+	
 }
 
 //
@@ -1310,8 +1310,8 @@ void preNews() //news
 //
 //g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static gg
 
-//g++ -g main.cpp src\*.cpp -o Logus-pre.exe
+//g++ -g main.cpp src\*.cpp -o Logus-pre.exe -static
+//g++ -g main.cpp src\*.cpp -o "Logus 20.5-pre.exe" -static
 //* HydroMoon has left the game (Quit)
 //* HydroMoon has joined the game
-//grimmy: STAĆ POLICJA! | STOP POLICE! Zjedź na pobocze! | Pull over!
 //30 kwietnia 2020

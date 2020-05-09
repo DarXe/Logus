@@ -349,7 +349,7 @@ bool closeLogus(string text = "Bye bye")
 	zapis();
 	Beep(dzwiekGlowny-100,250);
 	std::cout<<"\n"<<text;
-	for(int i = 0; i<5; i++){
+	for(int i = 0; i<4; i++){
 		std::cout<<".";
 		if(i == 2) {Beep(dzwiekGlowny,200); continue;}
 		Sleep(400);

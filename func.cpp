@@ -291,12 +291,13 @@ char fConsoleInput(string &line)//fci
 				}
 				return 1;
 			}
-			else if(line[gt+4]=='r'&&line[gt+5]=='e') //reset kursow
+			else if(line[gt+4]=='r'&&line[gt+5]=='e') //reset kursow /set re
 			{
 				money = 0;
-				courses = 0;	
-				return 0;
-			}			
+				courses = 0;
+				zapis();
+				return 1;
+			}
 			else return 0;
 		}
 		else return 0;
