@@ -1301,6 +1301,7 @@ void preNews() //news
 	std::cout<<" * 'set reset', 'set re'"<<std::endl;
 	std::cout<<" 205_9 Edytowano zmianę wartości ms dynamicznym odświeżaniu"<<std::endl;
 	std::cout<<" 205_91 Usunięto Logus-pre, od teraz Logus.exe na masterze jest aktualnym wydaniem Pre-Realease"<<std::endl;
+	std::cout<<" 205_10 Naprawiono błąd z substr()"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
