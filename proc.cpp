@@ -242,7 +242,8 @@ void getChat(int &lineCount)//gc
 				{
 					SetConsoleTextAttribute(h, 160); cout<<"=>";
 					SetConsoleTextAttribute(h, 10);
-					line = line.erase(0, gt);
+					if(line.length() > gt)
+						line = line.erase(0, gt);		
 					for (size_t i = 0; i < line.length(); i++)
 					{
 						if(line[i] == ':')
@@ -264,7 +265,8 @@ void getChat(int &lineCount)//gc
 				}
 				else
 				{
-					line = line.erase(0, gt);
+					if(line.length() > gt)
+						line = line.erase(0, gt);	
 					if(line[0] == '*')
 					{
 						SetConsoleTextAttribute(h, 14);
