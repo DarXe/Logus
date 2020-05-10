@@ -979,35 +979,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			}
 		}
 
-		//he ad
-		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
-		SetConsoleTextAttribute(h, 12);
-		std::cout<<"###############################LiveChat###############################"<<std::endl;
-		SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-		std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lineCount-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<std::endl;
-		if(isTimer)
-		{
-			SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-			std::cout<<" Timer "<<timer/1000/60;
-			if((timer/1000)%60<10) std::cout<<":0"; else std::cout<<":";
-			std::cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
-		}
-		else
-		{
-			SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-			std::cout<<" [t]Timer                  # F4 ";
-		}
-		if(courses) std::cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
-		else      std::cout<<"Dostarczone kursy: "<<courses<<"                                             ";
-		SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
-		int payment(0); payment = ((money>0)?((money*0.87)-3500)*grade:0);
-		std::cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<payment;
-		SetConsoleTextAttribute(h, 204);
-		pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); std::cout<<" ";
-		pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); std::cout<<" ";
-		pos.X=69; pos.Y=3; SetConsoleCursorPosition(h, pos); std::cout<<" ";
-		SetConsoleTextAttribute(h, 12);
-		std::cout<<"\n################################################"<<"#####[m]moveLogs()####"<<std::endl;
+		liveChatHead(lineCount);
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 		
 		lineCount = 0;
@@ -1301,7 +1273,7 @@ void preNews() //news
 	std::cout<<" * 'set reset', 'set re'"<<std::endl;
 	std::cout<<" 205_9 Edytowano zmianę wartości ms dynamicznym odświeżaniu"<<std::endl;
 	std::cout<<" 205_91 Usunięto Logus-pre, od teraz Logus.exe na masterze jest aktualnym wydaniem Pre-Realease"<<std::endl;
-	std::cout<<" 205_10 Naprawiono błąd z substr()"<<std::endl;
+	std::cout<<" 205_10 Poprawiono czyszczenie czatu po przeniesieniu logów"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
