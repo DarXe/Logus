@@ -6,7 +6,6 @@ https://github.com/DarXe/Logus/releases
 
 > Pobierz
 https://github.com/DarXe/Logus/releases/download/v19.8.5/Logus.exe
-# Aktualna wersja
 > Pobierz Pre-Release https://github.com/DarXe/Logus/raw/master/Logus.exe
 
 # Poradniki
