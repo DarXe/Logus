@@ -6,7 +6,7 @@ int intError(int &number)
 	while (!(cin>>number))
     {
       std::cout<<"\n\aERRROR! Podales litere/y!"<<std::endl;
-			//cin.clear(); // clear input buffer to restore cin to a usable state
+			cin.clear(); // clear input buffer to restore cin to a usable state
 			cin.ignore(INT_MAX, '\n'); // ignore last input
 			cout << "Ta opcja wymaga podania liczby..\n";
 			cout << "Spróbuj ponownie: ";

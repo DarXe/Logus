@@ -372,7 +372,6 @@ int console() //con
 							if(!(cin>>wyswietlaneWiersze))
 							{
 								intError(wyswietlaneWiersze);
-								return 0;
 							}
 							if(wyswietlaneWiersze < 1 || wyswietlaneWiersze > 100)
 								std::cout<<"MIN 1; MAX 100"<<std::endl;
@@ -391,7 +390,6 @@ int console() //con
 							if(!(cin>>refresh))
 							{
 								intError(refresh);
-								return 0;
 							}
 							if(refresh < 100 || refresh > 5000)
 								std::cout<<"MIN 100(0,1s); MAX 5000(5s)"<<std::endl;
@@ -416,7 +414,6 @@ int console() //con
 							if(!(cin>>dzwiekGlowny))
 							{
 								intError(dzwiekGlowny);
-								return 0;
 							}
 							if(dzwiekGlowny < 50 || dzwiekGlowny > 10000)
 								std::cout<<"MIN 50; MAX 10000"<<std::endl;
@@ -435,7 +432,6 @@ int console() //con
 							if(!(cin>>interval))
 							{
 								intError(interval);
-								return 0;
 							}
 							if(interval < 50 || interval > 1000)
 								std::cout<<"MIN 50; MAX 1000"<<std::endl;
@@ -457,7 +453,6 @@ int console() //con
 									if(!(cin>>autoMoveLogs))
 									{
 										intError(autoMoveLogs);
-										return 0;
 									}
 									if(autoMoveLogs < 50 || autoMoveLogs > 1500)
 										std::cout<<"MIN 50; MAX 1500"<<std::endl;
@@ -475,13 +470,11 @@ int console() //con
 						if(!(cin>>temp))
 						{
 							intError(temp);
-							return 0;
 						}
 						std::cout<<"Podaj sekundy: ";
 						if(!(cin>>temp2))
 						{
 							intError(temp2);
-							return 0;
 						}
 						czas = (temp*60) + temp2;
 						break;
@@ -501,7 +494,6 @@ int console() //con
 							if(!(cin>>money))
 							{
 								intError(money);
-								return 0;
 							}
 							if(money < 0 || money > 9999999)
 								std::cout<<"MIN 0; MAX 9999999"<<std::endl;
@@ -520,7 +512,6 @@ int console() //con
 							if(!(cin>>courses))
 							{
 								intError(courses);
-								return 0;
 							}
 							if(courses < 0 || courses > 9999)
 								std::cout<<"MIN 0; MAX 9999"<<std::endl;
@@ -540,7 +531,6 @@ int console() //con
 							if(!(cin>>_grade))
 							{
 								intError(_grade);
-								return 0;
 							}
 							grade = _grade;
 							if(grade < 20 || grade > 100)
@@ -671,7 +661,6 @@ int console() //con
 										if(!(cin>>temp))
 										{
 											intError(temp);
-											return 0;
 										}
 										std::cout<<"Usunieto gracza "<<nicknames.at(temp-1)<<std::endl;
 										nicknames.erase(nicknames.begin()+temp-1);
