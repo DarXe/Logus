@@ -371,7 +371,7 @@ int console() //con
 							std::cout<<"Podaj nowa ilosc wyswietlanych wierszy: ";
 							if(!(cin>>wyswietlaneWiersze))
 							{
-								intError();
+								intError(wyswietlaneWiersze);
 								return 0;
 							}
 							if(wyswietlaneWiersze < 1 || wyswietlaneWiersze > 100)
@@ -390,7 +390,7 @@ int console() //con
 							std::cout<<"Podaj nowa czestotliwosc odswiezania: ";
 							if(!(cin>>refresh))
 							{
-								intError();
+								intError(refresh);
 								return 0;
 							}
 							if(refresh < 100 || refresh > 5000)
@@ -415,7 +415,7 @@ int console() //con
 							std::cout<<"Podaj nowa czestotliwosc dzwieku: ";
 							if(!(cin>>dzwiekGlowny))
 							{
-								intError();
+								intError(dzwiekGlowny);
 								return 0;
 							}
 							if(dzwiekGlowny < 50 || dzwiekGlowny > 10000)
@@ -434,7 +434,7 @@ int console() //con
 							std::cout<<"Podaj nowy odstep miedzy dzwiekami: ";
 							if(!(cin>>interval))
 							{
-								intError();
+								intError(interval);
 								return 0;
 							}
 							if(interval < 50 || interval > 1000)
@@ -456,7 +456,7 @@ int console() //con
 									std::cout<<"Podaj ilosc wierszy, od jakiej maja byc przenoszone logi: ";
 									if(!(cin>>autoMoveLogs))
 									{
-										intError();
+										intError(autoMoveLogs);
 										return 0;
 									}
 									if(autoMoveLogs < 50 || autoMoveLogs > 1500)
@@ -474,13 +474,13 @@ int console() //con
 						std::cout<<"Podaj minuty: ";
 						if(!(cin>>temp))
 						{
-							intError();
+							intError(temp);
 							return 0;
 						}
 						std::cout<<"Podaj sekundy: ";
 						if(!(cin>>temp2))
 						{
-							intError();
+							intError(temp2);
 							return 0;
 						}
 						czas = (temp*60) + temp2;
@@ -500,7 +500,7 @@ int console() //con
 							std::cout<<"Podaj nowa ilosc $(sama liczba): ";
 							if(!(cin>>money))
 							{
-								intError();
+								intError(money);
 								return 0;
 							}
 							if(money < 0 || money > 9999999)
@@ -519,7 +519,7 @@ int console() //con
 							std::cout<<"Podaj nowa ilosc kursow: ";
 							if(!(cin>>courses))
 							{
-								intError();
+								intError(courses);
 								return 0;
 							}
 							if(courses < 0 || courses > 9999)
@@ -536,11 +536,13 @@ int console() //con
 						while(true)
 						{
 							std::cout<<"Podaj wartosc rangi(sama liczba, bez znaku %): ";
-							if(!(cin>>grade))
+							int _grade = 0;
+							if(!(cin>>_grade))
 							{
-								intError();
+								intError(_grade);
 								return 0;
 							}
+							grade = _grade;
 							if(grade < 20 || grade > 100)
 								std::cout<<"MIN 20; MAX 100"<<std::endl;
 							else
@@ -668,7 +670,7 @@ int console() //con
 										std::cout<<"Podaj id gracza, ktorego chcesz usunac: ";
 										if(!(cin>>temp))
 										{
-											intError();
+											intError(temp);
 											return 0;
 										}
 										std::cout<<"Usunieto gracza "<<nicknames.at(temp-1)<<std::endl;
