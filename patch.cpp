@@ -11,7 +11,7 @@ int getVer()
 	return temp;
 }
 
-void zapis()
+void zapis(bool showInfo)
 { //saa save
 	fstream file;
 	file.open("logus.ini", ios::out);
@@ -62,6 +62,7 @@ void zapis()
 			file<<i+1<<" "<<nicknames.at(i)<<endl;
 		}
 	file.close();
+	if(showInfo)
 	cout<<"(INFO) Ustawienia zostaly zapisane."<<endl;
 }
 
@@ -164,49 +165,7 @@ void patch() //pat
 		}
 		cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<"."<<endl;
 	file.close();
-	zapis();
-}
-
-void patch_190622()
-{
-	fstream file;
-	file.open("logus.ini");
-		for(int i(0); i<6; i++) getline(file,s_temp);
-		file>>s_temp>>ang;
-		file>>s_temp>>nick;
-		file>>s_temp>>dzwiekGlowny;
-		file>>s_temp>>kolorGlowny;
-		file>>s_temp>>menuGlowne;
-		file>>s_temp>>wyswietlaneWiersze;
-		file>>s_temp>>refresh;
-		file>>s_temp>>interval;
-		file>>s_temp>>fLockTeam;
-		file>>s_temp>>fLockPW;
-		file>>s_temp>>fLockKomunikat;
-		file>>s_temp>>fLockNick;
-		file>>s_temp>>chatSound;
-		file>>s_temp>>dynamicRefresh;
-		file>>s_temp>>czas;
-		file>>s_temp>>random;
-	file.close();
-
-	file.open("logus.ini");
-		do 
-		{
-			getline(file,s_temp);
-		} while (s_temp[0]!='L');
-		
-		file>>s_temp;
-		file>>leng;
-		nicknames.clear();
-		for(int i = 0; i < leng; i++)
-		{
-			file>>temp>>s_temp;
-			nicknames.push_back(s_temp);
-		}
-		cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji 190622."<<endl;
-	file.close();
-	zapis();
+	zapis(1);
 }
 
 void readDefault()

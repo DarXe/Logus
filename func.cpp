@@ -295,7 +295,7 @@ char fConsoleInput(string &line)//fci
 			{
 				money = 0;
 				courses = 0;
-				zapis();
+				zapis(1);
 				return 1;
 			}
 			else return 0;

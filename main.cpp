@@ -9,7 +9,6 @@
 #include "logus.hpp"
 #include "randomLogus.hpp"
 #include "var.hpp"
-//g++  main.cpp src\*.cpp
 #define q(var) cout<<#var<<"="<<var<<endl
 using namespace std;
 #include "patch.cpp"
@@ -59,12 +58,13 @@ int main(int argc, char** argv) //maa main
 	file.open("logus.ini");
 		if(file.good())
 		{
-			if(getVer()<190622) patch_190622();
-			else if(getVer() != ver) patch(); else odczyt();
+			if(getVer() != ver) patch(); else odczyt();
 		}
 		else
 		{
-			zapis();
+			preConfig();
+			zapis(1);
+			wersja();
 		}
 	file.close();
 	string _versionName_ = "Logus 20.5 Pre-Release";
@@ -79,7 +79,7 @@ int main(int argc, char** argv) //maa main
 	else
 	{
 		SetConsoleOutputCP(65001); //code page utf-8
-		SetConsoleCP(65001); 
+		SetConsoleCP(65001);
 	}
 
 	switch (fastStart)
@@ -237,7 +237,7 @@ int console() //con
 					std::cout<<" ________________________Ustawienia - LiveChat________________________"<<std::endl;
 					SetConsoleTextAttribute(h, 7);
 					std::cout<<" [r] Przywroc ustawienia domyslne"<<std::endl;
-					std::cout<<" [a] Flaga na PTS: "<<((ang)?"ANG":"PL")<<std::endl;
+					std::cout<<" [a] Jezyk: "<<((ang)?"ENG":"PL")<<std::endl;
 					SetConsoleTextAttribute(h, 14);
 					std::cout<<" [p] Dzwiek wiadomosci PW: "<<((!fLockPW)?"TAK":"NIE")<<std::endl;
 					std::cout<<" [t] Dzwiek wiadomosci teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<std::endl;
@@ -275,7 +275,7 @@ int console() //con
 					std::cout<<" ________________________Ustawienia - LiveChat________________________"<<std::endl;
 					SetConsoleTextAttribute(h, 7);
 					std::cout<<" [r] Przywróć ustawienia domyślne"<<std::endl;
-					std::cout<<" [a] Flaga na PTS: "<<((ang)?"ANG":"PL")<<std::endl;
+					std::cout<<" [a] Język: "<<((ang)?"ANG":"PL")<<std::endl;
 					SetConsoleTextAttribute(h, 14);
 					std::cout<<" [p] Dźwięk wiadomości PW: "<<((!fLockPW)?"TAK":"NIE")<<std::endl;
 					std::cout<<" [t] Dźwięk wiadomości teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<std::endl;
@@ -312,7 +312,7 @@ int console() //con
 				wyb = wybor();
 				if(wyb == 27){
 					cls();
-					zapis();
+					zapis(1);
 					break;
 				}
 					
@@ -541,7 +541,7 @@ int console() //con
 								intError();
 								return 0;
 							}
-							if(grade < 20 || grade > 100)
+							if(grade < 50 || grade > 100)
 								std::cout<<"MIN 20; MAX 100"<<std::endl;
 							else
 								break;
@@ -603,7 +603,7 @@ int console() //con
 							wyb = wybor();
 							if(wyb == 27){
 								cls();
-								zapis();
+								zapis(1);
 								break;
 							}
 							switch(wyb)
@@ -680,7 +680,7 @@ int console() //con
 								{
 									cls();
 									odczyt();
-									zapis();
+									zapis(1);
 									break;
 								}
 								case 'x':
@@ -907,7 +907,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 					pos.X=10; pos.Y=0; SetConsoleCursorPosition(h, pos);
 					Beep(dzwiekGlowny, 100);
 					std::cout<<"ZAPISANO!"; Sleep(500);
-					zapis();
+					zapis(1);
 				}
 				break;
 			case 'r': //read
