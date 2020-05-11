@@ -1,18 +1,17 @@
 // Copyright (C) 2018-2019  DarXe
+#include <climits>
 
-void intError()
+int intError(int &number)
 {
-	cerr<<"\n\aERRROR! Podales litere/y!"<<std::endl;
-	std::cout<<"Program wylaczy sie, uruchom go ponownie"<<std::endl;
-	if(fastStart == 1)
-	{
-		std::cout<<"\nMasz wlaczona funkcje fastStart!"<<std::endl;
-		std::cout<<"Program automatycznie wylaczy funkcje 'szybki start' w celu uniknienia"<<std::endl;
-		std::cout<<"ponownego polaczenia ze serwerem"<<std::endl;
-		fastStart = 0;
-		zapis(1);
-	}
-	getch();
+	while (!(cin>>number))
+    {
+      std::cout<<"\n\aERRROR! Podales litere/y!"<<std::endl;
+			cin.clear(); // clear input buffer to restore cin to a usable state
+			cin.ignore(INT_MAX, '\n'); // ignore last input
+			cout << "Ta opcja wymaga podania liczby..\n";
+			cout << "Spróbuj ponownie: ";
+    }
+  return number;
 }
 
 void color(string value)
@@ -352,6 +351,14 @@ void serverConnect()//flc
 {
 	s_temp = "start mtasa://"+mtasa;
 	system(s_temp.c_str());
+}
+
+void stopAutoJoin(bool &isAutoJoin)
+{
+	isAutoJoin = false;
+	pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
+	SetConsoleTextAttribute(h, 12); std::cout<<"       CONNECTED!       ";
+	Beep(dzwiekGlowny, 500);
 }
 
 bool closeLogus(string text = "Bye bye")
