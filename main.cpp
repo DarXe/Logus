@@ -818,6 +818,7 @@ int console() //con
 
 bool liveChat(int &wyswietlaneWiersze) //lc
 {
+	bool isAutoJoin = false;
 	string ostatniaLinia[11]; //ostatnie linie
 	int lineCount = 0;
 	fstream file;
@@ -851,10 +852,22 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 		//saving information about the number of lines in an auxiliary variable
 		temp = lineCount;
 
-		for(int i(0); i<20; i++) //wait time
+		if(!isAutoJoin)
 		{
-			Sleep(refresh/20);
-			if(kbhit()) break;
+			for(int i(0); i<20; i++) //wait time
+			{
+				Sleep(refresh/20);
+				if(kbhit()) break;
+			}
+		}
+		else
+		{
+			serverConnect();
+			for(int i(0); i<20; i++) //wait 5s
+			{
+				Sleep(5000/20);
+				if(kbhit()) break;
+			}
 		}
 
 		if(dynamicRefresh && refresh<950 && !kbhit()) refresh+=5;
@@ -901,6 +914,11 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 				{
 					trackId = ((trackId)?0:1);
 				}
+				break;
+			case 13: //enter start autoJoin
+			{
+				isAutoJoin = true;
+			}
 				break;
 			case 'v': //save
 				{
@@ -1106,7 +1124,38 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 				}
 				break;
 			}
-			
+
+			if(isAutoJoin)
+			{
+				switch (temp)
+				{
+				case 10:
+					if(ostatniaLinia[10][gt] != 'c') isAutoJoin = false;
+				case 9:
+					if(ostatniaLinia[9][gt] != 'c') isAutoJoin = false;
+				case 8:
+					if(ostatniaLinia[8][gt] != 'c') isAutoJoin = false;
+				case 7:
+					if(ostatniaLinia[7][gt] != 'c') isAutoJoin = false;
+				case 6:
+					if(ostatniaLinia[6][gt] != 'c') isAutoJoin = false;
+				case 5:
+					if(ostatniaLinia[5][gt] != 'c') isAutoJoin = false;
+				case 4:
+					if(ostatniaLinia[4][gt] != 'c') isAutoJoin = false;
+				case 3:
+					if(ostatniaLinia[3][gt] != 'c') isAutoJoin = false;
+				case 2:
+					if(ostatniaLinia[2][gt] != 'c') isAutoJoin = false;
+				case 1:
+					if(ostatniaLinia[1][gt] != 'c') isAutoJoin = false;
+					break;
+				
+				default:
+					break;
+				}
+			}
+
 			if(autoMoveLogs && (lineCount > autoMoveLogs)) moveLogs();
 			if(isTimer) timer -= (clock()-delay);
 		}//if
@@ -1274,6 +1323,8 @@ void preNews() //news
 	std::cout<<" 205_9 Edytowano zmianę wartości ms dynamicznym odświeżaniu"<<std::endl;
 	std::cout<<" 205_91 Usunięto Logus-pre, od teraz Logus.exe na masterze jest aktualnym wydaniem Pre-Realease"<<std::endl;
 	std::cout<<" 205_10 Poprawiono czyszczenie czatu po przeniesieniu logów"<<std::endl;
+	std::cout<<" 205_11 Dodano nową funkcje w LiveChat - [Enter] autoJoin"<<std::endl;
+	std::cout<<" * Dopóki nie nastąpi połączenie z serwerem, Logus łączy się z nim co 5 sekund"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
