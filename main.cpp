@@ -1323,6 +1323,7 @@ void preNews() //news
 	std::cout<<" * Dopóki nie nastąpi połączenie z serwerem, Logus łączy się z nim co 5 sekund"<<std::endl;
 	std::cout<<" 205_11.1 Zmiana funkcji sprawdzającej podania napisu zamiast liczby"<<std::endl;
 	std::cout<<" * Teraz nie jest potrzebne restartowanie programu w przypadku pomyłki"<<std::endl;
+	std::cout<<" 205_11.2 Dodano prekonfigurację w przypadku braku pliku logus.ini"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
