@@ -371,8 +371,7 @@ int console() //con
 							std::cout<<"Podaj nowa ilosc wyswietlanych wierszy: ";
 							if(!(cin>>wyswietlaneWiersze))
 							{
-								intError();
-								return 0;
+								intError(wyswietlaneWiersze);
 							}
 							if(wyswietlaneWiersze < 1 || wyswietlaneWiersze > 100)
 								std::cout<<"MIN 1; MAX 100"<<std::endl;
@@ -390,8 +389,7 @@ int console() //con
 							std::cout<<"Podaj nowa czestotliwosc odswiezania: ";
 							if(!(cin>>refresh))
 							{
-								intError();
-								return 0;
+								intError(refresh);
 							}
 							if(refresh < 100 || refresh > 5000)
 								std::cout<<"MIN 100(0,1s); MAX 5000(5s)"<<std::endl;
@@ -415,8 +413,7 @@ int console() //con
 							std::cout<<"Podaj nowa czestotliwosc dzwieku: ";
 							if(!(cin>>dzwiekGlowny))
 							{
-								intError();
-								return 0;
+								intError(dzwiekGlowny);
 							}
 							if(dzwiekGlowny < 50 || dzwiekGlowny > 10000)
 								std::cout<<"MIN 50; MAX 10000"<<std::endl;
@@ -434,8 +431,7 @@ int console() //con
 							std::cout<<"Podaj nowy odstep miedzy dzwiekami: ";
 							if(!(cin>>interval))
 							{
-								intError();
-								return 0;
+								intError(interval);
 							}
 							if(interval < 50 || interval > 1000)
 								std::cout<<"MIN 50; MAX 1000"<<std::endl;
@@ -456,8 +452,7 @@ int console() //con
 									std::cout<<"Podaj ilosc wierszy, od jakiej maja byc przenoszone logi: ";
 									if(!(cin>>autoMoveLogs))
 									{
-										intError();
-										return 0;
+										intError(autoMoveLogs);
 									}
 									if(autoMoveLogs < 50 || autoMoveLogs > 1500)
 										std::cout<<"MIN 50; MAX 1500"<<std::endl;
@@ -474,14 +469,12 @@ int console() //con
 						std::cout<<"Podaj minuty: ";
 						if(!(cin>>temp))
 						{
-							intError();
-							return 0;
+							intError(temp);
 						}
 						std::cout<<"Podaj sekundy: ";
 						if(!(cin>>temp2))
 						{
-							intError();
-							return 0;
+							intError(temp2);
 						}
 						czas = (temp*60) + temp2;
 						break;
@@ -500,8 +493,7 @@ int console() //con
 							std::cout<<"Podaj nowa ilosc $(sama liczba): ";
 							if(!(cin>>money))
 							{
-								intError();
-								return 0;
+								intError(money);
 							}
 							if(money < 0 || money > 9999999)
 								std::cout<<"MIN 0; MAX 9999999"<<std::endl;
@@ -519,8 +511,7 @@ int console() //con
 							std::cout<<"Podaj nowa ilosc kursow: ";
 							if(!(cin>>courses))
 							{
-								intError();
-								return 0;
+								intError(courses);
 							}
 							if(courses < 0 || courses > 9999)
 								std::cout<<"MIN 0; MAX 9999"<<std::endl;
@@ -536,11 +527,12 @@ int console() //con
 						while(true)
 						{
 							std::cout<<"Podaj wartosc rangi(sama liczba, bez znaku %): ";
-							if(!(cin>>grade))
+							int _grade = 0;
+							if(!(cin>>_grade))
 							{
-								intError();
-								return 0;
+								intError(_grade);
 							}
+							grade = _grade;
 							if(grade < 20 || grade > 100)
 								std::cout<<"MIN 20; MAX 100"<<std::endl;
 							else
@@ -668,8 +660,7 @@ int console() //con
 										std::cout<<"Podaj id gracza, ktorego chcesz usunac: ";
 										if(!(cin>>temp))
 										{
-											intError();
-											return 0;
+											intError(temp);
 										}
 										std::cout<<"Usunieto gracza "<<nicknames.at(temp-1)<<std::endl;
 										nicknames.erase(nicknames.begin()+temp-1);
@@ -818,6 +809,7 @@ int console() //con
 
 bool liveChat(int &wyswietlaneWiersze) //lc
 {
+	bool isAutoJoin = false;
 	string ostatniaLinia[11]; //ostatnie linie
 	int lineCount = 0;
 	fstream file;
@@ -851,10 +843,24 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 		//saving information about the number of lines in an auxiliary variable
 		temp = lineCount;
 
-		for(int i(0); i<20; i++) //wait time
+		if(!isAutoJoin)
 		{
-			Sleep(refresh/20);
-			if(kbhit()) break;
+			for(int i(0); i<20; i++) //wait time
+			{
+				Sleep(refresh/20);
+				if(kbhit()) break;
+			}
+		}
+		else
+		{
+			serverConnect();
+			for(int i(5); i>0; i--) //wait 5s
+			{
+				pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
+				SetConsoleTextAttribute(h, 12); std::cout<<" autoJoin: connect server for "<<i<<"s ";
+				Sleep(5000/5);
+				if(kbhit()) break;
+			}
 		}
 
 		if(dynamicRefresh && refresh<950 && !kbhit()) refresh+=5;
@@ -901,6 +907,14 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 				{
 					trackId = ((trackId)?0:1);
 				}
+				break;
+			case 13: //enter start autoJoin
+			{
+				isAutoJoin = true;
+				pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
+				SetConsoleTextAttribute(h, 12); std::cout<<"    START autoJoin    ";
+				Beep(dzwiekGlowny, 750);
+			}
 				break;
 			case 'v': //save
 				{
@@ -979,35 +993,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			}
 		}
 
-		//he ad
-		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
-		SetConsoleTextAttribute(h, 12);
-		std::cout<<"###############################LiveChat###############################"<<std::endl;
-		SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-		std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lineCount-1<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    "<<std::endl;
-		if(isTimer)
-		{
-			SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-			std::cout<<" Timer "<<timer/1000/60;
-			if((timer/1000)%60<10) std::cout<<":0"; else std::cout<<":";
-			std::cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
-		}
-		else
-		{
-			SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-			std::cout<<" [t]Timer                  # F4 ";
-		}
-		if(courses) std::cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
-		else      std::cout<<"Dostarczone kursy: "<<courses<<"                                             ";
-		SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
-		int payment(0); payment = ((money>0)?((money*0.87)-3500)*grade:0);
-		std::cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<payment;
-		SetConsoleTextAttribute(h, 204);
-		pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); std::cout<<" ";
-		pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); std::cout<<" ";
-		pos.X=69; pos.Y=3; SetConsoleCursorPosition(h, pos); std::cout<<" ";
-		SetConsoleTextAttribute(h, 12);
-		std::cout<<"\n################################################"<<"#####[m]moveLogs()####"<<std::endl;
+		liveChatHead(lineCount);
 		pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 		
 		lineCount = 0;
@@ -1134,7 +1120,38 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 				}
 				break;
 			}
-			
+
+			if(isAutoJoin)
+			{
+				switch (temp)
+				{
+				case 10:
+					if(ostatniaLinia[10][gt] != 'c') stopAutoJoin(isAutoJoin);
+				case 9:
+					if(ostatniaLinia[9][gt] != 'c') stopAutoJoin(isAutoJoin);
+				case 8:
+					if(ostatniaLinia[8][gt] != 'c') stopAutoJoin(isAutoJoin);
+				case 7:
+					if(ostatniaLinia[7][gt] != 'c') stopAutoJoin(isAutoJoin);
+				case 6:
+					if(ostatniaLinia[6][gt] != 'c') stopAutoJoin(isAutoJoin);
+				case 5:
+					if(ostatniaLinia[5][gt] != 'c') stopAutoJoin(isAutoJoin);
+				case 4:
+					if(ostatniaLinia[4][gt] != 'c') stopAutoJoin(isAutoJoin);
+				case 3:
+					if(ostatniaLinia[3][gt] != 'c') stopAutoJoin(isAutoJoin);
+				case 2:
+					if(ostatniaLinia[2][gt] != 'c') stopAutoJoin(isAutoJoin);
+				case 1:
+					if(ostatniaLinia[1][gt] != 'c') stopAutoJoin(isAutoJoin);
+					break;
+				
+				default:
+					break;
+				}
+			}
+
 			if(autoMoveLogs && (lineCount > autoMoveLogs)) moveLogs();
 			if(isTimer) timer -= (clock()-delay);
 		}//if
@@ -1301,6 +1318,11 @@ void preNews() //news
 	std::cout<<" * 'set reset', 'set re'"<<std::endl;
 	std::cout<<" 205_9 Edytowano zmianę wartości ms dynamicznym odświeżaniu"<<std::endl;
 	std::cout<<" 205_91 Usunięto Logus-pre, od teraz Logus.exe na masterze jest aktualnym wydaniem Pre-Realease"<<std::endl;
+	std::cout<<" 205_10 Poprawiono czyszczenie czatu po przeniesieniu logów"<<std::endl;
+	std::cout<<" 205_11 Dodano nową funkcje w LiveChat - [Enter] autoJoin"<<std::endl;
+	std::cout<<" * Dopóki nie nastąpi połączenie z serwerem, Logus łączy się z nim co 5 sekund"<<std::endl;
+	std::cout<<" 205_11.1 Zmiana funkcji sprawdzającej podania napisu zamiast liczby"<<std::endl;
+	std::cout<<" * Teraz nie jest potrzebne restartowanie programu w przypadku pomyłki"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
