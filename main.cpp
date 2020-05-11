@@ -863,9 +863,11 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 		else
 		{
 			serverConnect();
-			for(int i(0); i<20; i++) //wait 5s
+			for(int i(5); i>0; i--) //wait 5s
 			{
-				Sleep(5000/20);
+				pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
+				SetConsoleTextAttribute(h, 12); std::cout<<" autoJoin: connect server for "<<i<<"s ";
+				Sleep(5000/5);
 				if(kbhit()) break;
 			}
 		}
@@ -918,6 +920,9 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			case 13: //enter start autoJoin
 			{
 				isAutoJoin = true;
+				pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
+				SetConsoleTextAttribute(h, 12); std::cout<<"    START autoJoin    ";
+				Beep(dzwiekGlowny, 750);
 			}
 				break;
 			case 'v': //save
@@ -1130,25 +1135,25 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 				switch (temp)
 				{
 				case 10:
-					if(ostatniaLinia[10][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[10][gt] != 'c') stopAutoJoin(isAutoJoin);
 				case 9:
-					if(ostatniaLinia[9][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[9][gt] != 'c') stopAutoJoin(isAutoJoin);
 				case 8:
-					if(ostatniaLinia[8][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[8][gt] != 'c') stopAutoJoin(isAutoJoin);
 				case 7:
-					if(ostatniaLinia[7][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[7][gt] != 'c') stopAutoJoin(isAutoJoin);
 				case 6:
-					if(ostatniaLinia[6][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[6][gt] != 'c') stopAutoJoin(isAutoJoin);
 				case 5:
-					if(ostatniaLinia[5][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[5][gt] != 'c') stopAutoJoin(isAutoJoin);
 				case 4:
-					if(ostatniaLinia[4][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[4][gt] != 'c') stopAutoJoin(isAutoJoin);
 				case 3:
-					if(ostatniaLinia[3][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[3][gt] != 'c') stopAutoJoin(isAutoJoin);
 				case 2:
-					if(ostatniaLinia[2][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[2][gt] != 'c') stopAutoJoin(isAutoJoin);
 				case 1:
-					if(ostatniaLinia[1][gt] != 'c') isAutoJoin = false;
+					if(ostatniaLinia[1][gt] != 'c') stopAutoJoin(isAutoJoin);
 					break;
 				
 				default:

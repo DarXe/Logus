@@ -354,6 +354,14 @@ void serverConnect()//flc
 	system(s_temp.c_str());
 }
 
+void stopAutoJoin(bool &isAutoJoin)
+{
+	isAutoJoin = false;
+	pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
+	SetConsoleTextAttribute(h, 12); std::cout<<"       CONNECTED!       ";
+	Beep(dzwiekGlowny, 500);
+}
+
 bool closeLogus(string text = "Bye bye")
 {
 	cls();
