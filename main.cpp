@@ -275,7 +275,7 @@ int console() //con
 					std::cout<<" ________________________Ustawienia - LiveChat________________________"<<std::endl;
 					SetConsoleTextAttribute(h, 7);
 					std::cout<<" [r] Przywróć ustawienia domyślne"<<std::endl;
-					std::cout<<" [a] Język: "<<((ang)?"ANG":"PL")<<std::endl;
+					std::cout<<" [a] Język: "<<((ang)?"ENG":"PL")<<std::endl;
 					SetConsoleTextAttribute(h, 14);
 					std::cout<<" [p] Dźwięk wiadomości PW: "<<((!fLockPW)?"TAK":"NIE")<<std::endl;
 					std::cout<<" [t] Dźwięk wiadomości teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<std::endl;
@@ -534,7 +534,7 @@ int console() //con
 							}
 							grade = _grade;
 							if(grade < 50 || grade > 100)
-								std::cout<<"MIN 20; MAX 100"<<std::endl;
+								std::cout<<"MIN 50; MAX 100"<<std::endl;
 							else
 								break;
 						}
@@ -857,7 +857,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			for(int i(5); i>0; i--) //wait 5s
 			{
 				pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
-				SetConsoleTextAttribute(h, 12); std::cout<<" autoJoin: connect server for "<<i<<"s ";
+				SetConsoleTextAttribute(h, 12); std::cout<<" autoJoin: trying to connect in "<<i<<"s ";
 				Sleep(5000/5);
 				if(kbhit()) break;
 			}
