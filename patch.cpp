@@ -11,7 +11,7 @@ int getVer()
 	return temp;
 }
 
-void zapis(bool showInfo)
+void zapis(bool showInfo = true)
 { //saa save
 	fstream file;
 	file.open("logus.ini", ios::out);
@@ -165,7 +165,7 @@ void patch() //pat
 		}
 		cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<"."<<endl;
 	file.close();
-	zapis(1);
+	zapis();
 }
 
 void readDefault()

@@ -40,7 +40,7 @@ void salaryForTransport(string &line, bool &ang)
 				mnoz /= 10;
 			}
 			courses++;
-			zapis(1);
+			zapis();
 		}
 		else if(line[gt+18] == '.')
 		{
@@ -53,7 +53,7 @@ void salaryForTransport(string &line, bool &ang)
 				mnoz /= 10;
 			}
 			courses++;
-			zapis(1);
+			zapis();
 		}
 	}
 	else
@@ -69,7 +69,7 @@ void salaryForTransport(string &line, bool &ang)
 				mnoz /= 10;
 			}
 			courses++;
-			zapis(1);
+			zapis();
 		}
 		else if(line[60] == '$')
 		{
@@ -82,7 +82,7 @@ void salaryForTransport(string &line, bool &ang)
 				mnoz /= 10;
 			}
 			courses++;
-			zapis(1);
+			zapis();
 		}
 	}
 }
@@ -364,7 +364,7 @@ void stopAutoJoin(bool &isAutoJoin)
 bool closeLogus(string text = "Bye bye")
 {
 	cls();
-	zapis(1);
+	zapis();
 	Beep(dzwiekGlowny-100,250);
 	std::cout<<"\n"<<text;
 	for(int i = 0; i<4; i++){

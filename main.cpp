@@ -63,7 +63,7 @@ int main(int argc, char** argv) //maa main
 		else
 		{
 			preConfig();
-			zapis(1);
+			zapis();
 			wersja();
 		}
 	file.close();
@@ -312,7 +312,7 @@ int console() //con
 				wyb = wybor();
 				if(wyb == 27){
 					cls();
-					zapis(1);
+					zapis();
 					break;
 				}
 					
@@ -595,7 +595,7 @@ int console() //con
 							wyb = wybor();
 							if(wyb == 27){
 								cls();
-								zapis(1);
+								zapis();
 								break;
 							}
 							switch(wyb)
@@ -671,7 +671,7 @@ int console() //con
 								{
 									cls();
 									odczyt();
-									zapis(1);
+									zapis();
 									break;
 								}
 								case 'x':
@@ -921,7 +921,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 					pos.X=10; pos.Y=0; SetConsoleCursorPosition(h, pos);
 					Beep(dzwiekGlowny, 100);
 					std::cout<<"ZAPISANO!"; Sleep(500);
-					zapis(1);
+					zapis();
 				}
 				break;
 			case 'r': //read
