@@ -10,7 +10,6 @@
 #include "randomLogus.hpp"
 #include "var.hpp"
 #define q(var) cout<<#var<<"="<<var<<endl
-using namespace std;
 #include "patch.cpp"
 int console();
 bool liveChat(int &wyswietlaneWiersze);
@@ -755,19 +754,33 @@ int console() //con
 		case 'w':
 		{
 			cls();
+			clock_t p = 0;
+			string host = "";
+			std::cout<<"Choose host: "<<endl;
+			std::cout<<"1. localhost"<<endl;
+			std::cout<<"2. google.pl"<<endl;
+			std::cout<<"3. facebook.com"<<endl;
+			switch(getch())
+			{
+				case '1': host = "ping localhost"; break;
+				case '2': host = "ping google.pl"; break;
+				case '3': host = "ping facebook.com"; break;
+				default: break;
+			}
+			cls();
 			while(true)
 			{
-				Beep(dzwiekGlowny,500);
-				system("ping google.pl -n 2");
-				std::cout<<std::endl;
-				std::cout<<"POWROT - DOWOLNY KLAWISZ"<<std::endl;
-				if(kbhit())
-				{
-					getch();
-					cls();
-					break;
-				}
+				if(host == "") break;
+				p = clock();
+				std::cout<<"Any key - exit. ";
+				Sleep(1000);
+				system(host.c_str());
+				std::cout<<"Delay: "<<clock()-p<<"ms"<<endl;
+				if(clock()-p>4000)
+					Beep(dzwiekGlowny,333);
+				if(kbhit()) {getch(); break;}
 			}
+			cls();
 			break;
 		}
 		case 'i':
