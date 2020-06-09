@@ -9,9 +9,7 @@
 #include "logus.hpp"
 #include "randomLogus.hpp"
 #include "var.hpp"
-//g++  main.cpp src\*.cpp
 #define q(var) cout<<#var<<"="<<var<<endl
-using namespace std;
 #include "patch.cpp"
 int console();
 bool liveChat(int &wyswietlaneWiersze);
@@ -59,12 +57,13 @@ int main(int argc, char** argv) //maa main
 	file.open("logus.ini");
 		if(file.good())
 		{
-			if(getVer()<190622) patch_190622();
-			else if(getVer() != ver) patch(); else odczyt();
+			if(getVer() != ver) patch(); else odczyt();
 		}
 		else
 		{
+			preConfig();
 			zapis();
+			wersja();
 		}
 	file.close();
 	string _versionName_ = "Logus 20.5 Pre-Release";
@@ -79,7 +78,7 @@ int main(int argc, char** argv) //maa main
 	else
 	{
 		SetConsoleOutputCP(65001); //code page utf-8
-		SetConsoleCP(65001); 
+		SetConsoleCP(65001);
 	}
 
 	switch (fastStart)
@@ -237,7 +236,7 @@ int console() //con
 					std::cout<<" ________________________Ustawienia - LiveChat________________________"<<std::endl;
 					SetConsoleTextAttribute(h, 7);
 					std::cout<<" [r] Przywroc ustawienia domyslne"<<std::endl;
-					std::cout<<" [a] Flaga na PTS: "<<((ang)?"ANG":"PL")<<std::endl;
+					std::cout<<" [a] Jezyk: "<<((ang)?"ENG":"PL")<<std::endl;
 					SetConsoleTextAttribute(h, 14);
 					std::cout<<" [p] Dzwiek wiadomosci PW: "<<((!fLockPW)?"TAK":"NIE")<<std::endl;
 					std::cout<<" [t] Dzwiek wiadomosci teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<std::endl;
@@ -275,7 +274,7 @@ int console() //con
 					std::cout<<" ________________________Ustawienia - LiveChat________________________"<<std::endl;
 					SetConsoleTextAttribute(h, 7);
 					std::cout<<" [r] Przywróć ustawienia domyślne"<<std::endl;
-					std::cout<<" [a] Flaga na PTS: "<<((ang)?"ANG":"PL")<<std::endl;
+					std::cout<<" [a] Język: "<<((ang)?"ENG":"PL")<<std::endl;
 					SetConsoleTextAttribute(h, 14);
 					std::cout<<" [p] Dźwięk wiadomości PW: "<<((!fLockPW)?"TAK":"NIE")<<std::endl;
 					std::cout<<" [t] Dźwięk wiadomości teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<std::endl;
@@ -533,8 +532,8 @@ int console() //con
 								intError(_grade);
 							}
 							grade = _grade;
-							if(grade < 20 || grade > 100)
-								std::cout<<"MIN 20; MAX 100"<<std::endl;
+							if(grade < 50 || grade > 100)
+								std::cout<<"MIN 50; MAX 100"<<std::endl;
 							else
 								break;
 						}
@@ -755,19 +754,33 @@ int console() //con
 		case 'w':
 		{
 			cls();
+			clock_t p = 0;
+			string host = "";
+			std::cout<<"Choose host: "<<endl;
+			std::cout<<"1. localhost"<<endl;
+			std::cout<<"2. google.pl"<<endl;
+			std::cout<<"3. facebook.com"<<endl;
+			switch(getch())
+			{
+				case '1': host = "ping localhost"; break;
+				case '2': host = "ping google.pl"; break;
+				case '3': host = "ping facebook.com"; break;
+				default: break;
+			}
+			cls();
 			while(true)
 			{
-				Beep(dzwiekGlowny,500);
-				system("ping google.pl -n 2");
-				std::cout<<std::endl;
-				std::cout<<"POWROT - DOWOLNY KLAWISZ"<<std::endl;
-				if(kbhit())
-				{
-					getch();
-					cls();
-					break;
-				}
+				if(host == "") break;
+				p = clock();
+				std::cout<<"Any key - exit. ";
+				Sleep(1000);
+				system(host.c_str());
+				std::cout<<"Delay: "<<clock()-p<<"ms"<<endl;
+				if(clock()-p>4000)
+					Beep(dzwiekGlowny,333);
+				if(kbhit()) {getch(); break;}
 			}
+			cls();
 			break;
 		}
 		case 'i':
@@ -857,7 +870,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			for(int i(5); i>0; i--) //wait 5s
 			{
 				pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
-				SetConsoleTextAttribute(h, 12); std::cout<<" autoJoin: connect server for "<<i<<"s ";
+				SetConsoleTextAttribute(h, 12); std::cout<<" autoJoin: trying to connect in "<<i<<"s ";
 				Sleep(5000/5);
 				if(kbhit()) break;
 			}
@@ -1323,6 +1336,7 @@ void preNews() //news
 	std::cout<<" * Dopóki nie nastąpi połączenie z serwerem, Logus łączy się z nim co 5 sekund"<<std::endl;
 	std::cout<<" 205_11.1 Zmiana funkcji sprawdzającej podania napisu zamiast liczby"<<std::endl;
 	std::cout<<" * Teraz nie jest potrzebne restartowanie programu w przypadku pomyłki"<<std::endl;
+	std::cout<<" 205_11.2 Dodano prekonfigurację w przypadku braku pliku logus.ini"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
