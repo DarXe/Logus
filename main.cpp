@@ -760,11 +760,17 @@ int console() //con
 			std::cout<<"1. localhost"<<endl;
 			std::cout<<"2. google.pl"<<endl;
 			std::cout<<"3. facebook.com"<<endl;
+			std::cout<<"4. other"<<endl;
 			switch(getch())
 			{
 				case '1': host = "ping localhost"; break;
 				case '2': host = "ping google.pl"; break;
 				case '3': host = "ping facebook.com"; break;
+				case '4': {
+						std::cout<<"Enter host: ";
+						std::cin>>host;
+						host = "ping "+host; break;
+					}
 				default: break;
 			}
 			cls();
@@ -776,7 +782,7 @@ int console() //con
 				Sleep(1000);
 				system(host.c_str());
 				std::cout<<"Delay: "<<clock()-p<<"ms"<<endl;
-				if(clock()-p>4000)
+				if(clock()-p > 4000 && clock()-p < 5000)
 					Beep(dzwiekGlowny,333);
 				if(kbhit()) {getch(); break;}
 			}
