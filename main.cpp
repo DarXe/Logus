@@ -1347,6 +1347,8 @@ void preNews() //news
 	std::cout<<" * Od teraz Logus uruchomi powiadomienie dźwiękowe tylko wtedy, kiedy wróci internet"<<std::endl;
 	std::cout<<" 206_10 Ping (opcja 'w') dodano możliwość sprawdzenia innego adresu"<<std::endl;
 	std::cout<<" 206_11 Dodano powiadomienia na przelewy od innych graczy"<<std::endl;
+	std::cout<<" 206_12 Dodano możliwość ustawienia timera pod bind z mta (pomysł - arki)"<<std::endl;
+	std::cout<<" * wystarczy zrobić binda /bind <klawisz> <swój_nick> msg x"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy

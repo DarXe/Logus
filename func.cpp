@@ -118,8 +118,8 @@ bool fNicknames(string &line)
 		s_temp = nicknames.at(i);
 		leng = s_temp.length() - 1;
 		//chat
-		if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
-			return 0;
+		//if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
+		//	return 0;
 		//join
 		if(line[gt]=='*' && line[gt+leng+3]==' ' && line[gt+leng+2]==s_temp[leng] && line[gt+leng+1]==s_temp[leng-1] && line[gt+leng]==s_temp[leng-2])
 			return 1;
@@ -129,6 +129,13 @@ bool fNicknames(string &line)
 	}
 	return 0;
 }
+
+//[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
+bool bindKey(string &line)
+{
+	return (line[gt]=='m'&&line[gt+1]=='s'&&line[gt+2]=='g'&&line[gt+3]==':'&&line[gt+31]=='f');
+}
+
 /*bool fNick(string &wyraz)
 {
 	for(int i = 0; i<nicknames.size(); i++)
@@ -149,7 +156,7 @@ bool fNicknames(string &line)
 }
 */
 
-void startTimer(short getSeconds)
+void startTimer(short getSeconds = 0)
 {
 	delay = clock();
 	if(getSeconds)
