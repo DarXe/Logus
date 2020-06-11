@@ -66,7 +66,7 @@ int main(int argc, char** argv) //maa main
 			wersja();
 		}
 	file.close();
-	string _versionName_ = "Logus 20.5 Pre-Release";
+	string _versionName_ = "Logus 20.6 Pre-Release";
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
 	color(kolorGlowny);
@@ -1188,7 +1188,7 @@ void wersja()
 	std::cout<<" |       Autor       |"<<std::endl;
 	std::cout<<" |       DarXe       |"<<std::endl;
 	std::cout<<" |___________________|"<<std::endl;
-	std::cout<<" |  Wersja 20.5-Pre  |"<<std::endl; //verr
+	std::cout<<" |  Wersja 20.6-Pre  |"<<std::endl; //verr
 	/*Sleep(300); std::cout<<std::endl;
 	std::cout<<" PLANY: "<<std::endl;
 	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;
@@ -1343,6 +1343,10 @@ void preNews() //news
 	std::cout<<" 205_11.1 Zmiana funkcji sprawdzającej podania napisu zamiast liczby"<<std::endl;
 	std::cout<<" * Teraz nie jest potrzebne restartowanie programu w przypadku pomyłki"<<std::endl;
 	std::cout<<" 205_11.2 Dodano prekonfigurację w przypadku braku pliku logus.ini"<<std::endl;
+	std::cout<<" 206_9 Zmieniono system sprawdzania połączenia wi-fi, opcja 'w' z menu"<<std::endl;
+	std::cout<<" * Od teraz Logus uruchomi powiadomienie dźwiękowe tylko wtedy, kiedy wróci internet"<<std::endl;
+	std::cout<<" 206_10 Ping (opcja 'w') dodano możliwość sprawdzenia innego adresu"<<std::endl;
+	std::cout<<" 206_11 Dodano powiadomienia na przelewy od innych graczy"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy

@@ -171,6 +171,18 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 		}
 	}
 
+	//przelewy
+	if(fPrzelewyOd(ostatniaLinia, ang))
+	{
+		Beep(dzwiekGlowny,400);
+		Beep(0,interval);
+
+		fstream info;
+		info.open("logusInfoOutput.log", ios::app);
+			info<<ostatniaLinia<<std::endl;
+		info.close();
+	}
+
 	char _quit = fConsoleInput(ostatniaLinia);
 	if(_quit)
 	{
