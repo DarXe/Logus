@@ -118,8 +118,8 @@ bool fNicknames(string &line)
 		s_temp = nicknames.at(i);
 		leng = s_temp.length() - 1;
 		//chat
-		if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
-			return 0;
+		//if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
+		//	return 0;
 		//join
 		if(line[gt]=='*' && line[gt+leng+3]==' ' && line[gt+leng+2]==s_temp[leng] && line[gt+leng+1]==s_temp[leng-1] && line[gt+leng]==s_temp[leng-2])
 			return 1;
@@ -129,6 +129,13 @@ bool fNicknames(string &line)
 	}
 	return 0;
 }
+
+//[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
+bool bindKey(string &line)
+{
+	return (line[gt]=='m'&&line[gt+1]=='s'&&line[gt+2]=='g'&&line[gt+3]==':'&&line[gt+31]=='f');
+}
+
 /*bool fNick(string &wyraz)
 {
 	for(int i = 0; i<nicknames.size(); i++)
@@ -149,8 +156,9 @@ bool fNicknames(string &line)
 }
 */
 
-void startTimer(short getSeconds)
+void startTimer(short getSeconds = 0)
 {
+	Beep(dzwiekGlowny, 100);
 	delay = clock();
 	if(getSeconds)
 	{
@@ -166,6 +174,15 @@ void startTimer(short getSeconds)
 	pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
 	cout<<" Timer 0:00  [s]Stop Timer   ";
+}
+void stopTimer()
+{
+	Beep(dzwiekGlowny, 500);
+	isTimer = 0;
+	isCzas = 0;
+	timer = 0;
+	pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
+	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
 }
 
 //[2019-06-28 11:58:25] [Input]  : test

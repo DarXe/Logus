@@ -66,7 +66,7 @@ int main(int argc, char** argv) //maa main
 			wersja();
 		}
 	file.close();
-	string _versionName_ = "Logus 20.5 Pre-Release";
+	string _versionName_ = "Logus 20.6 Pre-Release";
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
 	color(kolorGlowny);
@@ -760,11 +760,17 @@ int console() //con
 			std::cout<<"1. localhost"<<endl;
 			std::cout<<"2. google.pl"<<endl;
 			std::cout<<"3. facebook.com"<<endl;
+			std::cout<<"4. other"<<endl;
 			switch(getch())
 			{
 				case '1': host = "ping localhost"; break;
 				case '2': host = "ping google.pl"; break;
 				case '3': host = "ping facebook.com"; break;
+				case '4': {
+						std::cout<<"Enter host: ";
+						std::cin>>host;
+						host = "ping "+host; break;
+					}
 				default: break;
 			}
 			cls();
@@ -776,7 +782,7 @@ int console() //con
 				Sleep(1000);
 				system(host.c_str());
 				std::cout<<"Delay: "<<clock()-p<<"ms"<<endl;
-				if(clock()-p>4000)
+				if(clock()-p > 4000 && clock()-p < 5000)
 					Beep(dzwiekGlowny,333);
 				if(kbhit()) {getch(); break;}
 			}
@@ -885,22 +891,8 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			if(wyb == 27) { cls(); break;}
 			switch (wyb)
 			{
-			case 't':
-				{
-					Beep(dzwiekGlowny, 100);
-					startTimer(0);
-				}
-				break;
-			case 's':
-				{
-					Beep(dzwiekGlowny, 100);
-					isTimer = 0;
-					isCzas = 0;
-					timer = 0;
-					pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
-					SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-				}
-				break;
+			case 't': startTimer(); break;
+			case 's': stopTimer(); break;
 			case 'm':
 				{
 					cls();
@@ -1182,7 +1174,7 @@ void wersja()
 	std::cout<<" |       Autor       |"<<std::endl;
 	std::cout<<" |       DarXe       |"<<std::endl;
 	std::cout<<" |___________________|"<<std::endl;
-	std::cout<<" |  Wersja 20.5-Pre  |"<<std::endl; //verr
+	std::cout<<" |  Wersja 20.6-Pre  |"<<std::endl; //verr
 	/*Sleep(300); std::cout<<std::endl;
 	std::cout<<" PLANY: "<<std::endl;
 	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;
@@ -1337,6 +1329,13 @@ void preNews() //news
 	std::cout<<" 205_11.1 Zmiana funkcji sprawdzającej podania napisu zamiast liczby"<<std::endl;
 	std::cout<<" * Teraz nie jest potrzebne restartowanie programu w przypadku pomyłki"<<std::endl;
 	std::cout<<" 205_11.2 Dodano prekonfigurację w przypadku braku pliku logus.ini"<<std::endl;
+	std::cout<<" 206_9 Zmieniono system sprawdzania połączenia wi-fi, opcja 'w' z menu"<<std::endl;
+	std::cout<<" * Od teraz Logus uruchomi powiadomienie dźwiękowe tylko wtedy, kiedy wróci internet"<<std::endl;
+	std::cout<<" 206_10 Ping (opcja 'w') dodano możliwość sprawdzenia innego adresu"<<std::endl;
+	std::cout<<" 206_11 Dodano powiadomienia na przelewy od innych graczy"<<std::endl;
+	std::cout<<" 206_12 Dodano możliwość ustawienia timera pod bind z mta (pomysł - arki)"<<std::endl;
+	std::cout<<" * wystarczy zrobić binda /bind <klawisz> <swój_nick> msg x"<<std::endl;
+	std::cout<<" 206_12.1 Ponowne włączenie bindu na timer wyłącza go (dłuższy Beep)"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
