@@ -187,13 +187,22 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 	//aktualna funkcja - start timera
 	if(bindKey(ostatniaLinia))
 	{
-		Beep(dzwiekGlowny, 100);
-		startTimer();
-
-		fstream info;
-		info.open("logusInfoOutput.log", ios::app);
-			info<<"Timer - START"<<std::endl;
-		info.close();
+		if(isTimer)
+		{
+			stopTimer();
+			fstream info;
+			info.open("logusInfoOutput.log", ios::app);
+				info<<"Timer - STOP"<<std::endl;
+			info.close();
+		}
+		else
+		{
+			startTimer();
+			fstream info;
+			info.open("logusInfoOutput.log", ios::app);
+				info<<"Timer - START"<<std::endl;
+			info.close();
+		}
 	}
 
 	char _quit = fConsoleInput(ostatniaLinia);

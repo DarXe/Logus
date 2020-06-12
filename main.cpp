@@ -891,22 +891,8 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			if(wyb == 27) { cls(); break;}
 			switch (wyb)
 			{
-			case 't':
-				{
-					Beep(dzwiekGlowny, 100);
-					startTimer(0);
-				}
-				break;
-			case 's':
-				{
-					Beep(dzwiekGlowny, 100);
-					isTimer = 0;
-					isCzas = 0;
-					timer = 0;
-					pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
-					SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-				}
-				break;
+			case 't': startTimer(); break;
+			case 's': stopTimer(); break;
 			case 'm':
 				{
 					cls();
@@ -1349,6 +1335,7 @@ void preNews() //news
 	std::cout<<" 206_11 Dodano powiadomienia na przelewy od innych graczy"<<std::endl;
 	std::cout<<" 206_12 Dodano możliwość ustawienia timera pod bind z mta (pomysł - arki)"<<std::endl;
 	std::cout<<" * wystarczy zrobić binda /bind <klawisz> <swój_nick> msg x"<<std::endl;
+	std::cout<<" 206_12.1 Ponowne włączenie bindu na timer wyłącza go (dłuższy Beep)"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy

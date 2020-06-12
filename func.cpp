@@ -158,6 +158,7 @@ bool bindKey(string &line)
 
 void startTimer(short getSeconds = 0)
 {
+	Beep(dzwiekGlowny, 100);
 	delay = clock();
 	if(getSeconds)
 	{
@@ -173,6 +174,15 @@ void startTimer(short getSeconds = 0)
 	pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
 	cout<<" Timer 0:00  [s]Stop Timer   ";
+}
+void stopTimer()
+{
+	Beep(dzwiekGlowny, 500);
+	isTimer = 0;
+	isCzas = 0;
+	timer = 0;
+	pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
+	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
 }
 
 //[2019-06-28 11:58:25] [Input]  : test
