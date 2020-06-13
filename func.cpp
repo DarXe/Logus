@@ -124,7 +124,7 @@ bool fNicknames(string &line)
 		if(line[gt]=='*' && line[gt+leng+3]==' ' && line[gt+leng+2]==s_temp[leng] && line[gt+leng+1]==s_temp[leng-1] && line[gt+leng]==s_temp[leng-2])
 			return 1;
 		//afk
-		if(line[gt+5]==' ' && line[gt+leng+7]==' ' && line[gt+leng+6]==s_temp[leng] && line[gt+leng+5]==s_temp[leng-1] && line[gt+leng+4]==s_temp[leng-2])
+		if(line[gt+3]=='c' && line[gt+4]=='z' && line[gt+5]==' ' && line[gt+leng+7]==' ' && line[gt+leng+6]==s_temp[leng] && line[gt+leng+5]==s_temp[leng-1] && line[gt+leng+4]==s_temp[leng-2])
 			return 1;
 	}
 	return 0;
