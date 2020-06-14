@@ -207,14 +207,14 @@ char fConsoleInput(string &line)//fci
 		{
 			if(line[gt+1] == 't')//tt START TIMER waga 100%
 			{
-				startTimer(0);
+				startTimer();
 				int temp;
 				temp = czas * 1000 / 1.1;
 				temp = czas * 1000 - temp;
 				timer -= temp;
 			}
-			else startTimer(0);
-			return 1;
+			else startTimer();
+			return 0;
 		}
 		else if(line[gt]=='s'&&line[gt+1]=='e'&&line[gt+2]=='t')
 		{

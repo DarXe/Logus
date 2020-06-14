@@ -192,7 +192,7 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 			stopTimer();
 			fstream info;
 			info.open("logusInfoOutput.log", ios::app);
-				info<<"Timer - STOP"<<std::endl;
+				info<<ostatniaLinia.substr(0, 33)<<"Timer - STOP"<<std::endl;
 			info.close();
 		}
 		else
@@ -200,7 +200,7 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 			startTimer();
 			fstream info;
 			info.open("logusInfoOutput.log", ios::app);
-				info<<"Timer - START"<<std::endl;
+				info<<ostatniaLinia.substr(0, 33)<<"Timer - START"<<std::endl;
 			info.close();
 		}
 	}
