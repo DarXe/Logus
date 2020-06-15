@@ -22,6 +22,11 @@ void wersja();
 
 int main(int argc, char** argv) //maa main
 {
+	CONSOLE_CURSOR_INFO CURSOR;
+	CURSOR.dwSize = 1;
+	CURSOR.bVisible = FALSE;
+	SetConsoleCursorInfo(h, &CURSOR);
+	
 	fstream file;
 	file.open("console.log");
 		while(!file.good())

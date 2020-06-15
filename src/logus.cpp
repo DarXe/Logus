@@ -14,7 +14,7 @@ void cls()
 }
 char wybor()
 {
-	cout<<" Wybierz opcje : ";
+	cout<<"\n Wybierz opcje (wciśnij klawisz)";
 	return getch();
 }
 void def()
