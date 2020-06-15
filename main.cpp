@@ -26,7 +26,7 @@ int main(int argc, char** argv) //maa main
 	CURSOR.dwSize = 1;
 	CURSOR.bVisible = FALSE;
 	SetConsoleCursorInfo(h, &CURSOR);
-	
+
 	fstream file;
 	file.open("console.log");
 		while(!file.good())
@@ -1341,6 +1341,7 @@ void preNews() //news
 	std::cout<<" 206_12 Dodano możliwość ustawienia timera pod bind z mta (pomysł - arki)"<<std::endl;
 	std::cout<<" * wystarczy zrobić binda /bind <klawisz> <swój_nick> msg x"<<std::endl;
 	std::cout<<" 206_12.1 Ponowne włączenie bindu na timer wyłącza go (dłuższy Beep)"<<std::endl;
+	std::cout<<" 206_15 Ukryto migający kursor w konsoli"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
