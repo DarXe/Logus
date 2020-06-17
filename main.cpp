@@ -113,13 +113,13 @@ int console() //con
 	{
 		if(isTimer) delay2 = clock();
 		color(kolorGlowny);
-		Beep(dzwiekGlowny,100);
 
 		if(menuGlowne)
 		{
 			menuBezPL();
 		}
 		else menu();
+		Beep(dzwiekGlowny,100);
 
 		wyb = wybor();
 		if(wyb == 27){
