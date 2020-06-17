@@ -271,7 +271,8 @@ void getChat(int &lineCount)//gc
 		for(int i = 0; i < wyswietlaneWiersze; i++)
 		{
 			getline(file, line);
-			if(fNicknames(line)||fTransport(line,ang)||fKomunikat(line,ang)||fPrzelewyOd(line,ang)||fPwOd(line,ang)||fTeam(line,0))
+			bool notif = fNicknames(line)||fTransport(line,ang)||fKomunikat(line,ang)||fPrzelewyOd(line,ang)||fPwOd(line,ang)||fTeam(line,0);
+			if(notif)
 			{
 				if(timestamps)
 				{
