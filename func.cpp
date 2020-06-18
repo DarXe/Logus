@@ -136,6 +136,15 @@ bool bindKey(string &line)
 	return (line[gt]=='m'&&line[gt+1]=='s'&&line[gt+2]=='g'&&line[gt+3]==':'&&line[gt+31]=='f');
 }
 
+bool player(string &line)
+{
+	return (line[gt]=='*' && line[gt]=='*');
+}
+
+//[2020-06-18 13:16:48] [Output] : * player has joined the game
+//[2020-06-18 13:19:46] [Output] : * player has left the game (Quit)
+//[2020-05-26 05:25:26] [Output] : * player has left the game (Timed out)
+
 /*bool fNick(string &wyraz)
 {
 	for(int i = 0; i<nicknames.size(); i++)
