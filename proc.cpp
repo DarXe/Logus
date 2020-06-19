@@ -102,6 +102,7 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 			info.open("logusInfoOutput.log", ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
+			return 1;
 		}
 	}
 
@@ -119,6 +120,18 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 			info.open("logusInfoOutput.log", ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
+			return 1;
+		}
+	}
+
+	//nick z czatu dodany do ulubionych
+	if(!fLockNick)
+	{
+		if(fNicknames(ostatniaLinia))
+		{
+			Beep(dzwiekGlowny,300);
+			Beep(0,interval);
+			return 1;
 		}
 	}
 
@@ -144,8 +157,10 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 			info.open("logusInfoOutput.log", ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
+			return 1;
 		}
-		else if(fKomunikat(ostatniaLinia, ang))
+
+		if(fKomunikat(ostatniaLinia, ang))
 		{
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
@@ -158,16 +173,7 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 			info.open("logusInfoOutput.log", ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
-		}
-	}
-
-	//nick z czatu dodany do ulubionych
-	if(!fLockNick)
-	{
-		if(fNicknames(ostatniaLinia))
-		{
-			Beep(dzwiekGlowny,300);
-			Beep(0,interval);
+			return 1;
 		}
 	}
 
@@ -181,6 +187,7 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 		info.open("logusInfoOutput.log", ios::app);
 			info<<ostatniaLinia<<std::endl;
 		info.close();
+		return 1;
 	}
 	
 	//klawisz zbindowany pod błąd /bind <key> <your_nick> msg x
@@ -203,6 +210,7 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 				info<<ostatniaLinia.substr(0, 33)<<"Timer - START"<<std::endl;
 			info.close();
 		}
+		return 1;
 	}
 
 	char _quit = fConsoleInput(ostatniaLinia);
