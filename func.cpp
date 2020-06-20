@@ -272,7 +272,7 @@ char fConsoleInput(string &line)//fci
 					liczba -= 48; temp += liczba;
 				}
 				startTimer(temp);
-				return 1;
+				return 0;
 			}
 			else if(line[gt+4]=='n')
 			{
