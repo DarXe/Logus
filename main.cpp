@@ -776,7 +776,7 @@ int console() //con
 						std::cin>>host;
 						host = "ping "+host; break;
 					}
-				default: break;
+				default: host = "ping google.pl"; break;
 			}
 			cls();
 			while(true)
