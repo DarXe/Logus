@@ -192,7 +192,7 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 	
 	//klawisz zbindowany pod błąd /bind <key> <your_nick> msg x
 	//aktualna funkcja - start timera
-	if(bindKey(ostatniaLinia))
+	if(fBindKey(ostatniaLinia))
 	{
 		if(isTimer)
 		{
@@ -214,7 +214,7 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 	}
 
 	//open the gate
-	if(open(ostatniaLinia))
+	if(fPwOd(ostatniaLinia, ang) && fOpen(ostatniaLinia))
 	{
 		Beep(dzwiekGlowny,400);
 		Beep(0,interval);

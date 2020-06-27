@@ -131,12 +131,12 @@ bool fNicknames(string &line)
 }
 
 //[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
-bool bindKey(string &line)
+bool fBindKey(string &line)
 {
 	return (line[gt]=='m'&&line[gt+1]=='s'&&line[gt+2]=='g'&&line[gt+3]==':'&&line[gt+31]=='f');
 }
 
-bool open(string &line)
+bool fOpen(string &line)
 {
 	return (line[line.length()-1]=='n'&&line[line.length()-2]=='e'&&line[line.length()-3]=='p'&&line[line.length()-4]=='o');
 }
