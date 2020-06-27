@@ -213,6 +213,20 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 		return 1;
 	}
 
+	//open the gate
+	if(open(ostatniaLinia))
+	{
+		Beep(dzwiekGlowny,400);
+		Beep(0,interval);
+		system("start open.rec");
+
+		fstream info;
+		info.open("logusInfoOutput.log", ios::app);
+			info<<ostatniaLinia<<std::endl;
+		info.close();
+		return 1;
+	}
+
 	char _quit = fConsoleInput(ostatniaLinia);
 	if(_quit)
 	{
