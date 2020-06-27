@@ -93,6 +93,20 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 	if(!fLockPW){
 		if(fPwOd(ostatniaLinia, ang))
 		{
+			//open the gate
+			if(fOpen(ostatniaLinia))
+			{
+				Beep(dzwiekGlowny,400);
+				Beep(0,interval);
+				system("start open.rec");
+
+				fstream info;
+				info.open("logusInfoOutput.log", ios::app);
+					info<<ostatniaLinia<<std::endl;
+				info.close();
+				return 1;
+			}
+			//other PM
 			Beep(dzwiekGlowny,300);
 			Beep(0,interval);
 			Beep(dzwiekGlowny,300);
@@ -210,20 +224,6 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 				info<<ostatniaLinia.substr(0, 33)<<"Timer - START"<<std::endl;
 			info.close();
 		}
-		return 1;
-	}
-
-	//open the gate
-	if(fPwOd(ostatniaLinia, ang) && fOpen(ostatniaLinia))
-	{
-		Beep(dzwiekGlowny,400);
-		Beep(0,interval);
-		system("start open.rec");
-
-		fstream info;
-		info.open("logusInfoOutput.log", ios::app);
-			info<<ostatniaLinia<<std::endl;
-		info.close();
 		return 1;
 	}
 
