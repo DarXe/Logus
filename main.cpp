@@ -1342,6 +1342,7 @@ void preNews() //news
 	std::cout<<" * wystarczy zrobić binda /bind <klawisz> <swój_nick> msg x"<<std::endl;
 	std::cout<<" 206_12.1 Ponowne włączenie bindu na timer wyłącza go (dłuższy Beep)"<<std::endl;
 	std::cout<<" 206_15 Ukryto migający kursor w konsoli"<<std::endl;
+	std::cout<<" 206_28 Dodano tryb automatycznego otwierania bramy, gdy ktoś poprosi o open na PW"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
