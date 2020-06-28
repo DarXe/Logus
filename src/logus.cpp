@@ -1,8 +1,6 @@
 // Copyright (C) 2018-2019  DarXe
 #include <iostream>
 #include <conio.h>
-#include "..\logus.hpp"
-using namespace std;
 
 int losuj(int od, int doo)
 {
@@ -14,11 +12,11 @@ void cls()
 }
 char wybor()
 {
-	cout<<"\n Wybierz opcje (wciśnij klawisz)";
+	std::cout<<"\n Wybierz opcje (wciśnij klawisz)";
 	return getch();
 }
 void def()
 {
 	cls();
-	cout<<"\a (INFO) Nie ma takiej opcji!\n";
+	std::cout<<"\a (INFO) Nie ma takiej opcji!\n";
 }

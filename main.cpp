@@ -9,7 +9,7 @@
 #include "logus.hpp"
 #include "randomLogus.hpp"
 #include "var.hpp"
-#define q(var) cout<<#var<<"="<<var<<endl
+#define q(var) cout<<#var<<"="<<var<<std::endl
 #include "patch.cpp"
 int console();
 bool liveChat(int &wyswietlaneWiersze);
@@ -27,7 +27,7 @@ int main(int argc, char** argv) //maa main
 	CURSOR.bVisible = FALSE;
 	SetConsoleCursorInfo(h, &CURSOR);
 
-	fstream file;
+	std::fstream file;
 	file.open("console.log");
 		while(!file.good())
 		{
@@ -46,15 +46,15 @@ int main(int argc, char** argv) //maa main
 		}
 		
 		{
-			fstream fileInit;
-			fileInit.open("console.log", ios::app); fileInit.close();
-			fileInit.open("console.log.1", ios::app); fileInit.close();
-			fileInit.open("console.log.2", ios::app); fileInit.close();
-			fileInit.open("console.log.3", ios::app); fileInit.close();
-			fileInit.open("console.log.4", ios::app); fileInit.close();
-			fileInit.open("console.log.5", ios::app); fileInit.close();
-			fileInit.open("logusInfoOutput.log", ios::app); fileInit.close();
-			fileInit.open("logus.log", ios::app); fileInit.close();
+			std::fstream fileInit;
+			fileInit.open("console.log", std::ios::app); fileInit.close();
+			fileInit.open("console.log.1", std::ios::app); fileInit.close();
+			fileInit.open("console.log.2", std::ios::app); fileInit.close();
+			fileInit.open("console.log.3", std::ios::app); fileInit.close();
+			fileInit.open("console.log.4", std::ios::app); fileInit.close();
+			fileInit.open("console.log.5", std::ios::app); fileInit.close();
+			fileInit.open("logusInfoOutput.log", std::ios::app); fileInit.close();
+			fileInit.open("logus.log", std::ios::app); fileInit.close();
 		}
 
 	file.close();
@@ -71,7 +71,7 @@ int main(int argc, char** argv) //maa main
 			wersja();
 		}
 	file.close();
-	string _versionName_ = "Logus 20.6 Pre-Release";
+	std::string _versionName_ = "Logus 20.6 Pre-Release";
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
 	color(kolorGlowny);
@@ -373,7 +373,7 @@ int console() //con
 						while(true)
 						{
 							std::cout<<"Podaj nowa ilosc wyswietlanych wierszy: ";
-							if(!(cin>>wyswietlaneWiersze))
+							if(!(std::cin>>wyswietlaneWiersze))
 							{
 								intError(wyswietlaneWiersze);
 							}
@@ -391,7 +391,7 @@ int console() //con
 						while(true)
 						{
 							std::cout<<"Podaj nowa czestotliwosc odswiezania: ";
-							if(!(cin>>refresh))
+							if(!(std::cin>>refresh))
 							{
 								intError(refresh);
 							}
@@ -415,7 +415,7 @@ int console() //con
 						while(true)
 						{
 							std::cout<<"Podaj nowa czestotliwosc dzwieku: ";
-							if(!(cin>>dzwiekGlowny))
+							if(!(std::cin>>dzwiekGlowny))
 							{
 								intError(dzwiekGlowny);
 							}
@@ -433,7 +433,7 @@ int console() //con
 						while(true)
 						{
 							std::cout<<"Podaj nowy odstep miedzy dzwiekami: ";
-							if(!(cin>>interval))
+							if(!(std::cin>>interval))
 							{
 								intError(interval);
 							}
@@ -454,7 +454,7 @@ int console() //con
 								while(true)
 								{
 									std::cout<<"Podaj ilosc wierszy, od jakiej maja byc przenoszone logi: ";
-									if(!(cin>>autoMoveLogs))
+									if(!(std::cin>>autoMoveLogs))
 									{
 										intError(autoMoveLogs);
 									}
@@ -471,12 +471,12 @@ int console() //con
 					{
 						cls();
 						std::cout<<"Podaj minuty: ";
-						if(!(cin>>temp))
+						if(!(std::cin>>temp))
 						{
 							intError(temp);
 						}
 						std::cout<<"Podaj sekundy: ";
-						if(!(cin>>temp2))
+						if(!(std::cin>>temp2))
 						{
 							intError(temp2);
 						}
@@ -495,7 +495,7 @@ int console() //con
 						while(true)
 						{
 							std::cout<<"Podaj nowa ilosc $(sama liczba): ";
-							if(!(cin>>money))
+							if(!(std::cin>>money))
 							{
 								intError(money);
 							}
@@ -513,7 +513,7 @@ int console() //con
 						while(true)
 						{
 							std::cout<<"Podaj nowa ilosc kursow: ";
-							if(!(cin>>courses))
+							if(!(std::cin>>courses))
 							{
 								intError(courses);
 							}
@@ -532,7 +532,7 @@ int console() //con
 						{
 							std::cout<<"Podaj wartosc rangi(sama liczba, bez znaku %): ";
 							int _grade = 0;
-							if(!(cin>>_grade))
+							if(!(std::cin>>_grade))
 							{
 								intError(_grade);
 							}
@@ -610,7 +610,7 @@ int console() //con
 									while(true)
 									{
 										std::cout<<"Podaj dokladna nazwe gracza: ";
-										cin>>s_temp;
+										std::cin>>s_temp;
 										if(s_temp.length()<3)
 											std::cout<<"Minimum 3 znaki!"<<std::endl;
 										else
@@ -662,7 +662,7 @@ int console() //con
 											std::cout<<i+1<<". "<<nicknames.at(i)<<std::endl;
 										}
 										std::cout<<"Podaj id gracza, ktorego chcesz usunac: ";
-										if(!(cin>>temp))
+										if(!(std::cin>>temp))
 										{
 											intError(temp);
 										}
@@ -699,7 +699,7 @@ int console() //con
 						while(true)
 						{
 							std::cout<<"Podaj swoj nowy nick: ";
-							cin>>nick;
+							std::cin>>nick;
 							if(nick.length()<3)
 							{
 								std::cout<<"MINIMUM 3 znaki"<<std::endl;
@@ -760,12 +760,12 @@ int console() //con
 		{
 			cls();
 			clock_t p = 0;
-			string host = "";
-			std::cout<<"Choose host: "<<endl;
-			std::cout<<"1. localhost"<<endl;
-			std::cout<<"2. google.pl"<<endl;
-			std::cout<<"3. facebook.com"<<endl;
-			std::cout<<"4. other"<<endl;
+			std::string host = "";
+			std::cout<<"Choose host: "<<std::endl;
+			std::cout<<"1. localhost"<<std::endl;
+			std::cout<<"2. google.pl"<<std::endl;
+			std::cout<<"3. facebook.com"<<std::endl;
+			std::cout<<"4. other"<<std::endl;
 			switch(getch())
 			{
 				case '1': host = "ping localhost"; break;
@@ -786,7 +786,7 @@ int console() //con
 				std::cout<<"Any key - exit. ";
 				Sleep(1000);
 				system(host.c_str());
-				std::cout<<"Delay: "<<clock()-p<<"ms"<<endl;
+				std::cout<<"Delay: "<<clock()-p<<"ms"<<std::endl;
 				if(clock()-p > 4000 && clock()-p < 5000)
 					Beep(dzwiekGlowny,333);
 				if(kbhit()) {getch(); break;}
@@ -834,10 +834,10 @@ int console() //con
 bool liveChat(int &wyswietlaneWiersze) //lc
 {
 	bool isAutoJoin = false;
-	string ostatniaLinia[11]; //ostatnie linie
+	std::string ostatniaLinia[11]; //ostatnie linie
 	int lineCount = 0;
-	fstream file;
-	string line;
+	std::fstream file;
+	std::string line;
 
 	if(isTimer) delay = clock();
 
@@ -1015,7 +1015,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 				++lineCount;
 			}
 			file.clear();
-			file.seekg(ios::beg); //instead of file.close() and file.open() go to begin line
+			file.seekg(std::ios::beg); //instead of file.close() and file.open() go to begin line
 
 		temp = lineCount-temp; //difference in the number of lines
 		//if it is different, it means that a new message has appeared
@@ -1053,8 +1053,8 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 						{
 							errors++;
 							//saving errors
-							fstream error;
-							error.open("logusErrors.log", ios::app);
+							std::fstream error;
+							error.open("logusErrors.log", std::ios::app);
 								error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<std::endl;
 								error<<"TYPE: PRE\n";
 								error<<"ROWS: "<<lineCount<<"\n";
@@ -1112,8 +1112,8 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			default:
 				{
 					errors++;
-					fstream error;
-					error.open("logusErrors.log", ios::app);
+					std::fstream error;
+					error.open("logusErrors.log", std::ios::app);
 						error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<std::endl;
 						error<<"TYPE: POST\n";
 						error<<"ROWS: "<<lineCount<<"\n";
