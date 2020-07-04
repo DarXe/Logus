@@ -96,9 +96,11 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			//open the gate
 			if(fOpen(ostatniaLinia))
 			{
+				toClipboard("open");
+				system("start open.rec");
+				
 				Beep(dzwiekGlowny,400);
 				Beep(0,interval);
-				system("start open.rec");
 
 				std::fstream info;
 				info.open("logusInfoOutput.log", std::ios::app);

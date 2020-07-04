@@ -140,6 +140,10 @@ bool fOpen(std::string &line)
 {
 	return (line[line.length()-1]=='n'&&line[line.length()-2]=='e'&&line[line.length()-3]=='p'&&line[line.length()-4]=='o');
 }
+bool fOpenEventListener(std::string &line)
+{
+	return (line[gt]=='o'&&line[gt+1]=='p'&&line[gt+2]=='e'&&line[gt+3]=='n');
+}
 
 bool player(std::string &line)
 {
@@ -330,6 +334,11 @@ char fConsoleInput(std::string &line)//fci
 				return 1;
 			}
 			else return 0;
+		}
+		else if(fOpenEventListener(line))
+		{
+			system("taskkill /im tinytask.exe /f");
+			return 1;
 		}
 		else return 0;
 	}

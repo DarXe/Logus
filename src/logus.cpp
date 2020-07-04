@@ -24,7 +24,6 @@ void def()
 
 void toClipboard(const std::string &s)
 {
-	system("taskkill /im tinytask.exe");
 	OpenClipboard(0);
 	EmptyClipboard();	
 	HGLOBAL hg=GlobalAlloc(GMEM_MOVEABLE,s.size()+1);

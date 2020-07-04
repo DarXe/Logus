@@ -15,6 +15,8 @@ char wybor();
 
 void def();
 
+void toClipboard(const std::string &s);
+
 //void intError();
 
 #endif
