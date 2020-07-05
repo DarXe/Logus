@@ -3,7 +3,7 @@
 
 int getVer()
 {
-	fstream file;
+	std::fstream file;
 	file.open("logus.ini");
 		for(int i(0); i<6; i++) getline(file,s_temp);
 		file>>s_temp>>temp;
@@ -13,13 +13,13 @@ int getVer()
 
 void zapis(bool showInfo = true)
 { //saa save
-	fstream file;
-	file.open("logus.ini", ios::out);
+	std::fstream file;
+	file.open("logus.ini", std::ios::out);
 		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
 		file<<"//Witaj w pliku konfiguracyjnym. Aby ręcznie skonfigurować ustawienia, podmień liczbę na inną.\n";
 		file<<"//Pomiędzy nazwą ustawienia a wartością musi być odstęp spacji, np. nazwa_ustawienia: wartość.\n";
 		file<<"//Nie edytuj linii posiadających komentarz '//', w ustawieniach edytuj tylko wartosci\n";
-		file<<"//0 - fałsz, 1 - prawda, kolory: 1-9, A-F"<<endl;
+		file<<"//0 - fałsz, 1 - prawda, kolory: 1-9, A-F"<<std::endl;
 		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
 		file<<"wersja(nie_edytować): "<<ver<<"\n";
 		file<<"IP_serwera_MTA: "<<mtasa<<"\n";
@@ -47,29 +47,29 @@ void zapis(bool showInfo = true)
 		file<<"automatyczne_przenoszenie_logów: "<<autoMoveLogs<<"\n";
 		file<<"ranga(50%=0.5): "<<grade<<"\n";
 		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		file<<"//W tym miejscu znajduje sie lista zapisanych graczy."<<endl;
-		file<<"//Aby poprawnie dodać gracza przez plik należy ustalić też ilość graczy."<<endl;
-		file<<"//Zapisana jest ona po napisie 'ilość_graczy: ', po dwukropku musi być spacja."<<endl;
-		file<<"//Przykład:"<<endl;
-		file<<"//ilość_graczy: 2"<<endl;
-		file<<"//1 ASL|DarXe"<<endl;
-		file<<"//2 MERO4k"<<endl;
+		file<<"//W tym miejscu znajduje sie lista zapisanych graczy."<<std::endl;
+		file<<"//Aby poprawnie dodać gracza przez plik należy ustalić też ilość graczy."<<std::endl;
+		file<<"//Zapisana jest ona po napisie 'ilość_graczy: ', po dwukropku musi być spacja."<<std::endl;
+		file<<"//Przykład:"<<std::endl;
+		file<<"//ilość_graczy: 2"<<std::endl;
+		file<<"//1 ASL|DarXe"<<std::endl;
+		file<<"//2 MERO4k"<<std::endl;
 		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		file<<"Lista zapisanych graczy: "<<endl;
-		file<<"ilość_graczy: "<<nicknames.size()<<endl;
+		file<<"Lista zapisanych graczy: "<<std::endl;
+		file<<"ilość_graczy: "<<nicknames.size()<<std::endl;
 		for(int i = 0; i < nicknames.size(); i++)
 		{
-			file<<i+1<<" "<<nicknames.at(i)<<endl;
+			file<<i+1<<" "<<nicknames.at(i)<<std::endl;
 		}
 	file.close();
 	if(showInfo)
-	cout<<"(INFO) Ustawienia zostaly zapisane."<<endl;
+	std::cout<<"(INFO) Ustawienia zostaly zapisane."<<std::endl;
 }
 
 void odczyt() //re read
 {	
 	int temp;
-	fstream file;
+	std::fstream file;
 	file.open("logus.ini");
 		for(int i(0); i<6; i++) getline(file,s_temp);
 		file>>s_temp>>temp;
@@ -113,13 +113,13 @@ void odczyt() //re read
 			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
-		cout<<"(INFO) Wczytano ustawienia."<<endl;
+		std::cout<<"(INFO) Wczytano ustawienia."<<std::endl;
 	file.close();
 }
 
 void patch() //pat
 {
-	fstream file;
+	std::fstream file;
 	file.open("logus.ini");
 		for(int i(0); i<6; i++) getline(file,s_temp);
 		file>>s_temp>>temp;
@@ -163,7 +163,7 @@ void patch() //pat
 			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
-		cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<"."<<endl;
+		std::cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<"."<<std::endl;
 	file.close();
 	zapis();
 }

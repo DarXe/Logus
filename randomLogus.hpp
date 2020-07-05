@@ -1,10 +1,9 @@
 #ifndef _RANDOM_LOGUS_HPP
 #define _RANDOM_LOGUS_HPP
-using namespace std;
 
 int lottoLogus();
-void lottoLogusReplay(vector <string> &nicknames, vector <short> &playersId, vector <string> &winners, vector <short> &winnersId);
-void lottoLogusStats(vector <string> &nicknames);
-void playerList(vector <string> &nicknames);
+void lottoLogusReplay(std::vector <std::string> &nicknames, std::vector <short> &playersId, std::vector <std::string> &winners, std::vector <short> &winnersId);
+void lottoLogusStats(std::vector <std::string> &nicknames);
+void playerList(std::vector <std::string> &nicknames);
 
 #endif

@@ -3,20 +3,20 @@
 
 int intError(int &number)
 {
-	while (!(cin>>number))
+	while (!(std::cin>>number))
     {
       std::cout<<"\n\aERRROR! Podales litere/y!"<<std::endl;
-			cin.clear(); // clear input buffer to restore cin to a usable state
-			cin.ignore(INT_MAX, '\n'); // ignore last input
-			cout << "Ta opcja wymaga podania liczby..\n";
-			cout << "Spróbuj ponownie: ";
+			std::cin.clear(); // clear input buffer to restore std::cin to a usable state
+			std::cin.ignore(INT_MAX, '\n'); // ignore last input
+			std::cout << "Ta opcja wymaga podania liczby..\n";
+			std::cout << "Spróbuj ponownie: ";
     }
   return number;
 }
 
-void color(string value)
+void color(std::string value)
 {
-	string value0 = "color 0"+value;
+	std::string value0 = "color 0"+value;
 	system(value0.c_str());
 }
 
@@ -25,7 +25,7 @@ void infoOuput()
 	
 }
 
-void salaryForTransport(string &line, bool &ang)
+void salaryForTransport(std::string &line, bool &ang)
 {
 	if(ang)
 	{
@@ -87,21 +87,38 @@ void salaryForTransport(string &line, bool &ang)
 	}
 }
 
-bool liveChatBeep(string &ostatniaLinia) //bee
+bool liveChatBeep(std::string &ostatniaLinia) //bee
 {
 	//wiadomość pw
 	if(!fLockPW){
 		if(fPwOd(ostatniaLinia, ang))
 		{
+			//open the gate
+			if(fOpen(ostatniaLinia))
+			{
+				system("start pasteCmd.exe");
+				toClipboard("open");
+				
+				Beep(dzwiekGlowny,400);
+				Beep(0,interval);
+
+				std::fstream info;
+				info.open("logusInfoOutput.log", std::ios::app);
+					info<<ostatniaLinia<<std::endl;
+				info.close();
+				return 1;
+			}
+			//other PM
 			Beep(dzwiekGlowny,300);
 			Beep(0,interval);
 			Beep(dzwiekGlowny,300);
 			Beep(0,interval);
 
-			fstream info;
-			info.open("logusInfoOutput.log", ios::app);
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
+			return 1;
 		}
 	}
 
@@ -115,10 +132,22 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
 			
-			fstream info;
-			info.open("logusInfoOutput.log", ios::app);
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
+			return 1;
+		}
+	}
+
+	//nick z czatu dodany do ulubionych
+	if(!fLockNick)
+	{
+		if(fNicknames(ostatniaLinia))
+		{
+			Beep(dzwiekGlowny,300);
+			Beep(0,interval);
+			return 1;
 		}
 	}
 
@@ -140,12 +169,14 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
 			
-			fstream info;
-			info.open("logusInfoOutput.log", ios::app);
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
+			return 1;
 		}
-		else if(fKomunikat(ostatniaLinia, ang))
+
+		if(fKomunikat(ostatniaLinia, ang))
 		{
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
@@ -154,20 +185,11 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
 			
-			fstream info;
-			info.open("logusInfoOutput.log", ios::app);
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
-		}
-	}
-
-	//nick z czatu dodany do ulubionych
-	if(!fLockNick)
-	{
-		if(fNicknames(ostatniaLinia))
-		{
-			Beep(dzwiekGlowny,300);
-			Beep(0,interval);
+			return 1;
 		}
 	}
 
@@ -177,32 +199,34 @@ bool liveChatBeep(string &ostatniaLinia) //bee
 		Beep(dzwiekGlowny,400);
 		Beep(0,interval);
 
-		fstream info;
-		info.open("logusInfoOutput.log", ios::app);
+		std::fstream info;
+		info.open("logusInfoOutput.log", std::ios::app);
 			info<<ostatniaLinia<<std::endl;
 		info.close();
+		return 1;
 	}
 	
 	//klawisz zbindowany pod błąd /bind <key> <your_nick> msg x
 	//aktualna funkcja - start timera
-	if(bindKey(ostatniaLinia))
+	if(fBindKey(ostatniaLinia))
 	{
 		if(isTimer)
 		{
 			stopTimer();
-			fstream info;
-			info.open("logusInfoOutput.log", ios::app);
-				info<<"Timer - STOP"<<std::endl;
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
+				info<<ostatniaLinia.substr(0, 33)<<"Timer - STOP"<<std::endl;
 			info.close();
 		}
 		else
 		{
 			startTimer();
-			fstream info;
-			info.open("logusInfoOutput.log", ios::app);
-				info<<"Timer - START"<<std::endl;
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
+				info<<ostatniaLinia.substr(0, 33)<<"Timer - START"<<std::endl;
 			info.close();
 		}
+		return 1;
 	}
 
 	char _quit = fConsoleInput(ostatniaLinia);
@@ -250,8 +274,8 @@ void liveChatHead(int lineCount = 0) //head
 
 void getChat(int &lineCount)//gc
 {
-	fstream file;
-	string line;
+	std::fstream file;
+	std::string line;
 
 	liveChatHead(lineCount);
 
@@ -271,7 +295,8 @@ void getChat(int &lineCount)//gc
 		for(int i = 0; i < wyswietlaneWiersze; i++)
 		{
 			getline(file, line);
-			if(fNicknames(line)||fTransport(line,ang)||fKomunikat(line,ang)||fPrzelewyOd(line,ang)||fPwOd(line,ang)||fTeam(line,0))
+			bool notif = fNicknames(line)||fTransport(line,ang)||fKomunikat(line,ang)||fPrzelewyOd(line,ang)||fPwOd(line,ang)||fTeam(line,0);
+			if(notif)
 			{
 				if(timestamps)
 				{
@@ -335,9 +360,9 @@ void getChat(int &lineCount)//gc
 
 void moveLogs()//mv clean and move logs mtasarom console.log to logus.log
 {
-	fstream from;
-	fstream to;
-	string line;
+	std::fstream from;
+	std::fstream to;
+	std::string line;
 	int count = 0;
 
 	from.open("console.log");
@@ -348,11 +373,11 @@ void moveLogs()//mv clean and move logs mtasarom console.log to logus.log
 		}
 		count--;
 		from.clear();
-		from.seekg(ios::beg);
+		from.seekg(std::ios::beg);
 
-		vector <string> logs(count);
-		to.open("logus.log", ios::app);
-			for(string line : logs)
+		std::vector <std::string> logs(count);
+		to.open("logus.log", std::ios::app);
+			for(std::string line : logs)
 			{
 				getline(from, line);
 				to<<line<<std::endl;
@@ -360,7 +385,7 @@ void moveLogs()//mv clean and move logs mtasarom console.log to logus.log
 		to.close();
 	from.close();
 
-	from.open("console.log", ios::out);
+	from.open("console.log", std::ios::out);
 	from.close();
 
 	cls();
@@ -395,7 +420,7 @@ void stopAutoJoin(bool &isAutoJoin)
 	Beep(dzwiekGlowny, 500);
 }
 
-bool closeLogus(string text = "Bye bye")
+bool closeLogus(std::string text = "Bye bye")
 {
 	cls();
 	zapis();
@@ -660,7 +685,7 @@ void preConfig()
 											{
 												std::cout<<" Enter your pay wage."<<std::endl;
 												std::cout<<" Enter a number (without %): "; std::cin>>grade; std::cout<<std::endl;
-												while (cin.fail() && grade < 50 || grade > 100)
+												while (std::cin.fail() && grade < 50 || grade > 100)
 												{
 													cls();
 													std::cin.clear();
@@ -687,7 +712,7 @@ void preConfig()
 													std::cout<<" Podaj % wypłaty."<<std::endl;
 													std::cout<<" Podaj liczbę (bez %): "; std::cin>>grade; std::cout<<std::endl;
 												}
-												while (cin.fail() && grade < 50 || grade > 100)
+												while (std::cin.fail() && grade < 50 || grade > 100)
 												{
 													cls();
 													std::cin.clear();
@@ -729,7 +754,7 @@ void preConfig()
 								{
 									std::cout<<" Enter courses that you have on your F4."<<std::endl;
 									std::cout<<" Enter a number: "; std::cin>>courses; std::cout<<std::endl;
-									while (cin.fail() && courses < 0 || courses > 9999)
+									while (std::cin.fail() && courses < 0 || courses > 9999)
 									{
 										cls();
 										std::cin.clear();
@@ -748,7 +773,7 @@ void preConfig()
 									SetConsoleTextAttribute(h, 10);
 									std::cout<<" Enter money that you have on your F4."<<std::endl;
 									std::cout<<" Enter a number: "; std::cin>>money; std::cout<<std::endl;
-									while (cin.fail() && money < 0 || money > 9999999)
+									while (std::cin.fail() && money < 0 || money > 9999999)
 									{
 										cls();
 										std::cin.clear();
@@ -776,7 +801,7 @@ void preConfig()
 										std::cout<<" Podaj liczbę: "; std::cin>>courses; std::cout<<std::endl;
 									}
 									
-									while (cin.fail() && courses < 0 || courses > 9999)
+									while (std::cin.fail() && courses < 0 || courses > 9999)
 									{
 										cls();
 										std::cin.clear();
@@ -812,7 +837,7 @@ void preConfig()
 											std::cout<<" Podaj zarobek który masz pod F4."<<std::endl;
 											std::cout<<" Wpisz liczbę: "; std::cin>>money; std::cout<<std::endl;
 										}
-									while (cin.fail() && money < 0 || money > 9999999)
+									while (std::cin.fail() && money < 0 || money > 9999999)
 									{
 										cls();
 										std::cin.clear();
@@ -895,7 +920,7 @@ void preConfig()
 					{
 						std::cout<<" First, we will choose loading time."<<std::endl;
 						std::cout<<"Enter minutes: "; std::cin>>temp2; std::cout<<std::endl;
-						while (cin.fail())
+						while (std::cin.fail())
 						{
 							cls(); SetConsoleTextAttribute(h, 12);
 							std::cout<<" _______________________Logus_pre-config_______________________"<<std::endl;
@@ -909,7 +934,7 @@ void preConfig()
 							cls();
 							std::cout<<" Now enter seconds."<<std::endl;
 							std::cout<<"Enter seconds: "; std::cin>>temp; std::cout<<std::endl;
-						while (cin.fail())
+						while (std::cin.fail())
 						{
 							cls(); SetConsoleTextAttribute(h, 12);
 							std::cout<<" _______________________Logus_pre-config_______________________"<<std::endl;
@@ -935,7 +960,7 @@ void preConfig()
 							std::cout<<" Na początek wybierzmy czas ładowania towaru."<<std::endl;
 							std::cout<<"Podaj minuty: "; std::cin>>temp2; std::cout<<std::endl;
 						}
-						while (cin.fail())
+						while (std::cin.fail())
 						{
 							cls(); SetConsoleTextAttribute(h, 12);
 							std::cout<<" _______________________Logus_pre-config_______________________"<<std::endl;
@@ -959,7 +984,7 @@ void preConfig()
 							SetConsoleTextAttribute(h, 10);
 							std::cout<<" Teraz podaj sekundy."<<std::endl;
 							std::cout<<"Podaj sekundy: "; std::cin>>temp; std::cout<<std::endl;
-						while (cin.fail())
+						while (std::cin.fail())
 						{
 							cls(); SetConsoleTextAttribute(h, 12);
 							std::cout<<" _______________________Logus_pre-config_______________________"<<std::endl;

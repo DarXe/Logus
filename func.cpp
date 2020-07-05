@@ -5,7 +5,7 @@
 //(team) [pts]nick
 void serverConnect();
 
-bool fTeam(string &line, bool e)
+bool fTeam(std::string &line, bool e)
 {
 	leng = nick.length();
 	if(line[gt]=='('&&line[gt+1]=='T'&&line[gt+2]=='E'&&line[gt+3]=='A'&&line[gt+4]=='M')
@@ -18,7 +18,7 @@ bool fTeam(string &line, bool e)
 	else return 0;
 }
 
-bool fPwOd(string &line, bool &ang)
+bool fPwOd(std::string &line, bool &ang)
 {
 	if(ang)
 	{
@@ -37,14 +37,14 @@ bool fPwOd(string &line, bool &ang)
 	}
 }
 
-bool fPwDo(string &line)
+bool fPwDo(std::string &line)
 {
 	if(line[gt]=='-'&&line[gt+1]=='>')
 		return 1;
 	else return 0;
 }
 
-bool fPrzelewyOd(string &line, bool &ang)
+bool fPrzelewyOd(std::string &line, bool &ang)
 {
 	leng = line.length();
 	if(ang)
@@ -61,7 +61,7 @@ bool fPrzelewyOd(string &line, bool &ang)
 	}
 }
 
-bool fPrzelewyDo(string &line, bool &ang)
+bool fPrzelewyDo(std::string &line, bool &ang)
 {
 	if(ang)
 	{
@@ -77,7 +77,7 @@ bool fPrzelewyDo(string &line, bool &ang)
 	}
 }
 
-bool fKomunikat(string &line, bool &ang)
+bool fKomunikat(std::string &line, bool &ang)
 {
 	if(ang)
 	{
@@ -93,7 +93,7 @@ bool fKomunikat(string &line, bool &ang)
 	}
 }
 
-bool fTransport(string &line, bool &ang)
+bool fTransport(std::string &line, bool &ang)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 	if(ang)
@@ -111,7 +111,7 @@ bool fTransport(string &line, bool &ang)
 	}
 }
 
-bool fNicknames(string &line)
+bool fNicknames(std::string &line)
 {
 	for(int i = 0; i<nicknames.size(); i++)
 	{
@@ -124,17 +124,31 @@ bool fNicknames(string &line)
 		if(line[gt]=='*' && line[gt+leng+3]==' ' && line[gt+leng+2]==s_temp[leng] && line[gt+leng+1]==s_temp[leng-1] && line[gt+leng]==s_temp[leng-2])
 			return 1;
 		//afk
-		if(line[gt+5]==' ' && line[gt+leng+7]==' ' && line[gt+leng+6]==s_temp[leng] && line[gt+leng+5]==s_temp[leng-1] && line[gt+leng+4]==s_temp[leng-2])
+		if(line[gt+3]=='c' && line[gt+4]=='z' && line[gt+5]==' ' && line[gt+leng+7]==' ' && line[gt+leng+6]==s_temp[leng] && line[gt+leng+5]==s_temp[leng-1] && line[gt+leng+4]==s_temp[leng-2])
 			return 1;
 	}
 	return 0;
 }
 
 //[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
-bool bindKey(string &line)
+bool fBindKey(std::string &line)
 {
 	return (line[gt]=='m'&&line[gt+1]=='s'&&line[gt+2]=='g'&&line[gt+3]==':'&&line[gt+31]=='f');
 }
+
+bool fOpen(std::string &line)
+{
+	return (line[line.length()-1]=='n'&&line[line.length()-2]=='e'&&line[line.length()-3]=='p'&&line[line.length()-4]=='o');
+}
+
+bool player(std::string &line)
+{
+	return (line[gt]=='*' && line[gt]=='*');
+}
+
+//[2020-06-18 13:16:48] [Output] : * player has joined the game
+//[2020-06-18 13:19:46] [Output] : * player has left the game (Quit)
+//[2020-05-26 05:25:26] [Output] : * player has left the game (Timed out)
 
 /*bool fNick(string &wyraz)
 {
@@ -172,8 +186,8 @@ void startTimer(short getSeconds = 0)
 	}
 	isTimer = 1;
 	pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
-	SetConsoleTextAttribute(h, 170); cout<<" "; SetConsoleTextAttribute(h, 12);
-	cout<<" Timer 0:00  [s]Stop Timer   ";
+	SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
+	std::cout<<" Timer 0:00  [s]Stop Timer   ";
 }
 void stopTimer()
 {
@@ -186,7 +200,7 @@ void stopTimer()
 }
 
 //[2019-06-28 11:58:25] [Input]  : test
-char fConsoleInput(string &line)//fci
+char fConsoleInput(std::string &line)//fci
 {
 	if(line[gt-10]=='I')
 	{
@@ -207,14 +221,14 @@ char fConsoleInput(string &line)//fci
 		{
 			if(line[gt+1] == 't')//tt START TIMER waga 100%
 			{
-				startTimer(0);
+				startTimer();
 				int temp;
 				temp = czas * 1000 / 1.1;
 				temp = czas * 1000 - temp;
 				timer -= temp;
 			}
-			else startTimer(0);
-			return 1;
+			else startTimer();
+			return 0;
 		}
 		else if(line[gt]=='s'&&line[gt+1]=='e'&&line[gt+2]=='t')
 		{
@@ -263,7 +277,7 @@ char fConsoleInput(string &line)//fci
 					liczba -= 48; temp += liczba;
 				}
 				startTimer(temp);
-				return 1;
+				return 0;
 			}
 			else if(line[gt+4]=='n')
 			{
@@ -327,13 +341,13 @@ void nrPliku(int nr)
 	if(nr != 10)
 	{
 		if(!nr)
-			cout<<">>>>>>>>>>>>>>>>>>>> logus.log <<<<<<<<<<<<<<<<<<<<"<<endl;
+			std::cout<<">>>>>>>>>>>>>>>>>>>> logus.log <<<<<<<<<<<<<<<<<<<<"<<std::endl;
 		else
-			cout<<">>>>>>>>>>>>>>>>>>>> Plik nr "<<nr<<" <<<<<<<<<<<<<<<<<<<<"<<endl;
+			std::cout<<">>>>>>>>>>>>>>>>>>>> Plik nr "<<nr<<" <<<<<<<<<<<<<<<<<<<<"<<std::endl;
 	}
 }
 
-bool fPlayerCount(string &line, bool &ang)
+bool fPlayerCount(std::string &line, bool &ang)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 	if(ang)
@@ -351,13 +365,13 @@ bool fPlayerCount(string &line, bool &ang)
 	}
 }
 
-int all(string &nazwa, int nr)
+int all(std::string &nazwa, int nr)
 {
-	string line;
+	std::string line;
 	int lineCount = 0;
 	nrPliku(nr);
 
-	fstream file;
+	std::fstream file;
 	file.open(nazwa.c_str());
 		while(!file.eof())
 		{
@@ -369,23 +383,23 @@ int all(string &nazwa, int nr)
 	return lineCount;
 }
 
-int teamsay(string &nazwa, int nr)
+int teamsay(std::string &nazwa, int nr)
 {
-	string line;
+	std::string line;
 	int lineCount = 0;
 	nrPliku(nr);
 
-	fstream file;
+	std::fstream file;
 	file.open(nazwa.c_str());
 		while(!file.eof())
 		{
 			getline(file,line);
 			if(fTeam(line, 1))
 			{
-				cout<<++lineCount<<line<<endl;
+				std::cout<<++lineCount<<line<<std::endl;
 				if(lineCount%30 == 0)
 				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					std::cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<std::endl;
 					if(getch() == 27)
 					{
 						cls();
@@ -405,23 +419,23 @@ int teamsay(string &nazwa, int nr)
 	return lineCount;
 }
 
-int pw(string &nazwa, int nr)
+int pw(std::string &nazwa, int nr)
 {
-	string line;
+	std::string line;
 	int lineCount = 0;
 	nrPliku(nr);
 
-	fstream file;
+	std::fstream file;
 	file.open(nazwa.c_str());
 		while(!file.eof())
 		{
 			getline(file,line);
 			if(fPwOd(line, ang)||fPwDo(line))
 			{
-				cout<<++lineCount<<line<<endl;
+				std::cout<<++lineCount<<line<<std::endl;
 				if(lineCount%30 == 0)
 				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					std::cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<std::endl;
 					if(getch() == 27)
 					{
 						cls();
@@ -441,23 +455,23 @@ int pw(string &nazwa, int nr)
 	return lineCount;
 }
 
-int przelewy(string &nazwa, int nr)
+int przelewy(std::string &nazwa, int nr)
 {
-	string line;
+	std::string line;
 	int lineCount = 0;
 	nrPliku(nr);
 
-	fstream file;
+	std::fstream file;
 	file.open(nazwa.c_str());
 		while(!file.eof())
 		{
 			getline(file,line);
 			if(fPrzelewyOd(line, ang)||fPrzelewyDo(line, ang))
 			{
-				cout<<++lineCount<<line<<endl;
+				std::cout<<++lineCount<<line<<std::endl;
 				if(lineCount%30 == 0)
 				{
-					cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<endl;
+					std::cout<<"PLIK "<<nr<<" [ESC] "<<((!nr)?"Wyjscie":"Nastepny file")<<" | Nastepne 30 wierszy... (dowolny klawisz)"<<std::endl;
 					if(getch() == 27)
 					{
 						cls();
