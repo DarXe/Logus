@@ -1344,7 +1344,6 @@ void preNews() //news
 	std::cout<<" 206_15 Ukryto migający kursor w konsoli"<<std::endl;
 	std::cout<<" 206_28 Dodano tryb automatycznego otwierania bramy, gdy ktoś poprosi o open na PW"<<std::endl;
 	std::cout<<" 207_4 Automatyczne zamykanie programu wykonującego polecenie + polecenie jest wklejane, a nie pisane"<<std::endl;
-	std::cout<<" 207_4 Automatyczne zamykanie programu wykonującego polecenie + polecenie jest wklejane, a nie pisane"<<std::endl;
 }
 
 //todo: Wer-Dar 6:37, to były czasy
