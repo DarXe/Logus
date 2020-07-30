@@ -864,8 +864,7 @@ void preConfig()
 						}
 						case '2':
 						{
-							break;
-							sel = 1;
+							sel = 1; break;
 						}
 						default:
 						{

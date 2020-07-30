@@ -133,7 +133,7 @@ bool fNicknames(std::string &line)
 //[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
 bool fBindKey(std::string &line)
 {
-	return (line[gt]=='m'&&line[gt+1]=='s'&&line[gt+2]=='g'&&line[gt+3]==':'&&line[gt+31]=='f');
+	return (line[gt]=='m'&&line[gt+1]=='s'&&line[gt+2]=='g'&&line[gt+3]==':'&&line[gt+5]=='P');
 }
 
 bool fOpen(std::string &line)
