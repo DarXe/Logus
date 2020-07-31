@@ -6,7 +6,7 @@
 //var (ZMIENNE)
 //logus.ini
 std::string mtasa = "185.62.189.174:22003"; //ip server
-const int ver = 200511; //version variable, not editable //zmienna wersji, nie wolno edytować
+const int ver = 200700; //version variable, not editable //zmienna wersji, nie wolno edytować
 int dzwiekGlowny = 1777; //sound message //dźwięk komunikatów
 bool fLockTeam = 0; //lock beep(TEAM)
 bool fLockPW = 0; //lock beep priv message
