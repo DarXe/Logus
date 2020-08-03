@@ -22,11 +22,6 @@ void wersja();
 
 int main(int argc, char** argv) //maa main
 {
-	CONSOLE_CURSOR_INFO CURSOR;
-	CURSOR.dwSize = 1;
-	CURSOR.bVisible = FALSE;
-	SetConsoleCursorInfo(h, &CURSOR);
-
 	std::fstream file;
 	file.open("console.log");
 		while(!file.good())
@@ -66,11 +61,23 @@ int main(int argc, char** argv) //maa main
 		}
 		else
 		{
+			// installed OS detection, might be working funky :-D
+			DWORD val;
+			DWORD dataSize = sizeof(val);
+			if (ERROR_SUCCESS == RegGetValueA(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentMajorVersionNumber", RRF_RT_DWORD, nullptr, &val, &dataSize) && val<=10)
+				codePage852 = 0;
+			else
+				codePage852 = 1;
 			preConfig();
 			zapis();
 			wersja();
 		}
 	file.close();
+
+	CONSOLE_CURSOR_INFO CURSOR;
+	CURSOR.dwSize = 1;
+	CURSOR.bVisible = FALSE;
+	SetConsoleCursorInfo(h, &CURSOR);
 	std::string _versionName_ = "Logus 20.7";
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
@@ -1346,6 +1353,8 @@ void preNews() //news
 	std::cout<<" 206_28 Dodano tryb automatycznego otwierania bramy, gdy ktoś poprosi o open na PW"<<std::endl;
 	std::cout<<" * 207_5 Konwersja makra na pasteCmd.exe"<<std::endl;
 	std::cout<<" 207_31 Wydanie wersji 20.7"<<std::endl;
+
+	std::cout<<" 208_04 Poprawienie funkcji preConfig, dodanie preSelection(), preInputInt() oraz preInputString()\n";
 }
 
 //todo: Wer-Dar 6:37, to były czasy
