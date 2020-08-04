@@ -64,7 +64,7 @@ int main(int argc, char** argv) //maa main
 			// installed OS detection, might be working funky :-D
 			DWORD val;
 			DWORD dataSize = sizeof(val);
-			if (ERROR_SUCCESS == RegGetValueA(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentMajorVersionNumber", RRF_RT_DWORD, nullptr, &val, &dataSize) && val<=10)
+			if (ERROR_SUCCESS == RegGetValueA(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentMajorVersionNumber", RRF_RT_DWORD, nullptr, &val, &dataSize) && val>=10)
 				codePage852 = 0;
 			else
 				codePage852 = 1;
