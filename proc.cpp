@@ -580,10 +580,10 @@ void preConfig()
 					grade = preInputInt("Specify your pay wage.", "Pay wage:", "Error. Specify correct pay wage:", "Min 50 max 100.", 50, 100);
 					grade /= 100;
 
-					courses = preInputInt("Enter courses that you have on your F4.", "Courses:", "Error. Specify correct amount of courses:", "Number cannot be negative.", -1, INT_MAX
+					courses = preInputInt("Enter courses that you have on your F4.", "Courses:", "Error. Specify correct amount of courses:", "Number cannot be negative.", 0, INT_MAX
 					);
 
-					money = preInputInt("Enter money that you have on your F4.", "Money:", "Error. Specify correct amount of money:", "Number cannot be negative.", -1, INT_MAX);
+					money = preInputInt("Enter money that you have on your F4.", "Money:", "Error. Specify correct amount of money:", "Number cannot be negative.", 0, INT_MAX);
 					break;
 				}
 				default: break;
@@ -607,9 +607,9 @@ void preConfig()
 					grade = preInputInt("Podaj procent wyplaty.", "Procent wyplaty:", "Blad. Podaj prawidlowy procent wyplaty:", "Min 50 max 100.", 50, 100);
 					grade /= 100;
 
-					courses = preInputInt("Podaj kursy ktore masz pod F4.", "Kursy:", "Blad. Podaj prawidlowa ilosc kursow:", "Liczba nie moze byc ujemna.", -1, INT_MAX);
+					courses = preInputInt("Podaj kursy ktore masz pod F4.", "Kursy:", "Blad. Podaj prawidlowa ilosc kursow:", "Liczba nie moze byc ujemna.", 0, INT_MAX);
 
-					money = preInputInt("Podaj zarobiona gotówkę pod F4.", "Gotowka:", "Blad. Podaj prawidlowa ilosc gotowki:", "Liczba nie moze byc ujemna.", -1, INT_MAX );
+					money = preInputInt("Podaj zarobiona gotówkę pod F4.", "Gotowka:", "Blad. Podaj prawidlowa ilosc gotowki:", "Liczba nie moze byc ujemna.", 0, INT_MAX );
 					break;
 				}
 				default: break;
@@ -633,9 +633,9 @@ void preConfig()
 					grade = preInputInt("Podaj procent wypłaty.", "Procent wypłaty:", "Błąd. Podaj prawidłowy procent wypłaty:", "Min 50 max 100.", 50, 100);
 					grade /= 100;
 
-					courses = preInputInt("Podaj kursy które masz pod F4.", "Kursy:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", -1, INT_MAX);
+					courses = preInputInt("Podaj kursy które masz pod F4.", "Kursy:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
 
-					money = preInputInt("Podaj zarobioną gotówkę pod F4.", "Gotówka:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", -1, INT_MAX);
+					money = preInputInt("Podaj zarobioną gotówkę pod F4.", "Gotówka:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
 					break;
 				}
 				default: break;
@@ -681,25 +681,19 @@ void preConfig()
 	if(ang) {
 
 		if(preSelection("Do you want to enable automatic log mover?", "Yes, I do", "No, not really") == 1) {
-			autoMoveLogs = preInputInt("Enter how many lines of logs are needed to move them.", "Enter amount:", "Error. Please enter correct ammount", "Number cannot be negative.", -1, INT_MAX);
+			autoMoveLogs = preInputInt("Enter how many lines of logs are needed to move them.", "Enter amount:", "Error. Please enter correct ammount", "Number cannot be negative.", 0, INT_MAX);
 		}
 
 	} else if(codePage852) {
 
 		if(preSelection("Czy chcesz wlaczyc automatyczne przenoszenie logow?", "Tak, chce", "Nie, nie chce") == 1) {
-			autoMoveLogs = preInputInt(
-				"Podaj ilosc linijek do przeniesienia logow",
-				"Podaj ilosc:",
-				"Blad. Podaj prawidlowa ilosc",
-				"Liczba nie moze byc ujemna."
-				-1, INT_MAX
-			);
+			autoMoveLogs = preInputInt("Podaj ilosc linijek do przeniesienia logow", "Podaj ilosc:", "Blad. Podaj prawidlowa ilosc", "Liczba nie moze byc ujemna.", 0, INT_MAX);
 		}
 
 	} else {
 
 		if(preSelection("Czy chcesz wlączyć automatyczne przenoszenie logów?", "Tak, chcę", "Nie, nie chcę") == 1) {
-			autoMoveLogs = preInputInt("Podaj ilość linijek do przeniesienia logów", "Podaj ilość:", "Błąd. Podaj prawidłową ilość", "Liczba nie może być ujemna.", -1, INT_MAX);
+			autoMoveLogs = preInputInt("Podaj ilość linijek do przeniesienia logów", "Podaj ilość:", "Błąd. Podaj prawidłową ilość", "Liczba nie może być ujemna.", 0, INT_MAX);
 		}
 
 	}
