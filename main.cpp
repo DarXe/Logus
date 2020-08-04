@@ -78,7 +78,7 @@ int main(int argc, char** argv) //maa main
 	CURSOR.dwSize = 1;
 	CURSOR.bVisible = FALSE;
 	SetConsoleCursorInfo(h, &CURSOR);
-	std::string _versionName_ = "Logus 20.7";
+	std::string _versionName_ = "Logus 20.8";
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
 	color(kolorGlowny);
@@ -1185,8 +1185,9 @@ void wersja()
 	std::cout<<"  ___________________"<<std::endl;
 	std::cout<<" |       Autor       |"<<std::endl;
 	std::cout<<" |       DarXe       |"<<std::endl;
+	std::cout<<" |     Niventill     |"<<std::endl;
 	std::cout<<" |___________________|"<<std::endl;
-	std::cout<<" |    Wersja 20.7    |"<<std::endl; //verr
+	std::cout<<" |    Wersja 20.8    |"<<std::endl; //verr
 	/*Sleep(300); std::cout<<std::endl;
 	std::cout<<" PLANY: "<<std::endl;
 	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;
