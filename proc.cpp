@@ -450,7 +450,7 @@ int preInputInt(std::string text = "", std::string inputText = "", std::string e
 	std::cout<<" "<<text<<"\n";
 	std::cout<<" "<<inputText<<" ";
 	std::cin>>temp;
-	while (std::cin.fail() && temp < min || temp > max) {
+	while (std::cin.fail() || temp < min || temp > max) {
 		cls();
 		std::cin.clear();
 		std::cin.ignore(INT_MAX,'\n');
@@ -604,7 +604,7 @@ void preConfig()
 				}
 				case 2:
 				{				
-					grade = preInputInt("Podaj procent wyplaty", "Procent wyplaty:", "Blad. Podaj prawidlowy procent wyplaty:", "Min 50 max 100.", 50, 100);
+					grade = preInputInt("Podaj procent wyplaty.", "Procent wyplaty:", "Blad. Podaj prawidlowy procent wyplaty:", "Min 50 max 100.", 50, 100);
 					grade /= 100;
 
 					courses = preInputInt("Podaj kursy ktore masz pod F4.", "Kursy:", "Blad. Podaj prawidlowa ilosc kursow:", "Liczba nie moze byc ujemna.", -1, INT_MAX);
@@ -630,7 +630,7 @@ void preConfig()
 				}
 				case 2:
 				{
-					grade = preInputInt("Podaj procent wypłaty", "Procent wypłaty:", "Błąd. Podaj prawidłowy procent wypłaty:", "Min 50 max 100.", 50, 100);
+					grade = preInputInt("Podaj procent wypłaty.", "Procent wypłaty:", "Błąd. Podaj prawidłowy procent wypłaty:", "Min 50 max 100.", 50, 100);
 					grade /= 100;
 
 					courses = preInputInt("Podaj kursy które masz pod F4.", "Kursy:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", -1, INT_MAX);
