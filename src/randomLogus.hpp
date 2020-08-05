@@ -1,3 +1,5 @@
+// Copyright (C) 2018-2020  DarXe
+
 #ifndef _RANDOM_LOGUS_HPP
 #define _RANDOM_LOGUS_HPP
 

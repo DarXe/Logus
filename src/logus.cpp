@@ -1,7 +1,5 @@
-// Copyright (C) 2018-2019  DarXe
-#include <iostream>
-#include <conio.h>
-#include <windows.h>
+// Copyright (C) 2018-2020  DarXe
+
 #include "logus.hpp"
 
 int losuj(int od, int doo)

@@ -1,3 +1,5 @@
+// Copyright (C) 2018-2020  DarXe
+
 #ifndef _LOGUS_HPP
 #define _LOGUS_HPP
 

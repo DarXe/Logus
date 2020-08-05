@@ -1,11 +1,5 @@
-// Copyright (C) 2018-2019  DarXe
-#include <iostream>
-#include <windows.h>
-#include <conio.h>
-#include <vector>
-#include <ctime>
-#include <fstream>
-#include "logus.hpp"
+// Copyright (C) 2018-2020  DarXe
+
 #include "randomLogus.hpp"
 
 using namespace std;
