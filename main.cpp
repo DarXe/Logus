@@ -1171,7 +1171,7 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 	}//while
 	return 1;
 }//liveChat()
-void preNews();
+void News();
 void wersja()
 {
 	std::cout<<std::endl;
@@ -1197,10 +1197,7 @@ void wersja()
 	std::cout<<" Wcisnij klawisz, aby wyswietlic nowosci"<<std::endl; getch();
 	cls();
 	std::cout<<" CO NOWEGO?"<<std::endl;
-	preNews();
-	std::cout<<std::endl;
-	std::cout<<" Wcisnij klawisz, aby wyswietlic MENU"<<std::endl;
-	getch();
+	News();
 	cls();
 }
 
@@ -1290,13 +1287,14 @@ void menuBezPL()
 	std::cout<<"                                [ESC] Wyjscie i zapis                              "<<std::endl;
 }
 
-void preNews() //news
+void News() //news
 {
 	SetConsoleTextAttribute(h, 10);
 	std::cout<<" Od 12 sierpnia '19 prace nad programem zostały wstrzymane"<<std::endl;
 	std::cout<<" Nowy Rok, nowe wyzwania - kontynuacja rozwoju programu :)"<<std::endl;
-	SetConsoleTextAttribute(h, 7);
-	std::cout<<" Zmiany"<<std::endl;
+	SetConsoleTextAttribute(h, 4);
+	std::cout<<" ZMIANY - początek roku"<<std::endl;
+	SetConsoleTextAttribute(h, 6);
 	std::cout<<" Jeszcze w sierpniu zmieniono system sprawdzania nowych linii"<<std::endl;
 	std::cout<<" 201_2 Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames"<<std::endl;
 	std::cout<<" * Pozostaje powiadomienie na wejscie i wyjscie z serwera oraz na status AFK danego gracza"<<std::endl;
@@ -1305,8 +1303,11 @@ void preNews() //news
 	std::cout<<" 202_13 Zmodyfikowano sprawdzanie warunków przy dostarczonym towarze"<<std::endl;
 	std::cout<<" * Jest to kolejna próba testów z serii 'co powoduje pomijanie zapisu niektórych kursów'"<<std::endl;
 	std::cout<<" 202_13 Po wciśnięciu entera wraz z uruchomieniem serwera włączy się funkcja LiveChat"<<std::endl;
-		std::cout<<"\n Wciśnij klawisz, aby kontynuować"<<std::endl; cls();
-		if(getch() == 27) return;
+		std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominac INFO)"<<std::endl;
+		if(getch() == 27) return; cls();
+	SetConsoleTextAttribute(h, 4);
+	std::cout<<" MARZEC"<<std::endl;
+	SetConsoleTextAttribute(h, 6);
 	std::cout<<" 203_1 Zmieniono polecenie reconnect z 'r' na 'rr'"<<std::endl;
 	std::cout<<" 203_1 Dodano nowy plik .log, aby mieć szybszy dostęp do logów z powiadomień(PW, TEAM, TOWAR, PRZELEWY)"<<std::endl;
 	std::cout<<" * Po wyłączeniu komunikatu dźwiękowego w opcjach linijka z logiem nie pojawi się w tym pliku"<<std::endl;
@@ -1317,7 +1318,11 @@ void preNews() //news
 	std::cout<<" 203_3 Dodano nową komendę - ustawienie F4 z poziomu konsoli MTA"<<std::endl;
 	std::cout<<" * Wpisując w konsoli 'set m KWOTA', F4 ustawi się na podaną wartość"<<std::endl;
 	std::cout<<" * Dodano też komendę na ustawienie ilości kursów - set c KURSY"<<std::endl;
-
+		std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominac INFO)"<<std::endl;
+		if(getch() == 27) return; cls();
+	SetConsoleTextAttribute(h, 4);
+	std::cout<<" MAJ"<<std::endl;
+	SetConsoleTextAttribute(h, 6);
 	std::cout<<" 205_6 Dodano dodatkowy warunek sprawdzający nick"<<std::endl;
 	std::cout<<" * Teraz Logus bierze pod uwagę długość nicku zmniejszając szanse na błędny komunikat"<<std::endl;
 	std::cout<<" 205_6 Przypisano dodatkowe działanie komendzie 'quit' z mta"<<std::endl;
@@ -1337,7 +1342,11 @@ void preNews() //news
 	std::cout<<" 205_11.1 Zmiana funkcji sprawdzającej podania napisu zamiast liczby"<<std::endl;
 	std::cout<<" * Teraz nie jest potrzebne restartowanie programu w przypadku pomyłki"<<std::endl;
 	std::cout<<" 205_11.2 Dodano prekonfigurację w przypadku braku pliku logus.ini"<<std::endl;
-	
+		std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominac INFO)"<<std::endl;
+		if(getch() == 27) return; cls();
+	SetConsoleTextAttribute(h, 4);
+	std::cout<<" CZERWIEC-LIPIEC"<<std::endl;
+	SetConsoleTextAttribute(h, 6);
 	std::cout<<" 206_9 Zmieniono system sprawdzania połączenia wi-fi, opcja 'w' z menu"<<std::endl;
 	std::cout<<" * Od teraz Logus uruchomi powiadomienie dźwiękowe tylko wtedy, kiedy wróci internet"<<std::endl;
 	std::cout<<" 206_10 Ping (opcja 'w') dodano możliwość sprawdzenia innego adresu"<<std::endl;
@@ -1349,7 +1358,6 @@ void preNews() //news
 	std::cout<<" 206_28 Dodano tryb automatycznego otwierania bramy, gdy ktoś poprosi o open na PW"<<std::endl;
 	std::cout<<" * 207_5 Konwersja makra na pasteCmd.exe"<<std::endl;
 	std::cout<<" 207_31 Wydanie wersji 20.7"<<std::endl;
-
 	std::cout<<" 208_04 Poprawienie funkcji preConfig, dodanie preSelection(), preInputInt() oraz preInputString()\n";
 }
 
