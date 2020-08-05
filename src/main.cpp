@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <vector>
 #include "logus.cpp"
-#include "randomLogus.cpp"
+#include "lotto\randomLogus.cpp"
 #include "var.hpp"
 #define q(var) cout<<#var<<"="<<var<<std::endl
 #include "patch.cpp"
@@ -1361,13 +1361,4 @@ void News() //news
 	std::cout<<" 208_04 Poprawienie funkcji preConfig, dodanie preSelection(), preInputInt() oraz preInputString()\n";
 }
 
-//todo: Wer-Dar 6:37, to były czasy
-//baza graczy - wybieranie powiadomien dla kazdego gracza (join, quit, afk, chat)
-//
-//g++ -g .\Logus\main.cpp .\Logus\src\*.cpp -o .\Logus\Logus-pre.exe -static
-
-//g++ main.cpp src\*.cpp -o Logus.exe -static -s -Os
-//g++ -g main.cpp src\*.cpp -o "Logus 20.5-pre.exe" -static
-//* HydroMoon has left the game (Quit)
-//* HydroMoon has joined the game
-//30 kwietnia 2020
+//g++ src\main.cpp -o Logus.exe -static -s -Ofast
