@@ -128,13 +128,9 @@ int console() //con
 		else menu();
 		Beep(dzwiekGlowny,100);
 
-		wyb = wybor();
-		if(wyb == 27){
-			return closeLogus("Zamykanie programu");
-		}
-
-		switch(wyb) //set0 MENU
+		switch(wybor()) //set0 MENU
 		{
+		case 27: return closeLogus("Zamykanie programu");
 		case '1':
 		{
 			cls();
@@ -899,10 +895,9 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 		//if key pressed
 		if(kbhit())
 		{
-			wyb = getch();
-			if(wyb == 27) { cls(); break;}
-			switch (wyb)
+			switch (getch())
 			{
+			case 27: cls(); return 1;
 			case 't': startTimer(); break;
 			case 's': stopTimer(); break;
 			case 'm':
