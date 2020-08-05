@@ -5,8 +5,8 @@
 #include <vector>
 #include <ctime>
 #include <fstream>
-#include "..\logus.hpp"
-#include "..\randomLogus.hpp"
+#include "logus.hpp"
+#include "randomLogus.hpp"
 
 using namespace std;
 int lottoLogus()

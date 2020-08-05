@@ -2,6 +2,7 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
+#include "logus.hpp"
 
 int losuj(int od, int doo)
 {
