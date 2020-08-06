@@ -168,7 +168,7 @@ void patch() //pat
 		engLang?std::cout<<"(INFO) Settings loaded. Succesfully updated do "<<ver<<"."<<std::endl:
 		std::cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<"."<<std::endl;
 	file.close();
-	zapis();
+	zapis(0);
 }
 
 void readDefault()
