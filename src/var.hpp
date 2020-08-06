@@ -31,6 +31,7 @@ bool codePage852 = 0; //false:UTF-8 lub true:852 (jesli wystepuja krytyczne bugi
 short trackId = 0;
 int autoMoveLogs = 0;
 float grade = 0;
+std::string mess; // used in ifs to determine language
 
 const short gt = 33; //auxiliary variable
 int leng = 0; //length

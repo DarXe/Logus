@@ -4,7 +4,6 @@ int menu() //con
 {
 	int lineCount = 0;
 	int lineCountAll = 0;
-	std::string mess;
 	while(true)
 	{
 		if(isTimer) delay2 = clock();
