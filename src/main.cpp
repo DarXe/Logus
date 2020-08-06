@@ -30,13 +30,17 @@ int main(int argc, char** argv) //maa main
 			Beep(0,interval);
 			Beep(dzwiekGlowny,125);
 			std::cout<<"Error, nie odnaleziono pliku!"<<std::endl;
+			std::cout<<"Error, file not found!\n";
 			std::cout<<"Program Logus musi znajdowac sie w folderze z logami MTA."<<std::endl;
+			std::cout<<"Logus has to be in the MTA log directory.\n";
 			Sleep(500);
-			std::cout<<"..\\MTA San Andreas 1.5\\MTA\\logs\\(tutaj wklej program)"<<std::endl;
+			std::cout<<"..\\MTA San Andreas 1.5\\MTA\\logs\\"<<std::endl;
 			Sleep(500);
 			std::cout<<"Nastepnie uruchom go ponownie\n"<<std::endl;
+			std::cout<<"Run it again when you're done\n";
 			Sleep(1000);
-			std::cout<<"Dowolny klawisz - zamknij okno\n"<<std::endl;
+			std::cout<<"Dowolny klawisz - zamknij Logus\n"<<std::endl;
+			std::cout<<"Any key - close Logus\n";
 			if(kbhit()) return 0;
 		}
 		
