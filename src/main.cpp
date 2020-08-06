@@ -6,19 +6,19 @@
 #include <conio.h>
 #include <windows.h>
 #include <vector>
-#include "logus.cpp"
-#include "lotto\randomLogus.cpp"
 #include "var.hpp"
 #define q(var) cout<<#var<<"="<<var<<std::endl
 #include "patch.cpp"
-int console();
 bool liveChat(int &wyswietlaneWiersze);
-void menu();
-void menuBezPL();
 void wersja();
+#include "logus.cpp"
+#include "lotto\randomLogus.cpp"
 
 #include "func.cpp" //functions
 #include "proc.cpp" //procedures
+
+#include "menu\settings.cpp"
+#include "menu\menu.cpp"
 
 int main(int argc, char** argv) //maa main
 {
@@ -30,13 +30,17 @@ int main(int argc, char** argv) //maa main
 			Beep(0,interval);
 			Beep(dzwiekGlowny,125);
 			std::cout<<"Error, nie odnaleziono pliku!"<<std::endl;
+			std::cout<<"Error, file not found!\n";
 			std::cout<<"Program Logus musi znajdowac sie w folderze z logami MTA."<<std::endl;
+			std::cout<<"Logus has to be in the MTA log directory.\n";
 			Sleep(500);
-			std::cout<<"..\\MTA San Andreas 1.5\\MTA\\logs\\(tutaj wklej program)"<<std::endl;
+			std::cout<<"..\\MTA San Andreas 1.5\\MTA\\logs\\"<<std::endl;
 			Sleep(500);
 			std::cout<<"Nastepnie uruchom go ponownie\n"<<std::endl;
+			std::cout<<"Run it again when you're done\n";
 			Sleep(1000);
-			std::cout<<"Dowolny klawisz - zamknij okno\n"<<std::endl;
+			std::cout<<"Dowolny klawisz - zamknij Logus\n"<<std::endl;
+			std::cout<<"Any key - close Logus\n";
 			if(kbhit()) return 0;
 		}
 		
@@ -74,10 +78,12 @@ int main(int argc, char** argv) //maa main
 		}
 	file.close();
 
+	#ifndef dupa
 	CONSOLE_CURSOR_INFO CURSOR;
 	CURSOR.dwSize = 1;
 	CURSOR.bVisible = FALSE;
 	SetConsoleCursorInfo(h, &CURSOR);
+	#endif
 	std::string _versionName_ = "Logus 20.8";
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
@@ -101,736 +107,15 @@ int main(int argc, char** argv) //maa main
 	case 1:
 		{
 			bool _quit = runLiveChat();
-			if(!_quit) return closeLogus("Zamykanie MTA i programu"); //close Logus
+			mess = engLang? "Closing MTA and Logus": "Zamykanie MTA i programu";
+			if(!_quit) return closeLogus(mess); //close Logus
 		}
 	default:
 		break;
 	}
 
-	console();
+	menu();
 
-	return 0;
-}
-
-int console() //con
-{
-	int lineCount = 0;
-	int lineCountAll = 0;
-	while(true)
-	{
-		if(isTimer) delay2 = clock();
-		color(kolorGlowny);
-
-		if(menuGlowne)
-		{
-			menuBezPL();
-		}
-		else menu();
-		Beep(dzwiekGlowny,100);
-
-		switch(wybor()) //set0 MENU
-		{
-		case 27: return closeLogus("Zamykanie programu");
-		case '1':
-		{
-			cls();
-			teamsay(a,1);
-			break;
-		}
-		case '2':
-		{
-			cls();
-			pw(a,1);
-			break;
-		}
-		case '3':
-		{
-			cls();
-			lineCount = 0;
-			lineCountAll = 0;
-			lineCountAll+=teamsay(f,6);
-			lineCountAll+=teamsay(e,5);
-			lineCountAll+=teamsay(d,4);
-			lineCountAll+=teamsay(c,3);
-			lineCountAll+=teamsay(b,2);
-			lineCountAll+=teamsay(a,1);
-			lineCount=teamsay(L,0);
-			std::cout<<"Wierszy w plikach MTA: "<<lineCountAll<<std::endl;
-			std::cout<<"Wierszy w logus.log: "<<lineCount<<std::endl;
-			break;
-		}
-
-		case '4':
-		{
-			cls();
-			lineCount = 0;
-			lineCountAll = 0;
-			lineCountAll+=pw(f,6);
-			lineCountAll+=pw(e,5);
-			lineCountAll+=pw(d,4);
-			lineCountAll+=pw(c,3);
-			lineCountAll+=pw(b,2);
-			lineCountAll+=pw(a,1);
-			lineCount=pw(L,0);
-			std::cout<<"Wierszy w plikach MTA: "<<lineCountAll<<std::endl;
-			std::cout<<"Wierszy w logus.log: "<<lineCount<<std::endl;
-			break;
-		}
-		case 'p':
-		{
-			cls();
-			lineCountAll = 0;
-			lineCountAll+=przelewy(f,6);
-			lineCountAll+=przelewy(e,5);
-			lineCountAll+=przelewy(d,4);
-			lineCountAll+=przelewy(c,3);
-			lineCountAll+=przelewy(b,2);
-			lineCountAll+=przelewy(a,1);
-			lineCountAll+=przelewy(L,0);
-			std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
-			break;
-		}
-		case 'n':
-		{
-			cls();
-			lineCountAll = 0;
-			lineCount = 0;
-			lineCount=all(f,6);
-			lineCountAll+=lineCount;
-			std::cout<<"Wierszy: "<<lineCount<<std::endl;
-			lineCount=all(e,5);
-			lineCountAll+=lineCount;
-			std::cout<<"Wierszy: "<<lineCount<<std::endl;
-			lineCount=all(d,4);
-			lineCountAll+=lineCount;
-			std::cout<<"Wierszy: "<<lineCount<<std::endl;
-			lineCount=all(c,3);
-			lineCountAll+=lineCount;
-			std::cout<<"Wierszy: "<<lineCount<<std::endl;
-			lineCount=all(b,2);
-			lineCountAll+=lineCount;
-			std::cout<<"Wierszy: "<<lineCount<<std::endl;
-			lineCount=all(a,1);
-			lineCountAll+=lineCount;
-			std::cout<<"Wierszy: "<<lineCount<<std::endl;
-			std::cout<<std::endl;
-			std::cout<<"Wierszy we wszystkich plikach MTA: "<<lineCountAll<<std::endl;
-			std::cout<<"Ilosc wierszy w logus.log: "<<all(L,10)<<std::endl;
-			break;
-		}
-		case 't':
-		{
-			cls();
-			if(isTimer) timer -= (clock()-delay2);
-			bool _quit = liveChat(wyswietlaneWiersze); //run LiveChat
-			if(!_quit) return closeLogus("Zamykanie MTA i programu"); //close Logus
-			break;
-		} 
-		case 'l':
-		case 'L':
-		{
-			cls();
-			lottoLogus(); //run Lotto Logus
-			break;
-		}
-		case '5': //set1    SETTINGS one
-		{
-			cls();
-			while(true)
-			{
-				if(menuGlowne)
-				{
-					SetConsoleTextAttribute(h, 10);
-					std::cout<<" ________________________Ustawienia - LiveChat________________________"<<std::endl;
-					SetConsoleTextAttribute(h, 7);
-					std::cout<<" [r] Przywroc ustawienia domyslne"<<std::endl;
-					std::cout<<" [a] Jezyk: "<<((ang)?"ENG":"PL")<<std::endl;
-					SetConsoleTextAttribute(h, 14);
-					std::cout<<" [p] Dzwiek wiadomosci PW: "<<((!fLockPW)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [t] Dzwiek wiadomosci teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [s] Dzwiek komunikatow(raport, transport): "<<((!fLockKomunikat)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [k] Powiadomienia na czacie - wybrane nicki: "<<((!fLockNick)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [c] Dzwiek kazdej wiadmosci na czacie: "<<((chatSound)?"TAK":"NIE")<<std::endl;
-					SetConsoleTextAttribute(h, 7);
-					std::cout<<" [1] Liczba wyswietlanych wierszy: "<<wyswietlaneWiersze<<std::endl;
-					std::cout<<" [2] Czestotliwosc odswiezania(100-5000): "<<refresh<<std::endl;
-					std::cout<<" [3] Dynamiczne odswiezanie: "<<((dynamicRefresh)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [4] Czestotliwosc dzwieku(50-10000): "<<dzwiekGlowny<<std::endl;
-					std::cout<<" [5] Przerwa miedzy dzwiekami(50-1000): "<<interval<<std::endl;
-					std::cout<<" [m] Automatyczne przenoszenie logow: "; if(autoMoveLogs) std::cout<<"TAK, przy "<<autoMoveLogs<<" wierszach"; else std::cout<<"NIE"; std::cout<<std::endl;
-					SetConsoleTextAttribute(h, 14);
-					std::cout<<" [6] Czas rozladowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<std::endl;
-					std::cout<<" [7] Sam wybiore / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiore")<<std::endl;
-					SetConsoleTextAttribute(h, 7);
-					std::cout<<" [8] F4 / zarobione pieniadze od ostatniego wyzerowania: $"<<money<<std::endl;
-					std::cout<<" [9] Liczba dostarczonych kursow: "<<courses<<std::endl;
-					std::cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<std::endl;
-					int payment(0); payment = ((money*0.87)-3500)*grade;
-					std::cout<<" # # Wyplata wynosi "<<"$"<<payment<<std::endl;
-					if(courses) std::cout<<" # # Srednia na kurs wynosi $"<<money/courses<<std::endl;
-					std::cout<<" [x] Wyzeruj stan F4 i kursow"<<std::endl;
-					SetConsoleTextAttribute(h, 14);
-					std::cout<<" [b] Nicknames - baza danych wybranych nickow"<<std::endl;
-					std::cout<<" [n] Nickname: "<<nick<<std::endl;
-					SetConsoleTextAttribute(h, 10);
-					std::cout<<" _____________________________________________________________________"<<std::endl;
-					std::cout<<"                         [ESC] Powrot i zapis                         "<<std::endl;
-				}
-				else
-				{
-					SetConsoleTextAttribute(h, 10);
-					std::cout<<" ________________________Ustawienia - LiveChat________________________"<<std::endl;
-					SetConsoleTextAttribute(h, 7);
-					std::cout<<" [r] Przywróć ustawienia domyślne"<<std::endl;
-					std::cout<<" [a] Język: "<<((ang)?"ENG":"PL")<<std::endl;
-					SetConsoleTextAttribute(h, 14);
-					std::cout<<" [p] Dźwięk wiadomości PW: "<<((!fLockPW)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [t] Dźwięk wiadomości teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [s] Dźwięk komunikatow(raport, transport): "<<((!fLockKomunikat)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [k] Powiadomienia na czacie - wybrane nicki: "<<((!fLockNick)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [c] Dźwięk każdej wiadomości na czacie: "<<((chatSound)?"TAK":"NIE")<<std::endl;
-					SetConsoleTextAttribute(h, 7);
-					std::cout<<" [1] Liczba wyświetlanych wierszy: "<<wyswietlaneWiersze<<std::endl;
-					std::cout<<" [2] Częstotliwość odświeżania(100-5000): "<<refresh<<std::endl;
-					std::cout<<" [3] Dynamiczne odświeżanie: "<<((dynamicRefresh)?"TAK":"NIE")<<std::endl;
-					std::cout<<" [4] Częstotliwość dźwięku(50-10000): "<<dzwiekGlowny<<std::endl;
-					std::cout<<" [5] Przerwa między dźwiękami(50-1000): "<<interval<<std::endl;
-					std::cout<<" [m] Automatyczne przenoszenie logów: "; if(autoMoveLogs) std::cout<<"TAK, przy "<<autoMoveLogs<<" wierszach"; else std::cout<<"NIE"; std::cout<<std::endl;
-					SetConsoleTextAttribute(h, 14);
-					std::cout<<" [6] Czas rozładowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<std::endl;
-					std::cout<<" [7] Sam wybiorę / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiorę")<<std::endl;
-					SetConsoleTextAttribute(h, 7);
-					std::cout<<" [8] F4 / zarobione pieniądze od ostatniego wyzerowania: $"<<money<<std::endl;
-					std::cout<<" [9] Liczba dostarczonych kursów: "<<courses<<std::endl;
-					std::cout<<" [0] Ranga w firmie: "<<grade*100<<"%"<<std::endl;
-					int payment(0); payment = ((money*0.87)-3500)*grade;
-					std::cout<<" # # Wyplata wynosi "<<"$"<<payment<<std::endl;
-					if(courses) std::cout<<" # # Średnia na kurs wynosi $"<<money/courses<<std::endl;
-					std::cout<<" [x] Wyzeruj stan F4 i kursów"<<std::endl;
-					SetConsoleTextAttribute(h, 14);
-					std::cout<<" [b] Nicknames - baza danych wybranych nicków"<<std::endl;
-					std::cout<<" [n] Nickname: "<<nick<<std::endl;
-					SetConsoleTextAttribute(h, 10);
-					std::cout<<" _____________________________________________________________________"<<std::endl;
-					std::cout<<"                         [ESC] Powrót i zapis                         "<<std::endl;
-				}
-				Beep(dzwiekGlowny,100);
-				
-				wyb = wybor();
-				if(wyb == 27){
-					cls();
-					zapis();
-					break;
-				}
-					
-				switch(wyb)
-				{
-					case 'r':
-					{
-						cls();
-						std::cout<<"CZY NA PEWNO CHCESZ TO ZROBIC? ESC - Anuluj | Inny klawisz - zgoda"<<std::endl;
-						if(getch() == 27) break;
-						readDefault();
-						std::cout<<"Ustawienia domyslne programu zostaly przywrocone!"<<std::endl;
-					}
-					break;
-					case 'a':
-					{
-						cls();
-						ang = (ang)?0:1;
-						break;
-					}
-					case 'p':
-					{
-						cls();
-						fLockPW = (fLockPW)?0:1;
-						break;
-					}
-					case 't':
-					{
-						cls();
-						fLockTeam = (fLockTeam)?0:1;
-						break;
-					}
-					case 's':
-					{
-						cls();
-						fLockKomunikat = (fLockKomunikat)?0:1;
-						break;
-					}
-					case 'k':
-					{
-						cls();
-						fLockNick = (fLockNick)?0:1;
-						break;
-					}
-					case 'c':
-					{
-						cls();
-						chatSound = (chatSound)?0:1;
-						break;
-					}
-					case '1':
-					{
-						cls();
-						while(true)
-						{
-							std::cout<<"Podaj nowa ilosc wyswietlanych wierszy: ";
-							if(!(std::cin>>wyswietlaneWiersze))
-							{
-								intError(wyswietlaneWiersze);
-							}
-							if(wyswietlaneWiersze < 1 || wyswietlaneWiersze > 100)
-								std::cout<<"MIN 1; MAX 100"<<std::endl;
-							else
-								break;
-						}
-						cls();
-						break;
-					}
-					case '2':
-					{
-						cls();
-						while(true)
-						{
-							std::cout<<"Podaj nowa czestotliwosc odswiezania: ";
-							if(!(std::cin>>refresh))
-							{
-								intError(refresh);
-							}
-							if(refresh < 100 || refresh > 5000)
-								std::cout<<"MIN 100(0,1s); MAX 5000(5s)"<<std::endl;
-							else
-								break;
-						}
-						cls();
-						break;
-					}
-					case '3':
-					{
-						cls();
-						dynamicRefresh = (dynamicRefresh)?0:1;
-						break;
-					}
-					case '4':
-					{
-						cls();
-						while(true)
-						{
-							std::cout<<"Podaj nowa czestotliwosc dzwieku: ";
-							if(!(std::cin>>dzwiekGlowny))
-							{
-								intError(dzwiekGlowny);
-							}
-							if(dzwiekGlowny < 50 || dzwiekGlowny > 10000)
-								std::cout<<"MIN 50; MAX 10000"<<std::endl;
-							else
-								break;
-						}
-						cls();
-						break;
-					}
-					case '5':
-					{
-						cls();
-						while(true)
-						{
-							std::cout<<"Podaj nowy odstep miedzy dzwiekami: ";
-							if(!(std::cin>>interval))
-							{
-								intError(interval);
-							}
-							if(interval < 50 || interval > 1000)
-								std::cout<<"MIN 50; MAX 1000"<<std::endl;
-							else
-								break;
-						}
-						cls();
-						break;
-					}
-					case 'm':
-					{
-						cls();
-						if(autoMoveLogs) autoMoveLogs = 0;
-						else
-							{
-								while(true)
-								{
-									std::cout<<"Podaj ilosc wierszy, od jakiej maja byc przenoszone logi: ";
-									if(!(std::cin>>autoMoveLogs))
-									{
-										intError(autoMoveLogs);
-									}
-									if(autoMoveLogs < 50 || autoMoveLogs > 1500)
-										std::cout<<"MIN 50; MAX 1500"<<std::endl;
-									else
-										break;
-								}
-							}
-						cls();
-						break;
-					}
-					case '6':
-					{
-						cls();
-						std::cout<<"Podaj minuty: ";
-						if(!(std::cin>>temp))
-						{
-							intError(temp);
-						}
-						std::cout<<"Podaj sekundy: ";
-						if(!(std::cin>>temp2))
-						{
-							intError(temp2);
-						}
-						czas = (temp*60) + temp2;
-						break;
-					}
-					case '7':
-					{
-						cls();
-						random = (random)?0:1;
-						break;
-					}
-					case '8':
-					{
-						cls();
-						while(true)
-						{
-							std::cout<<"Podaj nowa ilosc $(sama liczba): ";
-							if(!(std::cin>>money))
-							{
-								intError(money);
-							}
-							if(money < 0 || money > 9999999)
-								std::cout<<"MIN 0; MAX 9999999"<<std::endl;
-							else
-								break;
-						}
-						cls();
-						break;
-					}
-					case '9':
-					{
-						cls();
-						while(true)
-						{
-							std::cout<<"Podaj nowa ilosc kursow: ";
-							if(!(std::cin>>courses))
-							{
-								intError(courses);
-							}
-							if(courses < 0 || courses > 9999)
-								std::cout<<"MIN 0; MAX 9999"<<std::endl;
-							else
-								break;
-						}
-						cls();
-						break;
-					}
-					case '0':
-					{
-						cls();
-						while(true)
-						{
-							std::cout<<"Podaj wartosc rangi(sama liczba, bez znaku %): ";
-							int _grade = 0;
-							if(!(std::cin>>_grade))
-							{
-								intError(_grade);
-							}
-							grade = _grade;
-							if(grade < 50 || grade > 100)
-								std::cout<<"MIN 50; MAX 100"<<std::endl;
-							else
-								break;
-						}
-						grade /= 100;
-						cls();
-						break;
-					}
-					case 'x':
-					{
-						cls();
-						std::cout<<"CZY NA PEWNO CHCESZ TO ZROBIC? ESC - Anuluj | Inny klawisz - zgoda"<<std::endl;
-						if(getch() == 27) break;
-						money = 0;
-						courses = 0;
-						cls();
-						std::cout<<"(INFO) Wyzerowano."<<std::endl;
-						break;
-					}
-					case 'b':
-					{
-						cls();
-						while(true)
-						{
-							SetConsoleTextAttribute(h, 10);
-							Beep(dzwiekGlowny,100);
-							if(menuGlowne)
-							{
-								std::cout<<" _____________________Ustawienia - Nicknames_____________________"<<std::endl;
-								std::cout<<" (INFO) Mozesz tez wpisywac nazwy recznie w pliku logus.ini"<<std::endl;
-								SetConsoleTextAttribute(h, 14);
-								std::cout<<" [1] Dodaj nowego gracza"<<std::endl;
-								std::cout<<" [2] Usun ostatnio dodanego gracza"<<std::endl;
-								std::cout<<" [3] Wyswietl liste dodanych graczy"<<std::endl;
-								std::cout<<" [4] Usun gracza o danym id z listy"<<std::endl;
-								SetConsoleTextAttribute(h, 7);
-								std::cout<<" [r] Wykonaj odczyt z pliku, jesli gracz zostal dodany w logus.ini"<<std::endl;
-								std::cout<<" [x] Usun wszystkich graczy"<<std::endl;
-								SetConsoleTextAttribute(h, 10);
-								std::cout<<" ________________________________________________________________"<<std::endl;
-								std::cout<<"                       [ESC] Powrot i zapis                      "<<std::endl;
-							}
-							else
-							{
-								std::cout<<" _____________________Ustawienia - Nicknames_____________________"<<std::endl;
-								std::cout<<" (INFO) Możesz też wpisywać nazwy ręcznie w pliku logus.ini"<<std::endl;
-								SetConsoleTextAttribute(h, 14);
-								std::cout<<" [1] Dodaj nowego gracza"<<std::endl;
-								std::cout<<" [2] Usuń ostatnio dodanego gracza"<<std::endl;
-								std::cout<<" [3] Wyświetl listę dodanych graczy"<<std::endl;
-								std::cout<<" [4] Usuń gracza o danym id z listy"<<std::endl;
-								SetConsoleTextAttribute(h, 7);
-								std::cout<<" [r] Wykonaj odczyt z pliku, jeśli gracz został dodany w logus.ini"<<std::endl;
-								std::cout<<" [x] Usuń wszystkich graczy"<<std::endl;
-								SetConsoleTextAttribute(h, 10);
-								std::cout<<" ________________________________________________________________"<<std::endl;
-								std::cout<<"                       [ESC] Powrot i zapis                      "<<std::endl;
-							}
-							wyb = wybor();
-							if(wyb == 27){
-								cls();
-								zapis();
-								break;
-							}
-							switch(wyb)
-							{
-								case '1': //set2 SETTINGS two
-								{
-									cls();
-									while(true)
-									{
-										std::cout<<"Podaj dokladna nazwe gracza: ";
-										std::cin>>s_temp;
-										if(s_temp.length()<3)
-											std::cout<<"Minimum 3 znaki!"<<std::endl;
-										else
-										{   
-											cls();
-											nicknames.push_back(s_temp);
-											std::cout<<"Dodano gracza "<<s_temp<<std::endl;
-											break;
-										}
-									}
-									break;
-								}
-								case '2':
-								{
-									cls();
-									if(nicknames.empty())
-										std::cout<<"(INFO) Lista graczy jest pusta"<<std::endl;
-									else
-									{   
-										std::cout<<"Usunieto gracza "<<nicknames.back()<<std::endl;
-										nicknames.pop_back();
-									}
-									break;
-								}
-								case '3':
-								{
-									cls();
-									if(nicknames.empty())
-										std::cout<<"(INFO) Lista graczy jest pusta"<<std::endl;
-									else
-									{   
-										for(int i = 0; i < nicknames.size(); i++)
-										{
-											std::cout<<i+1<<". "<<nicknames.at(i)<<std::endl;
-										}
-									}
-									break;
-								}
-								case '4':
-								{
-									cls();
-									if(nicknames.empty())
-										std::cout<<"(INFO) Lista graczy jest pusta"<<std::endl;
-									else
-									{   
-										cls();
-										for(int i = 0; i < nicknames.size(); i++)
-										{
-											std::cout<<i+1<<". "<<nicknames.at(i)<<std::endl;
-										}
-										std::cout<<"Podaj id gracza, ktorego chcesz usunac: ";
-										if(!(std::cin>>temp))
-										{
-											intError(temp);
-										}
-										std::cout<<"Usunieto gracza "<<nicknames.at(temp-1)<<std::endl;
-										nicknames.erase(nicknames.begin()+temp-1);
-									}
-									break;
-								}
-								case 'r':
-								{
-									cls();
-									odczyt();
-									zapis();
-									break;
-								}
-								case 'x':
-								{
-									cls();
-									std::cout<<"CZY NA PEWNO CHCESZ TO ZROBIC? ESC - Anuluj | Inny klawisz - zgoda"<<std::endl;
-									if(getch() == 27) break;
-									nicknames.clear();
-									std::cout<<"Usunieto wszystkich graczy"<<std::endl;
-									break;
-								}
-								default: def();
-							}
-						}
-						break;
-					}
-					case 'n':
-					{
-						cls();
-						std::cout<<"Nazwa nicku potrzebna jest do poprawnego dzialania LiveChat"<<std::endl;
-						while(true)
-						{
-							std::cout<<"Podaj swoj nowy nick: ";
-							std::cin>>nick;
-							if(nick.length()<3)
-							{
-								std::cout<<"MINIMUM 3 znaki"<<std::endl;
-							}
-							else break;
-						}
-						cls();
-						break;
-					}
-					default: def();
-				}
-			}
-			break;
-		}
-		case '0':
-		{
-			cls();
-			if(codePage852)
-			{
-				codePage852 = 0;
-				SetConsoleOutputCP(65001);
-				SetConsoleCP(65001); 
-				std::cout<<"Kodowanie UTF-8"<<std::endl;
-			}
-			else
-			{
-				codePage852 = 1;
-				SetConsoleOutputCP(852);
-				SetConsoleCP(852); 
-				std::cout<<"Kodowanie 852"<<std::endl;
-			}
-			break;
-		}
-		case 'j':
-		{
-			cls();
-			if(menuGlowne)
-			{
-				menuGlowne = 0;
-				std::cout<<"Menu z polskimi ogonkami"<<std::endl;
-			}
-			else
-			{
-				menuGlowne = 1;
-				std::cout<<"Menu bez polskich ogonkow"<<std::endl;
-			}
-			break;
-		}
-		case '9':
-		{
-			cls();
-			dzwiekGlowny = losuj(50,10000);
-			std::cout<<dzwiekGlowny<<std::endl;
-			break;
-		}
-
-		case 'w':
-		{
-			cls();
-			clock_t p = 0;
-			std::string host = "";
-			std::cout<<"Choose host: "<<std::endl;
-			std::cout<<"1. localhost"<<std::endl;
-			std::cout<<"2. google.pl"<<std::endl;
-			std::cout<<"3. facebook.com"<<std::endl;
-			std::cout<<"4. other"<<std::endl;
-			switch(getch())
-			{
-				case '1': host = "ping localhost"; break;
-				case '2': host = "ping google.pl"; break;
-				case '3': host = "ping facebook.com"; break;
-				case '4': {
-						std::cout<<"Enter host: ";
-						std::cin>>host;
-						host = "ping "+host; break;
-					}
-				default: host = "ping google.pl"; break;
-			}
-			cls();
-			while(true)
-			{
-				if(host == "") break;
-				p = clock();
-				std::cout<<"Any key - exit. ";
-				Sleep(1000);
-				system(host.c_str());
-				std::cout<<"Delay: "<<clock()-p<<"ms"<<std::endl;
-				if(clock()-p > 4000 && clock()-p < 5000)
-					Beep(dzwiekGlowny,333);
-				if(kbhit()) {getch(); break;}
-			}
-			cls();
-			break;
-		}
-		case 'i':
-		{
-			cls();
-			wersja();
-			break;
-		}
-		case 's':
-		{
-			cls();
-			switch (fastStart)
-			{
-			case 0:
-				fastStart = 1;
-				break;
-			case 1:
-				fastStart = 2;
-				break;
-			default:
-				fastStart = 0;
-			break;
-			}
-			break;
-		}
-		case 13:
-		{
-			cls();
-			bool _quit = runLiveChat();
-			if(!_quit) return closeLogus("Zamykanie MTA i programu"); //close Logus
-			break;
-		}
-		default:
-			def();
-		}//switch
-	}
 	return 0;
 }
 
@@ -1171,121 +456,6 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 	}//while
 	return 1;
 }//liveChat()
-void News();
-void wersja()
-{
-	std::cout<<std::endl;
-	std::cout<<"  Witaj "<<nick<<" !"<<std::endl;
-	Sleep(300);
-	std::cout<<"  ___________________"<<std::endl;
-	std::cout<<" |       Autor       |"<<std::endl;
-	std::cout<<" |       DarXe       |"<<std::endl;
-	std::cout<<" |     Niventill     |"<<std::endl;
-	std::cout<<" |___________________|"<<std::endl;
-	std::cout<<" |    Wersja 20.8    |"<<std::endl; //verr
-	/*Sleep(300); std::cout<<std::endl;
-	std::cout<<" PLANY: "<<std::endl;
-	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;
-	std::cout<<" Wyszukiwanie wiadomosci tylko wybranych przez siebie graczy"<<std::endl;
-	std::cout<<" Wyszukiwanie po tagach, ktore bedzie sie tworzylo(wysylalo) w konsoli mta"<<std::endl;
-	std::cout<<" Naprawienie problemu z polskimi znakami na systemach win7"<<std::endl;*/
-	Sleep(300); std::cout<<std::endl;
-	std::cout<<" Nie zapomnij zagladnac na githuba - znajdziesz tam informacje o tym-"<<std::endl;
-	std::cout<<" -jak korzystac z programu (sa tam opisane wszystkie opcje)"<<std::endl;
-	std::cout<<" https://github.com/DarXe/Logus/blob/master/README.md\n"<<std::endl;
-	Sleep(500); Beep(dzwiekGlowny,150);
-	std::cout<<" Wcisnij klawisz, aby wyswietlic nowosci"<<std::endl; getch();
-	cls();
-	std::cout<<" CO NOWEGO?"<<std::endl;
-	News();
-	cls();
-}
-
-void menu()
-{
-	SetConsoleTextAttribute(h, 10);
-	std::cout<<" _______________________________________MENU_______________________________________"<<std::endl;
-	SetConsoleTextAttribute(h, 11);
-	std::cout<<" [Enter] Uruchom MTA i połącz z PTS / Połącz ponownie"<<std::endl;
-	std::cout<<" [L] PTS TOTOLOTEK - Lotto Logus"<<std::endl;
-	SetConsoleTextAttribute(h, 12);
-	std::cout<<" [s] Szybki start LiveChat + PTS: ";
-	switch (fastStart)
-	{
-	case 0:
-		std::cout<<"Nie, ale wyświetl info o wersji";
-		break;
-	case 1:
-		std::cout<<"Tak, uruchom MTA:PTS przy starcie Logusa";
-		break;
-	default:
-		std::cout<<"Nie uruchamiaj, ani nie wyświetlaj info o wersji";
-		break;
-	}
-	std::cout<<std::endl;
-	std::cout<<" [t] LiveChat - czat z gry w konsoli z komunikatami dźwiękowymi"<<std::endl;
-	std::cout<<" [5] LiveChat - ustawienia"<<std::endl;
-	SetConsoleTextAttribute(h, 11);
-	std::cout<<" [1] Szukaj wiadomości teamowych w console.log"<<std::endl;
-	std::cout<<" [2] Szukaj PW oraz odpowiedzi w console.log"<<std::endl;
-	std::cout<<" [3] Szukaj wiadomości teamowych we wszystkich plikach .log"<<std::endl;
-	std::cout<<" [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log"<<std::endl;
-	SetConsoleTextAttribute(h, 12);
-	std::cout<<" [p] Szukaj przelewów od i do graczy we wszystkich plikach"<<std::endl;
-	std::cout<<" [n] Ilość wierszy w plikach"<<std::endl;
-	SetConsoleTextAttribute(h, 11);
-	std::cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet"<<std::endl;
-	std::cout<<" [j] Menu bez polskich znaków"<<std::endl;
-	std::cout<<" [9] Zmiana dźwięku na losowy"<<std::endl;
-	std::cout<<" [0] Kodowanie: "<<((codePage852)?"852":"UTF-8")<<std::endl;
-	std::cout<<" [i] INFO"<<std::endl;
-	SetConsoleTextAttribute(h, 10);
-	std::cout<<" __________________________________________________________________________________"<<std::endl;
-	std::cout<<"                                [ESC] Wyjście i zapis                              "<<std::endl;
-}
-
-void menuBezPL()
-{
-	SetConsoleTextAttribute(h, 10);
-	std::cout<<" _______________________________________MENU_______________________________________"<<std::endl;
-	SetConsoleTextAttribute(h, 11);
-	std::cout<<" [Enter] Uruchom MTA i polacz z PTS / Polacz ponownie"<<std::endl;
-	std::cout<<" [L] PTS TOTOLOTEK - Lotto Logus"<<std::endl;
-	SetConsoleTextAttribute(h, 12);
-	std::cout<<" [s] Szybki start LiveChat + PTS: ";
-	switch (fastStart)
-	{
-	case 0:
-		std::cout<<"Nie, ale wyswietl info o wersji";
-		break;
-	case 1:
-		std::cout<<"Tak, uruchom MTA:PTS przy starcie Logusa";
-		break;
-	default:
-		std::cout<<"Nie uruchamiaj, ani nie wyswietlaj info o wersji";
-		break;
-	}
-	std::cout<<std::endl;
-	std::cout<<" [t] LiveChat - czat z gry w konsoli z komunikatami dzwiekowymi"<<std::endl;
-	std::cout<<" [5] LiveChat - ustawienia"<<std::endl;
-	SetConsoleTextAttribute(h, 11);
-	std::cout<<" [1] Szukaj wiadomosci teamowych w console.log"<<std::endl;
-	std::cout<<" [2] Szukaj PW oraz odpowiedzi w console.log"<<std::endl;
-	std::cout<<" [3] Szukaj wiadomosci teamowych we wszystkich plikach .log"<<std::endl;
-	std::cout<<" [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log"<<std::endl;
-	SetConsoleTextAttribute(h, 12);
-	std::cout<<" [p] Szukaj przelewow od i do graczy we wszystkich plikach"<<std::endl;
-	std::cout<<" [n] Ilosc wierszy w plikach"<<std::endl;
-	SetConsoleTextAttribute(h, 11);
-	std::cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet"<<std::endl;
-	std::cout<<" [j] Menu z polskimi znakami"<<std::endl;
-	std::cout<<" [9] Zmiana dzwieku na losowy"<<std::endl;
-	std::cout<<" [0] Kodowanie: "<<((codePage852)?"852":"UTF-8")<<std::endl;
-	std::cout<<" [i] INFO"<<std::endl;
-	SetConsoleTextAttribute(h, 10);
-	std::cout<<" __________________________________________________________________________________"<<std::endl;
-	std::cout<<"                                [ESC] Wyjscie i zapis                              "<<std::endl;
-}
 
 void News() //news
 {
@@ -1358,7 +528,44 @@ void News() //news
 	std::cout<<" 206_28 Dodano tryb automatycznego otwierania bramy, gdy ktoś poprosi o open na PW"<<std::endl;
 	std::cout<<" * 207_5 Konwersja makra na pasteCmd.exe"<<std::endl;
 	std::cout<<" 207_31 Wydanie wersji 20.7"<<std::endl;
+		std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominac INFO)"<<std::endl;
+		if(getch() == 27) return; cls();
+	SetConsoleTextAttribute(h, 4);
+	std::cout<<" SIERPIEŃ"<<std::endl;
+	SetConsoleTextAttribute(h, 6);
 	std::cout<<" 208_04 Poprawienie funkcji preConfig, dodanie preSelection(), preInputInt() oraz preInputString()\n";
+	std::cout<<" 208_06 Uporządkowanie kodu i refaktoryzacja\n";
+	std::cout<<" 208_06.1 Częściowe wsparcie dla języka angielskiego (jak widać nowości dalej sa po polsku Xd)\n";
+	std::cout<<" * Niebawem zrobione będzie pełnoprawne wsparcie dla Win 7 (z pomocą conEmu)\n";
+}
+
+void wersja()
+{
+	std::cout<<std::endl;
+	std::cout<<"  Witaj "<<nick<<" !"<<std::endl;
+	Sleep(300);
+	std::cout<<"  ___________________"<<std::endl;
+	std::cout<<" |       Autor       |"<<std::endl;
+	std::cout<<" |       DarXe       |"<<std::endl;
+	std::cout<<" |     Niventill     |"<<std::endl;
+	std::cout<<" |___________________|"<<std::endl;
+	std::cout<<" |    Wersja 20.8    |"<<std::endl; //verr
+	/*Sleep(300); std::cout<<std::endl;
+	std::cout<<" PLANY: "<<std::endl;
+	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;
+	std::cout<<" Wyszukiwanie wiadomosci tylko wybranych przez siebie graczy"<<std::endl;
+	std::cout<<" Wyszukiwanie po tagach, ktore bedzie sie tworzylo(wysylalo) w konsoli mta"<<std::endl;
+	std::cout<<" Naprawienie problemu z polskimi znakami na systemach win7"<<std::endl;*/
+	Sleep(300); std::cout<<std::endl;
+	std::cout<<" Nie zapomnij zagladnac na githuba - znajdziesz tam informacje o tym-"<<std::endl;
+	std::cout<<" -jak korzystac z programu (sa tam opisane wszystkie opcje)"<<std::endl;
+	std::cout<<" https://github.com/DarXe/Logus/blob/master/README.md\n"<<std::endl;
+	Sleep(500); Beep(dzwiekGlowny,150);
+	std::cout<<" Wcisnij klawisz, aby wyswietlic nowosci"<<std::endl; getch();
+	cls();
+	std::cout<<" CO NOWEGO?"<<std::endl;
+	News();
+	cls();
 }
 
 //g++ src\main.cpp -o Logus.exe -static -s -Ofast

@@ -12,12 +12,14 @@ void cls()
 }
 char wybor()
 {
+	engLang?std::cout<<"\n Choose an option (press a key)":
 	std::cout<<"\n Wybierz opcje (wciśnij klawisz)";
 	return getch();
 }
 void def()
 {
 	cls();
+	engLang?std::cout<<"\a (INFO) Option not found!\n":
 	std::cout<<"\a (INFO) Nie ma takiej opcji!\n";
 }
 

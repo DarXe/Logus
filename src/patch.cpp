@@ -27,7 +27,7 @@ void zapis(bool showInfo = true)
 		file<<"nick_na_pts: "<<nick<<"\n";
 		file<<"dzwięk_główny: "<<dzwiekGlowny<<"\n";
 		file<<"kolor_główny: "<<kolorGlowny<<"\n";
-		file<<"menu_glówne_bez_polskich_znaków(0/1): "<<menuGlowne<<"\n";
+		file<<"menu_glówne_bez_polskich_znaków(0/1): "<<engLang<<"\n";
 		file<<"wyświetlane_wiersze: "<<wyswietlaneWiersze<<"\n";
 		file<<"odświeżanie: "<<refresh<<"\n";
 		file<<"przerwa_między_dźwiękami: "<<interval<<"\n";
@@ -63,7 +63,8 @@ void zapis(bool showInfo = true)
 		}
 	file.close();
 	if(showInfo)
-	std::cout<<"(INFO) Ustawienia zostaly zapisane."<<std::endl;
+	engLang?std::cout<<"(INFO) Settings has been saved.\n":
+	std::cout<<"(INFO) Ustawienia zostaly zapisane.\n";
 }
 
 void odczyt() //re read
@@ -78,7 +79,7 @@ void odczyt() //re read
 		file>>s_temp>>nick;
 		file>>s_temp>>dzwiekGlowny;
 		file>>s_temp>>kolorGlowny;
-		file>>s_temp>>menuGlowne;
+		file>>s_temp>>engLang;
 		file>>s_temp>>wyswietlaneWiersze;
 		file>>s_temp>>refresh;
 		file>>s_temp>>interval;
@@ -113,7 +114,8 @@ void odczyt() //re read
 			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
-		std::cout<<"(INFO) Wczytano ustawienia."<<std::endl;
+		engLang?std::cout<<"(INFO) Settings has been loaded.":
+		std::cout<<"(INFO) Wczytano ustawienia.\n";
 	file.close();
 }
 
@@ -128,7 +130,7 @@ void patch() //pat
 		file>>s_temp>>nick;
 		file>>s_temp>>dzwiekGlowny;
 		file>>s_temp>>kolorGlowny;
-		file>>s_temp>>menuGlowne;
+		file>>s_temp>>engLang;
 		file>>s_temp>>wyswietlaneWiersze;
 		file>>s_temp>>refresh;
 		file>>s_temp>>interval;
@@ -163,9 +165,10 @@ void patch() //pat
 			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
+		engLang?std::cout<<"(INFO) Settings loaded. Succesfully updated do "<<ver<<"."<<std::endl:
 		std::cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<"."<<std::endl;
 	file.close();
-	zapis();
+	zapis(0);
 }
 
 void readDefault()
@@ -175,7 +178,7 @@ void readDefault()
 	fLockPW = 0;
 	fLockKomunikat = 0;
 	fLockNick = 0;
-	menuGlowne = 0;
+	engLang = 0;
 	chatSound = 0;
 	kolorGlowny = "A";
 	wyswietlaneWiersze = 15;
