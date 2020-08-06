@@ -103,7 +103,8 @@ int main(int argc, char** argv) //maa main
 	case 1:
 		{
 			bool _quit = runLiveChat();
-			if(!_quit) return closeLogus("Zamykanie MTA i programu"); //close Logus
+			mess = engLang? "Closing MTA and Logus": "Zamykanie MTA i programu";
+			if(!_quit) return closeLogus(mess); //close Logus
 		}
 	default:
 		break;
@@ -451,35 +452,6 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 	}//while
 	return 1;
 }//liveChat()
-void News();
-void wersja()
-{
-	std::cout<<std::endl;
-	std::cout<<"  Witaj "<<nick<<" !"<<std::endl;
-	Sleep(300);
-	std::cout<<"  ___________________"<<std::endl;
-	std::cout<<" |       Autor       |"<<std::endl;
-	std::cout<<" |       DarXe       |"<<std::endl;
-	std::cout<<" |     Niventill     |"<<std::endl;
-	std::cout<<" |___________________|"<<std::endl;
-	std::cout<<" |    Wersja 20.8    |"<<std::endl; //verr
-	/*Sleep(300); std::cout<<std::endl;
-	std::cout<<" PLANY: "<<std::endl;
-	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;
-	std::cout<<" Wyszukiwanie wiadomosci tylko wybranych przez siebie graczy"<<std::endl;
-	std::cout<<" Wyszukiwanie po tagach, ktore bedzie sie tworzylo(wysylalo) w konsoli mta"<<std::endl;
-	std::cout<<" Naprawienie problemu z polskimi znakami na systemach win7"<<std::endl;*/
-	Sleep(300); std::cout<<std::endl;
-	std::cout<<" Nie zapomnij zagladnac na githuba - znajdziesz tam informacje o tym-"<<std::endl;
-	std::cout<<" -jak korzystac z programu (sa tam opisane wszystkie opcje)"<<std::endl;
-	std::cout<<" https://github.com/DarXe/Logus/blob/master/README.md\n"<<std::endl;
-	Sleep(500); Beep(dzwiekGlowny,150);
-	std::cout<<" Wcisnij klawisz, aby wyswietlic nowosci"<<std::endl; getch();
-	cls();
-	std::cout<<" CO NOWEGO?"<<std::endl;
-	News();
-	cls();
-}
 
 void News() //news
 {
@@ -552,7 +524,44 @@ void News() //news
 	std::cout<<" 206_28 Dodano tryb automatycznego otwierania bramy, gdy ktoś poprosi o open na PW"<<std::endl;
 	std::cout<<" * 207_5 Konwersja makra na pasteCmd.exe"<<std::endl;
 	std::cout<<" 207_31 Wydanie wersji 20.7"<<std::endl;
+		std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominac INFO)"<<std::endl;
+		if(getch() == 27) return; cls();
+	SetConsoleTextAttribute(h, 4);
+	std::cout<<" SIERPIEŃ"<<std::endl;
+	SetConsoleTextAttribute(h, 6);
 	std::cout<<" 208_04 Poprawienie funkcji preConfig, dodanie preSelection(), preInputInt() oraz preInputString()\n";
+	std::cout<<" 208_06 Uporządkowanie kodu i refaktoryzacja\n";
+	std::cout<<" 208_06.1 Częściowe wsparcie dla języka angielskiego (jak widać nowości dalej sa po polsku Xd)\n";
+	std::cout<<" * Niebawem zrobione będzie pełnoprawne wsparcie dla Win 7 (z pomocą conEmu)\n";
+}
+
+void wersja()
+{
+	std::cout<<std::endl;
+	std::cout<<"  Witaj "<<nick<<" !"<<std::endl;
+	Sleep(300);
+	std::cout<<"  ___________________"<<std::endl;
+	std::cout<<" |       Autor       |"<<std::endl;
+	std::cout<<" |       DarXe       |"<<std::endl;
+	std::cout<<" |     Niventill     |"<<std::endl;
+	std::cout<<" |___________________|"<<std::endl;
+	std::cout<<" |    Wersja 20.8    |"<<std::endl; //verr
+	/*Sleep(300); std::cout<<std::endl;
+	std::cout<<" PLANY: "<<std::endl;
+	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;
+	std::cout<<" Wyszukiwanie wiadomosci tylko wybranych przez siebie graczy"<<std::endl;
+	std::cout<<" Wyszukiwanie po tagach, ktore bedzie sie tworzylo(wysylalo) w konsoli mta"<<std::endl;
+	std::cout<<" Naprawienie problemu z polskimi znakami na systemach win7"<<std::endl;*/
+	Sleep(300); std::cout<<std::endl;
+	std::cout<<" Nie zapomnij zagladnac na githuba - znajdziesz tam informacje o tym-"<<std::endl;
+	std::cout<<" -jak korzystac z programu (sa tam opisane wszystkie opcje)"<<std::endl;
+	std::cout<<" https://github.com/DarXe/Logus/blob/master/README.md\n"<<std::endl;
+	Sleep(500); Beep(dzwiekGlowny,150);
+	std::cout<<" Wcisnij klawisz, aby wyswietlic nowosci"<<std::endl; getch();
+	cls();
+	std::cout<<" CO NOWEGO?"<<std::endl;
+	News();
+	cls();
 }
 
 //g++ src\main.cpp -o Logus.exe -static -s -Ofast
