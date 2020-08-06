@@ -93,7 +93,7 @@ void settings()
                 if(getch() == 27) break;
                 readDefault();
                 engLang?std::cout<<"Settings has been succesfully reset to default!\n":
-                std::cout<<"Ustawienia domyslne programu zostaly przywrocone!\n";
+                std::cout<<"Ustawienia domyślne programu zostały przywrócone!\n";
             }
             break;
             case 'a':

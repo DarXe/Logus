@@ -63,7 +63,8 @@ void zapis(bool showInfo = true)
 		}
 	file.close();
 	if(showInfo)
-	std::cout<<"(INFO) Ustawienia zostaly zapisane."<<std::endl;
+	engLang?std::cout<<"(INFO) Settings has been saved.\n":
+	std::cout<<"(INFO) Ustawienia zostaly zapisane.\n";
 }
 
 void odczyt() //re read
@@ -113,7 +114,8 @@ void odczyt() //re read
 			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
-		std::cout<<"(INFO) Wczytano ustawienia."<<std::endl;
+		engLang?std::cout<<"(INFO) Settings has been loaded.":
+		std::cout<<"(INFO) Wczytano ustawienia.\n";
 	file.close();
 }
 
@@ -163,6 +165,7 @@ void patch() //pat
 			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
+		engLang?std::cout<<"(INFO) Settings loaded. Succesfully updated do "<<ver<<"."<<std::endl:
 		std::cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<"."<<std::endl;
 	file.close();
 	zapis();
