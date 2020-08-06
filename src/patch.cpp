@@ -27,7 +27,7 @@ void zapis(bool showInfo = true)
 		file<<"nick_na_pts: "<<nick<<"\n";
 		file<<"dzwięk_główny: "<<dzwiekGlowny<<"\n";
 		file<<"kolor_główny: "<<kolorGlowny<<"\n";
-		file<<"menu_glówne_bez_polskich_znaków(0/1): "<<menuGlowne<<"\n";
+		file<<"menu_glówne_bez_polskich_znaków(0/1): "<<engLang<<"\n";
 		file<<"wyświetlane_wiersze: "<<wyswietlaneWiersze<<"\n";
 		file<<"odświeżanie: "<<refresh<<"\n";
 		file<<"przerwa_między_dźwiękami: "<<interval<<"\n";
@@ -78,7 +78,7 @@ void odczyt() //re read
 		file>>s_temp>>nick;
 		file>>s_temp>>dzwiekGlowny;
 		file>>s_temp>>kolorGlowny;
-		file>>s_temp>>menuGlowne;
+		file>>s_temp>>engLang;
 		file>>s_temp>>wyswietlaneWiersze;
 		file>>s_temp>>refresh;
 		file>>s_temp>>interval;
@@ -128,7 +128,7 @@ void patch() //pat
 		file>>s_temp>>nick;
 		file>>s_temp>>dzwiekGlowny;
 		file>>s_temp>>kolorGlowny;
-		file>>s_temp>>menuGlowne;
+		file>>s_temp>>engLang;
 		file>>s_temp>>wyswietlaneWiersze;
 		file>>s_temp>>refresh;
 		file>>s_temp>>interval;
@@ -175,7 +175,7 @@ void readDefault()
 	fLockPW = 0;
 	fLockKomunikat = 0;
 	fLockNick = 0;
-	menuGlowne = 0;
+	engLang = 0;
 	chatSound = 0;
 	kolorGlowny = "A";
 	wyswietlaneWiersze = 15;
