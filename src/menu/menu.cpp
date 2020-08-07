@@ -23,7 +23,7 @@ int menu() //con
 			}
 			std::cout<<"\n";
 			std::cout<<" [t] LiveChat - ingame chat with notifications\n";
-			std::cout<<" [5] LiveChat - settings\n";
+			std::cout<<" [5] Logus's settings\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [1] Search for team messages in console.log\n";
 			std::cout<<" [2] Search for private messages in console.log\n";
@@ -56,7 +56,7 @@ int menu() //con
 			}
 			std::cout<<std::endl;
 			std::cout<<" [t] LiveChat - czat z gry w konsoli z komunikatami dźwiękowymi\n";
-			std::cout<<" [5] LiveChat - ustawienia\n";
+			std::cout<<" [5] Ustawienia Logusa\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [1] Szukaj wiadomości teamowych w console.log\n";
 			std::cout<<" [2] Szukaj PW oraz odpowiedzi w console.log\n";
