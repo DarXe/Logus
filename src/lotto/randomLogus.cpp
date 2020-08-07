@@ -26,8 +26,9 @@ int lottoLogus()
 		std::cout<<" [S] Statystyki, % szansa wygranej"<<std::endl;
 		std::cout<<" [Esc] Exit"<<std::endl;
 		std::cout<<" _______________________________________________________________\n"<<std::endl;
+		wyb = wybor();
 		SetConsoleTextAttribute(h, 15);
-		switch (wybor())
+		switch (wyb)
 		{
 		case 27:
 			cls();

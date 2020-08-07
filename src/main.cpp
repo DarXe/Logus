@@ -34,13 +34,13 @@ int main(int argc, char** argv) //maa main
 			std::cout<<"Program Logus musi znajdowac sie w folderze z logami MTA."<<std::endl;
 			std::cout<<"Logus has to be in the MTA log directory.\n";
 			Sleep(500);
-			std::cout<<"..\\MTA San Andreas 1.5\\MTA\\logs\\"<<std::endl;
+			std::cout<<"..\\MTA San Andreas 1.5\\MTA\\logs\\\n\n";
 			Sleep(500);
-			std::cout<<"Nastepnie uruchom go ponownie\n"<<std::endl;
-			std::cout<<"Run it again when you're done\n";
-			Sleep(1000);
-			std::cout<<"Dowolny klawisz - zamknij Logus\n"<<std::endl;
-			std::cout<<"Any key - close Logus\n";
+			std::cout<<"Nastepnie uruchom go ponownie\n";
+			std::cout<<"Run it again when you're done\n\n";
+			Sleep(3000);
+			std::cout<<"Dowolny klawisz - zamknij Logus\n";
+			std::cout<<"Any key - close Logus\n\n";
 			if(kbhit()) return 0;
 		}
 		
@@ -74,6 +74,7 @@ int main(int argc, char** argv) //maa main
 				codePage852 = 1;
 			preConfig();
 			zapis();
+			cls();
 			wersja();
 		}
 	file.close();
