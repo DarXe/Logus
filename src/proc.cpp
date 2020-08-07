@@ -539,7 +539,7 @@ void preConfig()
 	std::cout<<" Witaj w Logusiu || Welcome to Logus\n";
 	std::cout<<" Przechodze do prekonfiguracji || Going to preconfiguration"; dots(50,3); Sleep(5000);
 
-	if(cfgSelection(1, "Na poczatek wybierzmy jezyk || At the beginning, choose your language", "Polski -- wcisnij 1 aby wybrac", "English -- press 2 to select") ==2 ) engLang = 1;
+	if(cfgSelection(1, "Na poczatek wybierzmy jezyk || Choose your language", "Polski -- wcisnij 1 aby wybrac", "English -- press 2 to select") ==2 ) engLang = 1;
 
 	/* KROKI KONFIGURACJI:
 	1. Nick
