@@ -383,21 +383,22 @@ void moveLogs()//mv clean and move logs mtasarom console.log to logus.log
 	std::cout<<"Brak wierszy po przeniesieniu logow!";
 }
 
-bool runLiveChat()//flc
+void serverConnect()//flc
 {
+	#ifndef dbg
 	s_temp = "start mtasa://"+mtasa;
 	system(s_temp.c_str());
+	#endif
+}
+
+bool runLiveChat()//flc
+{
+	serverConnect();
 	cls();
 	Beep(dzwiekGlowny,100);
 	bool _quit = liveChat(wyswietlaneWiersze);
 	if(!_quit) return 0;
 	return 1;
-}
-
-void serverConnect()//flc
-{
-	s_temp = "start mtasa://"+mtasa;
-	system(s_temp.c_str());
 }
 
 void stopAutoJoin(bool &isAutoJoin)
