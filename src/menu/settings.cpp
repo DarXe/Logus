@@ -269,7 +269,7 @@ void settings()
                         {
                             cls();
                             zapis();
-                            break;
+                            return;
                         }
                         case '1': //set2 SETTINGS two
                         {
