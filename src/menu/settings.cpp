@@ -263,13 +263,13 @@ void settings()
                         std::cout<<" ________________________________________________________________\n";
                         std::cout<<"                       [ESC] Powrót i zapis                      \n";
                     }
-                    switch(wybor())
+                    switch(wyb = wybor())
                     {
                         case 27:
                         {
                             cls();
                             zapis();
-                            return;
+                            break;
                         }
                         case '1': //set2 SETTINGS two
                         {
@@ -362,6 +362,7 @@ void settings()
                         }
                         default: def();
                     }
+                    if(wyb == 27) break;
                 }
                 break;
             }
