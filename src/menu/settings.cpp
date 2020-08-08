@@ -276,18 +276,18 @@ void settings()
                             cls();
                             while(true)
                             {
-                                engLang?std::cout<<"Enter exact player name: ":
-                                std::cout<<"Podaj dokładną nazwę gracza: ";
+                                engLang?std::cout<<" Enter exact player name: ":
+                                std::cout<<" Podaj dokładną nazwę gracza: ";
                                 std::cin>>s_temp;
                                 if(s_temp.length()<3)
-                                    engLang?std::cout<<"Nickname has to be at least 3 characters long!\n":
-                                    std::cout<<"Minimum 3 znaki!\n";
+                                    engLang?std::cout<<" Nickname has to be at least 3 characters long!\n":
+                                    std::cout<<" Minimum 3 znaki!\n";
                                 else
                                 {   
                                     cls();
                                     nicknames.push_back(s_temp);
-                                    engLang?std::cout<<"Added player "<<s_temp<<"\n":
-                                    std::cout<<"Dodano gracza "<<s_temp<<"\n";
+                                    engLang?std::cout<<" Added player "<<s_temp<<"\n":
+                                    std::cout<<" Dodano gracza "<<s_temp<<"\n";
                                     break;
                                 }
                             }
@@ -297,10 +297,10 @@ void settings()
                         {
                             cls();
                             if(nicknames.empty())
-                                std::cout<<"(INFO) Lista graczy jest pusta\n";
+                                std::cout<<" (INFO) Lista graczy jest pusta\n";
                             else
                             {   
-                                std::cout<<"Usunieto gracza "<<nicknames.back()<<"\n";
+                                std::cout<<" Usunieto gracza "<<nicknames.back()<<"\n";
                                 nicknames.pop_back();
                             }
                             break;
@@ -309,13 +309,13 @@ void settings()
                         {
                             cls();
                             if(nicknames.empty())
-                                engLang?std::cout<<"(INFO) Player list is empty\n":
-                                std::cout<<"(INFO) Lista graczy jest pusta\n";
+                                engLang?std::cout<<" (INFO) Player list is empty\n":
+                                std::cout<<" (INFO) Lista graczy jest pusta\n";
                             else
                             {   
                                 for(int i = 0; i < nicknames.size(); i++)
                                 {
-                                    std::cout<<i+1<<". "<<nicknames.at(i)<<"\n";
+                                    std::cout<<" "<<i+1<<". "<<nicknames.at(i)<<"\n";
                                 }
                             }
                             break;
@@ -324,20 +324,20 @@ void settings()
                         {
                             cls();
                             if(nicknames.empty())
-                                engLang?std::cout<<"(INFO) Player list is empty\n":
-                                std::cout<<"(INFO) Lista graczy jest pusta\n";
+                                engLang?std::cout<<" (INFO) Player list is empty\n":
+                                std::cout<<" (INFO) Lista graczy jest pusta\n";
                             else
                             {   
                                 cls();
                                 for(int i = 0; i < nicknames.size(); i++)
                                 {
-                                    std::cout<<i+1<<". "<<nicknames.at(i)<<"\n";
+                                    std::cout<<" "<<i+1<<". "<<nicknames.at(i)<<"\n";
                                 }
                                 engLang?cfgInputInt(0, 0, "Enter player's ID that you want to remove", "Enter ID:", "Error. Entered wrong value", "It has to be a number", 0, nicknames.size()):
                                 cfgInputInt(0, 0, "Podaj ID gracza którego chcesz usunąć", "Podaj ID:", "Błąd. Podaną błędną wartość", "To musi być liczba", 0, nicknames.size());
                                 cls();
-                                engLang?std::cout<<"Removed player "<<nicknames.at(temp-1)<<"\n":
-                                std::cout<<"Usunieto gracza "<<nicknames.at(temp-1)<<"\n";
+                                engLang?std::cout<<" Removed player "<<nicknames.at(temp-1)<<"\n":
+                                std::cout<<" Usunieto gracza "<<nicknames.at(temp-1)<<"\n";
                                 nicknames.erase(nicknames.begin()+temp-1);
                             }
                             break;
@@ -356,8 +356,8 @@ void settings()
                             std::cout<<"CZY NA PEWNO CHCESZ TO ZROBIĆ? ESC - Anuluj | Inny klawisz - Zgoda\n";
                             if(getch() == 27) break;
                             nicknames.clear();
-                            engLang?std::cout<<"Removed all players\n":
-                            std::cout<<"Usunięto wszystkich graczy\n";
+                            engLang?std::cout<<" Removed all players\n":
+                            std::cout<<" Usunięto wszystkich graczy\n";
                             break;
                         }
                         default: def();
