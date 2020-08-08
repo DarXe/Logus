@@ -1,5 +1,4 @@
-// Copyright (C) 2018-2019  DarXe
-#include <cmath>
+// Copyright (C) 2018-2020  DarXe
 
 //func
 //(team) [pts]nick
@@ -294,9 +293,9 @@ char fConsoleInput(std::string &line)//fci
 			else if(line[gt+4]=='m') //set m x xx xxx.. //SET MONEY (f4)
 			{//[2020-03-01 02:16:00] [Input]  : set m x
 				money = 0;
-				int tempMoney(0);
-				int temp(line.length()-gt-6);
-				int mnoz = pow(10,2);
+				int tempMoney = 0;
+				int temp = line.length()-gt-6;
+				int mnoz = power(10,temp-1);
 
 				for (size_t i = 0; i < temp; i++)
 				{
@@ -310,9 +309,9 @@ char fConsoleInput(std::string &line)//fci
 			else if(line[gt+4]=='c') //set c x //SET COURSES
 			{//[2020-03-01 02:16:00] [Input]  : set c x
 				courses = 0;
-				int tempC(0);
-				int temp(line.length()-gt-6);
-				int mnoz(pow(10,temp-1));
+				int tempC = 0;
+				int temp = line.length()-gt-6;
+				int mnoz = power(10,temp-1);
 				for (size_t i = 0; i < temp; i++)
 				{
 					tempC = line[gt+6+i];

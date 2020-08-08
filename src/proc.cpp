@@ -1,18 +1,6 @@
-// Copyright (C) 2018-2019  DarXe
-#include <climits>
+// Copyright (C) 2018-2020  DarXe, Niventill
 
-int intError(int &number)
-{
-	while (!(std::cin>>number))
-    {
-      std::cout<<"\n\aERRROR! Podales litere/y!"<<std::endl;
-			std::cin.clear(); // clear input buffer to restore std::cin to a usable state
-			std::cin.ignore(INT_MAX, '\n'); // ignore last input
-			std::cout << "Ta opcja wymaga podania liczby..\n";
-			std::cout << "Spróbuj ponownie: ";
-    }
-  return number;
-}
+#include <climits>
 
 void color(std::string value)
 {
@@ -395,21 +383,22 @@ void moveLogs()//mv clean and move logs mtasarom console.log to logus.log
 	std::cout<<"Brak wierszy po przeniesieniu logow!";
 }
 
-bool runLiveChat()//flc
+void serverConnect()//flc
 {
+	#ifndef dbg
 	s_temp = "start mtasa://"+mtasa;
 	system(s_temp.c_str());
+	#endif
+}
+
+bool runLiveChat()//flc
+{
+	serverConnect();
 	cls();
 	Beep(dzwiekGlowny,100);
 	bool _quit = liveChat(wyswietlaneWiersze);
 	if(!_quit) return 0;
 	return 1;
-}
-
-void serverConnect()//flc
-{
-	s_temp = "start mtasa://"+mtasa;
-	system(s_temp.c_str());
 }
 
 void stopAutoJoin(bool &isAutoJoin)
@@ -443,10 +432,11 @@ void dots(short duration, short amount)
 	}
 }
 
-int preInputInt(std::string text = "", std::string inputText = "", std::string errorText = "", std::string minMaxText = "", int min = 0, int max = 0)
+int cfgInputInt(bool preHead, bool isCls, std::string text = "", std::string inputText = "", std::string errorText = "", std::string minMaxText = "", int min = 0, int max = 0)
 {
 	int temp;
-	cls(); std::cout<<" _______________________Logus_pre-config_______________________\n";
+	if(isCls) cls();
+	if(preHead) std::cout<<" _______________________Logus_pre-config_______________________\n";
 	std::cout<<" "<<text<<"\n";
 	std::cout<<" "<<inputText<<" ";
 	std::cin>>temp;
@@ -455,7 +445,7 @@ int preInputInt(std::string text = "", std::string inputText = "", std::string e
 		std::cin.clear();
 		std::cin.ignore(INT_MAX,'\n');
 		SetConsoleTextAttribute(h, 12);
-		std::cout<<" _______________________Logus_pre-config_______________________\n";
+		if(preHead) std::cout<<" _______________________Logus_pre-config_______________________\n";
 		SetConsoleTextAttribute(h, 10);
 		std::cout<<" "<<errorText<<"\n";
 		std::cout<<" "<<minMaxText<<"\n";
@@ -465,11 +455,12 @@ int preInputInt(std::string text = "", std::string inputText = "", std::string e
 	return temp;
 }
 
-std::string preInputString(std::string text = "", std::string inputText = "", std::string errorText = "")
+std::string cfgInputString(bool preHead, bool isCls, std::string text = "", std::string inputText = "", std::string errorText = "")
 {
 	std::string temp;
-	cls(); std::cout<<" _______________________Logus_pre-config_______________________\n";
-	std::cout<<" "<<text<<"\n";
+	if(isCls) cls();
+	if(preHead) std::cout<<" _______________________Logus_pre-config_______________________\n";
+	if(text != "") std::cout<<" "<<text<<"\n";
 	std::cout<<" "<<inputText<<" ";
 	std::cin>>temp;
 	while (std::cin.fail()) {
@@ -477,7 +468,7 @@ std::string preInputString(std::string text = "", std::string inputText = "", st
 		std::cin.clear();
 		std::cin.ignore(INT_MAX,'\n');
 		SetConsoleTextAttribute(h, 12);
-		std::cout<<" _______________________Logus_pre-config_______________________\n";
+		if(preHead) std::cout<<" _______________________Logus_pre-config_______________________\n";
 		SetConsoleTextAttribute(h, 10);
 		std::cout<<" "<<errorText<<"\n";
 		std::cout<<" "<<inputText<<" ";
@@ -486,17 +477,18 @@ std::string preInputString(std::string text = "", std::string inputText = "", st
 	return temp;
 }
 
-int preSelection(std::string Question = "", std::string Answer = "", std::string Answer2 = "", std::string Answer3 = "") // better version of preConfigLegacy i suppose lol
+int cfgSelection(bool preHead, std::string Question = "", std::string Answer = "", std::string Answer2 = "", std::string Answer3 = "", std::string Answer4 = "") // better version of preConfigLegacy i suppose lol
 {
 		bool sel = 1;
 		do {
 			cls(); SetConsoleTextAttribute(h, 12);
-			std::cout<<" _______________________Logus_pre-config_______________________\n";
+			if(preHead) std::cout<<" _______________________Logus_pre-config_______________________\n";
 			SetConsoleTextAttribute(h, 10);
 			if(Question != "") std::cout<<" "<<Question<<"\n";
 			if(Answer != "") std::cout<<" [1] "<<Answer<<"\n";
 			if(Answer2 != "") std::cout<<" [2] "<<Answer2<<"\n";
 			if(Answer3 != "") std::cout<<" [3] "<<Answer3<<"\n";
+			if(Answer4 != "") std::cout<<" [4] "<<Answer4<<"\n";
 
 			switch(getch()) {
 				case '1':
@@ -523,6 +515,14 @@ int preSelection(std::string Question = "", std::string Answer = "", std::string
 						sel = 1; return 3;
 					}
 				}
+				case '4':
+				{
+					if(Answer4 == "") {
+						sel = 0; break;
+					} else {
+						sel = 1; return 4;
+					}
+				}
 				default:
 				{
 					sel = 0; break;
@@ -542,7 +542,7 @@ void preConfig()
 	std::cout<<" Witaj w Logusiu || Welcome to Logus\n";
 	std::cout<<" Przechodze do prekonfiguracji || Going to preconfiguration"; dots(50,3); Sleep(5000);
 
-	if(preSelection("Na poczatek wybierzmy jezyk || At the beginning, choose your language", "Polski -- wcisnij 1 aby wybrac", "English -- press 2 to select") ==2 ) ang = 1;
+	if(cfgSelection(1, "Na poczatek wybierzmy jezyk || Choose your language", "Polski -- wcisnij 1 aby wybrac", "English -- press 2 to select") ==2 ) engLang = 1;
 
 	/* KROKI KONFIGURACJI:
 	1. Nick
@@ -553,20 +553,20 @@ void preConfig()
 
 	/* nick */ 
 
-	if(ang) {
-		nick = preInputString("Enter your ingame nickname.", "Enter nickname:", "Error. Please enter correct nickname:");
+	if(engLang) {
+		nick = cfgInputString(1, "Enter your ingame nickname.", "Enter nickname:", "Error. Please enter correct nickname:");
 	} else if(codePage852) {
-		nick = preInputString("Podaj nick w grze.", "Podaj nick:", "Blad. Podaj prawidlowy nick:");
+		nick = cfgInputString(1, "Podaj nick w grze.", "Podaj nick:", "Blad. Podaj prawidlowy nick:");
 	} else {
-		nick = preInputString("Podaj nick w grze.", "Podaj nick:", "Błąd. Podaj prawidłowy nick:");
+		nick = cfgInputString(1, "Podaj nick w grze.", "Podaj nick:", "Błąd. Podaj prawidłowy nick:");
 	}
 
 	/* pay wage, money and course */
 
-	if(ang) {
+	if(engLang) {
 
-		if(preSelection("Do you want to set pay wage, current courses and earned money?", "Yes, I do", "Not really") == 1 ) {
-			switch(preSelection("Specify your pay wage.", "I am a trucker/fraction worker, get me out of here", "Press 2 to specify")) {
+		if(cfgSelection(1, "Do you want to set pay wage, current courses and earned money?", "Yes, I do", "Not really") == 1 ) {
+			switch(cfgSelection(1, "Specify your pay wage.", "I am a trucker/fraction worker, get me out of here", "Press 2 to specify")) {
 				case 1:
 				{
 					grade = 1; cls();
@@ -577,13 +577,13 @@ void preConfig()
 				}
 				case 2:
 				{
-					grade = preInputInt("Specify your pay wage.", "Pay wage:", "Error. Specify correct pay wage:", "Min 50 max 100.", 50, 100);
+					grade = cfgInputInt(1, 1,  "Specify your pay wage.", "Pay wage:", "Error. Specify correct pay wage:", "Min 50 max 100.", 50, 100);
 					grade /= 100;
 
-					courses = preInputInt("Enter courses that you have on your F4.", "Courses:", "Error. Specify correct amount of courses:", "Number cannot be negative.", 0, INT_MAX
+					courses = cfgInputInt(1, 1,  "Enter courses that you have on your F4.", "Courses:", "Error. Specify correct amount of courses:", "Number cannot be negative.", 0, INT_MAX
 					);
 
-					money = preInputInt("Enter money that you have on your F4.", "Money:", "Error. Specify correct amount of money:", "Number cannot be negative.", 0, INT_MAX);
+					money = cfgInputInt(1, 1,  "Enter money that you have on your F4.", "Money:", "Error. Specify correct amount of money:", "Number cannot be negative.", 0, INT_MAX);
 					break;
 				}
 				default: break;
@@ -592,8 +592,8 @@ void preConfig()
 
 	} else if(codePage852) {
 
-		if(preSelection("Czy chcesz ustawic procent wyplaty, kursy oraz pieniadze?", "Tak, chce", "Nie, nie chce") == 1 ) {
-			switch(preSelection("Podaj kursy.", "Pracuje we frakcji/jestem truckerem! Zabierz mnie stad", "Wcisnij 2 aby podac")) {
+		if(cfgSelection(1, "Czy chcesz ustawic procent wyplaty, kursy oraz pieniadze?", "Tak, chce", "Nie, nie chce") == 1 ) {
+			switch(cfgSelection(1, "Podaj kursy.", "Pracuje we frakcji/jestem truckerem! Zabierz mnie stad", "Wcisnij 2 aby podac")) {
 				case 1:
 				{
 					grade = 1; cls();
@@ -604,12 +604,12 @@ void preConfig()
 				}
 				case 2:
 				{				
-					grade = preInputInt("Podaj procent wyplaty.", "Procent wyplaty:", "Blad. Podaj prawidlowy procent wyplaty:", "Min 50 max 100.", 50, 100);
+					grade = cfgInputInt(1, 1,  "Podaj procent wyplaty.", "Procent wyplaty:", "Blad. Podaj prawidlowy procent wyplaty:", "Min 50 max 100.", 50, 100);
 					grade /= 100;
 
-					courses = preInputInt("Podaj kursy ktore masz pod F4.", "Kursy:", "Blad. Podaj prawidlowa ilosc kursow:", "Liczba nie moze byc ujemna.", 0, INT_MAX);
+					courses = cfgInputInt(1, 1,  "Podaj kursy ktore masz pod F4.", "Kursy:", "Blad. Podaj prawidlowa ilosc kursow:", "Liczba nie moze byc ujemna.", 0, INT_MAX);
 
-					money = preInputInt("Podaj zarobiona gotówkę pod F4.", "Gotowka:", "Blad. Podaj prawidlowa ilosc gotowki:", "Liczba nie moze byc ujemna.", 0, INT_MAX );
+					money = cfgInputInt(1, 1,  "Podaj zarobiona gotówkę pod F4.", "Gotowka:", "Blad. Podaj prawidlowa ilosc gotowki:", "Liczba nie moze byc ujemna.", 0, INT_MAX );
 					break;
 				}
 				default: break;
@@ -618,8 +618,8 @@ void preConfig()
 
 	} else {
 
-		if(preSelection("Czy chcesz ustawić procent wypłaty, kursy oraz pieniędze?", "Tak, chcę", "Nie, nie chcę") == 1 ) {
-			switch(preSelection("Podaj kursy.", "Pracuję we frakcji/jestem truckerem! Zabierz mnie stąd", "Wciśnij 2 aby podać")) {
+		if(cfgSelection(1, "Czy chcesz ustawić procent wypłaty, kursy oraz pieniędze?", "Tak, chcę", "Nie, nie chcę") == 1 ) {
+			switch(cfgSelection(1, "Podaj kursy.", "Pracuję we frakcji/jestem truckerem! Zabierz mnie stąd", "Wciśnij 2 aby podać")) {
 				case 1:
 				{
 					grade = 1; cls();
@@ -630,12 +630,12 @@ void preConfig()
 				}
 				case 2:
 				{
-					grade = preInputInt("Podaj procent wypłaty.", "Procent wypłaty:", "Błąd. Podaj prawidłowy procent wypłaty:", "Min 50 max 100.", 50, 100);
+					grade = cfgInputInt(1, 1,  "Podaj procent wypłaty.", "Procent wypłaty:", "Błąd. Podaj prawidłowy procent wypłaty:", "Min 50 max 100.", 50, 100);
 					grade /= 100;
 
-					courses = preInputInt("Podaj kursy które masz pod F4.", "Kursy:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
+					courses = cfgInputInt(1, 1,  "Podaj kursy które masz pod F4.", "Kursy:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
 
-					money = preInputInt("Podaj zarobioną gotówkę pod F4.", "Gotówka:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
+					money = cfgInputInt(1, 1,  "Podaj zarobioną gotówkę pod F4.", "Gotówka:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
 					break;
 				}
 				default: break;
@@ -645,64 +645,64 @@ void preConfig()
 
 	/* loading time and transport method */
 
-	if(ang) {
+	if(engLang) {
 
-		if(preSelection("Do you want to set loading time and transport method?", "Yes, I do", "Not really") == 1 ) {
-			temp2 = preInputInt("Firstly we'll choose loading time.","Enter minutes:", "Error. Enter correct number.", "It has to be a number", 0, INT_MAX);
-			temp = preInputInt("Now enter seconds.", "Enter seconds:", "Error. Enter correct number.", "It has to be a number", 0, INT_MAX);
+		if(cfgSelection(1, "Do you want to set loading time and transport method?", "Yes, I do", "Not really") == 1 ) {
+			temp2 = cfgInputInt(1, 1,  "Firstly we'll choose loading time.","Enter minutes:", "Error. Enter correct number.", "It has to be a number", 0, INT_MAX);
+			temp = cfgInputInt(1, 1,  "Now enter seconds.", "Enter seconds:", "Error. Enter correct number.", "It has to be a number", 0, INT_MAX);
 			czas = (temp*60) + temp2;
 
-			if(preSelection("Specify loading method.", "Random", """I will choose""") == 1) random = 1;
+			if(cfgSelection(1, "Specify loading method.", "Random", """I will choose""") == 1) random = 1;
 		}
 
 	} else if(codePage852) {
 
-		if(preSelection("Chcesz wybrac sposob transportu i czas ladowania?", "Tak, chce", "Nie, nie chce") == 1 ) {
-			temp2 = preInputInt("Na poczatek wybierzmy czas ladowania.", "Podaj minuty:", "Blad. Podaj prawidlowa liczbe.", "To musi byc liczba.", 0, INT_MAX);
-			temp = preInputInt("Teraz podaj sekundy.", "Podaj sekundy:", "Blad. Podaj prawidlowa liczbe.", "To musi byc liczba.", 0, INT_MAX);
+		if(cfgSelection(1, "Chcesz wybrac sposob transportu i czas ladowania?", "Tak, chce", "Nie, nie chce") == 1 ) {
+			temp2 = cfgInputInt(1, 1,  "Na poczatek wybierzmy czas ladowania.", "Podaj minuty:", "Blad. Podaj prawidlowa liczbe.", "To musi byc liczba.", 0, INT_MAX);
+			temp = cfgInputInt(1, 1,  "Teraz podaj sekundy.", "Podaj sekundy:", "Blad. Podaj prawidlowa liczbe.", "To musi byc liczba.", 0, INT_MAX);
 			czas = (temp*60) + temp2;
 
-			if(preSelection("Podaj sposob ladowania.", "Losowy", """Sam wybiore""") == 1) random = 1;
+			if(cfgSelection(1, "Podaj sposob ladowania.", "Losowy", """Sam wybiore""") == 1) random = 1;
 		}
 
 	} else {
 
-		if(preSelection("Chcesz wybrać sposób transportu i czas ładowania?", "Tak, chcę", "Nie, nie chcę") == 1 ) {
-			temp2 = preInputInt("Na poczętek wybierzmy czas ładowania.", "Podaj minuty:", "Błąd. Podaj prawidłową liczbę.", "To musi być liczba.", 0, INT_MAX);
-			temp = preInputInt("Teraz podaj sekundy.", "Podaj sekundy:", "Błąd. Podaj prawidłową liczbę.", "To musi być liczba.", 0, INT_MAX );
+		if(cfgSelection(1, "Chcesz wybrać sposób transportu i czas ładowania?", "Tak, chcę", "Nie, nie chcę") == 1 ) {
+			temp2 = cfgInputInt(1, 1,  "Na początek wybierzmy czas ładowania.", "Podaj minuty:", "Błąd. Podaj prawidłową liczbę.", "To musi być liczba.", 0, INT_MAX);
+			temp = cfgInputInt(1, 1,  "Teraz podaj sekundy.", "Podaj sekundy:", "Błąd. Podaj prawidłową liczbę.", "To musi być liczba.", 0, INT_MAX );
 			czas = (temp*60) + temp2;
 
-			if(preSelection( "Podaj sposób ładowania.", "Losowy", """Sam wybiorę""") == 1) random = 1;
+			if(cfgSelection( "Podaj sposób ładowania.", "Losowy", """Sam wybiorę""") == 1) random = 1;
 		}	
 	}
 
 	/* auto log mover */
 
-	if(ang) {
+	if(engLang) {
 
-		if(preSelection("Do you want to enable automatic log mover?", "Yes, I do", "No, not really") == 1) {
-			autoMoveLogs = preInputInt("Enter how many lines of logs are needed to move them.", "Enter amount:", "Error. Please enter correct ammount", "Number cannot be negative.", 0, INT_MAX);
+		if(cfgSelection(1, "Do you want to enable automatic log mover?", "Yes, I do", "No, not really") == 1) {
+			autoMoveLogs = cfgInputInt(1, 1,  "Enter how many lines of logs are needed to move them.", "Enter amount:", "Error. Please enter correct ammount", "Number cannot be negative.", 0, INT_MAX);
 		}
 
 	} else if(codePage852) {
 
-		if(preSelection("Czy chcesz wlaczyc automatyczne przenoszenie logow?", "Tak, chce", "Nie, nie chce") == 1) {
-			autoMoveLogs = preInputInt("Podaj ilosc linijek do przeniesienia logow", "Podaj ilosc:", "Blad. Podaj prawidlowa ilosc", "Liczba nie moze byc ujemna.", 0, INT_MAX);
+		if(cfgSelection(1, "Czy chcesz wlaczyc automatyczne przenoszenie logow?", "Tak, chce", "Nie, nie chce") == 1) {
+			autoMoveLogs = cfgInputInt(1, 1,  "Podaj ilosc linijek do przeniesienia logow", "Podaj ilosc:", "Blad. Podaj prawidlowa ilosc", "Liczba nie moze byc ujemna.", 0, INT_MAX);
 		}
 
 	} else {
 
-		if(preSelection("Czy chcesz wlączyć automatyczne przenoszenie logów?", "Tak, chcę", "Nie, nie chcę") == 1) {
-			autoMoveLogs = preInputInt("Podaj ilość linijek do przeniesienia logów", "Podaj ilość:", "Błąd. Podaj prawidłową ilość", "Liczba nie może być ujemna.", 0, INT_MAX);
+		if(cfgSelection(1, "Czy chcesz wlączyć automatyczne przenoszenie logów?", "Tak, chcę", "Nie, nie chcę") == 1) {
+			autoMoveLogs = cfgInputInt(1, 1,  "Podaj ilość linijek do przeniesienia logów", "Podaj ilość:", "Błąd. Podaj prawidłową ilość", "Liczba nie może być ujemna.", 0, INT_MAX);
 		}
 
 	}
 
 	/* fast start */
 
-	if(ang) {
+	if(engLang) {
 
-		switch(preSelection("Select Logus' autostart option", "No LiveChat + PTS autostart, but show version info", "LiveChat + PTS autostart, but don't show version info", "No LiveChat + PTS autostart and no version info")) {
+		switch(cfgSelection(1, "Select Logus' autostart option", "No LiveChat + PTS autostart, but show version info", "LiveChat + PTS autostart, but don't show version info", "No LiveChat + PTS autostart and no version info")) {
 			case 1:
 			{
 				fastStart = 0;
@@ -723,7 +723,7 @@ void preConfig()
 
 	} else if(codePage852) {
 
-		switch(preSelection("Wybierz autostart Logusa", "Brak szybkiego startu LiveChat + PTS, ale pokaz info o wersji", "Szybki start LiveChat + PTS, nie pokazuj info o wersji", "Brak szybkiego startu LiveChat + PTS i nie pokazuj info o wersji")) {
+		switch(cfgSelection(1, "Wybierz autostart Logusa", "Brak szybkiego startu LiveChat + PTS, ale pokaz info o wersji", "Szybki start LiveChat + PTS, nie pokazuj info o wersji", "Brak szybkiego startu LiveChat + PTS i nie pokazuj info o wersji")) {
 			case 1:
 			{
 				fastStart = 0;
@@ -744,7 +744,7 @@ void preConfig()
 
 	} else {
 
-		switch(preSelection("Wybierz autostart Logusa", "Brak szybkiego startu LiveChat + PTS, ale pokaż info o wersji", "Szybki start LiveChat + PTS, nie pokazuj info o wersji", "Brak szybkiego startu LiveChat + PTS i nie pokazuj info o wersji")) {
+		switch(cfgSelection(1, "Wybierz autostart Logusa", "Brak szybkiego startu LiveChat + PTS, ale pokaż info o wersji", "Szybki start LiveChat + PTS, nie pokazuj info o wersji", "Brak szybkiego startu LiveChat + PTS i nie pokazuj info o wersji")) {
 			case 1:
 			{
 				fastStart = 0;
@@ -767,7 +767,7 @@ void preConfig()
 
 	/* end of preconfig */
 
-	if(ang) {
+	if(engLang) {
 		cls();
 		std::cout<<" Preconfiguration ended succesfully."; dots(100,3);
 		std::cout<<"\n You can always change settings in main menu! \n";

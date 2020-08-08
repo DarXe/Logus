@@ -1,18 +1,19 @@
-// Copyright (C) 2018-2019  DarXe
+// Copyright (C) 2018-2020  DarXe
 
 #ifndef VAR_HPP_INCLUDED
 #define VAR_HPP_INCLUDED
 
 //var (ZMIENNE)
 //logus.ini
+std::string tempVer;
 std::string mtasa = "185.62.189.174:22003"; //ip server
-const int ver = 200804; //version variable, not editable //zmienna wersji, nie wolno edytować
+std::string ver = genVer(); //version variable, not editable //zmienna wersji, nie wolno edytować
 int dzwiekGlowny = 1777; //sound message //dźwięk komunikatów
 bool fLockTeam = 0; //lock beep(TEAM)
 bool fLockPW = 0; //lock beep priv message
 bool fLockKomunikat = 0; //lock beep for transport
 bool fLockNick = 0; //lock beep nick 'nick: message'
-bool menuGlowne = 0; //menu without PL chars //menu bez ąęźć.. 
+bool engLang = 0; // Logus in English
 bool chatSound = 0; //the sound of any chat message //dźwięk każdej wiadomości na czacie
 std::string kolorGlowny = "A"; //main color //kolor główny(przy wyszukiwaniu logów)
 int wyswietlaneWiersze = 15; //displayed rows in LiveChat
@@ -31,6 +32,7 @@ bool codePage852 = 0; //false:UTF-8 lub true:852 (jesli wystepuja krytyczne bugi
 short trackId = 0;
 int autoMoveLogs = 0;
 float grade = 0;
+std::string mess; // used in ifs to determine language
 
 const short gt = 33; //auxiliary variable
 int leng = 0; //length
@@ -57,5 +59,6 @@ bool isTimer = 0; //TIMER aux var //pomocnicza zmienna - czy timer ma odliczac
 bool isCzas = 0; //TIMER aux var //pomocnicza zmienna - czas po zaladowaniu, odliczanie
 int avg = 0; //courses calculator - average //średnia kursów
 bool timestamps = 0; //show timestamps in LiveChat //pokaż date obok logów w LiveChat
+clock_t t; // clock to check code speed
 
 #endif

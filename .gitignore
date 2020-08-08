@@ -1,18 +1,13 @@
-q.exe
-m.cpp
-Nowy folder
 logus.ini
-logus.log
-consolel1.log
-console.log
+m.cpp
 a.exe
-.vscode
+*.log
+*.1
+*.2
+*.3
+*.4
+*.5
 logusInfoOutput.log
 logusErrors.log
-.gitignore
-console.log.1
-console.log.2
-console.log.5
-console.log.3
-console.log.4
-.gitignore
+.vscode
+

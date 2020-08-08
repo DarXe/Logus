@@ -1,3 +1,5 @@
+// Copyright (C) 2018-2020  DarXe
+
 #ifndef _LOGUS_HPP
 #define _LOGUS_HPP
 
@@ -16,6 +18,8 @@ char wybor();
 void def();
 
 void toClipboard(const std::string &s);
+
+int power(int x, int y);
 
 //void intError();
 
