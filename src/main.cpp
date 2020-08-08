@@ -1,13 +1,15 @@
 // Copyright (C) 2018-2020  DarXe
 
+#define q(var) std::cout<<#var<<"="<<var<<"\n";
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include <cmath>
 #include <conio.h>
 #include <windows.h>
 #include <vector>
+#include "ver.cpp"
 #include "var.hpp"
-#define q(var) cout<<#var<<"="<<var<<std::endl
 #include "patch.cpp"
 bool liveChat(int &wyswietlaneWiersze);
 void wersja();

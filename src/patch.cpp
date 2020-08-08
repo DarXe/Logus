@@ -1,14 +1,14 @@
 // Copyright (C) 2018-2020  DarXe
 //#include "..\patch.hpp"
 
-int getVer()
+std::string getVer()
 {
 	std::fstream file;
 	file.open("logus.ini");
 		for(int i(0); i<6; i++) getline(file,s_temp);
-		file>>s_temp>>temp;
+		file>>s_temp>>tempVer;
 	file.close();
-	return temp;
+	return tempVer;
 }
 
 void zapis(bool showInfo = true)
@@ -69,11 +69,10 @@ void zapis(bool showInfo = true)
 
 void odczyt() //re read
 {	
-	int temp;
 	std::fstream file;
 	file.open("logus.ini");
 		for(int i(0); i<6; i++) getline(file,s_temp);
-		file>>s_temp>>temp;
+		file>>s_temp>>tempVer;
 		file>>s_temp>>mtasa;
 		file>>s_temp>>ang;
 		file>>s_temp>>nick;
@@ -124,7 +123,7 @@ void patch() //pat
 	std::fstream file;
 	file.open("logus.ini");
 		for(int i(0); i<6; i++) getline(file,s_temp);
-		file>>s_temp>>temp;
+		file>>s_temp>>tempVer;
 		file>>s_temp>>mtasa;
 		file>>s_temp>>ang;
 		file>>s_temp>>nick;
@@ -165,8 +164,8 @@ void patch() //pat
 			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
-		engLang?std::cout<<"(INFO) Settings loaded. Succesfully updated do "<<ver<<"."<<std::endl:
-		std::cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<"."<<std::endl;
+		engLang?std::cout<<"(INFO) Settings loaded. Succesfully updated do "<<ver<<std::endl:
+		std::cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<std::endl;
 	file.close();
 	zapis(0);
 }

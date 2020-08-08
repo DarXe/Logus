@@ -397,7 +397,7 @@ void lottoLogusStats(std::vector <std::string> &nicknames)
 
         float srednia; float Msrednia=0; float msrednia=1000;
         float srednia2; float Msrednia2=0; float msrednia2=1000;
-        clock_t t = clock();
+        t = clock();
         int count = 10000;
 
         while(licznik<=count)

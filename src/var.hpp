@@ -5,8 +5,9 @@
 
 //var (ZMIENNE)
 //logus.ini
+std::string tempVer;
 std::string mtasa = "185.62.189.174:22003"; //ip server
-const int ver = 200807; //version variable, not editable //zmienna wersji, nie wolno edytować
+std::string ver = genVer(); //version variable, not editable //zmienna wersji, nie wolno edytować
 int dzwiekGlowny = 1777; //sound message //dźwięk komunikatów
 bool fLockTeam = 0; //lock beep(TEAM)
 bool fLockPW = 0; //lock beep priv message
@@ -58,5 +59,6 @@ bool isTimer = 0; //TIMER aux var //pomocnicza zmienna - czy timer ma odliczac
 bool isCzas = 0; //TIMER aux var //pomocnicza zmienna - czas po zaladowaniu, odliczanie
 int avg = 0; //courses calculator - average //średnia kursów
 bool timestamps = 0; //show timestamps in LiveChat //pokaż date obok logów w LiveChat
+clock_t t; // clock to check code speed
 
 #endif

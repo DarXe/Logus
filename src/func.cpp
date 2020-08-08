@@ -1,7 +1,5 @@
 // Copyright (C) 2018-2020  DarXe
 
-#include <cmath>
-
 //func
 //(team) [pts]nick
 void serverConnect();
