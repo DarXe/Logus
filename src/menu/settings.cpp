@@ -205,8 +205,8 @@ void settings()
             }
             case '0':
             {
-                grade = (engLang?cfgInputInt(0, 1,  "Enter new pay wage", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 50", 0, 50):
-                cfgInputInt(0, 1,  "Podaj nowy procent wypłaty", "Podaj ilość:", "Błąd. Podano błędną wartość", "Min 0, Max 50", 0, 50));
+                grade = (engLang?cfgInputInt(0, 1,  "Enter new pay wage", "Enter amount:", "Error. Entered wrong value", "Min 50, Max 100", 50, 100):
+                cfgInputInt(0, 1,  "Podaj nowy procent wypłaty", "Podaj ilość:", "Błąd. Podano błędną wartość", "Min 50, Max 100", 50, 100));
                 grade /= 100;
                 cls();
                 break;
