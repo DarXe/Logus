@@ -5,7 +5,7 @@ void settings()
     while(true) {
         if (engLang) {
             SetConsoleTextAttribute(h, 10);
-            std::cout<<" _________________________Settings - LiveChat_________________________\n";
+            std::cout<<" __________________________Settings - Logus___________________________\n";
             SetConsoleTextAttribute(h, 7);
             std::cout<<" [r] Reset settings to default\n";
             std::cout<<" [a] Language on PTS: "<<((ang)?"ENG":"PL")<<"\n";
@@ -41,7 +41,7 @@ void settings()
             std::cout<<"                         [ESC] Return & Save                          \n";
         } else {
             SetConsoleTextAttribute(h, 10);
-            std::cout<<" ________________________Ustawienia - LiveChat________________________\n";
+            std::cout<<" _________________________Ustawienia - Logus__________________________\n";
             SetConsoleTextAttribute(h, 7);
             std::cout<<" [r] Przywróć ustawienia domyślne\n";
             std::cout<<" [a] Język na PTS: "<<((ang)?"ENG":"PL")<<"\n";
