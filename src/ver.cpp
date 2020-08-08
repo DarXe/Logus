@@ -2,7 +2,6 @@
 
 std::string genVer()
 {
-    #ifndef dbg
     // __DATE__
     // Aug  7 2020
     // 01234567890
@@ -49,9 +48,10 @@ std::string genVer()
     tempSeconds += stoi(tempTime); //convert to int
     tempSeconds /= 60; //edit here if needed
     seconds = std::to_string(tempSeconds); //convert int to string
-
-    return year + month + day + "." + seconds;
+    
+    #ifndef dbg
+        return year + month + day + "." + seconds;
     #else
-    return "2137";
+        return year + month + day + ".dbg";
     #endif
 }
