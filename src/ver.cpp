@@ -36,7 +36,7 @@ std::string genVer()
     if(cDate.find("Dec") != std::string::npos) month = "12";
 
     // day
-    if(cDate[4] = ' ') day = "0" + (t1 = cDate[5]);
+    if(cDate[4] == ' ') day = "0" + (t1 = cDate[5]);
     else day = (t1 = cDate[4]) + (t2 = cDate[5]);
 
     // __TIME__
