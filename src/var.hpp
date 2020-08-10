@@ -5,7 +5,6 @@
 
 //var (ZMIENNE)
 //logus.ini
-std::string tempVer;
 std::string mtasa = "185.62.189.174:22003"; //ip server
 std::string ver = genVer(); //version variable, not editable //zmienna wersji, nie wolno edytować
 int dzwiekGlowny = 1777; //sound message //dźwięk komunikatów

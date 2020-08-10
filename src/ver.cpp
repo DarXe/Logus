@@ -1,5 +1,8 @@
 // Copyright (C) 2020  Niventill
 
+std::string tempVer; //variable needed for patch()
+std::string relVer; // "20.08" format instead of "2008.2232"
+
 std::string genVer()
 {
     // __DATE__
@@ -48,6 +51,8 @@ std::string genVer()
     tempSeconds += stoi(tempTime); //convert to int
     tempSeconds /= 60; //edit here if needed
     seconds = std::to_string(tempSeconds); //convert int to string
+
+    relVer = year + "." + month;
     
     #ifndef dbg
         return year + month + day + "." + seconds;
