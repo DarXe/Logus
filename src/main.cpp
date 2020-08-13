@@ -19,7 +19,6 @@ void wersja();
 #include "func.cpp" //functions
 #include "proc.cpp" //procedures
 
-#include "menu\settings.cpp"
 #include "menu\menu.cpp"
 
 int main(int argc, char** argv) //maa main

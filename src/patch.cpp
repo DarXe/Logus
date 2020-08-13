@@ -22,8 +22,8 @@ void zapis(bool showInfo = true)
 		file<<"//0 - fałsz, 1 - prawda, kolory: 1-9, A-F"<<std::endl;
 		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
 		file<<"wersja(nie_edytować): "<<ver<<"\n";
-		file<<"IP_serwera_MTA: "<<mtasa<<"\n";
-		file<<"język_ang_na_pts(0/1): "<<ang<<"\n";
+		file<<"IP_serwera_MTA: "<<serverIP<<"\n";
+		file<<"język_ang_na_pts(0/1): "<<ptsLang<<"\n";
 		file<<"nick_na_pts: "<<nick<<"\n";
 		file<<"dzwięk_główny: "<<dzwiekGlowny<<"\n";
 		file<<"kolor_główny: "<<kolorGlowny<<"\n";
@@ -73,8 +73,8 @@ void odczyt() //re read
 	file.open("logus.ini");
 		for(int i(0); i<6; i++) getline(file,s_temp);
 		file>>s_temp>>tempVer;
-		file>>s_temp>>mtasa;
-		file>>s_temp>>ang;
+		file>>s_temp>>serverIP;
+		file>>s_temp>>ptsLang;
 		file>>s_temp>>nick;
 		file>>s_temp>>dzwiekGlowny;
 		file>>s_temp>>kolorGlowny;
@@ -124,8 +124,8 @@ void patch() //pat
 	file.open("logus.ini");
 		for(int i(0); i<6; i++) getline(file,s_temp);
 		file>>s_temp>>tempVer;
-		file>>s_temp>>mtasa;
-		file>>s_temp>>ang;
+		file>>s_temp>>serverIP;
+		file>>s_temp>>ptsLang;
 		file>>s_temp>>nick;
 		file>>s_temp>>dzwiekGlowny;
 		file>>s_temp>>kolorGlowny;
@@ -182,13 +182,13 @@ void readDefault()
 	kolorGlowny = "A";
 	wyswietlaneWiersze = 15;
 	refresh = 300;
-	ang = 0;
+	ptsLang = 0;
 	interval = 50;
 	nick = "PodajSwojNick";
 	dynamicRefresh = 0;
 	czas = 90;
 	random = 0;
-	mtasa = "185.62.189.174:22003";
+	serverIP = "185.62.189.174:22003";
 	money = 0;
 	courses = 0;
 	fastStart = 0;

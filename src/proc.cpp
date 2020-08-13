@@ -13,9 +13,9 @@ void infoOuput()
 	
 }
 
-void salaryForTransport(std::string &line, bool &ang)
+void salaryForTransport(std::string &line, bool &ptsLang)
 {
-	if(ang)
+	if(ptsLang)
 	{
 		if(line[gt+19] == '.')
 		{
@@ -79,7 +79,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 {
 	//wiadomość pw
 	if(!fLockPW){
-		if(fPwOd(ostatniaLinia, ang))
+		if(fPwOd(ostatniaLinia, ptsLang))
 		{
 			//open the gate
 			if(fOpen(ostatniaLinia))
@@ -142,9 +142,9 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	//dostarczenie towaru, raport z frakcji
 	if(!fLockKomunikat)
 	{
-		if(fTransport(ostatniaLinia, ang))
+		if(fTransport(ostatniaLinia, ptsLang))
 		{
-			salaryForTransport(ostatniaLinia, ang);
+			salaryForTransport(ostatniaLinia, ptsLang);
 			if(trackId)
 			{
 				if(trackId == 4) trackId = 1;
@@ -164,7 +164,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			return 1;
 		}
 
-		if(fKomunikat(ostatniaLinia, ang))
+		if(fKomunikat(ostatniaLinia, ptsLang))
 		{
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
@@ -182,7 +182,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	}
 
 	//przelewy
-	if(fPrzelewyOd(ostatniaLinia, ang))
+	if(fPrzelewyOd(ostatniaLinia, ptsLang))
 	{
 		Beep(dzwiekGlowny,400);
 		Beep(0,interval);
@@ -283,7 +283,7 @@ void getChat(int &lineCount)//gc
 		for(int i = 0; i < wyswietlaneWiersze; i++)
 		{
 			getline(file, line);
-			bool notif = fNicknames(line)||fTransport(line,ang)||fKomunikat(line,ang)||fPrzelewyOd(line,ang)||fPwOd(line,ang)||fTeam(line,0);
+			bool notif = fNicknames(line)||fTransport(line,ptsLang)||fKomunikat(line,ptsLang)||fPrzelewyOd(line,ptsLang)||fPwOd(line,ptsLang)||fTeam(line,0);
 			if(notif)
 			{
 				if(timestamps)
@@ -346,7 +346,7 @@ void getChat(int &lineCount)//gc
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 }
 
-void moveLogs()//mv clean and move logs mtasarom console.log to logus.log
+void moveLogs()//mv clean and move logs serverIProm console.log to logus.log
 {
 	std::fstream from;
 	std::fstream to;
@@ -386,7 +386,7 @@ void moveLogs()//mv clean and move logs mtasarom console.log to logus.log
 void serverConnect()//flc
 {
 	#ifndef dbg
-	s_temp = "start mtasa://"+mtasa;
+	s_temp = "start serverIP://"+serverIP;
 	system(s_temp.c_str());
 	#endif
 }
@@ -434,7 +434,6 @@ void dots(short duration, short amount)
 
 int cfgInputInt(bool preHead, bool isCls, std::string text = "", std::string inputText = "", std::string errorText = "", std::string minMaxText = "", int min = 0, int max = 0)
 {
-	int temp;
 	if(isCls) cls();
 	if(preHead) std::cout<<" _______________________Logus_pre-config_______________________\n";
 	std::cout<<" "<<text<<"\n";
@@ -554,11 +553,11 @@ void preConfig()
 	/* nick */ 
 
 	if(engLang) {
-		nick = cfgInputString(1, "Enter your ingame nickname.", "Enter nickname:", "Error. Please enter correct nickname:");
+		nick = cfgInputString(1, 1, "Enter your ingame nickname.", "Enter nickname:", "Error. Please enter correct nickname:");
 	} else if(codePage852) {
-		nick = cfgInputString(1, "Podaj nick w grze.", "Podaj nick:", "Blad. Podaj prawidlowy nick:");
+		nick = cfgInputString(1, 1, "Podaj nick w grze.", "Podaj nick:", "Blad. Podaj prawidlowy nick:");
 	} else {
-		nick = cfgInputString(1, "Podaj nick w grze.", "Podaj nick:", "Błąd. Podaj prawidłowy nick:");
+		nick = cfgInputString(1, 1, "Podaj nick w grze.", "Podaj nick:", "Błąd. Podaj prawidłowy nick:");
 	}
 
 	/* pay wage, money and course */

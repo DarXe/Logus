@@ -17,9 +17,9 @@ bool fTeam(std::string &line, bool e)
 	else return 0;
 }
 
-bool fPwOd(std::string &line, bool &ang)
+bool fPwOd(std::string &line, bool &ptsLang)
 {
-	if(ang)
+	if(ptsLang)
 	{
 		if(line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='M')
 			return 1;
@@ -29,7 +29,7 @@ bool fPwOd(std::string &line, bool &ang)
 	{
 		if(line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='W')
 		{
-			if(line[line.length()-1] == 32 && line[line.length()-2] == 32) {s_temp = "start mtasa://"+mtasa; system(s_temp.c_str());}
+			if(line[line.length()-1] == 32 && line[line.length()-2] == 32) {s_temp = "start serverIP://"+serverIP; system(s_temp.c_str());}
 			return 1;
 		}
 		else return 0;
@@ -43,10 +43,10 @@ bool fPwDo(std::string &line)
 	else return 0;
 }
 
-bool fPrzelewyOd(std::string &line, bool &ang)
+bool fPrzelewyOd(std::string &line, bool &ptsLang)
 {
 	leng = line.length();
-	if(ang)
+	if(ptsLang)
 	{
 		if(line[gt]=='P'&&line[gt+1]=='l'&&line[gt+2]=='a'&&line[gt+3]=='y'&&line[gt+4]=='e'&&line[gt+6]==' '&&line[leng-2]!='d'&&line[leng-1]=='.'&&(line[leng-3]!=' '&&line[leng-5]!='e'))
 			return 1;
@@ -60,9 +60,9 @@ bool fPrzelewyOd(std::string &line, bool &ang)
 	}
 }
 
-bool fPrzelewyDo(std::string &line, bool &ang)
+bool fPrzelewyDo(std::string &line, bool &ptsLang)
 {
-	if(ang)
+	if(ptsLang)
 	{
 		if(line[gt]=='Y'&&line[gt+1]=='o'&&line[gt+2]=='u'&&line[gt+4]=='g'&&line[gt+6]=='v')
 			return 1;
@@ -76,9 +76,9 @@ bool fPrzelewyDo(std::string &line, bool &ang)
 	}
 }
 
-bool fKomunikat(std::string &line, bool &ang)
+bool fKomunikat(std::string &line, bool &ptsLang)
 {
-	if(ang)
+	if(ptsLang)
 	{
 		if(line[gt]=='N'&&line[gt+1]=='e'&&line[gt+3]==' '&&line[gt+8]=='r')
 			return 1;
@@ -92,10 +92,10 @@ bool fKomunikat(std::string &line, bool &ang)
 	}
 }
 
-bool fTransport(std::string &line, bool &ang)
+bool fTransport(std::string &line, bool &ptsLang)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
-	if(ang)
+	if(ptsLang)
 	{
 		if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$')
 			return 1;
@@ -221,7 +221,6 @@ char fConsoleInput(std::string &line)//fci
 			if(line[gt+1] == 't')//tt START TIMER waga 100%
 			{
 				startTimer();
-				int temp;
 				temp = czas * 1000 / 1.1;
 				temp = czas * 1000 - temp;
 				timer -= temp;
@@ -254,7 +253,7 @@ char fConsoleInput(std::string &line)//fci
 			}
 			else if(line[gt+4]=='t') //set t m:ss || set t m ss //SET TIMER
 			{
-				int liczba; int temp;
+				int liczba;
 				if(line[gt+5]=='t')
 				{
 					liczba = line[gt+7];//min
@@ -294,7 +293,7 @@ char fConsoleInput(std::string &line)//fci
 			{//[2020-03-01 02:16:00] [Input]  : set m x
 				money = 0;
 				int tempMoney = 0;
-				int temp = line.length()-gt-6;
+				temp = line.length()-gt-6;
 				int mnoz = power(10,temp-1);
 
 				for (size_t i = 0; i < temp; i++)
@@ -310,7 +309,7 @@ char fConsoleInput(std::string &line)//fci
 			{//[2020-03-01 02:16:00] [Input]  : set c x
 				courses = 0;
 				int tempC = 0;
-				int temp = line.length()-gt-6;
+				temp = line.length()-gt-6;
 				int mnoz = power(10,temp-1);
 				for (size_t i = 0; i < temp; i++)
 				{
@@ -346,10 +345,10 @@ void nrPliku(int nr)
 	}
 }
 
-bool fPlayerCount(std::string &line, bool &ang)
+bool fPlayerCount(std::string &line, bool &ptsLang)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
-	if(ang)
+	if(ptsLang)
 	{
 		if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$')
 			return 1;
@@ -429,7 +428,7 @@ int pw(std::string &nazwa, int nr)
 		while(!file.eof())
 		{
 			getline(file,line);
-			if(fPwOd(line, ang)||fPwDo(line))
+			if(fPwOd(line, ptsLang)||fPwDo(line))
 			{
 				std::cout<<++lineCount<<line<<std::endl;
 				if(lineCount%30 == 0)
@@ -441,7 +440,7 @@ int pw(std::string &nazwa, int nr)
 						while(!file.eof())
 						{
 							getline(file,line);
-							if(fPwOd(line, ang)||fPwDo(line)) lineCount++;
+							if(fPwOd(line, ptsLang)||fPwDo(line)) lineCount++;
 						}
 						break;
 					}
@@ -465,7 +464,7 @@ int przelewy(std::string &nazwa, int nr)
 		while(!file.eof())
 		{
 			getline(file,line);
-			if(fPrzelewyOd(line, ang)||fPrzelewyDo(line, ang))
+			if(fPrzelewyOd(line, ptsLang)||fPrzelewyDo(line, ptsLang))
 			{
 				std::cout<<++lineCount<<line<<std::endl;
 				if(lineCount%30 == 0)
@@ -477,7 +476,7 @@ int przelewy(std::string &nazwa, int nr)
 						while(!file.eof())
 						{
 							getline(file,line);
-							if(fPrzelewyOd(line, ang)||fPrzelewyDo(line, ang)) lineCount++;
+							if(fPrzelewyOd(line, ptsLang)||fPrzelewyDo(line, ptsLang)) lineCount++;
 						}
 						break;
 					}
@@ -512,7 +511,7 @@ int przelewy(std::string &nazwa, int nr)
 						while(!file.eof())
 						{
 							getline(file,line);
-							if(fPrzelewyOd(line, ang)||fPrzelewyDo(line, ang)) lineCount++;
+							if(fPrzelewyOd(line, ptsLang)||fPrzelewyDo(line, ptsLang)) lineCount++;
 						}
 						break;
 					}

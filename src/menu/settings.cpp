@@ -8,7 +8,7 @@ void settings()
             std::cout<<" __________________________Settings - Logus___________________________\n";
             SetConsoleTextAttribute(h, 7);
             std::cout<<" [r] Reset settings to default\n";
-            std::cout<<" [a] Language on PTS: "<<((ang)?"ENG":"PL")<<"\n";
+            std::cout<<" [a] Language on PTS: "<<((ptsLang)?"ENG":"PL")<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [p] Notify on private message: "<<((!fLockPW)?"YES":"NO")<<"\n";
             std::cout<<" [t] Notify on team message: "<<((!fLockTeam)?"YES":"NO")<<"\n";
@@ -44,7 +44,7 @@ void settings()
             std::cout<<" _________________________Ustawienia - Logus__________________________\n";
             SetConsoleTextAttribute(h, 7);
             std::cout<<" [r] Przywróć ustawienia domyślne\n";
-            std::cout<<" [a] Język na PTS: "<<((ang)?"ENG":"PL")<<"\n";
+            std::cout<<" [a] Język na PTS: "<<((ptsLang)?"ENG":"PL")<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [p] Dźwięk wiadomości PW: "<<((!fLockPW)?"TAK":"NIE")<<"\n";
             std::cout<<" [t] Dźwięk wiadomości teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<"\n";
@@ -99,7 +99,7 @@ void settings()
             case 'a':
             {
                 cls();
-                ang = (ang)?0:1;
+                ptsLang = (ptsLang)?0:1;
                 break;
             }
             case 'p':

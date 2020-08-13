@@ -5,7 +5,7 @@
 
 //var (ZMIENNE)
 //logus.ini
-std::string mtasa = "185.62.189.174:22003"; //ip server
+std::string serverIP = "185.62.189.174:22003"; //ip server
 std::string ver = genVer(); //version variable, not editable //zmienna wersji, nie wolno edytować
 int dzwiekGlowny = 1777; //sound message //dźwięk komunikatów
 bool fLockTeam = 0; //lock beep(TEAM)
@@ -17,7 +17,7 @@ bool chatSound = 0; //the sound of any chat message //dźwięk każdej wiadomoś
 std::string kolorGlowny = "A"; //main color //kolor główny(przy wyszukiwaniu logów)
 int wyswietlaneWiersze = 15; //displayed rows in LiveChat
 int refresh = 300; //refresh<ms> in LiveChat
-bool ang = 0; //ANG version - flag on PTS
+bool ptsLang = 0; //ANG version - flag on PTS
 int interval = 50; //time interval between sounds //odstęp czasowy(ms) między kolejnymi dźwiękami
 std::string nick = "PodajSwojNick"; //nickname on MTA
 bool dynamicRefresh = 0; //dynamic refresh in LiveChat //dynamiczne odświeżanie w LC

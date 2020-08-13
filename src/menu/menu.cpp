@@ -1,5 +1,7 @@
 // Copyright (C) 2018-2020  DarXe, Niventill
 
+#include "settings.cpp"
+
 int menu() //con
 {
 	int lineCount = 0;
