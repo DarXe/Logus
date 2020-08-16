@@ -1,5 +1,6 @@
 // Copyright (C) 2018-2020  DarXe, Niventill
 
+#include "livechat.cpp"
 #include "settings.cpp"
 
 int menu() //con

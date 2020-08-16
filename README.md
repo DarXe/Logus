@@ -10,10 +10,12 @@ Logus - konsolowy program do przeglądania logów, czat z serwera w konsoli oraz
 > Pobierz Nightly https://github.com/DarXe/Logus/raw/experimental/Logus.exe
 
 # Poradniki
-> Instalacja programu https://github.com/DarXe/Logus/issues/6
+> Wiki Logusa https://github.com/DarXe/Logus/wiki
 
-> MENU https://github.com/DarXe/Logus/issues/5
+> Instalacja https://github.com/DarXe/Logus/wiki/Instalacja
 
-> LiveChat https://github.com/DarXe/Logus/issues/3
+> Menu https://github.com/DarXe/Logus/wiki/Menu-g%C5%82%C3%B3wne
 
-> Ustawienia https://github.com/DarXe/Logus/issues/4
+> LiveChat https://github.com/DarXe/Logus/wiki/LiveChat
+
+> Ustawienia https://github.com/DarXe/Logus/wiki/Ustawienia
