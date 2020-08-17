@@ -2,36 +2,8 @@
 
 
 void serverConnect();
-
-void startTimer(short getSeconds = 0)
-{
-	Beep(dzwiekGlowny, 100);
-	delay = clock();
-	if(getSeconds)
-	{
-		timer = getSeconds*1000;
-	}
-	else
-	{
-		timer = czas*1000;
-		if(random) timer += 300000; else timer += 360000;
-		isCzas = 1;
-	}
-	isTimer = 1;
-	pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
-	SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-	std::cout<<" Timer 0:00  [s]Stop Timer   ";
-}
-
-void stopTimer()
-{
-	Beep(dzwiekGlowny, 500);
-	isTimer = 0;
-	isCzas = 0;
-	timer = 0;
-	pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
-	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-}
+void startTimer(short getSeconds = 0);
+void stopTimer();
 
 bool fTeam(std::string &line, bool e)
 {
