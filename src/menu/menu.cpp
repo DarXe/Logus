@@ -1,6 +1,6 @@
 // Copyright (C) 2018-2020  DarXe, Niventill
 
-#include "..\addons\dealer.cpp"
+
 #include "livechat.cpp"
 #include "settings.cpp"
 
