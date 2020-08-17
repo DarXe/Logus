@@ -28,10 +28,13 @@ int money = 0; //courses calculator - money for delivered courses //pieniądze z
 int courses = 0; //courses calculator - number of courses //ilość kursów
 short fastStart = 0; //start Logus + LiveChat with MTA or skipping the version info
 bool codePage852 = 0; //false:UTF-8 lub true:852 (jesli wystepuja krytyczne bugi)
-short trackId = 0;
-int autoMoveLogs = 0;
-float grade = 0;
+short trackId = 0; //ap-ls ls-ap itp itd
+int autoMoveLogs = 0; //amount of logs to move
+float grade = 0; //pay grade
 std::string mess; // used in ifs to determine language
+float base_dealerBuy = 0.40; //base price for skup pojazdu lol
+float base_dealerSellCar = 0.65; //base price for sprzedaz pojazdu osobowego lol
+float base_dealerSellTransport = 0.80; //base price for sprzedaz pojazdu dostawczego lol
 
 const short gt = 33; //auxiliary variable
 int leng = 0; //length

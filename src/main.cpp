@@ -13,7 +13,7 @@
 #include "patch.cpp"
 bool liveChat(int &wyswietlaneWiersze);
 #include "logus.cpp"
-#include "lotto\randomLogus.cpp"
+#include "addons\randomLogus.cpp"
 void wersja();
 #include "menu\livechat_func.cpp"
 #include "menu\livechat_proc.cpp"
@@ -158,7 +158,7 @@ void wersja()
 	std::cout<<" * Niebawem zrobione będzie pełnoprawne wsparcie dla Win 7 (z pomocą conEmu)\n";
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
-	if(getch() == 27) return; cls();
+	if(getch() == 27)  cls(); return;
 	SetConsoleTextAttribute(h, 4);
 	std::cout<<" CZERWIEC-LIPIEC"<<std::endl;
 
@@ -176,7 +176,7 @@ void wersja()
 	std::cout<<" 207_31 Wydanie wersji 20.7"<<std::endl;
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
-	if(getch() == 27) return; cls();
+	if(getch() == 27)  cls(); return;
 	SetConsoleTextAttribute(h, 4);
 	std::cout<<" MAJ"<<std::endl;
 
@@ -202,7 +202,7 @@ void wersja()
 	std::cout<<" 205_11.2 Dodano prekonfigurację w przypadku braku pliku logus.ini"<<std::endl;
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
-	if(getch() == 27) return; cls();
+	if(getch() == 27)  cls(); return;
 	SetConsoleTextAttribute(h, 4);
 	std::cout<<" MARZEC"<<std::endl;
 
@@ -219,7 +219,7 @@ void wersja()
 	std::cout<<" * Dodano też komendę na ustawienie ilości kursów - set c KURSY"<<std::endl;
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
-	if(getch() == 27) return; cls();
+	if(getch() == 27)  cls(); return;
 	SetConsoleTextAttribute(h, 4);
 	std::cout<<" ZMIANY - początek roku"<<std::endl;
 	SetConsoleTextAttribute(h, 6);

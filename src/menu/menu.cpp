@@ -1,5 +1,6 @@
 // Copyright (C) 2018-2020  DarXe, Niventill
 
+#include "..\addons\dealer.cpp"
 #include "livechat.cpp"
 #include "settings.cpp"
 
@@ -37,6 +38,7 @@ int menu() //con
 			std::cout<<" [n] Amount of lines in all .log files\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [w] Pingtest - check connection to the internet\n";
+			std::cout<<" [k] Car Dealer - purchase and selling prices\n";
 			std::cout<<" [j] Language - change to Polski\n";
 			std::cout<<" [9] Change sound (beep) to random\n";
 			std::cout<<" [0] Codepage (legacy): "<<((codePage852)?"852":"UTF-8")<<std::endl;
@@ -70,6 +72,7 @@ int menu() //con
 			std::cout<<" [n] Ilość wierszy w plikach\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet\n";
+			std::cout<<" [k] Komis - ceny skupu i sprzedaży\n";
 			std::cout<<" [j] Język - zmień na English\n";
 			std::cout<<" [9] Zmiana dźwięku na losowy\n";
 			std::cout<<" [0] Kodowanie (legacy): "<<((codePage852)?"852":"UTF-8")<<std::endl;
@@ -321,6 +324,12 @@ int menu() //con
 				if(kbhit()) {getch(); break;}
 			}
 			cls();
+			break;
+		}
+		case 'k':
+		{
+			cls();
+			dealer();
 			break;
 		}
 		case 'i':

@@ -46,6 +46,9 @@ void zapis(bool showInfo = true)
 		file<<"trasa: "<<trackId<<"\n";
 		file<<"automatyczne_przenoszenie_logów: "<<autoMoveLogs<<"\n";
 		file<<"ranga(50%=0.5): "<<grade<<"\n";
+		file<<"komis_stawka_sprzedaż_osobówki: "<<base_dealerSellCar<<"\n";
+		file<<"komis_stawka_sprzedaż_dostawczaka: "<<base_dealerSellTransport<<"\n";
+		file<<"komis_stawka_skup: "<<base_dealerBuy<<"\n";
 		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
 		file<<"//W tym miejscu znajduje sie lista zapisanych graczy."<<std::endl;
 		file<<"//Aby poprawnie dodać gracza przez plik należy ustalić też ilość graczy."<<std::endl;
@@ -67,7 +70,7 @@ void zapis(bool showInfo = true)
 	std::cout<<"(INFO) Ustawienia zostaly zapisane.\n";
 }
 
-void odczyt() //re read
+void odczyt(bool showInfo = true) //re read
 {	
 	std::fstream file;
 	file.open("logus.ini");
@@ -97,6 +100,9 @@ void odczyt() //re read
 		file>>s_temp>>trackId;
 		file>>s_temp>>autoMoveLogs;
 		file>>s_temp>>grade;
+		file>>s_temp>>base_dealerSellCar;
+		file>>s_temp>>base_dealerSellTransport;
+		file>>s_temp>>base_dealerBuy;
 	file.close();
 
 	file.open("logus.ini");
@@ -113,61 +119,18 @@ void odczyt() //re read
 			file>>temp>>s_temp;
 			nicknames.push_back(s_temp);
 		}
-		engLang?std::cout<<"(INFO) Settings has been loaded.":
-		std::cout<<"(INFO) Wczytano ustawienia.\n";
+		if(showInfo) {
+			engLang?std::cout<<"(INFO) Settings has been loaded.":
+			std::cout<<"(INFO) Wczytano ustawienia.\n";
+		}
 	file.close();
 }
 
 void patch() //pat
 {
-	std::fstream file;
-	file.open("logus.ini");
-		for(int i(0); i<6; i++) getline(file,s_temp);
-		file>>s_temp>>tempVer;
-		file>>s_temp>>serverIP;
-		file>>s_temp>>ptsLang;
-		file>>s_temp>>nick;
-		file>>s_temp>>dzwiekGlowny;
-		file>>s_temp>>kolorGlowny;
-		file>>s_temp>>engLang;
-		file>>s_temp>>wyswietlaneWiersze;
-		file>>s_temp>>refresh;
-		file>>s_temp>>interval;
-		file>>s_temp>>fLockTeam;
-		file>>s_temp>>fLockPW;
-		file>>s_temp>>fLockKomunikat;
-		file>>s_temp>>fLockNick;
-		file>>s_temp>>chatSound;
-		file>>s_temp>>dynamicRefresh;
-		file>>s_temp>>czas;
-		file>>s_temp>>random;
-		file>>s_temp>>money;
-		file>>s_temp>>courses;
-		file>>s_temp>>fastStart;
-		file>>s_temp>>codePage852;
-		file>>s_temp>>trackId;
-		file>>s_temp>>autoMoveLogs;
-		file>>s_temp>>grade;
-	file.close();
-
-	file.open("logus.ini");
-		do 
-		{
-			getline(file,s_temp);
-		} while (s_temp[0]!='L');
-		
-		file>>s_temp;
-		file>>leng;
-		nicknames.clear();
-		for(int i = 0; i < leng; i++)
-		{
-			file>>temp>>s_temp;
-			nicknames.push_back(s_temp);
-		}
-		engLang?std::cout<<"(INFO) Settings loaded. Succesfully updated do "<<ver<<std::endl:
-		std::cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<std::endl;
-	file.close();
-	zapis(0);
+	odczyt(0);
+	engLang?std::cout<<"(INFO) Settings loaded. Succesfully updated do "<<ver<<std::endl:
+	std::cout<<"(INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<std::endl;
 }
 
 void readDefault()
@@ -196,4 +159,7 @@ void readDefault()
 	trackId = 0;
 	autoMoveLogs = 0;
 	grade = 0.5;
+	base_dealerBuy = 0.4;
+	base_dealerSellCar = 0.65;
+	base_dealerSellTransport = 0.8;
 }
