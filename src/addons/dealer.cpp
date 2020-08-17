@@ -170,6 +170,7 @@ void dealerInfo(bool isBuy)
 				searchedVehicle[i] = tolower(searchedVehicle[i]);
 			i++;
 		}
+		isTransport = 0;
 		cars.open("cars.txt", std::ios::in);
 		while(!cars.eof())
 		{
@@ -181,7 +182,8 @@ void dealerInfo(bool isBuy)
 					vehicle[i] = tolower(vehicle[i]);
 				i++;
 			}
-			if((vehicle.find(searchedVehicle) != std::string::npos))
+			if(vehicle == "dostawcze") isTransport = 1;
+			if(vehicle.find(searchedVehicle) != std::string::npos)
 			{
 				vehicle[0] = toupper(vehicle[0]);
 				if(isBuy)
@@ -212,7 +214,6 @@ void dealerInfo(bool isBuy)
 				}
 
 			}
-			if(vehicle == "Dostawcze") isTransport = 1;
 		}
 		cars.close();
 	}

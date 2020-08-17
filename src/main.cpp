@@ -13,7 +13,6 @@
 #include "patch.cpp"
 bool liveChat(int &wyswietlaneWiersze);
 #include "logus.cpp"
-#include "addons\dealer.cpp"
 #include "addons\randomLogus.cpp"
 void wersja();
 #include "menu\livechat_func.cpp"
@@ -21,6 +20,7 @@ void wersja();
 #include "func.cpp" //functions
 #include "proc.cpp" //procedures
 
+#include "addons\dealer.cpp"
 #include "menu\menu.cpp"
 
 int main(int argc, char** argv) //maa main
