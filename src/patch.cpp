@@ -49,6 +49,7 @@ void zapis(bool showInfo = true)
 		file<<"komis_stawka_sprzedaż_osobówki: "<<base_dealerSellCar<<"\n";
 		file<<"komis_stawka_sprzedaż_dostawczaka: "<<base_dealerSellTransport<<"\n";
 		file<<"komis_stawka_skup: "<<base_dealerBuy<<"\n";
+		file<<"manualna_edycja_cars.txt: "<<dealerManual<<"\n";
 		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
 		file<<"//W tym miejscu znajduje sie lista zapisanych graczy."<<std::endl;
 		file<<"//Aby poprawnie dodać gracza przez plik należy ustalić też ilość graczy."<<std::endl;
@@ -103,6 +104,7 @@ void odczyt(bool showInfo = true) //re read
 		file>>s_temp>>base_dealerSellCar;
 		file>>s_temp>>base_dealerSellTransport;
 		file>>s_temp>>base_dealerBuy;
+		file>>s_temp>>dealerManual;
 	file.close();
 
 	file.open("logus.ini");
@@ -162,4 +164,5 @@ void readDefault()
 	base_dealerBuy = 0.4;
 	base_dealerSellCar = 0.65;
 	base_dealerSellTransport = 0.8;
+	dealerManual = 0;
 }

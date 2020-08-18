@@ -80,7 +80,7 @@ bool genDealerDatabase(std::string file = "cars.txt")
 	cars << "FCR-900          800000		  0 km/h\n";
 	cars << "PCJ-600          850000		  0 km/h\n";
 	cars << "Sanchez          700000		  0 km/h\n";
-	cars << "Dostawcze 00000000 00000000 00000000\n";
+	cars << "Dostawcze             0		  0	km/h\n";
 	cars << "Benson           200000		109 km/h\n";
 	cars << "Berkley          250000		121 km/h\n";
 	cars << "Boxville         150000		 96 km/h\n";
@@ -128,6 +128,11 @@ void databaseCheckout()
 	}
 	else
 	{
+		if (dealerManual)
+		{
+			std::cout << " MANUALNA EDYCJA BAZY DANYCH. POMIJANIE SPRAWDZANIA BAZY DANYCH!\n";
+			return;
+		}
 		f1.open("cars.txt", std::ios::in);
 		if (!genDealerDatabase("cars.tmp"))
 			std::cout << " BŁĄD PODCZAS PORÓWNYWANIA BAZY DANYCH!\n";
@@ -157,62 +162,62 @@ void dealerInfo(bool isBuy)
 	std::fstream cars;
 	int price, vmax, i = 0;
 	bool isTransport = 0;
-	while(true)
+	while (true)
 	{
 		cls();
-		std::cout<<" Podaj DOKŁADNĄ nazwę pojazdu: ";
+		std::cout << " Podaj DOKŁADNĄ nazwę pojazdu: ";
 		getline(std::cin, searchedVehicle);
-		while(i < searchedVehicle.length())
+		while (i < searchedVehicle.length())
 		{
-			if(isspace(searchedVehicle[i]))
+			if (isspace(searchedVehicle[i]))
 				searchedVehicle[i] = '_';
-			if(isupper(searchedVehicle[i]))
+			if (isupper(searchedVehicle[i]))
 				searchedVehicle[i] = tolower(searchedVehicle[i]);
 			i++;
 		}
 		isTransport = 0;
 		cars.open("cars.txt", std::ios::in);
-		while(!cars.eof())
+		while (!cars.eof())
 		{
-			cars>>vehicle>>price>>vmax>>kmph;
+			cars >> vehicle >> price >> vmax >> kmph;
 			i = 0;
-			while(i < vehicle.length())
+			while (i < vehicle.length())
 			{
-				if(isupper(vehicle[i]))
+				if (isupper(vehicle[i]))
 					vehicle[i] = tolower(vehicle[i]);
 				i++;
 			}
-			if(vehicle == "dostawcze") isTransport = 1;
-			if(vehicle.find(searchedVehicle) != std::string::npos)
+			if (vehicle == "dostawcze")
+				isTransport = 1;
+			if (vehicle.find(searchedVehicle) != std::string::npos)
 			{
 				vehicle[0] = toupper(vehicle[0]);
-				if(isBuy)
+				if (isBuy)
 				{
 					cls();
-					std::cout<<" Stawka bazowa: "<<base_dealerBuy*100<<"%, "<<vehicle<<", $"<<price*base_dealerBuy<<", "<<vmax<<" km/h\n";
-					std::cout<<" ESC - wyjście | Inny klawisz, wyszukaj ponownie\n";
+					std::cout << " Stawka bazowa: " << base_dealerBuy * 100 << "%, " << vehicle << ", $" << price * base_dealerBuy << ", " << vmax << " km/h\n";
+					std::cout << " ESC - wyjście | Inny klawisz, wyszukaj ponownie\n";
 				}
 				else
 				{
-					if(!isTransport)
+					if (!isTransport)
 					{
 						cls();
-						std::cout<<" Stawka bazowa: "<<base_dealerSellCar*100<<"%, "<<vehicle<<", $"<<price*base_dealerSellCar<<", "<<vmax<<" km/h\n";
-						std::cout<<" ESC - wyjście | Inny klawisz, wyszukaj ponownie\n";
+						std::cout << " Stawka bazowa: " << base_dealerSellCar * 100 << "%, " << vehicle << ", $" << price * base_dealerSellCar << ", " << vmax << " km/h\n";
+						std::cout << " ESC - wyjście | Inny klawisz, wyszukaj ponownie\n";
 					}
 					else
 					{
 						cls();
-						std::cout<<" Stawka bazowa: "<<base_dealerSellTransport*100<<"%, "<<vehicle<<", $"<<price*base_dealerSellTransport<<", "<<vmax<<" km/h\n";
-						std::cout<<" ESC - wyjście | Inny klawisz, wyszukaj ponownie\n";
+						std::cout << " Stawka bazowa: " << base_dealerSellTransport * 100 << "%, " << vehicle << ", $" << price * base_dealerSellTransport << ", " << vmax << " km/h\n";
+						std::cout << " ESC - wyjście | Inny klawisz, wyszukaj ponownie\n";
 					}
 				}
-				if(getch() == 27)
+				if (getch() == 27)
 				{
 					cls();
 					return;
 				}
-
 			}
 		}
 		cars.close();
@@ -224,13 +229,14 @@ void printDatabase()
 	std::string line;
 	std::fstream cars;
 	cars.open("cars.txt");
-	while(!cars.eof())
+	while (!cars.eof())
 	{
 		getline(cars, line);
-		std::cout<<line<<"\n";
+		std::cout << line << "\n";
 	}
-	std::cout<<"\nDowolny klawisz - kontynuuj\n"; getch(); cls();
-
+	std::cout << "\nDowolny klawisz - kontynuuj\n";
+	getch();
+	cls();
 }
 
 void dealer()
@@ -246,6 +252,8 @@ void dealer()
 		std::cout << " [2] (osobówka: " << base_dealerSellCar * 100 << "%, dostawczy: " << base_dealerSellTransport * 100 << "%) Sprzedaż z komisu - podaj dokładną nazwę pojazdu\n";
 		std::cout << " [3] Lista pojazdów\n";
 		std::cout << " [4] Ustaw stawkę bazową\n";
+		std::cout << " [0] Manualna edycja cars.txt: "; dealerManual ? std::cout << "TAK\n" : std::cout << "NIE\n";
+		std::cout << " [r] Reset bazy danych\n";
 		SetConsoleTextAttribute(h, 15);
 		std::cout << " __________________________________________________________________________________\n";
 		std::cout << "                                [ESC] Wyjście i zapis                              \n";
@@ -325,7 +333,26 @@ void dealer()
 				}
 			}
 		}
-		default: cls(); break;
+		case '0':
+		{
+			dealerManual = dealerManual ? 0 : 1;
+			cls();
+			zapis(0);
+			break;
+		}
+		case 'r':
+		{
+			cls();
+			std::cout << " CZY NA PEWNO CHCESZ ZRESETOWAĆ BAZĘ DANYCH? TEJ AKCJI NIE MOŻNA COFNĄĆ\n ESC = ANULUJ, INNY KLAWISZ = RESET\n";
+			if (getch() == 27)
+				break;
+			genDealerDatabase();
+			cls();
+			break;
+		}
+		default:
+			cls();
+			break;
 		}
 	}
 }
