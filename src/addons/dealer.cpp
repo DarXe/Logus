@@ -80,7 +80,7 @@ bool genDealerDatabase(std::string file = "cars.txt")
 	cars << "FCR-900          800000		  0 km/h\n";
 	cars << "PCJ-600          850000		  0 km/h\n";
 	cars << "Sanchez          700000		  0 km/h\n";
-	cars << "Dostawcze             0		  0	km/h\n";
+	cars << "Dostawcze             0		  0 km/h\n";
 	cars << "Benson           200000		109 km/h\n";
 	cars << "Berkley          250000		121 km/h\n";
 	cars << "Boxville         150000		 96 km/h\n";
@@ -118,7 +118,6 @@ void databaseCheckout()
 	SetConsoleTextAttribute(h, 6); //set info text to yellow
 	std::fstream cars, f1, f2;
 	char c1, c2;
-	int flag = 3;
 	cars.open("cars.txt");
 	if (!cars.good())
 	{
@@ -224,16 +223,45 @@ void dealerInfo(bool isBuy)
 	}
 }
 
-void printDatabase()
+void printDatabase(bool showDiff = false)
 {
 	std::string line;
 	std::fstream cars;
-	cars.open("cars.txt");
-	while (!cars.eof())
+	char dL, dO;
+	if (showDiff == 0)
 	{
-		getline(cars, line);
-		std::cout << line << "\n";
+		cars.open("cars.txt");
+		while (!cars.eof())
+		{
+			getline(cars, line);
+			std::cout << line << "\n";
+		}
+		cars.close();
 	}
+	else
+	{
+		std::fstream diL, diO;
+		diL.open("cars.txt", std::ios::in);
+		genDealerDatabase("cars.tmp");
+		diO.open("cars.tmp", std::ios::in);
+		while(true)
+		{
+			dL = diL.get();
+			dO = diO.get();
+			if ((dL == EOF) || (dO == EOF))
+				break;
+			if (dL != dO)
+				SetConsoleTextAttribute(h, 12);
+			else
+				SetConsoleTextAttribute(h, 7);
+			std::cout<<dL;
+		}
+		diL.close();
+		diO.close();
+		remove("cars.tmp");
+
+	}
+	SetConsoleTextAttribute(h, 7);
 	std::cout << "\nDowolny klawisz - kontynuuj\n";
 	getch();
 	cls();
@@ -253,6 +281,7 @@ void dealer()
 		std::cout << " [3] Lista pojazdów\n";
 		std::cout << " [4] Ustaw stawkę bazową\n";
 		std::cout << " [0] Manualna edycja cars.txt: "; dealerManual ? std::cout << "TAK\n" : std::cout << "NIE\n";
+		std::cout << " [f] Ghetto diff tool\n";
 		std::cout << " [r] Reset bazy danych\n";
 		SetConsoleTextAttribute(h, 15);
 		std::cout << " __________________________________________________________________________________\n";
@@ -338,6 +367,12 @@ void dealer()
 			dealerManual = dealerManual ? 0 : 1;
 			cls();
 			zapis(0);
+			break;
+		}
+		case 'f':
+		{
+			cls();
+			printDatabase(1);
 			break;
 		}
 		case 'r':
