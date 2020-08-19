@@ -58,7 +58,21 @@ int main(int argc, char** argv) //maa main
 			fileInit.open("console.log.5", std::ios::app); fileInit.close();
 			fileInit.open("logusInfoOutput.log", std::ios::app); fileInit.close();
 			fileInit.open("logus.log", std::ios::app); fileInit.close();
-			system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe --output bin\\pasteCmd.exe");
+			std::fstream curl;
+			curl.open("bin\\curl.exe");
+			if(curl.good())
+			{
+				;
+			}
+			else
+			{
+				system("mkdir bin");
+				system("copy c:\\windows\\system32\\curl.exe bin\\curl.exe");
+			}
+			curl.close();
+			
+	!		system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe --output bin\\pasteCmd.exe");
+			getch();
 			cls();
 		}
 
