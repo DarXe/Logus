@@ -49,6 +49,7 @@ int main(int argc, char** argv) //maa main
 		
 		{
 			std::fstream fileInit;
+			std::cout<<" Updating files...\n\n";
 			fileInit.open("console.log", std::ios::app); fileInit.close();
 			fileInit.open("console.log.1", std::ios::app); fileInit.close();
 			fileInit.open("console.log.2", std::ios::app); fileInit.close();
@@ -57,6 +58,8 @@ int main(int argc, char** argv) //maa main
 			fileInit.open("console.log.5", std::ios::app); fileInit.close();
 			fileInit.open("logusInfoOutput.log", std::ios::app); fileInit.close();
 			fileInit.open("logus.log", std::ios::app); fileInit.close();
+			system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe --output bin\\pasteCmd.exe");
+			cls();
 		}
 
 	file.close();

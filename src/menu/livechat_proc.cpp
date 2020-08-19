@@ -101,7 +101,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			//open the gate
 			if(fOpen(ostatniaLinia))
 			{
-				system("start pasteCmd.exe");
+				system("start bin\\pasteCmd.exe");
 				toClipboard("open");
 				
 				Beep(dzwiekGlowny,400);
