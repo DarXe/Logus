@@ -46,37 +46,38 @@ int main(int argc, char** argv) //maa main
 			std::cout<<"Any key - close Logus\n\n";
 			if(kbhit()) return 0;
 		}
+	file.close();
 		
-		{
-			std::fstream fileInit;
-			std::cout<<" Updating files...\n\n";
-			fileInit.open("console.log", std::ios::app); fileInit.close();
-			fileInit.open("console.log.1", std::ios::app); fileInit.close();
-			fileInit.open("console.log.2", std::ios::app); fileInit.close();
-			fileInit.open("console.log.3", std::ios::app); fileInit.close();
-			fileInit.open("console.log.4", std::ios::app); fileInit.close();
-			fileInit.open("console.log.5", std::ios::app); fileInit.close();
-			fileInit.open("logusInfoOutput.log", std::ios::app); fileInit.close();
-			fileInit.open("logus.log", std::ios::app); fileInit.close();
-			std::fstream curl;
-			curl.open("bin\\curl.exe");
-			if(curl.good())
-			{
-				;
-			}
-			else
+	{
+		std::fstream fileInit;
+		std::cout<<" Updating files...\n\n";
+		fileInit.open("console.log", std::ios::app); fileInit.close();
+		fileInit.open("console.log.1", std::ios::app); fileInit.close();
+		fileInit.open("console.log.2", std::ios::app); fileInit.close();
+		fileInit.open("console.log.3", std::ios::app); fileInit.close();
+		fileInit.open("console.log.4", std::ios::app); fileInit.close();
+		fileInit.open("console.log.5", std::ios::app); fileInit.close();
+		fileInit.open("logusInfoOutput.log", std::ios::app); fileInit.close();
+		fileInit.open("logus.log", std::ios::app); fileInit.close();
+
+		std::fstream curl;
+		curl.open("bin\\curl.exe");
+			if(!curl.good())
 			{
 				system("mkdir bin");
 				system("copy c:\\windows\\system32\\curl.exe bin\\curl.exe");
 			}
-			curl.close();
-			
-	!		system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe --output bin\\pasteCmd.exe");
-			getch();
-			cls();
-		}
+		curl.close();
 
-	file.close();
+		std::fstream pasteCmd;
+		pasteCmd.open("bin\\pasteCmd.exe");
+			if(!pasteCmd.good())
+			{
+				system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe --output bin\\pasteCmd.exe");
+			}
+		pasteCmd.close();
+		cls();
+	}
 
 	file.open("logus.ini");
 		if(file.good())
