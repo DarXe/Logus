@@ -76,6 +76,14 @@ int main(int argc, char** argv) //maa main
 				system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe --output bin\\pasteCmd.exe");
 			}
 		pasteCmd.close();
+
+		std::fstream updater;
+		updater.open("bin\\updater.exe");
+			if(!updater.good())
+			{
+				system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/experimental/bin/updater.exe --output bin\\updater.exe");
+			}
+		updater.close();
 		cls();
 	}
 
