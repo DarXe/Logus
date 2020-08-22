@@ -372,6 +372,13 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 						getline(file, ostatniaLinia[2]);
 					case 2:
 						getline(file, ostatniaLinia[1]);
+					case 1: //tests
+					{
+						std::fstream error;
+						error.open("logusErrors.log", std::ios::app);
+							error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<std::endl;
+							error<<"TYPE: ???\n";
+					}
 						break;
 					default:
 						{
