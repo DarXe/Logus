@@ -168,8 +168,8 @@ void settings()
             }
             case 'm':
             {
-                autoMoveLogs = (engLang?cfgInputInt(0, 1,  "Enter new delay between sounds", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 1500", 0, 1500):
-                cfgInputInt(0, 1,  "Podaj nowy odstęp między dźwiękami", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 1500", 0, 1500));
+                autoMoveLogs = (engLang?cfgInputInt(0, 1,  "Enter new delay between log move", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 1500", 0, 1500):
+                cfgInputInt(0, 1,  "Podaj nowy odstęp między przeniesieniem logów", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 1500", 0, 1500));
                 cls();
                 break;
             }
