@@ -172,14 +172,14 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 			getline(file,line);
 			++lineCount;
 		}
-		file.close();
+	file.close();
 	getChat(lineCount);
 
 	if(isTimer) timer -= (clock()-delay);
 	while(true)
 	{   
 		if(isTimer) delay = clock();
-		
+		ostatniaLinia[0] = "error";
 		lineCount = 0;
 		//counting lines in a log file
 		file.open("console.log");
@@ -347,7 +347,10 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 		if(temp > 0)
 		{
 			if(isTimer) delay = clock();
-
+			while(true)
+			{
+				file.clear();
+				file.seekg(std::ios::beg); //instead of file.close() and file.open() go to begin line
 				if(lineCount <= 10)
 				{
 					switch (lineCount) //bug fix
@@ -370,46 +373,20 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 						getline(file, ostatniaLinia[2]);
 					case 2:
 						getline(file, ostatniaLinia[1]);
-						break;
 					case 1:
 						getline(file, ostatniaLinia[0]);
-						break;
-					default:
-						{
-							//saving errors
-							std::fstream error;
-							error.open("logusErrors.log", std::ios::app);
-								error<<">>>>>>>>>>ERROR NR "<<++errors<<"<<<<<<<<<<"<<std::endl;
-								error<<"TYPE: PRE\n";
-								error<<"ROWS: "<<lineCount<<"\n";
-								error<<"Refresh: "<<refresh<<"\n";
-								error<<"Temp: "<<temp<<"\n";
-								error<<"Lck: "<<fLockTeam<<fLockPW<<fLockKomunikat<<fLockNick<<chatSound<<"\n";
-								error<<"LAST(9)\n";
-								for (size_t i = 9; i >= 1; i--)
-								{
-									error<<i<<". "<<ostatniaLinia[i]<<std::endl;
-								}
-								std::cout<<std::endl;
-							error.close();
-						}
 						break;
 					}
 				}
 				else
 				{
-					ostatniaLinia[0] = "error";
-					while(true)
-					{
-						file.clear();
-						file.seekg(std::ios::beg); //instead of file.close() and file.open() go to begin line
-						for(int i = 0; i < lineCount-10; i++) getline(file, ostatniaLinia[10]);
-						//capturing last lines
-						for(int i = 9; i >= 0; i--) {getline(file, ostatniaLinia[i]);}
-						if(ostatniaLinia[0] == "") break;
-						lineCount++; temp++;
-					}
+					for(int i = 0; i < lineCount-10; i++) getline(file, ostatniaLinia[10]);
+					//capturing last lines
+					for(int i = 9; i >= 0; i--) {getline(file, ostatniaLinia[i]);}
 				}
+				if(ostatniaLinia[0] == "") break;
+				lineCount++; temp++;
+			}
 			file.close();
 
 			if(chatSound) {Beep(750,50); timer -= 50;} //the sound of each new chat message
