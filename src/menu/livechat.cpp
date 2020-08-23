@@ -338,8 +338,6 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 				getline(file,line);
 				++lineCount;
 			}
-			file.clear();
-			file.seekg(std::ios::beg); //instead of file.close() and file.open() go to begin line
 
 		temp = lineCount-temp; //difference in the number of lines
 		//if it is different, it means that a new message has appeared
@@ -372,21 +370,16 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 						getline(file, ostatniaLinia[2]);
 					case 2:
 						getline(file, ostatniaLinia[1]);
-					case 1: //tests
-					{
-						std::fstream error;
-						error.open("logusErrors.log", std::ios::app);
-							error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<std::endl;
-							error<<"TYPE: ???\n";
-					}
+						break;
+					case 1:
+						getline(file, ostatniaLinia[0]);
 						break;
 					default:
 						{
-							errors++;
 							//saving errors
 							std::fstream error;
 							error.open("logusErrors.log", std::ios::app);
-								error<<">>>>>>>>>>ERROR NR "<<errors<<"<<<<<<<<<<"<<std::endl;
+								error<<">>>>>>>>>>ERROR NR "<<++errors<<"<<<<<<<<<<"<<std::endl;
 								error<<"TYPE: PRE\n";
 								error<<"ROWS: "<<lineCount<<"\n";
 								error<<"Refresh: "<<refresh<<"\n";
@@ -405,9 +398,17 @@ bool liveChat(int &wyswietlaneWiersze) //lc
 				}
 				else
 				{
-					for(int i = 0; i < lineCount-10; i++) getline(file, ostatniaLinia[10]);
-					//capturing last lines
-					for(int i = 9; i > 0; i--) {getline(file, ostatniaLinia[i]);}
+					ostatniaLinia[0] = "error";
+					while(true)
+					{
+						file.clear();
+						file.seekg(std::ios::beg); //instead of file.close() and file.open() go to begin line
+						for(int i = 0; i < lineCount-10; i++) getline(file, ostatniaLinia[10]);
+						//capturing last lines
+						for(int i = 9; i >= 0; i--) {getline(file, ostatniaLinia[i]);}
+						if(ostatniaLinia[0] == "") break;
+						lineCount++; temp++;
+					}
 				}
 			file.close();
 
