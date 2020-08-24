@@ -182,6 +182,7 @@ void wersja()
 
 	SetConsoleTextAttribute(h, 6);
 	std::cout<<" 208_25 Gruntowna przebudowa LiveChat, w końcu mniejsze zużycie I/O i brak pomijania logów!\n";
+	std::cout<<" 208_17 Dodanie integracji z komisem, tj. możliwość sprawdzenia cen pojazdów w komisie\n";
 	std::cout<<" * Niebawem zrobione będzie pełnoprawne wsparcie dla Win 7 (z pomocą conEmu)\n";
 	std::cout<<" 208_06.1 Częściowe wsparcie dla języka angielskiego (jak widać nowości dalej sa po polsku Xd)\n";
 	std::cout<<" 208_06 Uporządkowanie kodu i refaktoryzacja\n";
