@@ -8,7 +8,6 @@ std::string line;
 
 void liveChatHead() //head
 {
-	
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
 	std::cout<<"###############################LiveChat###############################\n";
@@ -80,7 +79,6 @@ void updateLiveChatHead()
 
 void showChat()
 {
-	
 	std::string nline;
 	cls();
 	liveChatHead();
@@ -149,7 +147,6 @@ void showChat()
 
 void getChat(bool init = 0)//gc
 {
-	
 	if (init) //if it's init, open file first
 		file.open("console.log", std::ios::in);
 	while (!file.eof()) 
@@ -179,6 +176,8 @@ void checkNotifications()
 
 bool liveChat() //lc
 {
+	if(file.is_open())
+		file.close();
 	bool isAutoJoin = false;
 	//load logs without checking notifications
 	getChat(1);
