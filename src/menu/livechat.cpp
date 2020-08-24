@@ -203,12 +203,12 @@ bool liveChat() //lc
 			{
 				for(int i = 0; i<newLines.size(); i++)
 				{
-					if(refresh <= 10)
+					if(refresh <= 20)
 					{
-						refresh = 10;
+						refresh = 20;
 						break;
 					}
-					refresh -= 5;
+					refresh -= 10;
 				}
 			}
 			std::thread chknotifs(checkNotifications);
@@ -230,15 +230,7 @@ bool liveChat() //lc
 
 		//darxe's shit
 
-		if(!isAutoJoin)
-		{
-			for(int i(0); i<20; i++) //wait time
-			{
-				Sleep(refresh/20);
-				if(kbhit()) break;
-			}
-		}
-		else
+		if(isAutoJoin)
 		{
 			serverConnect();
 			for(int i(5); i>0; i--) //wait 5s
