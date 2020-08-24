@@ -226,7 +226,7 @@ int menu() //con
 		{
 			cls();
 			if(isTimer) timer -= (clock()-delay2);
-			bool _quit = liveChat(wyswietlaneWiersze); //run LiveChat
+			bool _quit = liveChat(); //run LiveChat
 			mess = engLang? "Closing MTA and Logus": "Zamykanie MTA i programu";
 			if(!_quit) return closeLogus(mess); //close Logus
 			break;

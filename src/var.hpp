@@ -50,6 +50,7 @@ std::string f = "console.log.5";
 std::string L = "logus.log";
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD pos;
+COORD tpos;
 
 std::string track[5] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
 clock_t delay = 0, delay2 = 0; //pomiary delay

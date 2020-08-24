@@ -21,7 +21,7 @@ bool runLiveChat()//flc
 	serverConnect();
 	cls();
 	Beep(dzwiekGlowny,100);
-	bool _quit = liveChat(wyswietlaneWiersze);
+	bool _quit = liveChat();
 	if(!_quit) return 0;
 	return 1;
 }

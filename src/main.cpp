@@ -8,10 +8,12 @@
 #include <conio.h>
 #include <windows.h>
 #include <vector>
+#include <deque>
+#include <thread>
 #include "ver.cpp"
 #include "var.hpp"
 #include "patch.cpp"
-bool liveChat(int &wyswietlaneWiersze);
+bool liveChat();
 #include "logus.cpp"
 #include "addons\randomLogus.cpp"
 void wersja();
@@ -179,10 +181,11 @@ void wersja()
 	std::cout<<" SIERPIEŃ"<<std::endl;
 
 	SetConsoleTextAttribute(h, 6);
-	std::cout<<" 208_04 Poprawienie funkcji preConfig, dodanie preSelection(), preInputInt() oraz preInputString()\n";
-	std::cout<<" 208_06 Uporządkowanie kodu i refaktoryzacja\n";
-	std::cout<<" 208_06.1 Częściowe wsparcie dla języka angielskiego (jak widać nowości dalej sa po polsku Xd)\n";
+	std::cout<<" 208_25 Gruntowna przebudowa LiveChat, w końcu mniejsze zużycie I/O i brak pomijania logów!\n";
 	std::cout<<" * Niebawem zrobione będzie pełnoprawne wsparcie dla Win 7 (z pomocą conEmu)\n";
+	std::cout<<" 208_06.1 Częściowe wsparcie dla języka angielskiego (jak widać nowości dalej sa po polsku Xd)\n";
+	std::cout<<" 208_06 Uporządkowanie kodu i refaktoryzacja\n";
+	std::cout<<" 208_04 Poprawienie funkcji preConfig, dodanie preSelection(), preInputInt() oraz preInputString()\n";
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
 	if(getch() == 27)  cls(); return;
@@ -190,17 +193,17 @@ void wersja()
 	std::cout<<" CZERWIEC-LIPIEC"<<std::endl;
 
 	SetConsoleTextAttribute(h, 6);
-	std::cout<<" 206_9 Zmieniono system sprawdzania połączenia wi-fi, opcja 'w' z menu"<<std::endl;
-	std::cout<<" * Od teraz Logus uruchomi powiadomienie dźwiękowe tylko wtedy, kiedy wróci internet"<<std::endl;
-	std::cout<<" 206_10 Ping (opcja 'w') dodano możliwość sprawdzenia innego adresu"<<std::endl;
-	std::cout<<" 206_11 Dodano powiadomienia na przelewy od innych graczy"<<std::endl;
-	std::cout<<" 206_12 Dodano możliwość ustawienia timera pod bind z mta (pomysł - arki)"<<std::endl;
-	std::cout<<" * wystarczy zrobić binda /bind <klawisz> xxx(nick, który nie istnieje) msg x"<<std::endl;
-	std::cout<<" 206_12.1 Ponowne włączenie bindu na timer wyłącza go (dłuższy Beep)"<<std::endl;
-	std::cout<<" 206_15 Ukryto migający kursor w konsoli"<<std::endl;
-	std::cout<<" 206_28 Dodano tryb automatycznego otwierania bramy, gdy ktoś poprosi o open na PW"<<std::endl;
-	std::cout<<" * 207_5 Konwersja makra na pasteCmd.exe"<<std::endl;
 	std::cout<<" 207_31 Wydanie wersji 20.7"<<std::endl;
+	std::cout<<" * 207_5 Konwersja makra na pasteCmd.exe"<<std::endl;
+	std::cout<<" 206_28 Dodano tryb automatycznego otwierania bramy, gdy ktoś poprosi o open na PW"<<std::endl;
+	std::cout<<" 206_15 Ukryto migający kursor w konsoli"<<std::endl;
+	std::cout<<" 206_12.1 Ponowne włączenie bindu na timer wyłącza go (dłuższy Beep)"<<std::endl;
+	std::cout<<" * wystarczy zrobić binda /bind <klawisz> xxx(nick, który nie istnieje) msg x"<<std::endl;
+	std::cout<<" 206_12 Dodano możliwość ustawienia timera pod bind z mta (pomysł - arki)"<<std::endl;
+	std::cout<<" 206_11 Dodano powiadomienia na przelewy od innych graczy"<<std::endl;
+	std::cout<<" 206_10 Ping (opcja 'w') dodano możliwość sprawdzenia innego adresu"<<std::endl;
+	std::cout<<" * Od teraz Logus uruchomi powiadomienie dźwiękowe tylko wtedy, kiedy wróci internet"<<std::endl;
+	std::cout<<" 206_9 Zmieniono system sprawdzania połączenia wi-fi, opcja 'w' z menu"<<std::endl;
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
 	if(getch() == 27)  cls(); return;
@@ -208,25 +211,25 @@ void wersja()
 	std::cout<<" MAJ"<<std::endl;
 
 	SetConsoleTextAttribute(h, 6);
-	std::cout<<" 205_6 Dodano dodatkowy warunek sprawdzający nick"<<std::endl;
-	std::cout<<" * Teraz Logus bierze pod uwagę długość nicku zmniejszając szanse na błędny komunikat"<<std::endl;
-	std::cout<<" 205_6 Przypisano dodatkowe działanie komendzie 'quit' z mta"<<std::endl;
-	std::cout<<" * Logus wyłączy się automatycznie wraz z grą (zapisując ustawienia)"<<std::endl;
-	std::cout<<" 205_6 Naprawiono problem z odczytywaniem plików log, jeśli nie zostały stworzone przez mta"<<std::endl;
-	std::cout<<" * Jeśli takich plików nie ma to Logus sam je zainicjuje (pliki log.1 log.2 itd.)"<<std::endl;
-	std::cout<<" 205_6 Zmieniono animacje wyłączenia programu"<<std::endl;
-	std::cout<<" * Dodano dźwięki, tekst jest różny w zależności od powodu zamknięcia programu"<<std::endl;
-	std::cout<<" 205_61 Dodano komendę na reset kursów i $ z poziomu konsoli mta"<<std::endl;
-	std::cout<<" * 'set reset', 'set re'"<<std::endl;
-	std::cout<<" 205_9 Edytowano zmianę wartości ms dynamicznym odświeżaniu"<<std::endl;
-	std::cout<<" 205_91 Usunięto Logus-pre, od teraz Logus.exe na masterze jest aktualnym wydaniem Pre-Realease"<<std::endl;
-	std::cout<<" 205_10 Poprawiono czyszczenie czatu po przeniesieniu logów"<<std::endl;
-	std::cout<<" 205_10 Rozmiar Logusa jako aplikacji .exe o wiele się zmniejszył"<<std::endl;
-	std::cout<<" 205_11 Dodano nową funkcje w LiveChat - [Enter] autoJoin"<<std::endl;
-	std::cout<<" * Dopóki nie nastąpi połączenie z serwerem, Logus łączy się z nim co 5 sekund"<<std::endl;
-	std::cout<<" 205_11.1 Zmiana funkcji sprawdzającej podania napisu zamiast liczby"<<std::endl;
-	std::cout<<" * Teraz nie jest potrzebne restartowanie programu w przypadku pomyłki"<<std::endl;
 	std::cout<<" 205_11.2 Dodano prekonfigurację w przypadku braku pliku logus.ini"<<std::endl;
+	std::cout<<" * Teraz nie jest potrzebne restartowanie programu w przypadku pomyłki"<<std::endl;
+	std::cout<<" 205_11.1 Zmiana funkcji sprawdzającej podania napisu zamiast liczby"<<std::endl;
+	std::cout<<" * Dopóki nie nastąpi połączenie z serwerem, Logus łączy się z nim co 5 sekund"<<std::endl;
+	std::cout<<" 205_11 Dodano nową funkcje w LiveChat - [Enter] autoJoin"<<std::endl;
+	std::cout<<" 205_10 Rozmiar Logusa jako aplikacji .exe o wiele się zmniejszył"<<std::endl;
+	std::cout<<" 205_10 Poprawiono czyszczenie czatu po przeniesieniu logów"<<std::endl;
+	std::cout<<" 205_91 Usunięto Logus-pre, od teraz Logus.exe na masterze jest aktualnym wydaniem Pre-Realease"<<std::endl;
+	std::cout<<" 205_9 Edytowano zmianę wartości ms dynamicznym odświeżaniu"<<std::endl;
+	std::cout<<" * 'set reset', 'set re'"<<std::endl;
+	std::cout<<" 205_61 Dodano komendę na reset kursów i $ z poziomu konsoli mta"<<std::endl;
+	std::cout<<" * Dodano dźwięki, tekst jest różny w zależności od powodu zamknięcia programu"<<std::endl;
+	std::cout<<" 205_6 Zmieniono animacje wyłączenia programu"<<std::endl;
+	std::cout<<" * Jeśli takich plików nie ma to Logus sam je zainicjuje (pliki log.1 log.2 itd.)"<<std::endl;
+	std::cout<<" 205_6 Naprawiono problem z odczytywaniem plików log, jeśli nie zostały stworzone przez mta"<<std::endl;
+	std::cout<<" * Logus wyłączy się automatycznie wraz z grą (zapisując ustawienia)"<<std::endl;
+	std::cout<<" 205_6 Przypisano dodatkowe działanie komendzie 'quit' z mta"<<std::endl;
+	std::cout<<" * Teraz Logus bierze pod uwagę długość nicku zmniejszając szanse na błędny komunikat"<<std::endl;
+	std::cout<<" 205_6 Dodano dodatkowy warunek sprawdzający nick"<<std::endl;
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
 	if(getch() == 27)  cls(); return;
@@ -234,30 +237,30 @@ void wersja()
 	std::cout<<" MARZEC"<<std::endl;
 
 	SetConsoleTextAttribute(h, 6);
-	std::cout<<" 203_1 Zmieniono polecenie reconnect z 'r' na 'rr'"<<std::endl;
-	std::cout<<" 203_1 Dodano nowy plik .log, aby mieć szybszy dostęp do logów z powiadomień(PW, TEAM, TOWAR, PRZELEWY)"<<std::endl;
-	std::cout<<" * Po wyłączeniu komunikatu dźwiękowego w opcjach linijka z logiem nie pojawi się w tym pliku"<<std::endl;
-	std::cout<<" * Plik znajduje się w folderze logs, logusInfoOutput.log"<<std::endl;
-	std::cout<<" 203_1 Zmieniono kolorystykę czatu w LiveChat oddzielając wiadomość od nazwy gracza"<<std::endl;
-	std::cout<<" * Jak na razie zmiany zostały wprowadzone w trybie bez daty(Timestamps)"<<std::endl;
-	std::cout<<" 203_2 Został dodany kolor żółty dla powiadomień zaczynających się od '*'"<<std::endl;
-	std::cout<<" 203_3 Dodano nową komendę - ustawienie F4 z poziomu konsoli MTA"<<std::endl;
-	std::cout<<" * Wpisując w konsoli 'set m KWOTA', F4 ustawi się na podaną wartość"<<std::endl;
 	std::cout<<" * Dodano też komendę na ustawienie ilości kursów - set c KURSY"<<std::endl;
+	std::cout<<" * Wpisując w konsoli 'set m KWOTA', F4 ustawi się na podaną wartość"<<std::endl;
+	std::cout<<" 203_3 Dodano nową komendę - ustawienie F4 z poziomu konsoli MTA"<<std::endl;
+	std::cout<<" 203_2 Został dodany kolor żółty dla powiadomień zaczynających się od '*'"<<std::endl;
+	std::cout<<" * Jak na razie zmiany zostały wprowadzone w trybie bez daty(Timestamps)"<<std::endl;
+	std::cout<<" 203_1 Zmieniono kolorystykę czatu w LiveChat oddzielając wiadomość od nazwy gracza"<<std::endl;
+	std::cout<<" * Plik znajduje się w folderze logs, logusInfoOutput.log"<<std::endl;
+	std::cout<<" * Po wyłączeniu komunikatu dźwiękowego w opcjach linijka z logiem nie pojawi się w tym pliku"<<std::endl;
+	std::cout<<" 203_1 Dodano nowy plik .log, aby mieć szybszy dostęp do logów z powiadomień(PW, TEAM, TOWAR, PRZELEWY)"<<std::endl;
+	std::cout<<" 203_1 Zmieniono polecenie reconnect z 'r' na 'rr'"<<std::endl;
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
 	if(getch() == 27)  cls(); return;
 	SetConsoleTextAttribute(h, 4);
 	std::cout<<" ZMIANY - początek roku"<<std::endl;
 	SetConsoleTextAttribute(h, 6);
-	std::cout<<" Jeszcze w sierpniu zmieniono system sprawdzania nowych linii"<<std::endl;
-	std::cout<<" 201_2 Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames"<<std::endl;
-	std::cout<<" * Pozostaje powiadomienie na wejscie i wyjscie z serwera oraz na status AFK danego gracza"<<std::endl;
-	std::cout<<" 202_13 Poprawiono blad przy wyswietlaniu wyplaty wiekszej niz $1000000 w LiveChat oraz ustawieniach"<<std::endl;
-	std::cout<<" * Dodatkowo juz nie bedzie wyswietlana wyplata mniejsza niz 0"<<std::endl;
-	std::cout<<" 202_13 Zmodyfikowano sprawdzanie warunków przy dostarczonym towarze"<<std::endl;
-	std::cout<<" * Jest to kolejna próba testów z serii 'co powoduje pomijanie zapisu niektórych kursów'"<<std::endl;
 	std::cout<<" 202_13 Po wciśnięciu entera wraz z uruchomieniem serwera włączy się funkcja LiveChat"<<std::endl;
+	std::cout<<" * Jest to kolejna próba testów z serii 'co powoduje pomijanie zapisu niektórych kursów'"<<std::endl;
+	std::cout<<" 202_13 Zmodyfikowano sprawdzanie warunków przy dostarczonym towarze"<<std::endl;
+	std::cout<<" * Dodatkowo juz nie bedzie wyswietlana wyplata mniejsza niz 0"<<std::endl;
+	std::cout<<" 202_13 Poprawiono blad przy wyswietlaniu wyplaty wiekszej niz $1000000 w LiveChat oraz ustawieniach"<<std::endl;
+	std::cout<<" * Pozostaje powiadomienie na wejscie i wyjscie z serwera oraz na status AFK danego gracza"<<std::endl;
+	std::cout<<" 201_2 Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames"<<std::endl;
+	std::cout<<" Jeszcze w sierpniu zmieniono system sprawdzania nowych linii"<<std::endl;
 
 	cls();
 }

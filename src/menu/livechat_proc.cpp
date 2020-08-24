@@ -45,7 +45,7 @@ void salaryForTransport(std::string &line, bool &ptsLang)
 				mnoz /= 10;
 			}
 			courses++;
-			zapis();
+			zapis(0);
 		}
 		else if(line[gt+18] == '.')
 		{
@@ -58,7 +58,7 @@ void salaryForTransport(std::string &line, bool &ptsLang)
 				mnoz /= 10;
 			}
 			courses++;
-			zapis();
+			zapis(0);
 		}
 	}
 	else
@@ -74,7 +74,7 @@ void salaryForTransport(std::string &line, bool &ptsLang)
 				mnoz /= 10;
 			}
 			courses++;
-			zapis();
+			zapis(0);
 		}
 		else if(line[60] == '$')
 		{
@@ -87,7 +87,7 @@ void salaryForTransport(std::string &line, bool &ptsLang)
 				mnoz /= 10;
 			}
 			courses++;
-			zapis();
+			zapis(0);
 		}
 	}
 }
@@ -240,6 +240,12 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		Beep(dzwiekGlowny,100);
 		Beep(0,interval);
 		if(_quit == 2) return 0; //close Logus
+	}
+
+	if(chatSound) 
+	{
+		Beep(750,50);
+		timer -= 50; //darxe po co to?
 	}
 
 	return 1;
