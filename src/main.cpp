@@ -8,7 +8,6 @@
 #include <conio.h>
 #include <windows.h>
 #include <vector>
-#include <deque>
 #include <thread>
 #include "ver.cpp"
 #include "var.hpp"
@@ -266,4 +265,4 @@ void wersja()
 	cls();
 }
 
-//g++ src\main.cpp -o Logus.exe -static -s -Ofast
+//g++ src\main.cpp -o Logus.exe -s -Ofast -std=c++17

@@ -1,5 +1,7 @@
 // Copyright (C) 2018-2020  DarXe, Niventill
 
+#include <deque>
+#include <filesystem>
 std::deque <std::string> lastLines, newLines;
 int lineCount;
 bool isNewLine = 0, isNewBeep = 0;
@@ -68,6 +70,8 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 	from.open("console.log", std::ios::out);
 	from.close();
 	lineCount = 0;
+	file.close();
+	file.open("console.log", std::ios::in);
 }
 
 void updateLiveChatHead()
@@ -202,9 +206,9 @@ bool liveChat() //lc
 			{
 				for(int i = 0; i<newLines.size(); i++)
 				{
-					if(refresh <= 20)
+					if(refresh <= 250)
 					{
-						refresh = 20;
+						refresh = 250;
 						break;
 					}
 					refresh -= 10;
@@ -228,8 +232,15 @@ bool liveChat() //lc
 		}
 
 		//darxe's shit
-
-		if(isAutoJoin)
+		if(!isAutoJoin)
+        {
+            for(int i(0); i<20; i++) //wait time
+            {
+                Sleep(refresh/20);
+                if(kbhit()) break;
+            }
+        }
+		else
 		{
 			serverConnect();
 			for(int i(5); i>0; i--) //wait 5s
@@ -356,7 +367,6 @@ bool liveChat() //lc
 
 		//end of darxe's shit
 		Sleep(refresh);
-
 		if (isAutoJoin)
 		{
 			std::string tempLine;
@@ -374,12 +384,9 @@ bool liveChat() //lc
 		newLines.clear();
 		file.clear();
 		file.sync();
-		if(autoMoveLogs && (lineCount > autoMoveLogs)) 
-		{
+		std::uintmax_t size = std::filesystem::file_size("console.log");
+		if((size >= 99000) && (lineCount > autoMoveLogs)) 
 			moveLogs();
-			file.close();
-			file.open("console.log", std::ios::in);
-		}
 		if(isTimer) timer -= (clock()-delay);
 	}
 	file.close();

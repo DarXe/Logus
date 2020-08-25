@@ -21,6 +21,4 @@ void toClipboard(const std::string &s);
 
 int power(int x, int y);
 
-//void intError();
-
 #endif
