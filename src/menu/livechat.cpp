@@ -385,7 +385,7 @@ bool liveChat() //lc
 		file.clear();
 		file.sync();
 		std::uintmax_t size = std::filesystem::file_size("console.log");
-		if((size >= 99000) && (lineCount > autoMoveLogs)) 
+		if((size >= 99000) && autoMoveLogs != 0) 
 			moveLogs();
 		if(isTimer) timer -= (clock()-delay);
 	}
