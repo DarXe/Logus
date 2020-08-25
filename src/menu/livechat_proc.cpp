@@ -1,5 +1,7 @@
 // Copyright (C) 2018-2020  DarXe, Niventill
 
+void liveChatHead();
+
 void startTimer(short getSeconds)
 {
 	Beep(dzwiekGlowny, 100);
@@ -162,6 +164,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		if(fTransport(ostatniaLinia, ptsLang))
 		{
 			salaryForTransport(ostatniaLinia, ptsLang);
+			liveChatHead();
 			if(trackId)
 			{
 				if(trackId == 4) trackId = 1;
@@ -234,7 +237,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		return 1;
 	}
 
-	char _quit = fConsoleInput(ostatniaLinia);
+	_quit = fConsoleInput(ostatniaLinia);
 	if(_quit)
 	{
 		Beep(dzwiekGlowny,100);

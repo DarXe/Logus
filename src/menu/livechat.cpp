@@ -141,11 +141,12 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 	pos.X=31; pos.Y=4; SetConsoleCursorPosition(h, pos); SetConsoleTextAttribute(h, 12);
 	std::cout<<"pending moveLogs";
 	dtime = clock();
+	//buffer file content into string then append it to logus.log
 	std::string fromContent((std::istreambuf_iterator<char>(from)), std::istreambuf_iterator<char>());
 	to << fromContent << '\n';
 	from.close(); to.close();
 	pos.X=28; pos.Y=4; SetConsoleCursorPosition(h, pos);
-	std::cout<<"moveLogs op_t: "<<clock()-dtime<<"ms"; Sleep(1000);
+	std::cout<<"moveLogs op_t: "<<clock()-dtime<<"ms#"; Sleep(1000);
 	//clear console.log
 	file.close();
 	std::ofstream clear;
@@ -163,6 +164,11 @@ void checkNotifications()
 	for(int i = 0; i<newLines.size(); i++)
 	{
 		liveChatBeep(newLines.at(i));
+		if(kbhit())
+		{
+			if(getch() == 27)
+				break;
+		}
 	}
 }
 
@@ -197,9 +203,9 @@ bool liveChat() //lc
 			{
 				for(int i = 0; i<newLines.size(); i++)
 				{
-					if(refresh <= 500)
+					if(refresh <= 250)
 					{
-						refresh = 500;
+						refresh = 250;
 						break;
 					}
 					refresh -= 10;
@@ -208,6 +214,8 @@ bool liveChat() //lc
 			std::thread chknotifs(checkNotifications);
 			showChat();
 			chknotifs.join();
+			if (_quit == 2)
+				return 0;
 			liveChatHead();
 		}
 		else

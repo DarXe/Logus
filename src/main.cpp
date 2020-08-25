@@ -137,9 +137,9 @@ int main(int argc, char** argv) //maa main
 		break;
 	case 1:
 		{
-			bool _quit = runLiveChat();
+			runLiveChat();
 			mess = engLang? "Closing MTA and Logus": "Zamykanie MTA i programu";
-			if(!_quit) return closeLogus(mess); //close Logus
+			if(_quit == 2) return closeLogus(mess); //close Logus
 		}
 	default:
 		break;
@@ -188,7 +188,12 @@ void wersja()
 	std::cout<<" 208_04 Poprawienie funkcji preConfig, dodanie preSelection(), preInputInt() oraz preInputString()\n";
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
-	if(getch() == 27)  cls(); return;
+	if(getch() == 27)
+	{
+		cls();
+		return;
+	}
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout<<" CZERWIEC-LIPIEC"<<std::endl;
 
@@ -206,7 +211,12 @@ void wersja()
 	std::cout<<" 206_9 Zmieniono system sprawdzania połączenia wi-fi, opcja 'w' z menu"<<std::endl;
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
-	if(getch() == 27)  cls(); return;
+	if(getch() == 27)
+	{
+		cls();
+		return;
+	}
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout<<" MAJ"<<std::endl;
 
@@ -232,7 +242,12 @@ void wersja()
 	std::cout<<" 205_6 Dodano dodatkowy warunek sprawdzający nick"<<std::endl;
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
-	if(getch() == 27)  cls(); return;
+	if(getch() == 27)
+	{
+		cls();
+		return;
+	}
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout<<" MARZEC"<<std::endl;
 
@@ -249,7 +264,12 @@ void wersja()
 	std::cout<<" 203_1 Zmieniono polecenie reconnect z 'r' na 'rr'"<<std::endl;
 
 	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
-	if(getch() == 27)  cls(); return;
+	if(getch() == 27)
+	{
+		cls();
+		return;
+	}
+	cls(); 
 	SetConsoleTextAttribute(h, 4);
 	std::cout<<" ZMIANY - początek roku"<<std::endl;
 	SetConsoleTextAttribute(h, 6);

@@ -21,8 +21,8 @@ bool runLiveChat()//flc
 	serverConnect();
 	cls();
 	Beep(dzwiekGlowny,100);
-	bool _quit = liveChat();
-	if(!_quit) return 0;
+	liveChat();
+	if(_quit == 2) return 0;
 	return 1;
 }
 

@@ -226,9 +226,9 @@ int menu() //con
 		{
 			cls();
 			if(isTimer) timer -= (clock()-delay2);
-			bool _quit = liveChat(); //run LiveChat
+			liveChat(); //run LiveChat
 			mess = engLang? "Closing MTA and Logus": "Zamykanie MTA i programu";
-			if(!_quit) return closeLogus(mess); //close Logus
+			if(_quit == 2) return closeLogus(mess); //close Logus
 			break;
 		} 
 		case 'l':
@@ -358,9 +358,9 @@ int menu() //con
 		case 13:
 		{
 			cls();
-			bool _quit = runLiveChat();
+			runLiveChat();
 			mess = engLang? "Closing MTA and Logus": "Zamykanie MTA i programu";
-			if(!_quit) return closeLogus(mess); //close Logus
+			if(_quit == 2) return closeLogus(mess); //close Logus
 			break;
 		}
 		default:
