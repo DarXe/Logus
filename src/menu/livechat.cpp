@@ -41,13 +41,6 @@ void liveChatHead() //head
 	std::cout<<"\n################################################"<<"#####[m]moveLogs()####\n";
 }
 
-void updateLiveChatHead()
-{
-	tpos = GetConsoleCursorPosition(h);
-	liveChatHead();
-	SetConsoleCursorPosition(h, tpos);
-}
-
 void showChat()
 {
 	std::string nline;
@@ -204,9 +197,9 @@ bool liveChat() //lc
 			{
 				for(int i = 0; i<newLines.size(); i++)
 				{
-					if(refresh <= 250)
+					if(refresh <= 500)
 					{
-						refresh = 250;
+						refresh = 500;
 						break;
 					}
 					refresh -= 10;
@@ -215,18 +208,18 @@ bool liveChat() //lc
 			std::thread chknotifs(checkNotifications);
 			showChat();
 			chknotifs.join();
-			updateLiveChatHead();
+			liveChatHead();
 		}
 		else
 		{
 			if(dynamicRefresh)
 			{
 			if(refresh < 1000)
-				refresh += 25;
+				refresh += 15;
 			else
 				refresh = 1000;
 			}
-			updateLiveChatHead();
+			liveChatHead();
 		}
 
 		//darxe's shit
@@ -379,7 +372,6 @@ bool liveChat() //lc
 		}
 
 		//end of darxe's shit
-		Sleep(refresh);
 		if (isAutoJoin)
 		{
 			std::string tempLine;
@@ -388,9 +380,7 @@ bool liveChat() //lc
 				tempLine = newLines.at(i);
 				if(tempLine[gt] != 'c')
 				{
-					tpos = GetConsoleCursorPosition(h);
 					stopAutoJoin(isAutoJoin);
-					SetConsoleCursorPosition(h, tpos);
 				}
 			}
 		}
