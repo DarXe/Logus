@@ -184,6 +184,7 @@ bool liveChat() //lc
 	if(file.is_open())
 		file.close();
 	bool isAutoJoin = false;
+	std::uintmax_t size;
 	//load logs without checking notifications
 	getChat(1);
 	showChat();
@@ -390,8 +391,8 @@ bool liveChat() //lc
 		newLines.clear();
 		file.clear();
 		file.sync();
-		std::uintmax_t size = std::filesystem::file_size("console.log");
-		if((size >= 99000) && autoMoveLogs != 0) 
+		size = std::filesystem::file_size("console.log");
+		if((size >= 99000) && autoMoveLogs) 
 			moveLogs();
 		if(isTimer) timer -= (clock()-delay);
 	}
