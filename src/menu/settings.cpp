@@ -57,7 +57,7 @@ void settings()
             std::cout<<" [3] Dynamiczne odświeżanie: "<<((dynamicRefresh)?"TAK":"NIE")<<"\n";
             std::cout<<" [4] Częstotliwość dźwięku(50-10000): "<<dzwiekGlowny<<"\n";
             std::cout<<" [5] Przerwa między dźwiękami(50-1000): "<<interval<<"\n";
-            std::cout<<" [m] Automatyczne przenoszenie logów: "; if(autoMoveLogs) std::cout<<"TAK, przy "<<autoMoveLogs<<" wierszach"; else std::cout<<"NIE"; std::cout<<"\n";
+            std::cout<<" [m] Automatyczne przenoszenie logów: "; if(autoMoveLogs) std::cout<<"TAK"; else std::cout<<"NIE"; std::cout<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [6] Czas rozładowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<"\n";
             std::cout<<" [7] Sam wybiorę / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiorę")<<"\n";

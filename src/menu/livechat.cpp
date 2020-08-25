@@ -7,6 +7,7 @@ int lineCount;
 bool isNewLine = 0, isNewBeep = 0;
 std::ifstream file;
 std::string line;
+std::uintmax_t size;
 
 void liveChatHead() //head
 {
@@ -138,36 +139,29 @@ void getChat(bool init = 0)//gc
 
 void moveLogs()//mv clean and move logs from console.log to logus.log
 {
-	std::fstream from;
-	std::fstream to;
 	std::string line;
-	int count = 0;
+	std::ifstream from("console.log");
+	std::ofstream to;
+	clock_t dtime;
+	to.open("logus.log", std::ios::app);
 
-	from.open("console.log");
-		while(!from.eof())
-		{
-			getline(from, line);
-			count++;
-		}
-		count--;
-		from.clear();
-		from.seekg(std::ios::beg);
-
-		std::vector <std::string> logs(count);
-		to.open("logus.log", std::ios::app);
-			for(std::string line : logs)
-			{
-				getline(from, line);
-				to<<line<<std::endl;
-			}
-		to.close();
-	from.close();
-
-	from.open("console.log", std::ios::out);
-	from.close();
-	lineCount = 0;
+	pos.X=31; pos.Y=4; SetConsoleCursorPosition(h, pos); SetConsoleTextAttribute(h, 12);
+	std::cout<<"pending moveLogs";
+	dtime = clock();
+	std::string fromContent((std::istreambuf_iterator<char>(from)), std::istreambuf_iterator<char>());
+	to << fromContent << '\n';
+	from.close(); to.close();
+	pos.X=28; pos.Y=4; SetConsoleCursorPosition(h, pos);
+	std::cout<<"moveLogs op_t: "<<clock()-dtime<<"ms"; Sleep(1000);
+	//clear console.log
 	file.close();
+	std::ofstream clear;
+	clear.open("console.log", std::ios::out | std::ios::trunc);
+	clear.close();
+	//reopen console.log
+	lineCount = 0;
 	file.open("console.log", std::ios::in);
+	//end clear console.log
 	showChat();
 }
 
@@ -181,10 +175,12 @@ void checkNotifications()
 
 bool liveChat() //lc
 {
+	//reset some things
 	if(file.is_open())
 		file.close();
+	lastLines.clear();
+	//end reset some things
 	bool isAutoJoin = false;
-	std::uintmax_t size;
 	//load logs without checking notifications
 	getChat(1);
 	showChat();
@@ -219,7 +215,7 @@ bool liveChat() //lc
 			std::thread chknotifs(checkNotifications);
 			showChat();
 			chknotifs.join();
-			showChat();
+			updateLiveChatHead();
 		}
 		else
 		{
@@ -255,69 +251,79 @@ bool liveChat() //lc
 		}
 
 		//if key pressed
-		if(kbhit())
+		if (kbhit())
 		{
 			switch (getch())
 			{
 			case 27:
 			{
 				cls();
-				lastLines.clear();
 				return 1;
 			}
-			case 't': startTimer(); break;
-			case 's': stopTimer(); break;
+			case 't':
+				startTimer();
+				break;
+			case 's':
+				stopTimer();
+				break;
 			case 'm':
-				{
-					cls();
-					std::cout<<"CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda\n";
-					if(getch() == 27) {getChat(lineCount); break;}
-					moveLogs();
-				}
-				break;
+			{
+				cls();
+				std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda\n";
+				if (getch() == 27)
+					break;
+				moveLogs();
+			}
+			break;
 			case '\t':
-				{
-					timestamps = ((timestamps)?0:1);
-					pos.X=0; pos.Y=4; SetConsoleCursorPosition(h, pos);
-					cls(); getChat(lineCount);
-				}
+			{
+				timestamps = ((timestamps) ? 0 : 1);
+				showChat();
 				break;
+			}
 			case 48: //48? it's funny, because it's 0 :D //clear track
-				{
-					trackId = ((trackId)?0:1);
-				}
-				break;
+			{
+				trackId = ((trackId) ? 0 : 1);
+			}
+			break;
 			case 13: //enter start autoJoin
 			{
 				isAutoJoin = true;
-				pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
-				SetConsoleTextAttribute(h, 12); std::cout<<"    START autoJoin    ";
+				pos.X = 3;
+				pos.Y = 4;
+				SetConsoleCursorPosition(h, pos);
+				SetConsoleTextAttribute(h, 12);
+				std::cout << "    START autoJoin    ";
 				Beep(dzwiekGlowny, 750);
 			}
-				break;
+			break;
 			case 'v': //save
-				{
-					pos.X=10; pos.Y=0; SetConsoleCursorPosition(h, pos);
-					Beep(dzwiekGlowny, 100);
-					std::cout<<"ZAPISANO!"; Sleep(500);
-					zapis();
-				}
-				break;
+			{
+				pos.X = 10;
+				pos.Y = 0;
+				SetConsoleCursorPosition(h, pos);
+				Beep(dzwiekGlowny, 100);
+				std::cout << "ZAPISANO!";
+				Sleep(500);
+				zapis(0);
+			}
+			break;
 			case 'r': //read
-				{
-					pos.X=10; pos.Y=0; SetConsoleCursorPosition(h, pos);
-					Beep(dzwiekGlowny, 100);
-					std::cout<<"WCZYTANO!"; Sleep(500);
-					odczyt();
-				}
-				break;
-			
+			{
+				pos.X = 10;
+				pos.Y = 0;
+				SetConsoleCursorPosition(h, pos);
+				Beep(dzwiekGlowny, 100);
+				std::cout << "WCZYTANO!";
+				Sleep(500);
+				odczyt(0);
+			}
+			break;
 			default:
-				{
-					def();
-					getChat(lineCount);
-				}
+			{
+				std::cout << '\a';
 				break;
+			}
 			}
 		}
 
@@ -391,9 +397,12 @@ bool liveChat() //lc
 		newLines.clear();
 		file.clear();
 		file.sync();
-		size = std::filesystem::file_size("console.log");
-		if((size >= 99000) && autoMoveLogs) 
-			moveLogs();
+		if(autoMoveLogs)
+		{
+			size = std::filesystem::file_size("console.log");
+			if (size >= 99000)
+				moveLogs();
+		}
 		if(isTimer) timer -= (clock()-delay);
 	}
 	file.close();

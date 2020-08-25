@@ -304,22 +304,18 @@ void preConfig()
 
 	if(engLang) {
 
-		if(cfgSelection(1, "Do you want to enable automatic log mover?", "Yes, I do", "No, not really") == 1) {
-			autoMoveLogs = cfgInputInt(1, 1,  "Enter how many lines of logs are needed to move them.", "Enter amount:", "Error. Please enter correct ammount", "Number cannot be negative.", 0, INT_MAX);
-		}
+		if (cfgSelection(1, "Do you want to enable automatic log mover?", "Yes, I do", "No, not really") ==1)
+			autoMoveLogs = 1;
 
 	} else if(codePage852) {
 
-		if(cfgSelection(1, "Czy chcesz wlaczyc automatyczne przenoszenie logow?", "Tak, chce", "Nie, nie chce") == 1) {
-			autoMoveLogs = cfgInputInt(1, 1,  "Podaj ilosc linijek do przeniesienia logow", "Podaj ilosc:", "Blad. Podaj prawidlowa ilosc", "Liczba nie moze byc ujemna.", 0, INT_MAX);
-		}
+		if(cfgSelection(1, "Czy chcesz wlaczyc automatyczne przenoszenie logow?", "Tak, chce", "Nie, nie chce") == 1)
+			autoMoveLogs = 1;
 
 	} else {
 
-		if(cfgSelection(1, "Czy chcesz wlączyć automatyczne przenoszenie logów?", "Tak, chcę", "Nie, nie chcę") == 1) {
-			autoMoveLogs = cfgInputInt(1, 1,  "Podaj ilość linijek do przeniesienia logów", "Podaj ilość:", "Błąd. Podaj prawidłową ilość", "Liczba nie może być ujemna.", 0, INT_MAX);
-		}
-
+		if(cfgSelection(1, "Czy chcesz wlączyć automatyczne przenoszenie logów?", "Tak, chcę", "Nie, nie chcę") == 1)
+			autoMoveLogs = 1;
 	}
 
 	/* fast start */
