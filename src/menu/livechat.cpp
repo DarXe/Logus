@@ -40,40 +40,6 @@ void liveChatHead() //head
 	std::cout<<"\n################################################"<<"#####[m]moveLogs()####\n";
 }
 
-void moveLogs()//mv clean and move logs from console.log to logus.log
-{
-	std::fstream from;
-	std::fstream to;
-	std::string line;
-	int count = 0;
-
-	from.open("console.log");
-		while(!from.eof())
-		{
-			getline(from, line);
-			count++;
-		}
-		count--;
-		from.clear();
-		from.seekg(std::ios::beg);
-
-		std::vector <std::string> logs(count);
-		to.open("logus.log", std::ios::app);
-			for(std::string line : logs)
-			{
-				getline(from, line);
-				to<<line<<std::endl;
-			}
-		to.close();
-	from.close();
-
-	from.open("console.log", std::ios::out);
-	from.close();
-	lineCount = 0;
-	file.close();
-	file.open("console.log", std::ios::in);
-}
-
 void updateLiveChatHead()
 {
 	tpos = GetConsoleCursorPosition(h);
@@ -168,6 +134,41 @@ void getChat(bool init = 0)//gc
 			isNewLine = 1;
 		}
 	}
+}
+
+void moveLogs()//mv clean and move logs from console.log to logus.log
+{
+	std::fstream from;
+	std::fstream to;
+	std::string line;
+	int count = 0;
+
+	from.open("console.log");
+		while(!from.eof())
+		{
+			getline(from, line);
+			count++;
+		}
+		count--;
+		from.clear();
+		from.seekg(std::ios::beg);
+
+		std::vector <std::string> logs(count);
+		to.open("logus.log", std::ios::app);
+			for(std::string line : logs)
+			{
+				getline(from, line);
+				to<<line<<std::endl;
+			}
+		to.close();
+	from.close();
+
+	from.open("console.log", std::ios::out);
+	from.close();
+	lineCount = 0;
+	file.close();
+	file.open("console.log", std::ios::in);
+	showChat();
 }
 
 void checkNotifications()
