@@ -164,7 +164,6 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		if(fTransport(ostatniaLinia, ptsLang))
 		{
 			salaryForTransport(ostatniaLinia, ptsLang);
-			liveChatHead();
 			if(trackId)
 			{
 				if(trackId == 4) trackId = 1;

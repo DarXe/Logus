@@ -6,16 +6,19 @@ int losuj(int od, int doo)
 {
 	return rand()%(doo - od + 1)+od;
 }
+
 void cls()
 {
 	system("cls");
 }
+
 char wybor()
 {
 	engLang?std::cout<<"\n Choose an option (press a key)":
 	std::cout<<"\n Wybierz opcje (wciśnij klawisz)";
 	return getch();
 }
+
 void def()
 {
 	cls();

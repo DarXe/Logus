@@ -216,10 +216,15 @@ bool liveChat() //lc
 			chknotifs.join();
 			if (_quit == 2)
 				return 0;
-			liveChatHead();
 		}
 		else
 		{
+			if(autoMoveLogs)
+			{
+				size = std::filesystem::file_size("console.log");
+				if (size >= 99000)
+					moveLogs();
+			}
 			if(dynamicRefresh)
 			{
 			if(refresh < 1000)
@@ -273,6 +278,7 @@ bool liveChat() //lc
 				std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda\n";
 				if (getch() == 27)
 					break;
+				liveChatHead();
 				moveLogs();
 			}
 			break;
@@ -395,12 +401,6 @@ bool liveChat() //lc
 		newLines.clear();
 		file.clear();
 		file.sync();
-		if(autoMoveLogs)
-		{
-			size = std::filesystem::file_size("console.log");
-			if (size >= 99000)
-				moveLogs();
-		}
 		if(isTimer) timer -= (clock()-delay);
 	}
 	file.close();

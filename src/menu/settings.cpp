@@ -168,7 +168,8 @@ void settings()
             }
             case 'm':
             {
-                autoMoveLogs ? 0 : 1;
+                cls();
+                autoMoveLogs = autoMoveLogs? 0 : 1;
                 break;
             }
             case '6':
