@@ -258,7 +258,12 @@ bool liveChat() //lc
 		{
 			switch (getch())
 			{
-			case 27: cls(); return 1;
+			case 27:
+			{
+				cls();
+				lastLines.clear();
+				return 1;
+			}
 			case 't': startTimer(); break;
 			case 's': stopTimer(); break;
 			case 'm':

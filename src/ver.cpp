@@ -51,12 +51,12 @@ std::string genVer()
     tempSeconds += stoi(tempTime); //convert to int
     tempSeconds /= 60; //edit here if needed
     seconds = std::to_string(tempSeconds); //convert int to string
-
-    relVer = year + "." + month;
     
     #ifndef dbg
+        relVer = year + "." + month;
         return year + month + day + "." + seconds;
     #else
+        relVer = year + "." + month + ".dbg";
         return year + month + day + ".dbg";
     #endif
 }
