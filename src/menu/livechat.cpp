@@ -2,7 +2,9 @@
 
 #include <deque>
 #include <filesystem>
-std::deque <std::string> lastLines, newLines;
+
+std::deque <std::string> lastLines;
+std::vector <std::string> newLines;
 int lineCount;
 bool isNewLine = 0, isNewBeep = 0;
 std::ifstream file;
@@ -15,7 +17,7 @@ void liveChatHead() //head
 	SetConsoleTextAttribute(h, 12);
 	std::cout<<"###############################LiveChat###############################\n";
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lineCount<<" # Errors:"<<errors<<" #  [ESC]Return to MENU    \n";
+	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lineCount<<" # Errors:"<<errors<<" #  [ESC]Return to MENU     \n";
 	if(isTimer)
 	{
 		SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
@@ -112,7 +114,7 @@ void showChat()
 void getChat(bool init = 0)//gc
 {
 	if (init) //if it's init, open file first
-		file.open("console.log", std::ios::in);
+		file.open("console.log", std::ios::in | std::ios::binary);
 	while (!file.eof()) 
 	{	
 		getline(file, line); //get line
@@ -132,31 +134,48 @@ void getChat(bool init = 0)//gc
 
 void moveLogs()//mv clean and move logs from console.log to logus.log
 {
-	std::string line;
-	std::ifstream from("console.log");
 	std::ofstream to;
-	clock_t dtime;
-	to.open("logus.log", std::ios::app);
+	//check file size and then load file content into string
+	std::ifstream from("console.log", std::ios::binary);
 
-	pos.X=31; pos.Y=4; SetConsoleCursorPosition(h, pos); SetConsoleTextAttribute(h, 12);
-	std::cout<<"pending moveLogs";
-	dtime = clock();
-	//buffer file content into string then append it to logus.log
-	std::string fromContent((std::istreambuf_iterator<char>(from)), std::istreambuf_iterator<char>());
-	to << fromContent << '\n';
-	from.close(); to.close();
-	pos.X=28; pos.Y=4; SetConsoleCursorPosition(h, pos);
-	std::cout<<"moveLogs op_t: "<<clock()-dtime<<"ms#"; Sleep(1000);
+		auto read = std::chrono::high_resolution_clock::now();
+    std::string fromContent(size,0);
+    from.read(&fromContent[0],size);
+	from.close();
+		auto read1 = std::chrono::high_resolution_clock::now();
+		auto readshow = std::chrono::duration_cast<std::chrono::nanoseconds>(read1 - read).count();
+
+		auto write = std::chrono::high_resolution_clock::now();
+	to.open("logus.log", std::ios::binary | std::ios::app);
+	to.write(fromContent.c_str(), size);
+	to.close();
+		auto write1 = std::chrono::high_resolution_clock::now();
+		auto writeshow = std::chrono::duration_cast<std::chrono::nanoseconds>(write1 - write).count();
 	//clear console.log
-	file.close();
+		auto clearl = std::chrono::high_resolution_clock::now();
 	std::ofstream clear;
+	
 	clear.open("console.log", std::ios::out | std::ios::trunc);
 	clear.close();
-	//reopen console.log
+	//goto beginning of the console.log
+	file.clear();
+	file.seekg (0, std::ios::beg);
 	lineCount = 0;
-	file.open("console.log", std::ios::in);
-	//end clear console.log
-	showChat();
+		auto clearl1 = std::chrono::high_resolution_clock::now();
+		auto clearlshow = std::chrono::duration_cast<std::chrono::nanoseconds>(clearl1 - clearl).count();
+
+	//save moveLogs time to file liveChatInfoOutput.log
+	std::ofstream save;
+	save.open("liveChatInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
+	save << getCurrentTime() <<"moveLogs: wielkość pliku: " << size/1000 << "KB, odczyt: " 
+		 << readshow << "ns (" << readshow/1000000 << "ms), zapis: "
+		 << writeshow << "ns (" << writeshow/1000000 << "ms), czyszczenie: "
+		 << clearlshow << "ns (" << clearlshow/1000000 << "ms), łączny czas: "
+		 << readshow+writeshow+clearlshow << "ns ("
+		 << std::chrono::duration_cast<std::chrono::milliseconds>(write1 - write).count() +
+		    std::chrono::duration_cast<std::chrono::milliseconds>(read1 - read).count() + 
+			std::chrono::duration_cast<std::chrono::milliseconds>(clearl1 - clearl).count() << "ms)\n";
+	save.close();
 }
 
 void checkNotifications()
@@ -219,21 +238,22 @@ bool liveChat() //lc
 		}
 		else
 		{
-			if(autoMoveLogs)
+			if(dynamicRefresh)
+			{
+				if(refresh < 2000)
+					refresh += 20;
+				else
+					refresh = 2000;
+			}
+			liveChatHead();
+		}
+
+		if(autoMoveLogs)
 			{
 				size = std::filesystem::file_size("console.log");
 				if (size >= 99000)
 					moveLogs();
 			}
-			if(dynamicRefresh)
-			{
-			if(refresh < 1000)
-				refresh += 15;
-			else
-				refresh = 1000;
-			}
-			liveChatHead();
-		}
 
 		//darxe's shit
 		if(!isAutoJoin)
@@ -278,7 +298,7 @@ bool liveChat() //lc
 				std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda\n";
 				if (getch() == 27)
 					break;
-				liveChatHead();
+				showChat();
 				moveLogs();
 			}
 			break;

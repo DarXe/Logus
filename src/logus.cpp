@@ -1,6 +1,8 @@
 // Copyright (C) 2018-2020  DarXe
 
 #include "logus.hpp"
+#include <chrono>
+#include <iomanip>
 
 int losuj(int od, int doo)
 {
@@ -10,6 +12,14 @@ int losuj(int od, int doo)
 void cls()
 {
 	system("cls");
+}
+
+std::string getCurrentTime()
+{
+	auto in_time_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "[%Y-%m-%d %H:%M:%S] ");
+	return ss.str();
 }
 
 char wybor()

@@ -1,6 +1,6 @@
 // Copyright (C) 2018-2020  DarXe, Niventill
 
-void liveChatHead();
+
 
 void startTimer(short getSeconds)
 {
