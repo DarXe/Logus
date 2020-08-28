@@ -1,6 +1,9 @@
-// Copyright (C) 2018-2020  DarXe, Niventill
+// Copyright © 2018-2020  DarXe, Niventill
 
 #include "livechat.cpp"
+#include "..\addons\loglookup.cpp"
+#include "..\addons\dealer.cpp"
+#include "..\addons\randomLogus.cpp"
 #include "settings.cpp"
 
 int menu() //con
@@ -34,7 +37,6 @@ int menu() //con
 			std::cout<<" [4] Search for private messages and answers in all .log files\n";
 			SetConsoleTextAttribute(h, 12);
 			std::cout<<" [p] Search for payments in all .log files\n";
-			std::cout<<" [n] Amount of lines in all .log files\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [w] Pingtest - check connection to the internet\n";
 			std::cout<<" [k] Car Dealer - purchase and selling prices\n";
@@ -69,7 +71,6 @@ int menu() //con
 			std::cout<<" [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log\n";
 			SetConsoleTextAttribute(h, 12);
 			std::cout<<" [p] Szukaj przelewów od i do graczy we wszystkich plikach\n";
-			std::cout<<" [n] Ilość wierszy w plikach\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet\n";
 			std::cout<<" [k] Komis - ceny skupu i sprzedaży\n";
@@ -95,132 +96,85 @@ int menu() //con
 		}
 		case '1':
 		{
-			cls();
-			teamsay("console.log",1);
+			std::string filen;
+			while(true)
+			{
+				cls();
+				std::cout << ((engLang)?"Enter filename to lookup: ":"Podaj plik do przeszukania: ");
+				std::cin >> filen;
+				if (filen == "console.log" || "console.log.1" || "console.log.2" || "console.log.3" || "console.log.4" || "console.log.5" || "logus.log")
+					break;
+			}
+			checkFileTeam(filen);
 			break;
 		}
 		case '2':
 		{
-			cls();
-			pw("console.log",1);
+			std::string filen;
+			while(true)
+			{
+				cls();
+				std::cout << ((engLang)?"Enter filename to lookup: ":"Podaj plik do przeszukania: ");
+				std::cin >> filen;
+				if (filen == "console.log" || "console.log.1" || "console.log.2" || "console.log.3" || "console.log.4" || "console.log.5" || "logus.log")
+					break;
+			}
+			checkFilePM(filen);
 			break;
 		}
 		case '3':
 		{
-			cls();
-			lineCount = 0;
-			lineCountAll = 0;
-			lineCountAll+=teamsay("console.log.5",6);
-			lineCountAll+=teamsay("console.log.4",5);
-			lineCountAll+=teamsay("console.log.3",4);
-			lineCountAll+=teamsay("console.log.2",3);
-			lineCountAll+=teamsay("console.log.1",2);
-			lineCountAll+=teamsay("console.log",1);
-			lineCount=teamsay("logus.log",0);
-			if(engLang) {
-				std::cout<<"Lines in MTA logs: "<<lineCountAll<<std::endl;
-				std::cout<<"Lines in logus.log: "<<lineCount<<std::endl;
-			} else {
-				std::cout<<"Wierszy w plikach MTA: "<<lineCountAll<<std::endl;
-				std::cout<<"Wierszy w logus.log: "<<lineCount<<std::endl;
-			}
+			if (!checkFileTeam("console.log"))
+				break;
+			if (!checkFileTeam("console.log.1"))
+				break;
+			if (!checkFileTeam("console.log.2"))
+				break;
+			if (!checkFileTeam("console.log.3"))
+				break;
+			if (!checkFileTeam("console.log.4"))
+				break;
+			if (!checkFileTeam("console.log.5"))
+				break;
+			if (!checkFileTeam("logus.log"))
+				break;
 			break;
 		}
 
 		case '4':
 		{
-			cls();
-			lineCount = 0;
-			lineCountAll = 0;
-			lineCountAll+=pw("console.log.5",6);
-			lineCountAll+=pw("console.log.4",5);
-			lineCountAll+=pw("console.log.3",4);
-			lineCountAll+=pw("console.log.2",3);
-			lineCountAll+=pw("console.log.1",2);
-			lineCountAll+=pw("console.log",1);
-			lineCount=pw("logus.log",0);
-			if(engLang) {
-				std::cout<<"Lines in MTA logs: "<<lineCountAll<<std::endl;
-				std::cout<<"Lines in logus.log: "<<lineCount<<std::endl;
-			} else {
-				std::cout<<"Wierszy w plikach MTA: "<<lineCountAll<<std::endl;
-				std::cout<<"Wierszy w logus.log: "<<lineCount<<std::endl;
-			}
+			if (!checkFilePM("console.log"))
+				break;
+			if (!checkFilePM("console.log.1"))
+				break;
+			if (!checkFilePM("console.log.2"))
+				break;
+			if (!checkFilePM("console.log.3"))
+				break;
+			if (!checkFilePM("console.log.4"))
+				break;
+			if (!checkFilePM("console.log.5"))
+				break;
+			if (!checkFilePM("logus.log"))
+				break;
 			break;
 		}
 		case 'p':
 		{
-			cls();
-			lineCountAll = 0;
-			lineCountAll+=przelewy("console.log.5",6);
-			lineCountAll+=przelewy("console.log.4",5);
-			lineCountAll+=przelewy("console.log.3",4);
-			lineCountAll+=przelewy("console.log.2",3);
-			lineCountAll+=przelewy("console.log.1",2);
-			lineCountAll+=przelewy("console.log",1);
-			lineCountAll+=przelewy("logus.log",0);
-			if(engLang) {
-				std::cout<<"Lines: "<<lineCountAll<<std::endl;
-			} else {
-				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
-			}
-			break;
-		}
-		case 'n':
-		{
-			cls();
-			lineCountAll = 0;
-			lineCount = 0;
-			lineCount=all("console.log.5",6);
-			lineCountAll+=lineCount;
-			if(engLang) {
-				std::cout<<"Lines: "<<lineCountAll<<std::endl;
-			} else {
-				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
-			}
-			lineCount=all("console.log.4",5);
-			lineCountAll+=lineCount;
-			if(engLang) {
-				std::cout<<"Lines: "<<lineCountAll<<std::endl;
-			} else {
-				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
-			}
-			lineCount=all("console.log.3",4);
-			lineCountAll+=lineCount;
-			if(engLang) {
-				std::cout<<"Lines: "<<lineCountAll<<std::endl;
-			} else {
-				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
-			}
-			lineCount=all("console.log.2",3);
-			lineCountAll+=lineCount;
-			if(engLang) {
-				std::cout<<"Lines: "<<lineCountAll<<std::endl;
-			} else {
-				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
-			}
-			lineCount=all("console.log.1",2);
-			lineCountAll+=lineCount;
-			if(engLang) {
-				std::cout<<"Lines: "<<lineCountAll<<std::endl;
-			} else {
-				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
-			}
-			lineCount=all("console.log",1);
-			lineCountAll+=lineCount;
-			if(engLang) {
-				std::cout<<"Lines: "<<lineCountAll<<std::endl;
-			} else {
-				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
-			}
-			std::cout<<std::endl;
-			if(engLang) {
-				std::cout<<"Lines in MTA logs: "<<lineCountAll<<std::endl;
-				std::cout<<"Lines in logus.log: "<<lineCount<<std::endl;
-			} else {
-				std::cout<<"Wierszy w plikach MTA: "<<lineCountAll<<std::endl;
-				std::cout<<"Wierszy w logus.log: "<<lineCount<<std::endl;
-			}
+			if (!checkFileTransfers("console.log"))
+				break;
+			if (!checkFileTransfers("console.log.1"))
+				break;
+			if (!checkFileTransfers("console.log.2"))
+				break;
+			if (!checkFileTransfers("console.log.3"))
+				break;
+			if (!checkFileTransfers("console.log.4"))
+				break;
+			if (!checkFileTransfers("console.log.5"))
+				break;
+			if (!checkFileTransfers("logus.log"))
+				break;
 			break;
 		}
 		case 't':

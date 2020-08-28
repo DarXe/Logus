@@ -1,4 +1,4 @@
-// Copyright (C) 2018-2020  DarXe
+// Copyright © 2018-2020  DarXe
 
 #include "randomLogus.hpp"
 

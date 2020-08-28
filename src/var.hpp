@@ -1,4 +1,4 @@
-// Copyright (C) 2018-2020  DarXe
+// Copyright © 2018-2020  DarXe
 
 #ifndef VAR_HPP_INCLUDED
 #define VAR_HPP_INCLUDED

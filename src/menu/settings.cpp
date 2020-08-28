@@ -1,4 +1,4 @@
-// Copyright (C) 2018-2020  DarXe, Niventill
+// Copyright © 2018-2020  DarXe, Niventill
 
 void settings()
 {

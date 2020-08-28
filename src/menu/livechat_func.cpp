@@ -1,4 +1,4 @@
-// Copyright (C) 2018-2020  DarXe, Niventill
+// Copyright © 2018-2020  DarXe, Niventill
 
 
 void serverConnect();
@@ -18,23 +18,11 @@ bool fTeam(std::string &line, bool e)
 	else return 0;
 }
 
-bool fPwOd(std::string &line, bool &ptsLang)
+bool fPwOd(std::string &line)
 {
-	if(ptsLang)
-	{
-		if(line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='M')
-			return 1;
-		else return 0;
-	}
-	else
-	{
-		if(line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='W')
-		{
-			if(line[line.length()-1] == 32 && line[line.length()-2] == 32) {s_temp = "start serverIP://"+serverIP; system(s_temp.c_str());}
-			return 1;
-		}
-		else return 0;
-	}
+	if(line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='M' || line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='W')
+		return 1;
+	else return 0;
 }
 
 bool fPwDo(std::string &line)
@@ -44,88 +32,55 @@ bool fPwDo(std::string &line)
 	else return 0;
 }
 
-bool fPrzelewyOd(std::string &line, bool &ptsLang)
+bool fPrzelewyOd(std::string &line)
 {
 	leng = line.length();
-	if(ptsLang)
-	{
-		if(line[gt]=='P'&&line[gt+1]=='l'&&line[gt+2]=='a'&&line[gt+3]=='y'&&line[gt+4]=='e'&&line[gt+6]==' '&&line[leng-2]!='d'&&line[leng-1]=='.'&&(line[leng-3]!=' '&&line[leng-5]!='e'))
-			return 1;
-		else return 0;
-	}
-	else
-	{
-		if(line[gt]=='G'&&line[gt+1]=='r'&&line[gt+2]=='a'&&line[gt+3]=='c'&&line[gt+4]=='z'&&line[gt+5]==' '&&line[leng-2]=='$'&&line[leng-1]=='.')
-			return 1;
-		else return 0;
-	}
+	if(line[gt]=='P'&&line[gt+1]=='l'&&line[gt+2]=='a'&&line[gt+3]=='y'&&line[gt+4]=='e'&&line[gt+6]==' '&&line[leng-2]!='d'&&line[leng-1]=='.'&&(line[leng-3]!=' '&&line[leng-5]!='e')
+	   || line[gt]=='G'&&line[gt+1]=='r'&&line[gt+2]=='a'&&line[gt+3]=='c'&&line[gt+4]=='z'&&line[gt+5]==' '&&line[leng-2]=='$'&&line[leng-1]=='.')
+		return 1;
+	else return 0;
 }
 
-bool fPrzelewyDo(std::string &line, bool &ptsLang)
+bool fPrzelewyDo(std::string &line)
 {
-	if(ptsLang)
-	{
-		if(line[gt]=='Y'&&line[gt+1]=='o'&&line[gt+2]=='u'&&line[gt+4]=='g'&&line[gt+6]=='v')
-			return 1;
-		else return 0;
-	}
-	else
-	{
-		if(line[gt]=='P'&&line[gt+1]=='r'&&line[gt+2]=='z'&&line[gt+3]=='e'&&line[gt+5]=='a')
-			return 1;
-		else return 0;
-	}
+
+	if(line[gt]=='Y'&&line[gt+1]=='o'&&line[gt+2]=='u'&&line[gt+4]=='g'&&line[gt+6]=='v' || line[gt]=='P'&&line[gt+1]=='r'&&line[gt+2]=='z'&&line[gt+3]=='e'&&line[gt+5]=='a')
+		return 1;
+	else return 0;
 }
 
-bool fKomunikat(std::string &line, bool &ptsLang)
+bool fKomunikat(std::string &line)
 {
-	if(ptsLang)
-	{
-		if(line[gt]=='N'&&line[gt+1]=='e'&&line[gt+3]==' '&&line[gt+8]=='r')
-			return 1;
-		else return 0;
-	}
-	else
-	{
-		if(line[gt]=='N'&&line[gt+1]=='o'&&line[gt+3]=='y'&&line[gt+4]==' '&&line[gt+9]=='r')
-			return 1;
-		else return 0;
-	}
+	if(line[gt]=='N'&&line[gt+1]=='e'&&line[gt+3]==' '&&line[gt+8]=='r' || line[gt]=='N'&&line[gt+1]=='o'&&line[gt+3]=='y'&&line[gt+4]==' '&&line[gt+9]=='r')
+		return 1;
+	else return 0;
 }
 
-bool fTransport(std::string &line, bool &ptsLang)
+bool fTransport(std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
-	if(ptsLang)
-	{
-		if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$')
-			return 1;
-		else return 0;
-	}
+		if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$' ||
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
-	else
-	{
-		if(line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i')
+		line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i')
 			return 1;
 		else return 0;
-	}
 }
 
 bool fNicknames(std::string &line)
 {
 	for(int i = 0; i<nicknames.size(); i++)
 	{
-		s_temp = nicknames.at(i);
-		leng = s_temp.length() - 1;
-		//chat
-		//if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
-		//	return 0;
-		//join
-		if(line[gt]=='*' && line[gt+leng+3]==' ' && line[gt+leng+2]==s_temp[leng] && line[gt+leng+1]==s_temp[leng-1] && line[gt+leng]==s_temp[leng-2])
-			return 1;
-		//afk
-		if(line[gt+3]=='c' && line[gt+4]=='z' && line[gt+5]==' ' && line[gt+leng+7]==' ' && line[gt+leng+6]==s_temp[leng] && line[gt+leng+5]==s_temp[leng-1] && line[gt+leng+4]==s_temp[leng-2])
-			return 1;
+	s_temp = nicknames.at(i);
+	leng = s_temp.length() - 1;
+	//chat
+	//if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
+	//	return 0;
+	//join
+	if(line[gt]=='*' && line[gt+leng+3]==' ' && line[gt+leng+2]==s_temp[leng] && line[gt+leng+1]==s_temp[leng-1] && line[gt+leng]==s_temp[leng-2])
+		return 1;
+	//afk
+	if(line[gt+3]=='c' && line[gt+4]=='z' && line[gt+5]==' ' && line[gt+leng+7]==' ' && line[gt+leng+6]==s_temp[leng] && line[gt+leng+5]==s_temp[leng-1] && line[gt+leng+4]==s_temp[leng-2])
+		return 1;
 	}
 	return 0;
 }
@@ -146,22 +101,14 @@ bool player(std::string &line)
 	return (line[gt]=='*' && line[gt]=='*');
 }
 
-bool fPlayerCount(std::string &line, bool &ptsLang)
+bool fPlayerCount(std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
-	if(ptsLang)
-	{
-		if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$')
-			return 1;
-		else return 0;
-	}
+	if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$' ||
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
-	else
-	{
-		if(line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i')
-			return 1;
-		else return 0;
-	}
+	line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i')
+		return 1;
+	else return 0;
 }
 
 char fConsoleInput(std::string &line)//fci
@@ -303,7 +250,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 {
 	//wiadomość pw
 	if(!fLockPW){
-		if(fPwOd(ostatniaLinia, ptsLang))
+		if(fPwOd(ostatniaLinia))
 		{
 			//open the gate
 			if(fOpen(ostatniaLinia))
@@ -366,7 +313,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	//dostarczenie towaru, raport z frakcji
 	if(!fLockKomunikat)
 	{
-		if(fTransport(ostatniaLinia, ptsLang))
+		if(fTransport(ostatniaLinia))
 		{
 			salaryForTransport(ostatniaLinia, ptsLang);
 			if(trackId)
@@ -388,7 +335,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			return 1;
 		}
 
-		if(fKomunikat(ostatniaLinia, ptsLang))
+		if(fKomunikat(ostatniaLinia))
 		{
 			Beep(dzwiekGlowny,150);
 			Beep(0,interval);
@@ -406,7 +353,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	}
 
 	//przelewy
-	if(fPrzelewyOd(ostatniaLinia, ptsLang))
+	if(fPrzelewyOd(ostatniaLinia))
 	{
 		Beep(dzwiekGlowny,400);
 		Beep(0,interval);

@@ -1,4 +1,4 @@
-// Copyright (C) 2020  Niventill
+// Copyright © 2020  Niventill
 
 bool genDealerDatabase(std::string file = "cars.txt")
 {

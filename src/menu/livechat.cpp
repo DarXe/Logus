@@ -1,7 +1,8 @@
-// Copyright (C) 2018-2020  DarXe, Niventill
+// Copyright © 2018-2020  DarXe, Niventill
 
 #include <deque>
-#include <filesystem>
+#include "livechat_proc.cpp"
+#include "livechat_func.cpp"
 
 std::deque <std::string> lastLines;
 std::vector <std::string> newLines;
@@ -62,7 +63,7 @@ void showChat()
 	for(int i = 0; i<lastLines.size(); i++)
 	{
 		nline = lastLines.at(i);
-		bool notif = fNicknames(nline)||fTransport(nline,ptsLang)||fKomunikat(nline,ptsLang)||fPrzelewyOd(nline,ptsLang)||fPwOd(nline,ptsLang)||fTeam(nline,0);
+		bool notif = fNicknames(nline)||fTransport(nline)||fKomunikat(nline)||fPrzelewyOd(nline)||fPwOd(nline)||fTeam(nline,0);
 		if(notif)
 		{
 			if(timestamps)
@@ -236,7 +237,8 @@ bool liveChat() //lc
 	size = std::filesystem::file_size("console.log");
 	std::ofstream save;
 	save.open("liveChatInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
-	save << getCurrentTime() <<"initLiveChat: wielkość pliku: " << size/1000 << "KB, odczyt: " 
+	save << getCurrentTime() <<"initLiveChat: wielkość pliku: " << size/1000 
+		<< "KB, linie: " << lcLineCount << ", odczyt: " 
 		<< initspeedshow << "ns (" << initspeedshow/1000000 << "ms), wyświetlanie: "
 		<< initshowspeedshow << "ns (" << initshowspeedshow/1000000 << "ms), łączny czas: "
 		<< initspeedshow+initshowspeedshow << "ns ("

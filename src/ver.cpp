@@ -1,4 +1,4 @@
-// Copyright (C) 2020  Niventill
+// Copyright © 2020  Niventill
 
 std::string tempVer; //variable needed for patch()
 std::string relVer; // "20.08" format instead of "2008.2232"

@@ -1,4 +1,4 @@
-// Copyright (C) 2018-2020  DarXe
+// Copyright © 2018-2020  DarXe
 
 #define q(var) std::cout<<#var<<"="<<var<<"\n";
 #include <iostream>
@@ -12,20 +12,17 @@
 #include <ncurses.h>
 #endif
 #include <vector>
+#include <filesystem>
 #include <thread>
+
 #include "ver.cpp"
 #include "var.hpp"
 #include "patch.cpp"
 #include "logus.cpp"
-#include "addons\randomLogus.cpp"
 bool liveChat();
 void wersja();
-#include "menu\livechat_proc.cpp"
-#include "menu\livechat_func.cpp"
-#include "func.cpp" //functions
 #include "proc.cpp" //procedures
 
-#include "addons\dealer.cpp"
 #include "menu\menu.cpp"
 
 int main(int argc, char** argv) //maa main

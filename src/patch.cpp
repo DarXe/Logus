@@ -1,5 +1,4 @@
-// Copyright (C) 2018-2020  DarXe
-//#include "..\patch.hpp"
+// Copyright © 2018-2020  DarXe
 
 std::string getVer()
 {
