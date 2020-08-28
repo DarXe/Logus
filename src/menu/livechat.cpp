@@ -174,6 +174,7 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 	to.open("logus.log", std::ios::binary | std::ios::app);
 	to.write(fromContent.c_str(), size);
 	to.close();
+	size = 0;
 		auto write1 = std::chrono::high_resolution_clock::now();
 		auto writeshow = std::chrono::duration_cast<std::chrono::nanoseconds>(write1 - write).count();
 
@@ -273,6 +274,9 @@ bool liveChat() //lc
 					refresh -= 50;
 				}
 			}
+			std::ifstream refreshf("console.log", std::ios::in | std::ios::binary);
+			refreshf.close();
+			size = std::filesystem::file_size("console.log");
 			std::thread chknotifs(checkNotifications);
 			showChat();
 			chknotifs.join();
@@ -294,7 +298,6 @@ bool liveChat() //lc
 			liveChatHead();
 		}
 
-		size = std::filesystem::file_size("console.log");
 		if(autoMoveLogs)
 			{
 				if (size >= 99000)
