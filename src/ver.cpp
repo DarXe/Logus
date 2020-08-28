@@ -52,11 +52,11 @@ std::string genVer()
     tempSeconds /= 60; //edit here if needed
     seconds = std::to_string(tempSeconds); //convert int to string
     
-    #ifndef dbg
+    #ifndef LOGUSDEV
         relVer = year + "." + month;
         return year + month + day + "." + seconds;
     #else
-        relVer = year + "." + month + ".dbg";
-        return year + month + day + ".dbg";
+        relVer = year + "." + month + ".dev";
+        return year + month + day + ".dev";
     #endif
 }

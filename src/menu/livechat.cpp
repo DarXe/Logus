@@ -5,19 +5,30 @@
 
 std::deque <std::string> lastLines;
 std::vector <std::string> newLines;
-int lineCount;
+int lcLineCount;
 bool isNewLine = 0, isNewBeep = 0;
-std::ifstream file;
-std::string line;
+std::ifstream filelc;
+std::string linelc;
 std::uintmax_t size;
 
 void liveChatHead() //head
 {
+	std::string sizet; float sizei = size;
+	if (size > 1000000)
+	{
+		sizei /= 1000000;
+		sizet = "MB";
+	}
+	else
+	{
+		sizei /= 1000;
+		sizet = "KB";
+	}
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
 	std::cout<<"###############################LiveChat###############################\n";
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lineCount<<" # Errors:"<<errors<<" #  [ESC]Return to MENU     \n";
+	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lcLineCount<<" # Rozmiar:"<<std::setprecision(3)<<sizei<<sizet<<" # [ESC]MENU        \n";
 	if(isTimer)
 	{
 		SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
@@ -113,20 +124,21 @@ void showChat()
 
 void getChat(bool init = 0)//gc
 {
-	if (init) //if it's init, open file first
-		file.open("console.log", std::ios::in | std::ios::binary);
-	while (!file.eof()) 
+	if (init) //if it's init, open filelc first
+		filelc.open("console.log", std::ios::in | std::ios::binary);
+	while (!filelc.eof()) 
 	{	
-		getline(file, line); //get line
-		if (file.eof()) //if above getline returns eof, do break
+		getline(filelc, linelc); //get linelc
+		if (filelc.eof()) //if above getline returns eof, do break
 			break;
+		
 		if (lastLines.size() >= wyswietlaneWiersze) //if array size exceds wyswietlaneWiersze size remove first element from aray
 			lastLines.pop_front();
-		lastLines.push_back(line); //add element to the end of array
-		++lineCount;
-		if (!init) //if eof isn't present (as there is a new line) AND it's not init = 1 save newlines
+		lastLines.push_back(linelc); //add element to the end of array
+		++lcLineCount;
+		if (!init) //if eof isn't present (as there is a new linelc) AND it's not init = 1 save newlines
 		{
-			newLines.push_back(line); //add new lines to another array
+			newLines.push_back(linelc); //add new lines to another array
 			isNewLine = 1;
 		}
 	}
@@ -135,15 +147,27 @@ void getChat(bool init = 0)//gc
 void moveLogs()//mv clean and move logs from console.log to logus.log
 {
 	std::ofstream to;
-	//check file size and then load file content into string
-	std::ifstream from("console.log", std::ios::binary);
 
+	//check filelc size and then load filelc content into string
 		auto read = std::chrono::high_resolution_clock::now();
+	std::ifstream from("console.log", std::ios::binary);
     std::string fromContent(size,0);
     from.read(&fromContent[0],size);
 	from.close();
 		auto read1 = std::chrono::high_resolution_clock::now();
 		auto readshow = std::chrono::duration_cast<std::chrono::nanoseconds>(read1 - read).count();
+
+	//clear console.log
+		auto clearl = std::chrono::high_resolution_clock::now();
+	std::ofstream clear;
+	clear.open("console.log", std::ios::out | std::ios::trunc);
+	clear.close();
+	//goto beginning of the console.log
+	filelc.clear();
+	filelc.seekg (0, std::ios::beg);
+	lcLineCount = 0;
+		auto clearl1 = std::chrono::high_resolution_clock::now();
+		auto clearlshow = std::chrono::duration_cast<std::chrono::nanoseconds>(clearl1 - clearl).count();
 
 		auto write = std::chrono::high_resolution_clock::now();
 	to.open("logus.log", std::ios::binary | std::ios::app);
@@ -151,26 +175,14 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 	to.close();
 		auto write1 = std::chrono::high_resolution_clock::now();
 		auto writeshow = std::chrono::duration_cast<std::chrono::nanoseconds>(write1 - write).count();
-	//clear console.log
-		auto clearl = std::chrono::high_resolution_clock::now();
-	std::ofstream clear;
-	
-	clear.open("console.log", std::ios::out | std::ios::trunc);
-	clear.close();
-	//goto beginning of the console.log
-	file.clear();
-	file.seekg (0, std::ios::beg);
-	lineCount = 0;
-		auto clearl1 = std::chrono::high_resolution_clock::now();
-		auto clearlshow = std::chrono::duration_cast<std::chrono::nanoseconds>(clearl1 - clearl).count();
 
-	//save moveLogs time to file liveChatInfoOutput.log
+	//save moveLogs time to filelc liveChatInfoOutput.log
 	std::ofstream save;
 	save.open("liveChatInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
 	save << getCurrentTime() <<"moveLogs: wielkość pliku: " << size/1000 << "KB, odczyt: " 
-		 << readshow << "ns (" << readshow/1000000 << "ms), zapis: "
-		 << writeshow << "ns (" << writeshow/1000000 << "ms), czyszczenie: "
-		 << clearlshow << "ns (" << clearlshow/1000000 << "ms), łączny czas: "
+		 << readshow << "ns (" << readshow/1000000 << "ms), czyszczenie: "
+		 << clearlshow << "ns (" << clearlshow/1000000 << "ms), zapis: "
+		 << writeshow << "ns (" << writeshow/1000000 << "ms), łączny czas: "
 		 << readshow+writeshow+clearlshow << "ns ("
 		 << std::chrono::duration_cast<std::chrono::milliseconds>(write1 - write).count() +
 		    std::chrono::duration_cast<std::chrono::milliseconds>(read1 - read).count() + 
@@ -180,28 +192,57 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 
 void checkNotifications()
 {
-	for(int i = 0; i<newLines.size(); i++)
-	{
-		liveChatBeep(newLines.at(i));
-		if(kbhit())
+	if (newLines.size() > 1000)
+		for(int i = newLines.size() - 1000; i < newLines.size(); i++)
 		{
-			if(getch() == 27)
-				break;
+			liveChatBeep(newLines.at(i));
+			if(kbhit())
+			{
+				if(getch() == 27)
+					break;
+			}
 		}
-	}
+	else
+		for(int i = 0; i < newLines.size(); i++)
+		{
+			liveChatBeep(newLines.at(i));
+			if(kbhit())
+			{
+				if(getch() == 27)
+					break;
+			}
+		}
 }
+
 
 bool liveChat() //lc
 {
 	//reset some things
-	if(file.is_open())
-		file.close();
 	lastLines.clear();
-	//end reset some things
+	lastLines.shrink_to_fit();
+	lcLineCount = 0;
 	bool isAutoJoin = false;
 	//load logs without checking notifications
+	auto initspeed = std::chrono::high_resolution_clock::now();
 	getChat(1);
+	auto initspeed1 = std::chrono::high_resolution_clock::now();
+	auto initspeedshow = std::chrono::duration_cast<std::chrono::nanoseconds>(initspeed1 - initspeed).count();
+
+		auto initshowspeed = std::chrono::high_resolution_clock::now();
 	showChat();
+	auto initshowspeed1 = std::chrono::high_resolution_clock::now();
+	auto initshowspeedshow = std::chrono::duration_cast<std::chrono::nanoseconds>(initshowspeed1 - initshowspeed).count();
+
+	size = std::filesystem::file_size("console.log");
+	std::ofstream save;
+	save.open("liveChatInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
+	save << getCurrentTime() <<"initLiveChat: wielkość pliku: " << size/1000 << "KB, odczyt: " 
+		<< initspeedshow << "ns (" << initspeedshow/1000000 << "ms), wyświetlanie: "
+		<< initshowspeedshow << "ns (" << initshowspeedshow/1000000 << "ms), łączny czas: "
+		<< initspeedshow+initshowspeedshow << "ns ("
+		<< std::chrono::duration_cast<std::chrono::milliseconds>(initspeed1 - initspeed).count() +
+			std::chrono::duration_cast<std::chrono::milliseconds>(initshowspeed1 - initshowspeed).count() << "ms)\n";
+	save.close();
 	//end
 
 	if(isTimer)
@@ -227,43 +268,46 @@ bool liveChat() //lc
 						refresh = 250;
 						break;
 					}
-					refresh -= 10;
+					refresh -= 50;
 				}
 			}
 			std::thread chknotifs(checkNotifications);
 			showChat();
 			chknotifs.join();
 			if (_quit == 2)
+			{
+				filelc.close();
 				return 0;
+			}
 		}
 		else
 		{
 			if(dynamicRefresh)
 			{
-				if(refresh < 2000)
+				if(refresh < 1500)
 					refresh += 20;
 				else
-					refresh = 2000;
+					refresh = 1500;
 			}
 			liveChatHead();
 		}
 
+		size = std::filesystem::file_size("console.log");
 		if(autoMoveLogs)
 			{
-				size = std::filesystem::file_size("console.log");
 				if (size >= 99000)
 					moveLogs();
 			}
 
 		//darxe's shit
 		if(!isAutoJoin)
-        {
-            for(int i(0); i<20; i++) //wait time
-            {
-                Sleep(refresh/20);
-                if(kbhit()) break;
-            }
-        }
+		{
+			for(int i(0); i<20; i++) //wait time
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(refresh/20));
+				if(kbhit()) break;
+			}
+		}
 		else
 		{
 			serverConnect();
@@ -284,6 +328,7 @@ bool liveChat() //lc
 			case 27:
 			{
 				cls();
+				filelc.close();
 				return 1;
 			}
 			case 't':
@@ -304,13 +349,13 @@ bool liveChat() //lc
 			break;
 			case '\t':
 			{
-				timestamps = ((timestamps) ? 0 : 1);
+				timestamps = timestamps ? 0 : 1;
 				showChat();
 				break;
 			}
 			case 48: //48? it's funny, because it's 0 :D //clear track
 			{
-				trackId = ((trackId) ? 0 : 1);
+				trackId = trackId ? 0 : 1;
 			}
 			break;
 			case 13: //enter start autoJoin
@@ -419,10 +464,12 @@ bool liveChat() //lc
 			}
 		}
 		newLines.clear();
-		file.clear();
-		file.sync();
+		if (newLines.capacity() > 100000)
+			newLines.shrink_to_fit();
+		filelc.clear();
+		filelc.sync();
 		if(isTimer) timer -= (clock()-delay);
 	}
-	file.close();
+	filelc.close();
 	return 1;
 }//liveChat()

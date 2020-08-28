@@ -40,23 +40,14 @@ bool dealerManual = 0;
 const short gt = 33; //auxiliary variable
 int leng = 0; //length
 char wyb = ' '; //auxiliary variable //wybór w menu, tymczasowa w fTransport
-int iloscLinijekAll = 0; //number of lines
-std::string a = "console.log"; //console.log
-std::string b = "console.log.1"; //console.log.1
-std::string c = "console.log.2"; //console.log.2
-std::string d = "console.log.3"; //console.log.3
-std::string e = "console.log.4"; //console.log.4
-std::string f = "console.log.5"; //console.log.5
-std::string L = "logus.log"; //logus.log
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+const HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD pos;
 COORD tpos;
 
-std::string track[5] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
+const std::string track[5] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
 clock_t delay = 0, delay2 = 0; //pomiary delay
 int temp = 0; //aux var //pomocnicza zmienna iloscLinijek w LiveChat
 int temp2 = 0; //aux var //pomocnicza2 w LiveChat
-int errors = 0; //the number of errors //liczenie błędów, jeśli liczba linijek przekroczy 10
 std::string s_temp = ""; //string temp
 char _quit; //used in fConsoleInput (quits logus if mta was closed via "quit" in mta console)
 int timer = 0; //TIMER countdown of time for unloading //odliczanie czasu do rozładowania

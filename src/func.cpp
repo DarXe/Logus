@@ -54,7 +54,7 @@ COORD GetConsoleCursorPosition(HANDLE hConsoleOutput)
 	}
 }
 
-int all(std::string &nazwa, int nr)
+int all(const std::string &nazwa, int nr)
 {
 	std::string line;
 	int lineCount = 0;
@@ -72,7 +72,7 @@ int all(std::string &nazwa, int nr)
 	return lineCount;
 }
 
-int teamsay(std::string &nazwa, int nr)
+int teamsay(const std::string &nazwa, int nr)
 {
 	std::string line;
 	int lineCount = 0;
@@ -108,7 +108,7 @@ int teamsay(std::string &nazwa, int nr)
 	return lineCount;
 }
 
-int pw(std::string &nazwa, int nr)
+int pw(const std::string &nazwa, int nr)
 {
 	std::string line;
 	int lineCount = 0;
@@ -144,7 +144,7 @@ int pw(std::string &nazwa, int nr)
 	return lineCount;
 }
 
-int przelewy(std::string &nazwa, int nr)
+int przelewy(const std::string &nazwa, int nr)
 {
 	std::string line;
 	int lineCount = 0;
@@ -185,7 +185,7 @@ int przelewy(std::string &nazwa, int nr)
 	string line;
 	int lineCount = 0;
 	nrPliku(nr);
-	fstream file;
+	wfstream file;
 	file.open(nazwa.c_str());
 		while(!file.eof())
 		{

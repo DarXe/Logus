@@ -9,9 +9,43 @@ int losuj(int od, int doo)
 	return rand()%(doo - od + 1)+od;
 }
 
+#ifdef _WIN32
+	#define CLS "cls"
+#elif __linux__
+	#define CLS "clear"
+
+int kbhit(void)
+{
+    int ch, r;
+
+    nodelay(stdscr, TRUE);
+    noecho();
+
+    ch = getch();
+    if( ch == ERR)
+            r = FALSE;
+    else
+    {
+            r = TRUE;
+            ungetch(ch);
+    }
+
+    echo();
+    nodelay(stdscr, FALSE);
+    return(r);
+}
+
+SetConsoleTitleA(std::string title)
+{
+	std::cout << "\033]0;" << title << "\007";
+}
+
+SetConsoleCursorPosition(int temp, )
+
+#endif
 void cls()
 {
-	system("cls");
+	system(CLS);
 }
 
 std::string getCurrentTime()

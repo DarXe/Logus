@@ -298,3 +298,162 @@ char fConsoleInput(std::string &line)//fci
 	}
 	else return 0;
 }
+
+bool liveChatBeep(std::string &ostatniaLinia) //bee
+{
+	//wiadomość pw
+	if(!fLockPW){
+		if(fPwOd(ostatniaLinia, ptsLang))
+		{
+			//open the gate
+			if(fOpen(ostatniaLinia))
+			{
+				system("start bin\\pasteCmd.exe");
+				toClipboard("open");
+				
+				Beep(dzwiekGlowny,400);
+				Beep(0,interval);
+
+				std::fstream info;
+				info.open("logusInfoOutput.log", std::ios::app);
+					info<<ostatniaLinia<<std::endl;
+				info.close();
+				return 1;
+			}
+			//other PM
+			Beep(dzwiekGlowny,300);
+			Beep(0,interval);
+			Beep(dzwiekGlowny,300);
+			Beep(0,interval);
+
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
+				info<<ostatniaLinia<<std::endl;
+			info.close();
+			return 1;
+		}
+	}
+
+	//wiadomość teamowa
+	if(!fLockTeam)
+	{
+		if(fTeam(ostatniaLinia, 0))
+		{
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
+				info<<ostatniaLinia<<std::endl;
+			info.close();
+			return 1;
+		}
+	}
+
+	//nick z czatu dodany do ulubionych
+	if(!fLockNick)
+	{
+		if(fNicknames(ostatniaLinia))
+		{
+			Beep(dzwiekGlowny,300);
+			Beep(0,interval);
+			return 1;
+		}
+	}
+
+	//dostarczenie towaru, raport z frakcji
+	if(!fLockKomunikat)
+	{
+		if(fTransport(ostatniaLinia, ptsLang))
+		{
+			salaryForTransport(ostatniaLinia, ptsLang);
+			if(trackId)
+			{
+				if(trackId == 4) trackId = 1;
+				else trackId++;
+			}
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
+				info<<ostatniaLinia<<std::endl;
+			info.close();
+			return 1;
+		}
+
+		if(fKomunikat(ostatniaLinia, ptsLang))
+		{
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			Beep(dzwiekGlowny,150);
+			Beep(0,interval);
+			
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
+				info<<ostatniaLinia<<std::endl;
+			info.close();
+			return 1;
+		}
+	}
+
+	//przelewy
+	if(fPrzelewyOd(ostatniaLinia, ptsLang))
+	{
+		Beep(dzwiekGlowny,400);
+		Beep(0,interval);
+
+		std::fstream info;
+		info.open("logusInfoOutput.log", std::ios::app);
+			info<<ostatniaLinia<<std::endl;
+		info.close();
+		return 1;
+	}
+	
+	//klawisz zbindowany pod błąd /bind <key> <your_nick> msg x
+	//aktualna funkcja - start timera
+	if(fBindKey(ostatniaLinia))
+	{
+		if(isTimer)
+		{
+			stopTimer();
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
+				info<<ostatniaLinia.substr(0, 33)<<"Timer - STOP"<<std::endl;
+			info.close();
+		}
+		else
+		{
+			startTimer();
+			std::fstream info;
+			info.open("logusInfoOutput.log", std::ios::app);
+				info<<ostatniaLinia.substr(0, 33)<<"Timer - START"<<std::endl;
+			info.close();
+		}
+		return 1;
+	}
+
+	_quit = fConsoleInput(ostatniaLinia);
+	if(_quit)
+	{
+		Beep(dzwiekGlowny,100);
+		Beep(0,interval);
+		if(_quit == 2) return 0; //close Logus
+	}
+
+	if(chatSound) 
+	{
+		Beep(750,50);
+		timer -= 50; //darxe po co to?
+	}
+
+	return 1;
+}

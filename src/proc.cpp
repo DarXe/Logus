@@ -26,14 +26,6 @@ bool runLiveChat()//flc
 	return 1;
 }
 
-void stopAutoJoin(bool &isAutoJoin)
-{
-	isAutoJoin = false;
-	pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
-	SetConsoleTextAttribute(h, 12); std::cout<<"       CONNECTED!       ";
-	Beep(dzwiekGlowny, 500);
-}
-
 bool closeLogus(std::string text = "Bye bye")
 {
 	cls();

@@ -5,19 +5,23 @@
 #include <fstream>
 #include <ctime>
 #include <cmath>
+#ifdef _WIN32
 #include <conio.h>
 #include <windows.h>
+#elif __linux__
+#include <ncurses.h>
+#endif
 #include <vector>
 #include <thread>
 #include "ver.cpp"
 #include "var.hpp"
 #include "patch.cpp"
-bool liveChat();
 #include "logus.cpp"
 #include "addons\randomLogus.cpp"
+bool liveChat();
 void wersja();
-#include "menu\livechat_func.cpp"
 #include "menu\livechat_proc.cpp"
+#include "menu\livechat_func.cpp"
 #include "func.cpp" //functions
 #include "proc.cpp" //procedures
 
@@ -61,6 +65,7 @@ int main(int argc, char** argv) //maa main
 		fileInit.open("logusInfoOutput.log", std::ios::app); fileInit.close();
 		fileInit.open("logus.log", std::ios::app); fileInit.close();
 
+		#ifdef _WIN32
 		std::fstream curl;
 		curl.open("bin\\curl.exe");
 			if(!curl.good())
@@ -86,6 +91,7 @@ int main(int argc, char** argv) //maa main
 			}
 		updater.close();
 		cls();
+		#endif
 	}
 
 	file.open("logus.ini");
@@ -95,6 +101,7 @@ int main(int argc, char** argv) //maa main
 		}
 		else
 		{
+			#ifdef _WIN32
 			// installed OS detection, might be working funky :-D
 			DWORD val;
 			DWORD dataSize = sizeof(val);
@@ -102,14 +109,14 @@ int main(int argc, char** argv) //maa main
 				codePage852 = 0;
 			else
 				codePage852 = 1;
+			#endif
 			preConfig();
 			zapis();
 			cls();
 			wersja();
 		}
 	file.close();
-
-	#ifndef dupa
+	#if !defined(SHOWCURSOR) && defined(_WIN32)
 	CONSOLE_CURSOR_INFO CURSOR;
 	CURSOR.dwSize = 1;
 	CURSOR.bVisible = FALSE;
@@ -119,6 +126,7 @@ int main(int argc, char** argv) //maa main
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
 	color(kolorGlowny);
+	#ifdef _WIN32
 	if(codePage852)
 	{
 		SetConsoleOutputCP(852); //code page 852
@@ -129,6 +137,7 @@ int main(int argc, char** argv) //maa main
 		SetConsoleOutputCP(65001); //code page utf-8
 		SetConsoleCP(65001);
 	}
+	#endif
 
 	switch (fastStart)
 	{
@@ -284,5 +293,3 @@ void wersja()
 
 	cls();
 }
-
-//g++ src\main.cpp -o Logus.exe -s -Ofast -std=c++17

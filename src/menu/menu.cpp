@@ -1,6 +1,5 @@
 // Copyright (C) 2018-2020  DarXe, Niventill
 
-
 #include "livechat.cpp"
 #include "settings.cpp"
 
@@ -41,7 +40,8 @@ int menu() //con
 			std::cout<<" [k] Car Dealer - purchase and selling prices\n";
 			std::cout<<" [j] Language - change to Polski\n";
 			std::cout<<" [9] Change sound (beep) to random\n";
-			std::cout<<" [0] Codepage (legacy): "<<((codePage852)?"852":"UTF-8")<<std::endl;
+			std::cout<<" [0] Codepage (legacy): "<<((codePage852)?"852\n":"UTF-8\n");
+			std::cout<<" [u] TEST UTF8 - EMOJI\n";
 			std::cout<<" [i] INFO\n";
 			SetConsoleTextAttribute(h, 10);
 			std::cout<<" __________________________________________________________________________________\n";
@@ -75,7 +75,8 @@ int menu() //con
 			std::cout<<" [k] Komis - ceny skupu i sprzedaży\n";
 			std::cout<<" [j] Język - zmień na English\n";
 			std::cout<<" [9] Zmiana dźwięku na losowy\n";
-			std::cout<<" [0] Kodowanie (legacy): "<<((codePage852)?"852":"UTF-8")<<std::endl;
+			std::cout<<" [0] Kodowanie (legacy): "<<((codePage852)?"852\n":"UTF-8\n");
+			std::cout<<" [u] TEST UTF8 - EMOJI\n";
 			std::cout<<" [i] INFO\n";
 			SetConsoleTextAttribute(h, 10);
 			std::cout<<" __________________________________________________________________________________\n";
@@ -95,13 +96,13 @@ int menu() //con
 		case '1':
 		{
 			cls();
-			teamsay(a,1);
+			teamsay("console.log",1);
 			break;
 		}
 		case '2':
 		{
 			cls();
-			pw(a,1);
+			pw("console.log",1);
 			break;
 		}
 		case '3':
@@ -109,13 +110,13 @@ int menu() //con
 			cls();
 			lineCount = 0;
 			lineCountAll = 0;
-			lineCountAll+=teamsay(f,6);
-			lineCountAll+=teamsay(e,5);
-			lineCountAll+=teamsay(d,4);
-			lineCountAll+=teamsay(c,3);
-			lineCountAll+=teamsay(b,2);
-			lineCountAll+=teamsay(a,1);
-			lineCount=teamsay(L,0);
+			lineCountAll+=teamsay("console.log.5",6);
+			lineCountAll+=teamsay("console.log.4",5);
+			lineCountAll+=teamsay("console.log.3",4);
+			lineCountAll+=teamsay("console.log.2",3);
+			lineCountAll+=teamsay("console.log.1",2);
+			lineCountAll+=teamsay("console.log",1);
+			lineCount=teamsay("logus.log",0);
 			if(engLang) {
 				std::cout<<"Lines in MTA logs: "<<lineCountAll<<std::endl;
 				std::cout<<"Lines in logus.log: "<<lineCount<<std::endl;
@@ -131,13 +132,13 @@ int menu() //con
 			cls();
 			lineCount = 0;
 			lineCountAll = 0;
-			lineCountAll+=pw(f,6);
-			lineCountAll+=pw(e,5);
-			lineCountAll+=pw(d,4);
-			lineCountAll+=pw(c,3);
-			lineCountAll+=pw(b,2);
-			lineCountAll+=pw(a,1);
-			lineCount=pw(L,0);
+			lineCountAll+=pw("console.log.5",6);
+			lineCountAll+=pw("console.log.4",5);
+			lineCountAll+=pw("console.log.3",4);
+			lineCountAll+=pw("console.log.2",3);
+			lineCountAll+=pw("console.log.1",2);
+			lineCountAll+=pw("console.log",1);
+			lineCount=pw("logus.log",0);
 			if(engLang) {
 				std::cout<<"Lines in MTA logs: "<<lineCountAll<<std::endl;
 				std::cout<<"Lines in logus.log: "<<lineCount<<std::endl;
@@ -151,13 +152,13 @@ int menu() //con
 		{
 			cls();
 			lineCountAll = 0;
-			lineCountAll+=przelewy(f,6);
-			lineCountAll+=przelewy(e,5);
-			lineCountAll+=przelewy(d,4);
-			lineCountAll+=przelewy(c,3);
-			lineCountAll+=przelewy(b,2);
-			lineCountAll+=przelewy(a,1);
-			lineCountAll+=przelewy(L,0);
+			lineCountAll+=przelewy("console.log.5",6);
+			lineCountAll+=przelewy("console.log.4",5);
+			lineCountAll+=przelewy("console.log.3",4);
+			lineCountAll+=przelewy("console.log.2",3);
+			lineCountAll+=przelewy("console.log.1",2);
+			lineCountAll+=przelewy("console.log",1);
+			lineCountAll+=przelewy("logus.log",0);
 			if(engLang) {
 				std::cout<<"Lines: "<<lineCountAll<<std::endl;
 			} else {
@@ -170,42 +171,42 @@ int menu() //con
 			cls();
 			lineCountAll = 0;
 			lineCount = 0;
-			lineCount=all(f,6);
+			lineCount=all("console.log.5",6);
 			lineCountAll+=lineCount;
 			if(engLang) {
 				std::cout<<"Lines: "<<lineCountAll<<std::endl;
 			} else {
 				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
 			}
-			lineCount=all(e,5);
+			lineCount=all("console.log.4",5);
 			lineCountAll+=lineCount;
 			if(engLang) {
 				std::cout<<"Lines: "<<lineCountAll<<std::endl;
 			} else {
 				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
 			}
-			lineCount=all(d,4);
+			lineCount=all("console.log.3",4);
 			lineCountAll+=lineCount;
 			if(engLang) {
 				std::cout<<"Lines: "<<lineCountAll<<std::endl;
 			} else {
 				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
 			}
-			lineCount=all(c,3);
+			lineCount=all("console.log.2",3);
 			lineCountAll+=lineCount;
 			if(engLang) {
 				std::cout<<"Lines: "<<lineCountAll<<std::endl;
 			} else {
 				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
 			}
-			lineCount=all(b,2);
+			lineCount=all("console.log.1",2);
 			lineCountAll+=lineCount;
 			if(engLang) {
 				std::cout<<"Lines: "<<lineCountAll<<std::endl;
 			} else {
 				std::cout<<"Wierszy: "<<lineCountAll<<std::endl;
 			}
-			lineCount=all(a,1);
+			lineCount=all("console.log",1);
 			lineCountAll+=lineCount;
 			if(engLang) {
 				std::cout<<"Lines: "<<lineCountAll<<std::endl;
@@ -263,6 +264,13 @@ int menu() //con
 				engLang?std::cout<<"Codepage 852\n":
 				std::cout<<"Kodowanie 852\n";
 			}
+			break;
+		}
+		case 'u':
+		{
+			cls();
+			std::cout << "👌 🤞 🧠 🦷 🦴 ∅ ∈ ∉ ⊂ ⊃ ⊆ ⊇ ⊄ ⋂ ⋃ ≠ ☮😎  𝓌𝐞𝕣ｓנＯη 𝐆έ𝓙  ☞⛵ ≤ ≥ ≈ ≡ ⌈ ⌉ ⌊ ⌋ ∑ ∫ × ⊗ ⊕ ⊙ × ∂ √ ≔ ± ² ℵ ∞ ∎ ′ ° ℓ ∡ ∀ ¬ ∧ ∨ ∃ ∵ ∴  ↖ ↗ ↘ ↙ ☮😎  𝓌𝐞𝕣ｓנＯη 𝐆έ𝓙  ☞⛵  🚃 🚇 🚈 🚊 🚋 🚞 🛤 \n";
+			std::cout << ((engLang)? "END. PRESS ESC TO RETURN TO THE MENU\n" : "KONIEC. WCIŚNIJ ESC ABY WRÓCIĆ DO MENU\n"); getch();
 			break;
 		}
 		case 'j':
