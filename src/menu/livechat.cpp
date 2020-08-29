@@ -277,9 +277,8 @@ bool liveChat() //lc
 			std::ifstream refreshf("console.log", std::ios::in | std::ios::binary);
 			refreshf.close();
 			size = std::filesystem::file_size("console.log");
-			std::thread chknotifs(checkNotifications);
 			showChat();
-			chknotifs.join();
+			checkNotifications();
 			if (_quit == 2)
 			{
 				filelc.close();
