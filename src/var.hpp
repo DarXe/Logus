@@ -36,6 +36,7 @@ float base_dealerBuy = 0.40; //base price for skup pojazdu lol
 float base_dealerSellCar = 0.65; //base price for sprzedaz pojazdu osobowego lol
 float base_dealerSellTransport = 0.80; //base price for sprzedaz pojazdu dostawczego lol
 bool dealerManual = 0;
+bool refreshCls = 0;
 
 const short gt = 33; //auxiliary variable
 int leng = 0; //length

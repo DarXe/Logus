@@ -29,7 +29,7 @@ void liveChatHead() //head
 	SetConsoleTextAttribute(h, 12);
 	std::cout<<"###############################LiveChat###############################\n";
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lcLineCount<<" # Rozmiar:"<<std::setprecision(3)<<sizei<<sizet<<" # [ESC]MENU        \n";
+	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lcLineCount<<" # Rozmiar:"<<std::setprecision(3)<<sizei<<sizet<<" # [ESC]MENU \n";
 	if(isTimer)
 	{
 		SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
@@ -294,7 +294,10 @@ bool liveChat() //lc
 				else
 					refresh = 1500;
 			}
-			liveChatHead();
+			if(refreshCls)
+				showChat();
+			else
+				liveChatHead();
 		}
 
 		if(autoMoveLogs)

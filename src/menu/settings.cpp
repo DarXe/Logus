@@ -21,6 +21,7 @@ void settings()
             std::cout<<" [3] Dynamic refresh: "<<((dynamicRefresh)?"YES":"NO")<<"\n";
             std::cout<<" [4] Notify' beep length(50-10000): "<<dzwiekGlowny<<"\n";
             std::cout<<" [5] Notify' beep delay(50-1000): "<<interval<<"\n";
+            std::cout<<" [u] Clear LiveChat every refresh: "<<((refreshCls)?"YES":"NO")<<"\n";
             std::cout<<" [m] Automatic log mover: "; if(autoMoveLogs) std::cout<<"YES, at "<<autoMoveLogs<<" lines"; else std::cout<<"NO"; std::cout<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [6] Cargo unload time - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<"\n";
@@ -57,6 +58,7 @@ void settings()
             std::cout<<" [3] Dynamiczne odświeżanie: "<<((dynamicRefresh)?"TAK":"NIE")<<"\n";
             std::cout<<" [4] Częstotliwość dźwięku(50-10000): "<<dzwiekGlowny<<"\n";
             std::cout<<" [5] Przerwa między dźwiękami(50-1000): "<<interval<<"\n";
+            std::cout<<" [u] Czyść LiveChat przy każdym refreshu: "<<((refreshCls)?"TAK":"NIE")<<"\n";
             std::cout<<" [m] Automatyczne przenoszenie logów: "; if(autoMoveLogs) std::cout<<"TAK"; else std::cout<<"NIE"; std::cout<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [6] Czas rozładowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<"\n";
@@ -165,6 +167,10 @@ void settings()
                 cfgInputInt(0, 1,  "Podaj nowy odstęp między dźwiękami", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 1000", 0, 1000));
                 cls();
                 break;
+            }
+            case 'u':
+            {
+                refreshCls = refreshCls ? 0 : 1;
             }
             case 'm':
             {
