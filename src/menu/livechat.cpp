@@ -174,13 +174,12 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 	to.open("logus.log", std::ios::binary | std::ios::app);
 	to.write(fromContent.c_str(), size);
 	to.close();
-	size = 0;
 		auto write1 = std::chrono::high_resolution_clock::now();
 		auto writeshow = std::chrono::duration_cast<std::chrono::nanoseconds>(write1 - write).count();
 
 	//save moveLogs time to filelc liveChatInfoOutput.log
 	std::ofstream save;
-	save.open("liveChatInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
+	save.open("debugInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
 	save << getCurrentTime() <<"moveLogs: wielkość pliku: " << size/1000 << "KB, odczyt: " 
 		 << readshow << "ns (" << readshow/1000000 << "ms), czyszczenie: "
 		 << clearlshow << "ns (" << clearlshow/1000000 << "ms), zapis: "
@@ -237,7 +236,7 @@ bool liveChat() //lc
 
 	size = std::filesystem::file_size("console.log");
 	std::ofstream save;
-	save.open("liveChatInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
+	save.open("debugInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
 	save << getCurrentTime() <<"initLiveChat: wielkość pliku: " << size/1000 
 		<< "KB, linie: " << lcLineCount << ", odczyt: " 
 		<< initspeedshow << "ns (" << initspeedshow/1000000 << "ms), wyświetlanie: "

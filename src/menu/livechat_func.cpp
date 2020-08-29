@@ -20,7 +20,7 @@ bool fTeam(std::string &line, bool e)
 
 bool fPwOd(std::string &line)
 {
-	if(line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='M' || line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='W')
+	if((line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='M') || (line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='W'))
 		return 1;
 	else return 0;
 }
@@ -35,8 +35,8 @@ bool fPwDo(std::string &line)
 bool fPrzelewyOd(std::string &line)
 {
 	leng = line.length();
-	if(line[gt]=='P'&&line[gt+1]=='l'&&line[gt+2]=='a'&&line[gt+3]=='y'&&line[gt+4]=='e'&&line[gt+6]==' '&&line[leng-2]!='d'&&line[leng-1]=='.'&&(line[leng-3]!=' '&&line[leng-5]!='e')
-	   || line[gt]=='G'&&line[gt+1]=='r'&&line[gt+2]=='a'&&line[gt+3]=='c'&&line[gt+4]=='z'&&line[gt+5]==' '&&line[leng-2]=='$'&&line[leng-1]=='.')
+	if((line[gt]=='P'&&line[gt+1]=='l'&&line[gt+2]=='a'&&line[gt+3]=='y'&&line[gt+4]=='e'&&line[gt+6]==' '&&line[leng-2]!='d'&&line[leng-1]=='.'&&line[leng-3]!=' '&&line[leng-5]!='e')
+	   || (line[gt]=='G'&&line[gt+1]=='r'&&line[gt+2]=='a'&&line[gt+3]=='c'&&line[gt+4]=='z'&&line[gt+5]==' '&&line[leng-2]=='$'&&line[leng-1]=='.'))
 		return 1;
 	else return 0;
 }
@@ -44,14 +44,14 @@ bool fPrzelewyOd(std::string &line)
 bool fPrzelewyDo(std::string &line)
 {
 
-	if(line[gt]=='Y'&&line[gt+1]=='o'&&line[gt+2]=='u'&&line[gt+4]=='g'&&line[gt+6]=='v' || line[gt]=='P'&&line[gt+1]=='r'&&line[gt+2]=='z'&&line[gt+3]=='e'&&line[gt+5]=='a')
+	if((line[gt]=='Y'&&line[gt+1]=='o'&&line[gt+2]=='u'&&line[gt+4]=='g'&&line[gt+6]=='v') || (line[gt]=='P'&&line[gt+1]=='r'&&line[gt+2]=='z'&&line[gt+3]=='e'&&line[gt+5]=='a'))
 		return 1;
 	else return 0;
 }
 
 bool fKomunikat(std::string &line)
 {
-	if(line[gt]=='N'&&line[gt+1]=='e'&&line[gt+3]==' '&&line[gt+8]=='r' || line[gt]=='N'&&line[gt+1]=='o'&&line[gt+3]=='y'&&line[gt+4]==' '&&line[gt+9]=='r')
+	if((line[gt]=='N'&&line[gt+1]=='e'&&line[gt+3]==' '&&line[gt+8]=='r') || (line[gt]=='N'&&line[gt+1]=='o'&&line[gt+3]=='y'&&line[gt+4]==' '&&line[gt+9]=='r'))
 		return 1;
 	else return 0;
 }
@@ -59,9 +59,9 @@ bool fKomunikat(std::string &line)
 bool fTransport(std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
-		if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$' ||
+		if((line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$') ||
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
-		line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i')
+		(line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i'))
 			return 1;
 		else return 0;
 }
@@ -104,9 +104,9 @@ bool player(std::string &line)
 bool fPlayerCount(std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
-	if(line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$' ||
+	if((line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$') ||
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
-	line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i')
+	(line[gt]=='P'&&line[gt+1]=='i'&&line[gt+2]=='e'&&line[gt+3]=='n'&&line[gt+4]=='i'))
 		return 1;
 	else return 0;
 }

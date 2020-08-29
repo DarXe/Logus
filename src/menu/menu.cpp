@@ -31,12 +31,13 @@ int menu() //con
 			std::cout<<" [t] LiveChat - ingame chat with notifications\n";
 			std::cout<<" [5] Logus's settings\n";
 			SetConsoleTextAttribute(h, 11);
-			std::cout<<" [1] Search for team messages in console.log\n";
-			std::cout<<" [2] Search for private messages in console.log\n";
+			std::cout<<" [1] Search for team messages in .log files\n";
+			std::cout<<" [2] Search for private messages in .log files\n";
 			std::cout<<" [3] Search for team messages in all .log files\n";
 			std::cout<<" [4] Search for private messages and answers in all .log files\n";
 			SetConsoleTextAttribute(h, 12);
 			std::cout<<" [p] Search for payments in all .log files\n";
+			std::cout<<" [o] Search in .log file with date from-to\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [w] Pingtest - check connection to the internet\n";
 			std::cout<<" [k] Car Dealer - purchase and selling prices\n";
@@ -65,12 +66,13 @@ int menu() //con
 			std::cout<<" [t] LiveChat - czat z gry w konsoli z komunikatami dźwiękowymi\n";
 			std::cout<<" [5] Ustawienia Logusa\n";
 			SetConsoleTextAttribute(h, 11);
-			std::cout<<" [1] Szukaj wiadomości teamowych w console.log\n";
-			std::cout<<" [2] Szukaj PW oraz odpowiedzi w console.log\n";
+			std::cout<<" [1] Szukaj wiadomości teamowych w plikach .log\n";
+			std::cout<<" [2] Szukaj PW oraz odpowiedzi w plikach .log\n";
 			std::cout<<" [3] Szukaj wiadomości teamowych we wszystkich plikach .log\n";
 			std::cout<<" [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log\n";
 			SetConsoleTextAttribute(h, 12);
 			std::cout<<" [p] Szukaj przelewów od i do graczy we wszystkich plikach\n";
+			std::cout<<" [o] Szukaj w plikach .log po dacie od-do\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet\n";
 			std::cout<<" [k] Komis - ceny skupu i sprzedaży\n";
@@ -96,29 +98,21 @@ int menu() //con
 		}
 		case '1':
 		{
-			std::string filen;
-			while(true)
-			{
-				cls();
-				std::cout << ((engLang)?"Enter filename to lookup: ":"Podaj plik do przeszukania: ");
-				std::cin >> filen;
-				if (filen == "console.log" || "console.log.1" || "console.log.2" || "console.log.3" || "console.log.4" || "console.log.5" || "logus.log")
-					break;
-			}
+			std::string filen = ((engLang)?cfgSelectionStr("Choose file to lookup.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"):
+										cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"));
+			cls();
+			if (filen == "WYJŚCIE")
+				break;
 			checkFileTeam(filen);
 			break;
 		}
 		case '2':
 		{
-			std::string filen;
-			while(true)
-			{
-				cls();
-				std::cout << ((engLang)?"Enter filename to lookup: ":"Podaj plik do przeszukania: ");
-				std::cin >> filen;
-				if (filen == "console.log" || "console.log.1" || "console.log.2" || "console.log.3" || "console.log.4" || "console.log.5" || "logus.log")
-					break;
-			}
+			std::string filen = ((engLang)?cfgSelectionStr("Choose file to lookup.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"):
+										cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"));
+			cls();
+			if (filen == "WYJŚCIE")
+				break;
 			checkFilePM(filen);
 			break;
 		}
@@ -175,6 +169,11 @@ int menu() //con
 				break;
 			if (!checkFileTransfers("logus.log"))
 				break;
+			break;
+		}
+		case 'o':
+		{
+			dateSelectionMenu();
 			break;
 		}
 		case 't':
