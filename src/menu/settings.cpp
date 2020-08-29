@@ -186,7 +186,7 @@ void settings()
                 cfgInputInt(0, 1,  "", "Podaj minuty:", "Błąd. Podano błędną wartość", "Min 0, Max 10", 0, 10));
                 temp = (engLang?cfgInputInt(0, 1,  "", "Enter seconds:", "Error. Entered wrong value", "Min 0, Max 59", 0, 59):
                 cfgInputInt(0, 1,  "", "Podaj sekundy:", "Błąd. Podano błędną wartość", "Min 0, Max 59", 0, 59));
-                czas = (temp*60) + temp2;
+                czas = (temp2*60) + temp;
                 cls();
                 break;
             }
