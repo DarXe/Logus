@@ -222,22 +222,34 @@ void dateSelectionMenu()
 {
 	std::string date, dateEnd, filename;
 	cls();
+	filename = ((engLang)?cfgSelectionStr("Choose file to lookup.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"):
+									cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"));
+	if (filename == "WYJŚCIE")
+		return;
+	cls();
 	if(engLang)
 	{
-
+		if (cfgSelection(0, "Do you want to also include the time in the search?", "Yes", "No"))
+		{
+			date = cfgInputString(0, 1, "Enter the starting date (for example 2020-08-28 21:37)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			dateEnd = cfgInputString(0, 1, "Enter the ending date (for example 2020-08-28 21:37)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			checkFileDateFromTo(filename, date, dateEnd, 1);
+			return;
+		}
+		else
+		{
+			date = cfgInputString(0, 1, "Enter the starting date (for example 2020-08-28)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			dateEnd = cfgInputString(0, 1, "Enter the ending date (for example 2020-08-28)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			checkFileDateFromTo(filename, date, dateEnd, 0);
+			return;
+		}
 	}
 	else
 	{
-		filename = ((engLang)?cfgSelectionStr("Choose file to lookup.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"):
-										cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"));
-		if (filename == "WYJSCIE")
-			return;
-		cls();
-		if(cfgSelection(0, "Czy chcesz uwzględnić w wyszukiwaniu także godzinę?", "Tak", "Nie"))
+		if (cfgSelection(0, "Czy chcesz uwzględnić w wyszukiwaniu także godzinę?", "Tak", "Nie"))
 		{
 			date = cfgInputString(0, 1, "Podaj datę początkową (przykładowo 2020-08-28 21:37)", "Podaj datę (obowiązkowo format RRRR-MM-DD HH:MM):", "Nie wiem jak, ale coś podałeś źle");
 			dateEnd = cfgInputString(0, 1, "Podaj datę końcową (przykładowo 2020-08-29 21:37)", "Podaj datę (obowiązkowo format RRRR-MM-DD HH:MM):", "Nie wiem jak, ale coś podałeś źle");
-			cls();
 			checkFileDateFromTo(filename, date, dateEnd, 1);
 			return;
 		}
@@ -245,7 +257,6 @@ void dateSelectionMenu()
 		{
 			date = cfgInputString(0, 1, "Podaj datę początkową (przykładowo 2020-08-28)", "Podaj datę (obowiązkowo format RRRR-MM-DD):", "Nie wiem jak, ale coś podałeś źle");
 			dateEnd = cfgInputString(0, 1, "Podaj datę końcową (przykładowo 2020-08-29)", "Podaj datę (obowiązkowo format RRRR-MM-DD):", "Nie wiem jak, ale coś podałeś źle");
-			cls();
 			checkFileDateFromTo(filename, date, dateEnd, 0);
 			return;
 		}
