@@ -170,6 +170,7 @@ void settings()
             }
             case 'u':
             {
+                cls();
                 refreshCls = refreshCls ? 0 : 1;
                 break;
             }
