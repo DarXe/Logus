@@ -171,6 +171,7 @@ void settings()
             case 'u':
             {
                 refreshCls = refreshCls ? 0 : 1;
+                break;
             }
             case 'm':
             {
