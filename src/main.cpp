@@ -196,6 +196,14 @@ void wersja()
 	std::cout<<" SIERPIEŃ"<<std::endl;
 
 	SetConsoleTextAttribute(h, 6);
+	std::cout<<" 208_31 Wyszukiwanie logów (przelewów, wiadomości teamowych itp) działa teraz tak jak nigdy dotąd\n";
+	std::cout<<" 208_31 Dalsza optymalizacja liveChat - chodzi naprawdę szybko :-)\n";
+	std::cout<<" 208_31 Nowe ustawienie - maksymalny i minimalny dynamiczny refresh\n";
+	std::cout<<" 208_31 Dodano także nowe bugi, tj. brak kompatybilności ustawień z poprzednimi wersjami...\n";
+	std::cout<<" * Kosztem tego jest config v2, czyli 57 biednych else ifów pracujących na czarno\n";
+	std::cout<<" 208_31 Przebudowa niektórych komend w taki sposób, aby przyjmowały dowolne wartości\n";
+	std::cout<<" 208_31 Nowe komendy w LiveChat - set n add nick i set n del nick (usuwa lub dodaje nick do bazy nicków)\n";
+	std::cout<<" 208_31 Automatyczne wyszukiwanie nicku i lokalizacji MTA\n";
 	std::cout<<" 208_25 Gruntowna przebudowa LiveChat, w końcu mniejsze zużycie I/O i brak pomijania logów!\n";
 	std::cout<<" 208_17 Dodanie integracji z komisem, tj. możliwość sprawdzenia cen pojazdów w komisie\n";
 	std::cout<<" * Niebawem zrobione będzie pełnoprawne wsparcie dla Win 7 (z pomocą conEmu)\n";
