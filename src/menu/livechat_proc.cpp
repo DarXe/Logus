@@ -48,7 +48,7 @@ void salaryForTransport(std::string &line)
 		delim1 = line.find(". I");
 
 	tempSalary = line.substr(delim+3, delim1-delim-3);
-	money = stoi(tempSalary);
+	money += stoi(tempSalary);
 	courses++;
 	saveConfig(0);
 }
