@@ -29,7 +29,7 @@ bool runLiveChat()//flc
 bool closeLogus(std::string text = "Bye bye")
 {
 	cls();
-	zapis();
+	saveConfig();
 	Beep(dzwiekGlowny-100,250);
 	std::cout<<"\n"<<text;
 	for(int i = 0; i<4; i++){
@@ -244,32 +244,19 @@ std::string cfgSelectionStr(std::string Question = "",
 
 void preConfig()
 {
-	SetConsoleOutputCP(65001); // hard-coding ftw
+	SetConsoleOutputCP(65001);
 	SetConsoleCP(65001); // should work on Win 7
 	std::string _versionName_ = "Logus - preconfig";
 	SetConsoleTitleA(_versionName_.c_str());
 	SetConsoleTextAttribute(h, 10);
-	std::cout<<" Witaj w Logusiu || Welcome to Logus\n";
-	std::cout<<" Przechodze do prekonfiguracji || Going to preconfiguration"; dots(50,3); Sleep(5000);
-
-	if(cfgSelection(1, "Na poczatek wybierzmy jezyk || Choose your language", "Polski -- wcisnij 1 aby wybrac", "English -- press 2 to select") ==2 ) engLang = 1;
+	std::cout<< ((engLang)?" Welcome to Logus!\n":" Witaj w Logusiu!\n");
+	std::cout<< ((engLang)?" Going to preconfiguration":" Przechodzę do prekonfiguracji"); dots(50,3); Sleep(5000);
 
 	/* KROKI KONFIGURACJI:
-	1. Nick
-	2. Czy chcesz ustawic % wyplaty, aktualnie zarobione pieniadze i kursy?
-	3. Chcesz wybrac sposob transportu i czas ladowania?
-	4. Przenoszenie logów
-	5. Autostart
-
-	/* nick */ 
-
-	if(engLang) {
-		nick = cfgInputString(1, 1, "Enter your ingame nickname.", "Enter nickname:", "Error. Please enter correct nickname:");
-	} else if(codePage852) {
-		nick = cfgInputString(1, 1, "Podaj nick w grze.", "Podaj nick:", "Blad. Podaj prawidlowy nick:");
-	} else {
-		nick = cfgInputString(1, 1, "Podaj nick w grze.", "Podaj nick:", "Błąd. Podaj prawidłowy nick:");
-	}
+	1. Czy chcesz ustawic % wyplaty, aktualnie zarobione pieniadze i kursy?
+	2. Chcesz wybrac sposob transportu i czas ladowania?
+	3. Przenoszenie logów
+	4. Autostart
 
 	/* pay wage, money and course */
 

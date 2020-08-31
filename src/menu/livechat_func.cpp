@@ -5,7 +5,7 @@ void serverConnect();
 void startTimer(short getSeconds = 0);
 void stopTimer();
 
-bool fTeam(std::string &line, bool e)
+bool fTeam(const std::string &line, bool e)
 {
 	leng = nick.length();
 	if(line[gt]=='('&&line[gt+1]=='T'&&line[gt+2]=='E'&&line[gt+3]=='A'&&line[gt+4]=='M')
@@ -18,45 +18,62 @@ bool fTeam(std::string &line, bool e)
 	else return 0;
 }
 
-bool fPwOd(std::string &line)
+bool fPwOd(const std::string &line)
 {
 	if((line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='M') || (line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='W'))
 		return 1;
 	else return 0;
 }
 
-bool fPwDo(std::string &line)
+bool fPwDo(const std::string &line)
 {
 	if(line[gt]=='-'&&line[gt+1]=='>')
 		return 1;
 	else return 0;
 }
 
-bool fPrzelewyOd(std::string &line)
+void fNickChange(const std::string &line)
 {
-	leng = line.length();
-	if((line[gt]=='P'&&line[gt+1]=='l'&&line[gt+2]=='a'&&line[gt+3]=='y'&&line[gt+4]=='e'&&line[gt+6]==' '&&line[leng-2]!='d'&&line[leng-1]=='.'&&line[leng-3]!=' '&&line[leng-5]!='e')
-	   || (line[gt]=='G'&&line[gt+1]=='r'&&line[gt+2]=='a'&&line[gt+3]=='c'&&line[gt+4]=='z'&&line[gt+5]==' '&&line[leng-2]=='$'&&line[leng-1]=='.'))
-		return 1;
-	else return 0;
+	//[2020-08-30 04:03:19] [Output] : * Niventill is now known as test
+	std::string tempnick = "* " + nick + " is now known as ";
+	if (line.find(tempnick) != std::string::npos)
+	{
+		std::string newnick, tempn;
+		tempnick = line.substr(gt, std::string::npos);
+		std::istringstream ss(tempnick);
+		ss >> tempn >> tempn >> tempn >> tempn >> tempn >> newnick;
+		nick = newnick;
+	}
 }
 
-bool fPrzelewyDo(std::string &line)
+bool fPrzelewyOd(const std::string &line)
 {
-
-	if((line[gt]=='Y'&&line[gt+1]=='o'&&line[gt+2]=='u'&&line[gt+4]=='g'&&line[gt+6]=='v') || (line[gt]=='P'&&line[gt+1]=='r'&&line[gt+2]=='z'&&line[gt+3]=='e'&&line[gt+5]=='a'))
-		return 1;
-	else return 0;
+	//[2020-08-09 21:06:56] [Output] : Gracz SpookyTank przelał tobie 1500$.
+	//[2020-08-30 16:35:09] [Output] : Player DarXe transferred to you $1.
+	if((line.find("[Output] : Gracz ") != std::string::npos) || (line.find("[Output] : Player ") != std::string::npos))
+		if ((line.find(" przelał tobie ") != std::string::npos) || (line.find(" transferred to you") != std::string::npos))
+			return 1;
+	return 0;
 }
 
-bool fKomunikat(std::string &line)
+bool fPrzelewyDo(const std::string &line)
+{
+	//[2020-08-29 15:34:28] [Output] : Przelałeś 1000000$ graczowi DarXe.
+	//[2020-08-30 16:34:52] [Output] : You gave $1 to player DarXe.
+	if((line.find("[Output] : Przelałeś ") != std::string::npos) || (line.find("[Output] : You gave $") != std::string::npos))
+		if ((line.find(" to player ") != std::string::npos) || (line.find(" graczowi ") != std::string::npos))
+			return 1;
+	return 0;
+}
+
+bool fKomunikat(const std::string &line)
 {
 	if((line[gt]=='N'&&line[gt+1]=='e'&&line[gt+3]==' '&&line[gt+8]=='r') || (line[gt]=='N'&&line[gt+1]=='o'&&line[gt+3]=='y'&&line[gt+4]==' '&&line[gt+9]=='r'))
 		return 1;
 	else return 0;
 }
 
-bool fTransport(std::string &line)
+bool fTransport(const std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 		if((line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$') ||
@@ -66,7 +83,7 @@ bool fTransport(std::string &line)
 		else return 0;
 }
 
-bool fNicknames(std::string &line)
+bool fNicknames(const std::string &line)
 {
 	for(int i = 0; i<nicknames.size(); i++)
 	{
@@ -86,22 +103,22 @@ bool fNicknames(std::string &line)
 }
 
 //[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
-bool fBindKey(std::string &line)
+bool fBindKey(const std::string &line)
 {
 	return (line[gt]=='m'&&line[gt+1]=='s'&&line[gt+2]=='g'&&line[gt+3]==':'&&line[gt+5]=='P');
 }
 
-bool fOpen(std::string &line)
+bool fOpen(const std::string &line)
 {
 	return (line[line.length()-1]=='n'&&line[line.length()-2]=='e'&&line[line.length()-3]=='p'&&line[line.length()-4]=='o');
 }
 
-bool player(std::string &line)
+bool player(const std::string &line)
 {
 	return (line[gt]=='*' && line[gt]=='*');
 }
 
-bool fPlayerCount(std::string &line)
+bool fPlayerCount(const std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 	if((line[gt]=='Y'&&line[gt+4]=='v'&&line[gt+14]=='$') ||
@@ -111,7 +128,7 @@ bool fPlayerCount(std::string &line)
 	else return 0;
 }
 
-char fConsoleInput(std::string &line)//fci
+char fConsoleInput(const std::string &line)//fci
 {
 	if(line[gt-10]=='I')
 	{
@@ -128,7 +145,7 @@ char fConsoleInput(std::string &line)//fci
 		{
 			return 2;
 		}
-		else if(line[gt]=='t'||line[gt]=='\'') //t START TIMER
+		else if(line[gt]=='t') //t START TIMER
 		{
 			if(line[gt+1] == 't')//tt START TIMER waga 100%
 			{
@@ -137,8 +154,17 @@ char fConsoleInput(std::string &line)//fci
 				temp = czas * 1000 - temp;
 				timer -= temp;
 			}
-			else startTimer();
+			else if(line[gt+1]=='\'')
+				startTimer();
 			return 0;
+		}
+		else if (line.find("nick ") != std::string::npos)
+		{	//[2020-08-30 04:03:24] [Input]  : nick Niventill
+			std::string tempnick = line.substr(gt, std::string::npos);
+			std::istringstream ss(tempnick);
+			ss >> tempnick >> tempnick;
+			nick = tempnick;
+			return 1;
 		}
 		else if(line[gt]=='s'&&line[gt+1]=='e'&&line[gt+2]=='t')
 		{
@@ -165,78 +191,76 @@ char fConsoleInput(std::string &line)//fci
 			}
 			else if(line[gt+4]=='t') //set t m:ss || set t m ss //SET TIMER
 			{
-				int liczba;
-				if(line[gt+5]=='t')
+				if (line.find("[Input]  : set t ") != std::string::npos) //[Input]  : set t 00:00
 				{
-					liczba = line[gt+7];//min
-					liczba -= 48; temp = liczba*600;
-					liczba = line[gt+8];//min
-					liczba -= 48; temp += liczba*60;
-					liczba = line[gt+10];//sec
-					liczba -= 48; temp += liczba*10;
-					liczba = line[gt+11];//sec
-					liczba -= 48; temp += liczba;
+					std::string temptimer; int minutes, seconds, delim;
+					delim = line.find("[Input]  : set t ");
+					temptimer = line.substr(delim+17, std::string::npos);
+					sscanf_s(temptimer.c_str(), "%2d:%2d", &minutes, &seconds);
+					minutes *= 60;
+					minutes += seconds;
+					startTimer(minutes);
+					return 1;
 				}
-				else
-				{
-					liczba = line[gt+6];//min
-					liczba -= 48; temp = liczba*60;
-					liczba = line[gt+8];//sec
-					liczba -= 48; liczba *=10; temp += liczba;
-					liczba = line[gt+9];//sec
-					liczba -= 48; temp += liczba;
-				}
-				startTimer(temp);
 				return 0;
 			}
 			else if(line[gt+4]=='n')
-			{
+			{//[2020-03-01 02:16:00] [Input]  : set n add nick
 				if(line[gt+6]=='a'&&line[gt+7]=='d'&&line[gt+8]=='d')
 				{
+					std::string tempn; int delim;
+					delim = line.find("[Input]  : set n add ");
+					tempn = line.substr(delim+21, std::string::npos);
+					tempn = removeSpaces(tempn);
+					nicknames.push_back(tempn);
+					saveConfig(0);
 					return 1;
 				}
 				else if(line[gt+6]=='d'&&line[gt+7]=='e'&&line[gt+8]=='l')
 				{
+					std::string tempn; int delim;
+					delim = line.find("[Input]  : set n del ");
+					tempn = line.substr(delim+21, std::string::npos);
+					tempn = removeSpaces(tempn);
+					for(int i = 0; i < nicknames.size(); i++)
+					{
+						if (nicknames.at(i) == tempn)
+							nicknames.erase(nicknames.begin()+i);
+					}
+					saveConfig(0);
 					return 1;
 				}
 				else return 0;
 			}
 			else if(line[gt+4]=='m') //set m x xx xxx.. //SET MONEY (f4)
 			{//[2020-03-01 02:16:00] [Input]  : set m x
-				money = 0;
-				int tempMoney = 0;
-				temp = line.length()-gt-6;
-				int mnoz = power(10,temp-1);
-
-				for (size_t i = 0; i < temp; i++)
+				if (line.find("[Input]  : set m ") != std::string::npos)
 				{
-					tempMoney = line[gt+6+i];
-					tempMoney -= 48;
-					money += tempMoney*mnoz;
-					mnoz /= 10;
+					int delim = line.find("[Input]  : set m ");
+					std::string tmoney = line.substr(delim+16, std::string::npos);
+					money = stoi(tmoney);
+					saveConfig(0);
+					return 1;
 				}
-				return 1;
+				return 0;
 			}
 			else if(line[gt+4]=='c') //set c x //SET COURSES
 			{//[2020-03-01 02:16:00] [Input]  : set c x
-				courses = 0;
-				int tempC = 0;
-				temp = line.length()-gt-6;
-				int mnoz = power(10,temp-1);
-				for (size_t i = 0; i < temp; i++)
+				if (line.find("[Input]  : set c ") != std::string::npos)
 				{
-					tempC = line[gt+6+i];
-					tempC -= 48;
-					courses += tempC*mnoz;
-					mnoz /= 10;
+					int delim = line.find("[Input]  : set c ");
+					std::string tcourses = line.substr(delim+16, std::string::npos);
+					courses = stoi(tcourses);
+					saveConfig(0);
+					return 1;
 				}
-				return 1;
+				return 0;
 			}
 			else if(line[gt+4]=='r'&&line[gt+5]=='e') //reset kursow /set re
 			{
 				money = 0;
 				courses = 0;
-				zapis();
+				saveConfig(0);
 				return 1;
 			}
 			else return 0;
@@ -262,7 +286,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 				Beep(0,interval);
 
 				std::fstream info;
-				info.open("logusInfoOutput.log", std::ios::app);
+				info.open("liveChatInfoOutput.log", std::ios::app);
 					info<<ostatniaLinia<<std::endl;
 				info.close();
 				return 1;
@@ -274,7 +298,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			Beep(0,interval);
 
 			std::fstream info;
-			info.open("logusInfoOutput.log", std::ios::app);
+			info.open("liveChatInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
 			return 1;
@@ -292,7 +316,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			Beep(0,interval);
 			
 			std::fstream info;
-			info.open("logusInfoOutput.log", std::ios::app);
+			info.open("liveChatInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
 			return 1;
@@ -315,7 +339,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	{
 		if(fTransport(ostatniaLinia))
 		{
-			salaryForTransport(ostatniaLinia, ptsLang);
+			salaryForTransport(ostatniaLinia);
 			if(trackId)
 			{
 				if(trackId == 4) trackId = 1;
@@ -329,7 +353,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			Beep(0,interval);
 			
 			std::fstream info;
-			info.open("logusInfoOutput.log", std::ios::app);
+			info.open("liveChatInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
 			return 1;
@@ -345,7 +369,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			Beep(0,interval);
 			
 			std::fstream info;
-			info.open("logusInfoOutput.log", std::ios::app);
+			info.open("liveChatInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia<<std::endl;
 			info.close();
 			return 1;
@@ -359,7 +383,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		Beep(0,interval);
 
 		std::fstream info;
-		info.open("logusInfoOutput.log", std::ios::app);
+		info.open("liveChatInfoOutput.log", std::ios::app);
 			info<<ostatniaLinia<<std::endl;
 		info.close();
 		return 1;
@@ -373,7 +397,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		{
 			stopTimer();
 			std::fstream info;
-			info.open("logusInfoOutput.log", std::ios::app);
+			info.open("liveChatInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia.substr(0, 33)<<"Timer - STOP"<<std::endl;
 			info.close();
 		}
@@ -381,12 +405,14 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		{
 			startTimer();
 			std::fstream info;
-			info.open("logusInfoOutput.log", std::ios::app);
+			info.open("liveChatInfoOutput.log", std::ios::app);
 				info<<ostatniaLinia.substr(0, 33)<<"Timer - START"<<std::endl;
 			info.close();
 		}
 		return 1;
 	}
+
+	fNickChange(ostatniaLinia);
 
 	_quit = fConsoleInput(ostatniaLinia);
 	if(_quit)

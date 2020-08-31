@@ -5,20 +5,16 @@
 #include <fstream>
 #include <ctime>
 #include <cmath>
-#ifdef _WIN32
 #include <conio.h>
 #include <windows.h>
-#elif __linux__
-#include <ncurses.h>
-#endif
 #include <vector>
 #include <filesystem>
 #include <thread>
 
 #include "ver.cpp"
 #include "var.hpp"
-#include "patch.cpp"
-#include "logus.cpp"
+#include "common.cpp"
+#include "config.cpp"
 bool liveChat();
 void wersja();
 #include "proc.cpp" //procedures
@@ -26,104 +22,37 @@ void wersja();
 #include "menu\menu.cpp"
 
 int main(int argc, char** argv) //maa main
-{
-	std::fstream file;
-	file.open("console.log");
-		while(!file.good())
-		{
-			Beep(dzwiekGlowny,125);
-			Beep(0,interval);
-			Beep(dzwiekGlowny,125);
-			std::cout<<"Error, nie odnaleziono pliku!"<<std::endl;
-			std::cout<<"Error, file not found!\n";
-			std::cout<<"Program Logus musi znajdowac sie w folderze z logami MTA."<<std::endl;
-			std::cout<<"Logus has to be in the MTA log directory.\n";
-			Sleep(500);
-			std::cout<<"..\\MTA San Andreas 1.5\\MTA\\logs\\\n\n";
-			Sleep(500);
-			std::cout<<"Nastepnie uruchom go ponownie\n";
-			std::cout<<"Run it again when you're done\n\n";
-			Sleep(3000);
-			std::cout<<"Dowolny klawisz - zamknij Logus\n";
-			std::cout<<"Any key - close Logus\n\n";
-			if(kbhit()) return 0;
-		}
-	file.close();
-		
+{	
+	std::fstream inifile;
+	inifile.open("logus.ini");
+	if(inifile.good())
 	{
-		std::fstream fileInit;
-		std::cout<<" Updating files...\n\n";
-		fileInit.open("console.log", std::ios::app); fileInit.close();
-		fileInit.open("console.log.1", std::ios::app); fileInit.close();
-		fileInit.open("console.log.2", std::ios::app); fileInit.close();
-		fileInit.open("console.log.3", std::ios::app); fileInit.close();
-		fileInit.open("console.log.4", std::ios::app); fileInit.close();
-		fileInit.open("console.log.5", std::ios::app); fileInit.close();
-		fileInit.open("logusInfoOutput.log", std::ios::app); fileInit.close();
-		fileInit.open("logus.log", std::ios::app); fileInit.close();
-
-		#ifdef _WIN32
-		std::fstream curl;
-		curl.open("bin\\curl.exe");
-			if(!curl.good())
-			{
-				system("mkdir bin");
-				system("copy c:\\windows\\system32\\curl.exe bin\\curl.exe");
-			}
-		curl.close();
-
-		std::fstream pasteCmd;
-		pasteCmd.open("bin\\pasteCmd.exe");
-			if(!pasteCmd.good())
-			{
-				system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe --output bin\\pasteCmd.exe");
-			}
-		pasteCmd.close();
-
-		std::fstream updater;
-		updater.open("bin\\updater.exe");
-			if(!updater.good())
-			{
-				system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/experimental/bin/updater.exe --output bin\\updater.exe");
-			}
-		updater.close();
-		cls();
-		#endif
+		if(getVer() != ver) readConfig(0, 1); else readConfig();
 	}
-
-	file.open("logus.ini");
-		if(file.good())
-		{
-			if(getVer() != ver) patch(); else odczyt();
-		}
+	else
+	{
+		// installed OS detection, might be working funky :-D
+		DWORD val;
+		DWORD dataSize = sizeof(val);
+		if (ERROR_SUCCESS == RegGetValueA(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentMajorVersionNumber", RRF_RT_DWORD, nullptr, &val, &dataSize) && val>=10)
+			codePage852 = 0;
 		else
-		{
-			#ifdef _WIN32
-			// installed OS detection, might be working funky :-D
-			DWORD val;
-			DWORD dataSize = sizeof(val);
-			if (ERROR_SUCCESS == RegGetValueA(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentMajorVersionNumber", RRF_RT_DWORD, nullptr, &val, &dataSize) && val>=10)
-				codePage852 = 0;
-			else
-				codePage852 = 1;
-			#endif
-			preConfig();
-			zapis();
-			cls();
-			wersja();
-		}
-	file.close();
-	#if !defined(SHOWCURSOR) && defined(_WIN32)
-	CONSOLE_CURSOR_INFO CURSOR;
-	CURSOR.dwSize = 1;
-	CURSOR.bVisible = FALSE;
-	SetConsoleCursorInfo(h, &CURSOR);
-	#endif
-	std::string _versionName_ = "Logus " + relVer;
-	SetConsoleTitleA(_versionName_.c_str()); //verr
-	std::srand(time(NULL));
-	color(kolorGlowny);
-	#ifdef _WIN32
+			codePage852 = 1;
+
+		mtaLocation = getMTALocation();
+		if (GetUserDefaultUILanguage() != 1045)
+			engLang = 1;
+		else
+			engLang = 0;
+		if (getNickFromMTAConfig() != "")
+			nick = getNickFromMTAConfig();
+		preConfig();
+		saveConfig();
+		cls();
+		wersja();
+	}
+	inifile.close();
+	
 	if(codePage852)
 	{
 		SetConsoleOutputCP(852); //code page 852
@@ -134,7 +63,88 @@ int main(int argc, char** argv) //maa main
 		SetConsoleOutputCP(65001); //code page utf-8
 		SetConsoleCP(65001);
 	}
+	std::ifstream test;
+	while (true)
+	{
+		test.open(mtaLocation + "\\MTA\\logs\\console.log");
+		if (!test.good() && mtaLocation != "ERROR")
+		{
+			std::string temploc;
+			std::cout << ((engLang)?" Found MTA Path: ":" Znaleziona ścieżka MTA: ");
+			std::cout << mtaLocation << '\n';
+			std::cout << ((engLang)?" MTA directory found, but console.log file couldn't been found\n":" Udało się znaleźć lokalizację MTA, ale nie znaleziono pliku console.log\n");
+			std::cout << ((engLang)?" Make sure you ran MTA after it's installation. If you did so and it's still not working, pray and blame your computer\n Press any key to try find MTA path again":
+			" Upewnij się, że MTA zostało uruchomione po jego zainstalowaniu.\n Jeśli poblem nadal występuje, pomódl się i poprzeklinaj na kąkuter\n Wciśnij dowolny klawisz aby spróbować znaleźć lokalizację MTA ponownie");
+			getch(); mtaLocation = getMTALocation();
+		}
+		else if (!test.good() && mtaLocation == "ERROR")
+		{
+			std::string temploc;
+			std::cout << ((engLang)?" MTA directory not found. Please enter path manually\n":" Nie udało się znaleźć lokalizacji MTA. Proszę podaj lokalizację manualnie\n");
+			std::cout << ((engLang)?" It has to be the main directory, eg. C:\\Program Files (x86)\\MTA San Andreas 1.5\n":" Ścieżka musi być ścieżką główną, np. C:\\Program Files (x86)\\MTA San Andreas 1.5\n");
+			std::cout << ((engLang)?" Enter path: ":" Podaj ścieżkę: "); getline(std::cin, mtaLocation);
+		}
+		else
+		{
+			test.close();
+			consoleLogPath = mtaLocation + "\\MTA\\logs\\console.log";
+			consoleLog1Path = mtaLocation + "\\MTA\\logs\\console.log.1";
+			consoleLog2Path = mtaLocation + "\\MTA\\logs\\console.log.2";
+			consoleLog3Path = mtaLocation + "\\MTA\\logs\\console.log.3";
+			consoleLog4Path = mtaLocation + "\\MTA\\logs\\console.log.4";
+			consoleLog5Path = mtaLocation + "\\MTA\\logs\\console.log.5";
+			break;
+		}
+	}
+
+	//q(mtaLocation); q(consoleLogPath); q(consoleLog1Path); q(consoleLog2Path); q(consoleLog3Path); q(consoleLog4Path); q(consoleLog5Path); getch(); return 0;
+	std::fstream fileInit;
+	std::cout<<" Updating files...\n\n";
+	fileInit.open(consoleLogPath, std::ios::app); fileInit.close();
+	fileInit.open(consoleLog1Path, std::ios::app); fileInit.close();
+	fileInit.open(consoleLog2Path, std::ios::app); fileInit.close();
+	fileInit.open(consoleLog3Path, std::ios::app); fileInit.close();
+	fileInit.open(consoleLog4Path, std::ios::app); fileInit.close();
+	fileInit.open(consoleLog5Path, std::ios::app); fileInit.close();
+	fileInit.open("liveChatInfoOutput.log", std::ios::app); fileInit.close();
+	fileInit.open("logus.log", std::ios::app); fileInit.close();
+
+	std::fstream curl;
+	curl.open("bin\\curl.exe");
+		if(!curl.good())
+		{
+			system("mkdir bin");
+			system("copy c:\\windows\\system32\\curl.exe bin\\curl.exe");
+		}
+	curl.close();
+
+	std::fstream pasteCmd;
+	pasteCmd.open("bin\\pasteCmd.exe");
+		if(!pasteCmd.good())
+		{
+			system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe --output bin\\pasteCmd.exe");
+		}
+	pasteCmd.close();
+
+	std::fstream updater;
+	updater.open("bin\\updater.exe");
+		if(!updater.good())
+		{
+			system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/experimental/bin/updater.exe --output bin\\updater.exe");
+		}
+	updater.close();
+
+	cls();
+	#if !defined(SHOWCURSOR)
+	CONSOLE_CURSOR_INFO CURSOR;
+	CURSOR.dwSize = 1;
+	CURSOR.bVisible = FALSE;
+	SetConsoleCursorInfo(h, &CURSOR);
 	#endif
+	std::string _versionName_ = "Logus " + relVer;
+	SetConsoleTitleA(_versionName_.c_str()); //verr
+	std::srand(time(NULL));
+	color(kolorGlowny);
 
 	switch (fastStart)
 	{

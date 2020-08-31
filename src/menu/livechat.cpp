@@ -126,7 +126,7 @@ void showChat()
 void getChat(bool init = 0)//gc
 {
 	if (init) //if it's init, open filelc first
-		filelc.open("console.log", std::ios::in | std::ios::binary);
+		filelc.open(consoleLogPath, std::ios::in | std::ios::binary);
 	while (!filelc.eof()) 
 	{	
 		getline(filelc, linelc); //get linelc
@@ -151,7 +151,7 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 
 	//check filelc size and then load filelc content into string
 		auto read = std::chrono::high_resolution_clock::now();
-	std::ifstream from("console.log", std::ios::binary);
+	std::ifstream from(consoleLogPath, std::ios::binary);
     std::string fromContent(size,0);
     from.read(&fromContent[0],size);
 	from.close();
@@ -161,7 +161,7 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 	//clear console.log
 		auto clearl = std::chrono::high_resolution_clock::now();
 	std::ofstream clear;
-	clear.open("console.log", std::ios::out | std::ios::trunc);
+	clear.open(consoleLogPath, std::ios::out | std::ios::trunc);
 	clear.close();
 	//goto beginning of the console.log
 	filelc.clear();
@@ -189,6 +189,7 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 		    std::chrono::duration_cast<std::chrono::milliseconds>(read1 - read).count() + 
 			std::chrono::duration_cast<std::chrono::milliseconds>(clearl1 - clearl).count() << "ms)\n";
 	save.close();
+	size = std::filesystem::file_size(consoleLogPath);
 }
 
 void checkNotifications()
@@ -229,12 +230,12 @@ bool liveChat() //lc
 	auto initspeed1 = std::chrono::high_resolution_clock::now();
 	auto initspeedshow = std::chrono::duration_cast<std::chrono::nanoseconds>(initspeed1 - initspeed).count();
 
-		auto initshowspeed = std::chrono::high_resolution_clock::now();
+	auto initshowspeed = std::chrono::high_resolution_clock::now();
+	size = std::filesystem::file_size(consoleLogPath);
 	showChat();
 	auto initshowspeed1 = std::chrono::high_resolution_clock::now();
 	auto initshowspeedshow = std::chrono::duration_cast<std::chrono::nanoseconds>(initshowspeed1 - initshowspeed).count();
 
-	size = std::filesystem::file_size("console.log");
 	std::ofstream save;
 	save.open("debugInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
 	save << getCurrentTime() <<"initLiveChat: wielkość pliku: " << size/1000 
@@ -265,17 +266,17 @@ bool liveChat() //lc
 			{
 				for(int i = 0; i<newLines.size(); i++)
 				{
-					if(refresh <= 250)
+					if(refresh <= minRefresh)
 					{
-						refresh = 250;
+						refresh = minRefresh;
 						break;
 					}
 					refresh -= 50;
 				}
 			}
-			std::ifstream refreshf("console.log", std::ios::in | std::ios::binary);
+			std::ifstream refreshf(consoleLogPath, std::ios::in | std::ios::binary);
 			refreshf.close();
-			size = std::filesystem::file_size("console.log");
+			size = std::filesystem::file_size(consoleLogPath);
 			showChat();
 			checkNotifications();
 			if (_quit == 2)
@@ -288,13 +289,18 @@ bool liveChat() //lc
 		{
 			if(dynamicRefresh)
 			{
-				if(refresh < 1500)
+				if(refresh < maxRefresh)
 					refresh += 20;
 				else
-					refresh = 1500;
+					refresh = maxRefresh;
+				if (refresh == maxRefresh)
+				{
+					if (isTimer)
+						liveChatHead();
+				}
+				else
+					liveChatHead();
 			}
-			if(refreshCls)
-				showChat();
 			else
 				liveChatHead();
 		}
@@ -321,7 +327,7 @@ bool liveChat() //lc
 			{
 				pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
 				SetConsoleTextAttribute(h, 12); std::cout<<" autoJoin: trying to connect in "<<i<<"s ";
-				Sleep(5000/5);
+				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 				if(kbhit()) break;
 			}
 		}
@@ -342,6 +348,7 @@ bool liveChat() //lc
 				break;
 			case 's':
 				stopTimer();
+				liveChatHead();
 				break;
 			case 'm':
 			{
@@ -382,8 +389,8 @@ bool liveChat() //lc
 				SetConsoleCursorPosition(h, pos);
 				Beep(dzwiekGlowny, 100);
 				std::cout << "ZAPISANO!";
-				Sleep(500);
-				zapis(0);
+				std::this_thread::sleep_for(std::chrono::milliseconds(500));
+				saveConfig(0);
 			}
 			break;
 			case 'r': //read
@@ -393,8 +400,8 @@ bool liveChat() //lc
 				SetConsoleCursorPosition(h, pos);
 				Beep(dzwiekGlowny, 100);
 				std::cout << "WCZYTANO!";
-				Sleep(500);
-				odczyt(0);
+				std::this_thread::sleep_for(std::chrono::milliseconds(500));
+				readConfig(0);
 			}
 			break;
 			default:

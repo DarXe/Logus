@@ -8,8 +8,6 @@
 
 int menu() //con
 {
-	int lineCount = 0;
-	int lineCountAll = 0;
 	while(true)
 	{
 		if(isTimer) delay2 = clock();
@@ -98,37 +96,43 @@ int menu() //con
 		}
 		case '1':
 		{
-			std::string filen = ((engLang)?cfgSelectionStr("Choose file to lookup.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"):
-										cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"));
+			std::string filen = ((engLang)?cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"):
+										cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
 			cls();
 			if (filen == "WYJŚCIE")
+			{
+				cls();
 				break;
+			}
 			checkFileTeam(filen);
 			break;
 		}
 		case '2':
 		{
-			std::string filen = ((engLang)?cfgSelectionStr("Choose file to lookup.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"):
-										cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"));
+			std::string filen = ((engLang)?cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"):
+										cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
 			cls();
 			if (filen == "WYJŚCIE")
+			{
+				cls();
 				break;
+			}
 			checkFilePM(filen);
 			break;
 		}
 		case '3':
 		{
-			if (!checkFileTeam("console.log"))
+			if (!checkFileTeam(consoleLogPath))
 				break;
-			if (!checkFileTeam("console.log.1"))
+			if (!checkFileTeam(consoleLog1Path))
 				break;
-			if (!checkFileTeam("console.log.2"))
+			if (!checkFileTeam(consoleLog2Path))
 				break;
-			if (!checkFileTeam("console.log.3"))
+			if (!checkFileTeam(consoleLog3Path))
 				break;
-			if (!checkFileTeam("console.log.4"))
+			if (!checkFileTeam(consoleLog4Path))
 				break;
-			if (!checkFileTeam("console.log.5"))
+			if (!checkFileTeam(consoleLog5Path))
 				break;
 			if (!checkFileTeam("logus.log"))
 				break;
@@ -137,17 +141,17 @@ int menu() //con
 
 		case '4':
 		{
-			if (!checkFilePM("console.log"))
+			if (!checkFilePM(consoleLogPath))
 				break;
-			if (!checkFilePM("console.log.1"))
+			if (!checkFilePM(consoleLog1Path))
 				break;
-			if (!checkFilePM("console.log.2"))
+			if (!checkFilePM(consoleLog2Path))
 				break;
-			if (!checkFilePM("console.log.3"))
+			if (!checkFilePM(consoleLog3Path))
 				break;
-			if (!checkFilePM("console.log.4"))
+			if (!checkFilePM(consoleLog4Path))
 				break;
-			if (!checkFilePM("console.log.5"))
+			if (!checkFilePM(consoleLog5Path))
 				break;
 			if (!checkFilePM("logus.log"))
 				break;
@@ -155,17 +159,17 @@ int menu() //con
 		}
 		case 'p':
 		{
-			if (!checkFileTransfers("console.log"))
+			if (!checkFileTransfers(consoleLogPath))
 				break;
-			if (!checkFileTransfers("console.log.1"))
+			if (!checkFileTransfers(consoleLog1Path))
 				break;
-			if (!checkFileTransfers("console.log.2"))
+			if (!checkFileTransfers(consoleLog2Path))
 				break;
-			if (!checkFileTransfers("console.log.3"))
+			if (!checkFileTransfers(consoleLog3Path))
 				break;
-			if (!checkFileTransfers("console.log.4"))
+			if (!checkFileTransfers(consoleLog4Path))
 				break;
-			if (!checkFileTransfers("console.log.5"))
+			if (!checkFileTransfers(consoleLog5Path))
 				break;
 			if (!checkFileTransfers("logus.log"))
 				break;
@@ -239,6 +243,7 @@ int menu() //con
 				engLang = 1;
 				std::cout<<"Menu in English\n";
 			}
+			saveConfig(0);
 			break;
 		}
 		case '9':

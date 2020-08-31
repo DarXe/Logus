@@ -1,6 +1,6 @@
 // Copyright © 2018-2020  DarXe
 
-#include "logus.hpp"
+#include "common.hpp"
 #include <chrono>
 #include <iomanip>
 
@@ -9,44 +9,9 @@ int losuj(int od, int doo)
 	return rand()%(doo - od + 1)+od;
 }
 
-#ifdef __linux__
-
-int kbhit(void)
-{
-    int ch, r;
-
-    nodelay(stdscr, TRUE);
-    noecho();
-
-    ch = getch();
-    if( ch == ERR)
-            r = FALSE;
-    else
-    {
-            r = TRUE;
-            ungetch(ch);
-    }
-
-    echo();
-    nodelay(stdscr, FALSE);
-    return(r);
-}
-
-SetConsoleTitleA(std::string title)
-{
-	std::cout << "\033]0;" << title << "\007";
-}
-
-SetConsoleCursorPosition(int temp, )
-
-#endif
 void cls()
 {
-	#ifdef _WIN32
 	system("cls");
-	#elif __linux__
-	system("clear");
-	#endif
 }
 
 std::string getCurrentTime()
@@ -55,6 +20,56 @@ std::string getCurrentTime()
     std::stringstream ss;
     ss << std::put_time(std::localtime(&in_time_t), "[%Y-%m-%d %H:%M:%S] ");
 	return ss.str();
+}
+
+std::string getMTALocation()
+{
+	size_t bufferSize = 0xFFF;
+	#ifdef _WIN64
+	std::wstring mtaRegKey = L"SOFTWARE\\WOW6432Node\\Multi Theft Auto: San Andreas All\\1.5";
+	#elif _WIN32
+	std::wstring mtaRegKey = L"SOFTWARE\\Multi Theft Auto: San Andreas All\\1.5";
+	#endif
+    std::wstring valueBuf;
+    valueBuf.resize(bufferSize);
+    auto cbData = static_cast<DWORD>(bufferSize * sizeof(wchar_t));
+    auto rc = RegGetValueW(
+        HKEY_LOCAL_MACHINE,
+        mtaRegKey.c_str(),
+        L"Last Run Location",
+        RRF_RT_REG_SZ,
+        nullptr,
+        static_cast<void*>(valueBuf.data()),
+        &cbData
+    );
+	if (rc == ERROR_SUCCESS)
+	{
+		cbData /= sizeof(wchar_t);
+        valueBuf.resize(static_cast<size_t>(cbData - 1));
+		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> conv;
+		return conv.to_bytes(valueBuf);
+	}
+	else return "ERROR";
+}
+
+std::string getNickFromMTAConfig()
+{
+	std::ifstream check(mtaLocation + "\\MTA\\config\\coreconfig.xml", std::ios::in | std::ios::binary);
+	if(!check.good())
+		return "";
+	else
+	{	
+		std::string tempnick, newnick;
+		for(int i = 0; i < 3; i++)
+			getline(check, tempnick);
+		int delim, delim1;
+
+		delim = tempnick.find("<nick>");
+		delim1 = tempnick.find("</nick>");
+		
+		return tempnick.substr(delim+6, delim1-delim-6);
+
+	}
 }
 
 char wybor()
@@ -69,6 +84,15 @@ void def()
 	cls();
 	engLang?std::cout<<"\a (INFO) Option not found!\n":
 	std::cout<<"\a (INFO) Nie ma takiej opcji!\n";
+}
+
+std::string removeSpaces(std::string &line)
+{
+	if (isspace(line[0]))
+		line.erase(0, 1);
+	if (isspace(line.back()))
+		line.erase(line.size()-1);
+	return line;
 }
 
 void toClipboard(const std::string &s)

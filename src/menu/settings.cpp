@@ -8,7 +8,6 @@ void settings()
             std::cout<<" __________________________Settings - Logus___________________________\n";
             SetConsoleTextAttribute(h, 7);
             std::cout<<" [r] Reset settings to default\n";
-            std::cout<<" [a] Language on PTS: "<<((ptsLang)?"ENG":"PL")<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [p] Notify on private message: "<<((!fLockPW)?"YES":"NO")<<"\n";
             std::cout<<" [t] Notify on team message: "<<((!fLockTeam)?"YES":"NO")<<"\n";
@@ -21,7 +20,8 @@ void settings()
             std::cout<<" [3] Dynamic refresh: "<<((dynamicRefresh)?"YES":"NO")<<"\n";
             std::cout<<" [4] Notify' beep length(50-10000): "<<dzwiekGlowny<<"\n";
             std::cout<<" [5] Notify' beep delay(50-1000): "<<interval<<"\n";
-            std::cout<<" [u] Clear LiveChat every refresh: "<<((refreshCls)?"YES":"NO")<<"\n";
+            std::cout<<" [u] Min dynamic refresh in LiveChat: "<<minRefresh<<"\n";
+            std::cout<<" [o] Max dynamic refresh in LiveChat: "<<maxRefresh<<"\n";
             std::cout<<" [m] Automatic log mover: "; if(autoMoveLogs) std::cout<<"YES, at "<<autoMoveLogs<<" lines"; else std::cout<<"NO"; std::cout<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [6] Cargo unload time - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<"\n";
@@ -45,7 +45,6 @@ void settings()
             std::cout<<" _________________________Ustawienia - Logus__________________________\n";
             SetConsoleTextAttribute(h, 7);
             std::cout<<" [r] Przywróć ustawienia domyślne\n";
-            std::cout<<" [a] Język na PTS: "<<((ptsLang)?"ENG":"PL")<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [p] Dźwięk wiadomości PW: "<<((!fLockPW)?"TAK":"NIE")<<"\n";
             std::cout<<" [t] Dźwięk wiadomości teamowych: "<<((!fLockTeam)?"TAK":"NIE")<<"\n";
@@ -58,7 +57,8 @@ void settings()
             std::cout<<" [3] Dynamiczne odświeżanie: "<<((dynamicRefresh)?"TAK":"NIE")<<"\n";
             std::cout<<" [4] Częstotliwość dźwięku(50-10000): "<<dzwiekGlowny<<"\n";
             std::cout<<" [5] Przerwa między dźwiękami(50-1000): "<<interval<<"\n";
-            std::cout<<" [u] Czyść LiveChat przy każdym refreshu: "<<((refreshCls)?"TAK":"NIE")<<"\n";
+            std::cout<<" [u] Minimalny dynamiczny refresh w LiveChat: "<<minRefresh<<"\n";
+            std::cout<<" [o] Maksymalny dynamiczny refresh w LiveChat: "<<maxRefresh<<"\n";
             std::cout<<" [m] Automatyczne przenoszenie logów: "; if(autoMoveLogs) std::cout<<"TAK"; else std::cout<<"NIE"; std::cout<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [6] Czas rozładowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<"\n";
@@ -84,7 +84,7 @@ void settings()
             case 27:
             {
                 cls();
-                zapis();
+                saveConfig();
                 return;
             }
             case 'r':
@@ -98,12 +98,6 @@ void settings()
                 std::cout<<"Ustawienia domyślne programu zostały przywrócone!\n";
             }
             break;
-            case 'a':
-            {
-                cls();
-                ptsLang = (ptsLang)?0:1;
-                break;
-            }
             case 'p':
             {
                 cls();
@@ -170,8 +164,16 @@ void settings()
             }
             case 'u':
             {
+                minRefresh = (engLang?cfgInputInt(0, 1,  "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 1, Max 2000", 1, 2000):
+                cfgInputInt(0, 1,  "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 1, Max 2000", 1, 2000));
                 cls();
-                refreshCls = refreshCls ? 0 : 1;
+                break;
+            }
+            case 'o':
+            {
+                maxRefresh = (engLang?cfgInputInt(0, 1,  "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 1, Max 2000", 1, 2000):
+                cfgInputInt(0, 1,  "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 1, Max 2000", 1, 2000));
+                cls();
                 break;
             }
             case 'm':
@@ -186,7 +188,7 @@ void settings()
                 cfgInputInt(0, 1,  "", "Podaj minuty:", "Błąd. Podano błędną wartość", "Min 0, Max 10", 0, 10));
                 temp = (engLang?cfgInputInt(0, 1,  "", "Enter seconds:", "Error. Entered wrong value", "Min 0, Max 59", 0, 59):
                 cfgInputInt(0, 1,  "", "Podaj sekundy:", "Błąd. Podano błędną wartość", "Min 0, Max 59", 0, 59));
-                czas = (temp*60) + temp2;
+                czas = (temp2*60) + temp;
                 cls();
                 break;
             }
@@ -275,7 +277,7 @@ void settings()
                         case 27:
                         {
                             cls();
-                            zapis();
+                            saveConfig();
                             break;
                         }
                         case '1': //set2 SETTINGS two
@@ -352,8 +354,8 @@ void settings()
                         case 'r':
                         {
                             cls();
-                            odczyt();
-                            zapis();
+                            readDefault();
+                            saveConfig();
                             break;
                         }
                         case 'x':

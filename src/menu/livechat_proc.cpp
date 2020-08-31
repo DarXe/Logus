@@ -32,66 +32,25 @@ void stopTimer()
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
 }
 
-void salaryForTransport(std::string &line, bool &ptsLang)
+void salaryForTransport(std::string &line)
 {
-	if(ptsLang)
-	{
-		if(line[gt+19] == '.')
-		{
-			int liczba, mnoz=1000;
-			for(int i = 48; i<52; i++)//57 58 59 60 61 $xxxx
-			{
-				liczba = line[i];
-				liczba -= 48;
-				money += liczba*mnoz;
-				mnoz /= 10;
-			}
-			courses++;
-			zapis(0);
-		}
-		else if(line[gt+18] == '.')
-		{
-			int liczba, mnoz=100;
-			for(int i = 48; i<51; i++)//57 58 59 60 $xxx
-			{
-				liczba = line[i];
-				liczba -= 48;
-				money += liczba*mnoz;
-				mnoz /= 10;
-			}
-			courses++;
-			zapis(0);
-		}
-	}
-	else
-	{
-		if(line[61] == '$')
-		{
-			int liczba, mnoz=1000;
-			for(int i = 57; i<61; i++)//57 58 59 60 61 xxxx$
-			{
-				liczba = line[i];
-				liczba -= 48;
-				money += liczba*mnoz;
-				mnoz /= 10;
-			}
-			courses++;
-			zapis(0);
-		}
-		else if(line[60] == '$')
-		{
-			int liczba, mnoz=100;
-			for(int i = 57; i<60; i++)//57 58 59 60 xxx$
-			{
-				liczba = line[i];
-				liczba -= 48;
-				money += liczba*mnoz;
-				mnoz /= 10;
-			}
-			courses++;
-			zapis(0);
-		}
-	}
+	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
+	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
+	short delim = 0, delim1 = 0; std::string tempSalary;
+	if (line.find("rt ") != std::string::npos) //pol if
+		delim = line.find("rt ");
+	else if (line.find("d $") != std::string::npos) //eng if
+		delim = line.find("d $");
+
+	if (line.find("$ z") != std::string::npos) //pol if
+		delim1 = line.find("$ z");
+	else if (line.find(". I") != std::string::npos) //eng if
+		delim1 = line.find(". I");
+
+	tempSalary = line.substr(delim+3, delim1-delim-3);
+	money = stoi(tempSalary);
+	courses++;
+	saveConfig(0);
 }
 
 void stopAutoJoin(bool &isAutoJoin)

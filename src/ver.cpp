@@ -54,7 +54,7 @@ std::string genVer()
     
     #ifndef LOGUSDEV
         relVer = year + "." + month;
-        return year + month + day + "." + seconds;
+        return year + "." + month + "." + day + "-" + seconds;
     #else
         relVer = year + "." + month + ".dev";
         return year + month + day + ".dev";

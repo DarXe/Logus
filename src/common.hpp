@@ -1,7 +1,7 @@
 // Copyright © 2018-2020  DarXe
 
-#ifndef _LOGUS_HPP
-#define _LOGUS_HPP
+#ifndef _COMMON_HPP
+#define _COMMON_HPP
 
 /**
  * brief random number from a to b

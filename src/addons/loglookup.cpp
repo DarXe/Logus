@@ -1,6 +1,6 @@
 // Copyright © 2020  Niventill
 
-bool checkDate(std::string line, const std::string date, const bool &checkHour = 0)
+bool checkDate(std::string line, const std::string &date, const bool &checkHour = 0)
 {
 	//used date format (same as in mta logs) [2020-08-28 02:30:15]
 	if (!checkHour)
@@ -79,7 +79,7 @@ bool showFileContent(const std::string &filename, const uintmax_t &filesize, con
 	return 1;
 }
 
-bool checkFileNicknames(const std::string filename)
+bool checkFileNicknames(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
@@ -105,7 +105,7 @@ bool checkFileNicknames(const std::string filename)
 	return 1;
 }
 
-bool checkFilePM(const std::string filename)
+bool checkFilePM(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
@@ -131,7 +131,7 @@ bool checkFilePM(const std::string filename)
 	return 1;
 }
 
-bool checkFileTransfers(const std::string filename)
+bool checkFileTransfers(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
@@ -157,7 +157,7 @@ bool checkFileTransfers(const std::string filename)
 	return 1;
 }
 
-bool checkFileTeam(const std::string filename)
+bool checkFileTeam(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
@@ -173,7 +173,7 @@ bool checkFileTeam(const std::string filename)
 	while(!fileCheck.eof())
 	{
 		getline(fileCheck, line);
-		if (fTeam(line, 0))
+		if (fTeam(line, 1))
 			foundLines.push_back(line);
 	}
 	fileCheck.close();
@@ -222,10 +222,13 @@ void dateSelectionMenu()
 {
 	std::string date, dateEnd, filename;
 	cls();
-	filename = ((engLang)?cfgSelectionStr("Choose file to lookup.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"):
-									cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", "console.log", "console.log.1", "console.log.2", "console.log.3", "console.log.4", "console.log.5", "logus.log"));
+	filename = ((engLang)?cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"):
+									cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
 	if (filename == "WYJŚCIE")
+	{
+		cls();
 		return;
+	}
 	cls();
 	if(engLang)
 	{

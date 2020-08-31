@@ -85,7 +85,7 @@ bool genDealerDatabase(std::string file = "cars.txt")
 	cars << "Berkley          250000		121 km/h\n";
 	cars << "Boxville         150000		 96 km/h\n";
 	cars << "Burrito          250000		140 km/h\n";
-	cars << "Wywrotka         300000		116 km/h\n";
+	cars << "Wywrotka_Solo    300000		116 km/h\n";
 	cars << "DFT-30           280000		116 km/h\n";
 	cars << "Flatbed          350000		140 km/h\n";
 	cars << "Mule             160000		 94 km/h\n";
@@ -102,8 +102,8 @@ bool genDealerDatabase(std::string file = "cars.txt")
 	cars << "Linerunner       250000		 98 km/h\n";
 	cars << "Roadtrain        350000		127 km/h\n";
 	cars << "Tanker           300000		107 km/h\n";
-	cars << "Burtówka         150000		  0 km/h\n";
-	cars << "Chłodnia         150000		  0 km/h\n";
+	cars << "Burtowka         150000		  0 km/h\n";
+	cars << "Chlodnia         150000		  0 km/h\n";
 	cars << "Cysterna         150000		  0 km/h\n";
 	cars << "Wywrotka         150000		  0 km/h\n";
 	cars << "Utility_Trailer  150000		  0 km/h\n";
@@ -356,7 +356,7 @@ void dealer()
 				}
 				if (wyb == 27)
 				{
-					zapis(0);
+					saveConfig(0);
 					cls();
 					break;
 				}
@@ -366,7 +366,7 @@ void dealer()
 		{
 			dealerManual = dealerManual ? 0 : 1;
 			cls();
-			zapis(0);
+			saveConfig(0);
 			break;
 		}
 		case 'f':

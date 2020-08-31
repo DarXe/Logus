@@ -7,6 +7,7 @@
 //logus.ini
 std::string serverIP = "185.62.189.174:22003"; //ip server
 std::string ver = genVer(); //version variable, not editable //zmienna wersji, nie wolno edytować
+std::string mtaLocation = "";
 int dzwiekGlowny = 1777; //sound message //dźwięk komunikatów
 bool fLockTeam = 0; //lock beep(TEAM)
 bool fLockPW = 0; //lock beep priv message
@@ -17,7 +18,6 @@ bool chatSound = 0; //the sound of any chat message //dźwięk każdej wiadomoś
 std::string kolorGlowny = "A"; //main color //kolor główny(przy wyszukiwaniu logów)
 int wyswietlaneWiersze = 15; //displayed rows in LiveChat
 int refresh = 300; //refresh<ms> in LiveChat
-bool ptsLang = 0; //ANG version - flag on PTS
 int interval = 50; //time interval between sounds //odstęp czasowy(ms) między kolejnymi dźwiękami
 std::string nick = "PodajSwojNick"; //nickname on MTA
 bool dynamicRefresh = 0; //dynamic refresh in LiveChat //dynamiczne odświeżanie w LC
@@ -35,8 +35,9 @@ std::string mess; // used in ifs to determine language
 float base_dealerBuy = 0.40; //base price for skup pojazdu lol
 float base_dealerSellCar = 0.65; //base price for sprzedaz pojazdu osobowego lol
 float base_dealerSellTransport = 0.80; //base price for sprzedaz pojazdu dostawczego lol
-bool dealerManual = 0;
-bool refreshCls = 0;
+bool dealerManual = 0; //manual car database edit
+short minRefresh = 250; //minimal refresh in livechat
+short maxRefresh = 1250; //max refresh in livechat
 
 const short gt = 33; //auxiliary variable
 int leng = 0; //length
@@ -44,6 +45,13 @@ char wyb = ' '; //auxiliary variable //wybór w menu, tymczasowa w fTransport
 const HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD pos;
 COORD tpos;
+
+std::string consoleLogPath;
+std::string consoleLog1Path;
+std::string consoleLog2Path;
+std::string consoleLog3Path;
+std::string consoleLog4Path;
+std::string consoleLog5Path;
 
 const std::string track[5] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
 clock_t delay = 0, delay2 = 0; //pomiary delay
