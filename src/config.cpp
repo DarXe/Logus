@@ -157,6 +157,11 @@ void readConfig(bool showInfo = true, bool showPatchInfo = false)
 
 		else if (templine.find("b_Manualna edycja cars.txt:") != std::string::npos)
 			dealerManual = stoi(clearConfigValue(templine, "b_Manualna edycja cars.txt:"));
+
+		else if (templine.find("b_Toggle auto gate opening (open at the end of PM):") != std::string::npos)
+			autoOpenGate = stoi(clearConfigValue(templine, "b_Toggle auto gate opening (open at the end of PM):"));
+		else if (templine.find("b_Włącz automatyczne otwieranie bramy (open na końcu PW):") != std::string::npos)
+			autoOpenGate = stoi(clearConfigValue(templine, "b_Włącz automatyczne otwieranie bramy (open na końcu PW):"));
 	}
 
 	consoleLogPath = mtaLocation + "\\MTA\\logs\\console.log";
@@ -234,6 +239,7 @@ void saveConfig(bool showInfo = true)
 		file<<"b_Mute PM notifications: "<<fLockPW<<"\n";
 		file<<"b_Mute fraction/cargo notifications: "<<fLockKomunikat<<"\n";
 		file<<"b_Mute nicknames notifications: "<<fLockNick<<"\n";
+		file<<"b_Toggle auto gate opening (open at the end of PM): "<<autoOpenGate<<"\n";
 		file<<"b_Notify on any message: "<<chatSound<<"\n";
 		file<<"b_Dynamic refresh: "<<dynamicRefresh<<"\n";
 		file<<"i_Min dynamic refresh: "<<minRefresh<<"\n";
@@ -278,6 +284,7 @@ void saveConfig(bool showInfo = true)
 		file<<"b_Blokada powiadomienia PM: "<<fLockPW<<"\n";
 		file<<"b_Blokada powiadomienia towaru/frakcji: "<<fLockKomunikat<<"\n";
 		file<<"b_Blokada powiadomienia na wybrane nicki: "<<fLockNick<<"\n";
+		file<<"b_Włącz automatyczne otwieranie bramy (open na końcu PW): "<<autoOpenGate<<"\n";
 		file<<"b_Powiadomienia na każdą wiadomość: "<<chatSound<<"\n";
 		file<<"b_Odświeżanie dynamiczne: "<<dynamicRefresh<<"\n";
 		file<<"i_Min dynamiczne odświeżanie: "<<minRefresh<<"\n";

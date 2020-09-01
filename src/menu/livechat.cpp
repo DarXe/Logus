@@ -290,15 +290,16 @@ bool liveChat() //lc
 			if(dynamicRefresh)
 			{
 				if(refresh < maxRefresh)
-					refresh += 20;
-				else
-					refresh = maxRefresh;
-				if (refresh == maxRefresh)
 				{
-					if (isTimer)
-						liveChatHead();
+					refresh += 25;
+					liveChatHead();
 				}
-				else
+				else if (refresh != maxRefresh)
+				{
+					refresh = maxRefresh;
+					liveChatHead();
+				}
+				else if ((refresh == maxRefresh) && isTimer)
 					liveChatHead();
 			}
 			else
@@ -369,8 +370,9 @@ bool liveChat() //lc
 			case 48: //48? it's funny, because it's 0 :D //clear track
 			{
 				trackId = trackId ? 0 : 1;
+				liveChatHead();
+				break;
 			}
-			break;
 			case 13: //enter start autoJoin
 			{
 				isAutoJoin = true;

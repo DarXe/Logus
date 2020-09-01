@@ -193,6 +193,21 @@ void wersja()
 	////////////////////////////////////////////////////////////////// news goes here ////////////////////////////
 
 	SetConsoleTextAttribute(h, 4);
+	std::cout<<" WRZESIEŃ"<<std::endl;
+
+	SetConsoleTextAttribute(h, 6);
+	std::cout<<" 209_01 Wykrycie wypadku uruchomi teraz także timer (resetując przy okazji inne timery)\n";
+	std::cout<<" 209_01 Dodano nowe ustawienie - automatyczne otwieranie bramy po otrzymaniu PW kończącego się na ""open""\n";
+	std::cout<<" 209_01 Poprawiono kilka błędów powstałych po optymalizacji liveChat, teraz powinno być git\n";
+
+	std::cout<<"\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)"<<std::endl;
+	if(getch() == 27)
+	{
+		cls();
+		return;
+	}
+	cls();
+	SetConsoleTextAttribute(h, 4);
 	std::cout<<" SIERPIEŃ"<<std::endl;
 
 	SetConsoleTextAttribute(h, 6);

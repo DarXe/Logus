@@ -18,6 +18,26 @@ bool fTeam(const std::string &line, bool e)
 	else return 0;
 }
 
+void pKarambol(const std::string &line)
+{
+	if (line.find("[Output] : Nie ma lekarzy na serwerze. Za ") != std::string::npos)
+	{
+		int delim, delim1, var;
+		delim = line.find(" Za ");
+		delim1 = line.find(" sek ");
+		var = stoi(line.substr(delim+4, delim1-delim-4));
+		startTimer(var);
+	}
+	else if (line.find("[Output] : There's no medics right here on the serwer. Wait ") != std::string::npos)
+	{
+		int delim, delim1, var;
+		delim = line.find(" Wait ");
+		delim1 = line.find(" sek ");
+		var = stoi(line.substr(delim+6, delim1-delim-6));
+		startTimer(var);
+	}
+}
+
 bool fPwOd(const std::string &line)
 {
 	if((line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='M') || (line[gt]=='*'&&line[gt+2]=='P'&&line[gt+3]=='W'))
@@ -32,7 +52,7 @@ bool fPwDo(const std::string &line)
 	else return 0;
 }
 
-void fNickChange(const std::string &line)
+void pNickChange(const std::string &line)
 {
 	//[2020-08-30 04:03:19] [Output] : * Niventill is now known as test
 	std::string tempnick = "* " + nick + " is now known as ";
@@ -110,7 +130,9 @@ bool fBindKey(const std::string &line)
 
 bool fOpen(const std::string &line)
 {
-	return (line[line.length()-1]=='n'&&line[line.length()-2]=='e'&&line[line.length()-3]=='p'&&line[line.length()-4]=='o');
+	if(autoOpenGate)
+		return (line[line.length()-2]=='n'&&line[line.length()-3]=='e'&&line[line.length()-4]=='p'&&line[line.length()-5]=='o');
+	else return 0;
 }
 
 bool player(const std::string &line)
@@ -158,7 +180,7 @@ char fConsoleInput(const std::string &line)//fci
 				startTimer();
 			return 0;
 		}
-		else if (line.find("nick ") != std::string::npos)
+		else if (line.find("[Input]  : nick") != std::string::npos)
 		{	//[2020-08-30 04:03:24] [Input]  : nick Niventill
 			std::string tempnick = line.substr(gt, std::string::npos);
 			std::istringstream ss(tempnick);
@@ -249,7 +271,7 @@ char fConsoleInput(const std::string &line)//fci
 				if (line.find("[Input]  : set c ") != std::string::npos)
 				{
 					int delim = line.find("[Input]  : set c ");
-					std::string tcourses = line.substr(delim+16, std::string::npos);
+					std::string tcourses = line.substr(delim+17, std::string::npos);
 					courses = stoi(tcourses);
 					saveConfig(0);
 					return 1;
@@ -374,6 +396,8 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			info.close();
 			return 1;
 		}
+
+		pKarambol(ostatniaLinia);
 	}
 
 	//przelewy
@@ -412,7 +436,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		return 1;
 	}
 
-	fNickChange(ostatniaLinia);
+	pNickChange(ostatniaLinia);
 
 	_quit = fConsoleInput(ostatniaLinia);
 	if(_quit)

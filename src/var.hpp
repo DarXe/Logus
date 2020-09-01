@@ -38,6 +38,7 @@ float base_dealerSellTransport = 0.80; //base price for sprzedaz pojazdu dostawc
 bool dealerManual = 0; //manual car database edit
 short minRefresh = 250; //minimal refresh in livechat
 short maxRefresh = 1250; //max refresh in livechat
+bool autoOpenGate = 0;
 
 const short gt = 33; //auxiliary variable
 int leng = 0; //length

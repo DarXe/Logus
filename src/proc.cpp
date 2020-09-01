@@ -369,7 +369,7 @@ void preConfig()
 			temp = cfgInputInt(1, 1,  "Teraz podaj sekundy.", "Podaj sekundy:", "Błąd. Podaj prawidłową liczbę.", "To musi być liczba.", 0, INT_MAX );
 			czas = (temp*60) + temp2;
 
-			if(cfgSelection( "Podaj sposób ładowania.", "Losowy", """Sam wybiorę""") == 1) random = 1;
+			if(cfgSelection(1, "Podaj sposób ładowania.", "Losowy", """Sam wybiorę""") == 1) random = 1;
 		}	
 	}
 
