@@ -34,7 +34,7 @@ int menu() //con
 			std::cout<<" [3] Search for team messages in all .log files\n";
 			std::cout<<" [4] Search for private messages and answers in all .log files\n";
 			SetConsoleTextAttribute(h, 12);
-			std::cout<<" [p] Search for payments in all .log files\n";
+			std::cout<<" [p] Search for payments in .log files\n";
 			std::cout<<" [o] Search in .log file with date from-to\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [w] Pingtest - check connection to the internet\n";
@@ -69,7 +69,7 @@ int menu() //con
 			std::cout<<" [3] Szukaj wiadomości teamowych we wszystkich plikach .log\n";
 			std::cout<<" [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log\n";
 			SetConsoleTextAttribute(h, 12);
-			std::cout<<" [p] Szukaj przelewów od i do graczy we wszystkich plikach\n";
+			std::cout<<" [p] Szukaj przelewów od i do graczy w plikach .log\n";
 			std::cout<<" [o] Szukaj w plikach .log po dacie od-do\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout<<" [w] Test ping - szybkie sprawdzenie, czy jest internet\n";
@@ -159,20 +159,15 @@ int menu() //con
 		}
 		case 'p':
 		{
-			if (!checkFileTransfers(consoleLogPath))
+			std::string filen = ((engLang)?cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"):
+										cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
+			cls();
+			if (filen == "WYJŚCIE")
+			{
+				cls();
 				break;
-			if (!checkFileTransfers(consoleLog1Path))
-				break;
-			if (!checkFileTransfers(consoleLog2Path))
-				break;
-			if (!checkFileTransfers(consoleLog3Path))
-				break;
-			if (!checkFileTransfers(consoleLog4Path))
-				break;
-			if (!checkFileTransfers(consoleLog5Path))
-				break;
-			if (!checkFileTransfers("logus.log"))
-				break;
+			}
+			checkFileTransfers(filen);
 			break;
 		}
 		case 'o':
