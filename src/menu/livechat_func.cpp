@@ -223,7 +223,6 @@ char fConsoleInput(const std::string &line)//fci
 					minutes *= 60;
 					minutes += seconds;
 					startTimer(minutes);
-					return 1;
 				}
 				return 0;
 			}
