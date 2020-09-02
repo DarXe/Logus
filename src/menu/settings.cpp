@@ -23,6 +23,7 @@ void settings()
             std::cout<<" [u] Min dynamic refresh in LiveChat: "<<minRefresh<<"\n";
             std::cout<<" [o] Max dynamic refresh in LiveChat: "<<maxRefresh<<"\n";
             std::cout<<" [m] Automatic log mover: "; if(autoMoveLogs) std::cout<<"YES, at "<<autoMoveLogs<<" lines"; else std::cout<<"NO"; std::cout<<"\n";
+            std::cout<<" [d] Auto gate open (open at the end of PM): "<<autoOpenGate<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [6] Cargo unload time - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<"\n";
             std::cout<<" [7] I will choose / Random: "<<((random)?"5min - Random":"6min - I will choose")<<"\n";
@@ -60,6 +61,7 @@ void settings()
             std::cout<<" [u] Minimalny dynamiczny refresh w LiveChat: "<<minRefresh<<"\n";
             std::cout<<" [o] Maksymalny dynamiczny refresh w LiveChat: "<<maxRefresh<<"\n";
             std::cout<<" [m] Automatyczne przenoszenie logów: "; if(autoMoveLogs) std::cout<<"TAK"; else std::cout<<"NIE"; std::cout<<"\n";
+            std::cout<<" [d] Automatyczne otwieranie bramy (open na końcu PW): "<<autoOpenGate<<"\n";
             SetConsoleTextAttribute(h, 14);
             std::cout<<" [6] Czas rozładowywania towaru - "<<czas/60<<((czas%60<10)?":0":":")<<czas%60<<"\n";
             std::cout<<" [7] Sam wybiorę / Skrypt: "<<((random)?"5min - Skrypt":"6min - Sam wybiorę")<<"\n";
@@ -180,6 +182,12 @@ void settings()
             {
                 cls();
                 autoMoveLogs = autoMoveLogs? 0 : 1;
+                break;
+            }
+            case 'd':
+            {
+                cls();
+                autoOpenGate = autoOpenGate? 0: 1;
                 break;
             }
             case '6':
