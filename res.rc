@@ -10,7 +10,7 @@ BEGIN
       VALUE "FileDescription", "Logi, logi i jeszcze raz logi... MTA oczywiscie."
       VALUE "FileVersion", "20.09"
       VALUE "InternalName", "Logus"
-      VALUE "LegalCopyright", "Copyright (C) 2018-2020 DarXe"
+      VALUE "LegalCopyright", "Copyright (C) 2018-2020 DarXe and Niventill"
       VALUE "OriginalFilename", "Logus.exe"
       VALUE "ProductName", "Logus"
       VALUE "ProductVersion", "20.09"

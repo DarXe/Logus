@@ -1,4 +1,5 @@
 // Copyright © 2020  Niventill
+// This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
 bool genDealerDatabase(std::string file = "cars.txt")
 {

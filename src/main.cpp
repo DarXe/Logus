@@ -1,4 +1,5 @@
 // Copyright © 2018-2020  DarXe
+// This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
 #define q(var) std::cout<<#var<<"="<<var<<"\n";
 #include <iostream>

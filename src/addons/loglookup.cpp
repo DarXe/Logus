@@ -1,4 +1,5 @@
 // Copyright © 2020  Niventill
+// This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
 bool checkDate(std::string line, const std::string &date, const bool &checkHour = 0)
 {
