@@ -309,7 +309,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 
 				std::fstream info;
 				info.open("liveChatInfoOutput.log", std::ios::app);
-					info<<ostatniaLinia<<std::endl;
+					info<<ostatniaLinia;
 				info.close();
 				return 1;
 			}
@@ -321,7 +321,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
-				info<<ostatniaLinia<<std::endl;
+				info<<ostatniaLinia;
 			info.close();
 			return 1;
 		}
@@ -339,7 +339,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
-				info<<ostatniaLinia<<std::endl;
+				info<<ostatniaLinia;
 			info.close();
 			return 1;
 		}
@@ -376,7 +376,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
-				info<<ostatniaLinia<<std::endl;
+				info<<ostatniaLinia;
 			info.close();
 			return 1;
 		}
@@ -392,7 +392,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
-				info<<ostatniaLinia<<std::endl;
+				info<<ostatniaLinia;
 			info.close();
 			return 1;
 		}
@@ -408,7 +408,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 
 		std::fstream info;
 		info.open("liveChatInfoOutput.log", std::ios::app);
-			info<<ostatniaLinia<<std::endl;
+			info<<ostatniaLinia;
 		info.close();
 		return 1;
 	}
@@ -422,7 +422,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			stopTimer();
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
-				info<<ostatniaLinia.substr(0, 33)<<"Timer - STOP"<<std::endl;
+				info<<ostatniaLinia.substr(0, 33)<<"Timer - STOP";
 			info.close();
 		}
 		else
@@ -430,7 +430,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			startTimer();
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
-				info<<ostatniaLinia.substr(0, 33)<<"Timer - START"<<std::endl;
+				info<<ostatniaLinia.substr(0, 33)<<"Timer - START";
 			info.close();
 		}
 		return 1;
