@@ -1,7 +1,8 @@
 default:
 
 logus: src\main.cpp
-	g++ -o Logus.exe src\main.cpp -std=c++17 -O3 -s -ftime-report
+	windres res.rc -O coff -o res.res
+	g++ -o Logus.exe src\main.cpp res.res -std=c++17 -O3 -s -ftime-report
 	@echo release build done!
 logusdev: src\main.cpp
 	g++ -o Logus.exe src\main.cpp -std=c++17 -O3 -s -D LOGUSDEV
