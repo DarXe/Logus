@@ -160,32 +160,29 @@ void dealerInfo(bool isBuy)
 {
 	std::string searchedVehicle, vehicle, kmph;
 	std::fstream cars;
-	int price, vmax, i = 0;
+	int price, vmax;
 	bool isTransport = 0;
 	while (true)
 	{
 		cls();
 		std::cout << " Podaj DOKŁADNĄ nazwę pojazdu: ";
 		getline(std::cin, searchedVehicle);
-		while (i < searchedVehicle.length())
+		for (int i = 0; i < searchedVehicle.length(); i++)
 		{
 			if (isspace(searchedVehicle[i]))
 				searchedVehicle[i] = '_';
 			if (isupper(searchedVehicle[i]))
 				searchedVehicle[i] = tolower(searchedVehicle[i]);
-			i++;
 		}
 		isTransport = 0;
 		cars.open("cars.txt", std::ios::in);
 		while (!cars.eof())
 		{
 			cars >> vehicle >> price >> vmax >> kmph;
-			i = 0;
-			while (i < vehicle.length())
+			for (int i = 0; i < vehicle.length(); i++)
 			{
 				if (isupper(vehicle[i]))
 					vehicle[i] = tolower(vehicle[i]);
-				i++;
 			}
 			if (vehicle == "dostawcze")
 				isTransport = 1;
@@ -210,6 +207,8 @@ void dealerInfo(bool isBuy)
 					{
 						cls();
 						std::cout << " Stawka bazowa: " << base_dealerSellTransport * 100 << "%, " << vehicle << ", $" << price * base_dealerSellTransport << ", " << vmax << " km/h\n";
+						if (vehicle == "Roadtrain" && vehicle == "Tanker" && vehicle == "Linerunner")
+							std::cout << " Z naczepą ($" << base_dealerSellTransport * 150000 << "): $" << (price + 150000) * base_dealerSellTransport << '\n';
 						std::cout << " ESC - wyjście | Inny klawisz, wyszukaj ponownie\n";
 					}
 				}
@@ -218,6 +217,7 @@ void dealerInfo(bool isBuy)
 					cls();
 					return;
 				}
+				else break;
 			}
 		}
 		cars.close();
