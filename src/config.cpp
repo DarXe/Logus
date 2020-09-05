@@ -7,7 +7,7 @@ std::string clearConfigValue(std::string &line, std::string cfgname)
 	return removeSpaces(line);
 }
 
-void readConfig(bool showInfo = true, bool showPatchInfo = false)
+void readConfig(bool showInfo = true)
 {
 	std::ifstream read; std::string templine;
 	read.open("logus.ini");
@@ -16,10 +16,6 @@ void readConfig(bool showInfo = true, bool showPatchInfo = false)
 		getline(read, templine);
 		if ((templine.find("//BAZA DANYCH NICKÓW") != std::string::npos) || (templine.find("//NICKNAMES DATABASE") != std::string::npos))
 			break;
-		else if (templine.find("s_version:") != std::string::npos)
-			ver = clearConfigValue(templine, "s_version:");
-		else if (templine.find("s_wersja:") != std::string::npos)
-			ver = clearConfigValue(templine, "s_wersja:");
 
 		else if (templine.find("s_MTA server IP:") != std::string::npos)
 			serverIP = clearConfigValue(templine, "s_MTA server IP:");
@@ -163,6 +159,9 @@ void readConfig(bool showInfo = true, bool showPatchInfo = false)
 			autoOpenGate = stoi(clearConfigValue(templine, "b_Toggle auto gate opening (open at the end of PM):"));
 		else if (templine.find("b_Włącz automatyczne otwieranie bramy (open na końcu PW):") != std::string::npos)
 			autoOpenGate = stoi(clearConfigValue(templine, "b_Włącz automatyczne otwieranie bramy (open na końcu PW):"));
+
+		else if (templine.find("s_Update channel:") != std::string::npos)
+			updateChannel = clearConfigValue(templine, "s_Update channel:");
 	}
 
 	consoleLogPath = mtaLocation + "\\MTA\\logs\\console.log";
@@ -182,12 +181,7 @@ void readConfig(bool showInfo = true, bool showPatchInfo = false)
 		nicknames.push_back(templine);
 	}
 	read.close();
-	if (showPatchInfo)
-	{
-		engLang?std::cout<<" (INFO) Settings loaded. Succesfully updated do "<<ver<<'\n':
-		std::cout<<" (INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<'\n';
-	}
-	else if(showInfo) 
+	if(showInfo) 
 	{
 			engLang?std::cout<<" (INFO) Settings has been loaded.":
 			std::cout<<" (INFO) Wczytano ustawienia.\n";
@@ -203,16 +197,22 @@ std::string getVer()
 		getline(file, templine);
 		if (templine.find("s_version:") != std::string::npos)
 		{
-			templine = templine.substr(11, std::string::npos);
+			clearConfigValue(templine, "s_version:");
 			return removeSpaces(templine);
 		}
 		else if (templine.find("s_wersja:") != std::string::npos)
 		{
-			templine = templine.substr(9, std::string::npos);
+			clearConfigValue(templine, "s_wersja:");
 			return removeSpaces(templine);
 		}
 	}
 	return "ERROR";
+}
+
+void showUpdateInfo()
+{
+	engLang?std::cout<<" (INFO) Settings loaded. Succesfully updated do "<<ver<<'\n':
+		std::cout<<" (INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<'\n';
 }
 
 void saveConfig(bool showInfo = true)
@@ -227,6 +227,7 @@ void saveConfig(bool showInfo = true)
 		file<<"//Colors: 1-9, A-F"<<std::endl;
 		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
 		file<<"s_version: "<<ver<<"\n";
+		file<<"s_Update channel: " <<updateChannel<<'\n';
 		file<<"s_MTA server IP: "<<serverIP<<"\n";
 		file<<"s_MTA Path: "<<mtaLocation<<"\n";
 		file<<"s_Nickname: "<<nick<<"\n";
@@ -273,6 +274,7 @@ void saveConfig(bool showInfo = true)
 		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
 		file<<"s_wersja: "<<ver<<"\n";
 		file<<"s_IP serwera MTA: "<<serverIP<<"\n";
+		file<<"s_Update channel: " <<updateChannel<<'\n';
 		file<<"s_Ścieżka MTA: "<<mtaLocation<<"\n";
 		file<<"s_Nickname: "<<nick<<"\n";
 		file<<"i_Dźwięk główny: "<<dzwiekGlowny<<"\n";

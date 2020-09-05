@@ -4,12 +4,7 @@
 #ifndef _COMMON_HPP
 #define _COMMON_HPP
 
-/**
- * brief random number from a to b
- * param from
- * param to 
- * return random number
- **/
+
 int losuj(int from, int to);
 
 void cls();

@@ -2,6 +2,7 @@
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
 
+
 void startTimer(short getSeconds)
 {
 	Beep(dzwiekGlowny, 100);

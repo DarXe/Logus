@@ -1,7 +1,6 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-std::string tempVer; //variable needed for patch()
 std::string relVer; // "20.08" format instead of "2008.2232"
 
 std::string genVer()

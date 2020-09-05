@@ -16,6 +16,7 @@
 #include "var.hpp"
 #include "common.cpp"
 #include "config.cpp"
+#include "updater.cpp"
 bool liveChat();
 void wersja();
 #include "proc.cpp" //procedures
@@ -28,7 +29,7 @@ int main(int argc, char** argv) //maa main
 	inifile.open("logus.ini");
 	if(inifile.good())
 	{
-		if(getVer() != ver) readConfig(0, 1); else readConfig();
+		readConfig(0);
 	}
 	else
 	{
@@ -110,33 +111,8 @@ int main(int argc, char** argv) //maa main
 	fileInit.open("liveChatInfoOutput.log", std::ios::app); fileInit.close();
 	fileInit.open("logus.log", std::ios::app); fileInit.close();
 
-	std::fstream curl;
-	curl.open("bin\\curl.exe");
-		if(!curl.good())
-		{
-			system("mkdir bin");
-			system("copy c:\\windows\\system32\\curl.exe bin\\curl.exe");
-		}
-	curl.close();
-
-	std::fstream pasteCmd;
-	pasteCmd.open("bin\\pasteCmd.exe");
-		if(!pasteCmd.good())
-		{
-			system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe --output bin\\pasteCmd.exe");
-		}
-	pasteCmd.close();
-
-	std::fstream updater;
-	updater.open("bin\\updater.exe");
-		if(!updater.good())
-		{
-			system("bin\\curl --url https://raw.githubusercontent.com/DarXe/Logus/experimental/bin/updater.exe --output bin\\updater.exe");
-		}
-	updater.close();
-
 	cls();
-	#if !defined(SHOWCURSOR)
+	#ifndef SHOWCURSOR
 	CONSOLE_CURSOR_INFO CURSOR;
 	CURSOR.dwSize = 1;
 	CURSOR.bVisible = FALSE;
@@ -146,6 +122,14 @@ int main(int argc, char** argv) //maa main
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
 	color(kolorGlowny);
+
+	if (getVer() != ver)
+		showUpdateInfo();
+	else
+	{
+		if (updateChannel != "disable")
+			runUpdater();
+	}
 
 	switch (fastStart)
 	{
@@ -172,7 +156,7 @@ void wersja()
 	std::cout<<"  Witaj "<<nick<<" !"<<std::endl;
 	Sleep(300);
 	std::cout<<"  ___________________"<<std::endl;
-	std::cout<<" |       Autor       |"<<std::endl;
+	std::cout<<" |      Autorzy      |"<<std::endl;
 	std::cout<<" |       DarXe       |"<<std::endl;
 	std::cout<<" |     Niventill     |"<<std::endl;
 	std::cout<<" |___________________|"<<std::endl;

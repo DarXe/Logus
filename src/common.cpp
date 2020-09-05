@@ -2,8 +2,6 @@
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
 #include "common.hpp"
-#include <chrono>
-#include <iomanip>
 
 int losuj(int od, int doo)
 {
@@ -50,14 +48,17 @@ std::string getMTALocation()
 		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> conv;
 		return conv.to_bytes(valueBuf);
 	}
-	else return "ERROR";
+	return "ERROR";
 }
 
 std::string getNickFromMTAConfig()
 {
 	std::ifstream check(mtaLocation + "\\MTA\\config\\coreconfig.xml", std::ios::in | std::ios::binary);
 	if(!check.good())
+	{
+		check.close();
 		return "";
+	}
 	else
 	{	
 		std::string tempnick, newnick;
@@ -67,10 +68,11 @@ std::string getNickFromMTAConfig()
 
 		delim = tempnick.find("<nick>");
 		delim1 = tempnick.find("</nick>");
-		
+		check.close();
 		return tempnick.substr(delim+6, delim1-delim-6);
 
 	}
+	return "";
 }
 
 char wybor()

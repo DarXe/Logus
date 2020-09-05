@@ -1,7 +1,6 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-#include <climits>
 
 void color(std::string value)
 {
