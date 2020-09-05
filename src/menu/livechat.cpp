@@ -1,9 +1,7 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-#include <deque>
-#include "livechat_proc.cpp"
-#include "livechat_func.cpp"
+#include "livechat.hpp"
 
 std::deque <std::string> lastLines;
 std::vector <std::string> newLines;
@@ -124,7 +122,7 @@ void showChat()
 	}
 }
 
-void getChat(bool init = 0)//gc
+void getChat(bool init)//gc
 {
 	if (init) //if it's init, open filelc first
 		filelc.open(consoleLogPath, std::ios::in | std::ios::binary);

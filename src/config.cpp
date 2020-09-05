@@ -1,13 +1,15 @@
 // Copyright © 2020  Niventill, Darxe
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include "config.hpp"
+
 std::string clearConfigValue(std::string &line, std::string cfgname)
 {
 	line.erase(0, cfgname.size());
 	return removeSpaces(line);
 }
 
-void readConfig(bool showInfo = true)
+void readConfig(bool showInfo)
 {
 	std::ifstream read; std::string templine;
 	read.open("logus.ini");
@@ -215,7 +217,7 @@ void showUpdateInfo()
 		std::cout<<" (INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<'\n';
 }
 
-void saveConfig(bool showInfo = true)
+void saveConfig(bool showInfo)
 { //saa save
 	std::fstream file;
 	if(engLang)

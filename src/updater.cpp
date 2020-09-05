@@ -1,6 +1,7 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include "updater.hpp"
 
 void updateDependecies()
 {
@@ -14,7 +15,7 @@ void updateDependecies()
     }
 
         std::filesystem::create_directory("bin");
-        system("bin\\curl https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe -z bin\\pasteCmd.exe -o bin\\pasteCmd.exe --location --verbose");
+        system("bin\\curl https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe -z bin\\pasteCmd.exe -o bin\\pasteCmd.exe --locatio");
 }
 
 void checkUpdate()

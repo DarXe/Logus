@@ -1,11 +1,7 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-
-
-void serverConnect();
-void startTimer(short getSeconds = 0);
-void stopTimer();
+#include "livechat_func.hpp"
 
 bool fTeam(const std::string &line, bool e)
 {

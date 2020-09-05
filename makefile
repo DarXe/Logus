@@ -1,18 +1,23 @@
-default:
+CC           = g++
+CFLAGS       = -O3 -std=c++17 -s
+PROGRAM_NAME = Logus
+SRCFILES       = $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
+MENUFILES       = $(patsubst %.cpp,%.o,$(wildcard src/menu/*.cpp))
+ADDONFILES       = $(patsubst %.cpp,%.o,$(wildcard src/addons/*.cpp))
 
-logus: src\main.cpp
+
+default: $(PROGRAM_NAME)
+
+$(PROGRAM_NAME): $(SRCFILES) $(ADDONFILES) $(MENUFILES) res.res
+	$(CC) $(CFLAGS) -o $(PROGRAM_NAME) res.res $(SRCFILES) $(ADDONFILES) $(MENUFILES)
+	@echo kompilacja boza poszla pomyslnie
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c -o $@ $<
+	@echo rekompilacja pliku $@
+
+res.res: res.rc
 	windres res.rc -O coff -o res.res
-	g++ -o Logus.exe src\main.cpp res.res -std=c++17 -O3 -s -ftime-report
-	@echo release build done!
-logusdev: src\main.cpp
-	g++ -o Logus.exe src\main.cpp -std=c++17 -O3 -s -D LOGUSDEV
-	@echo dev build done!
-logussc: src\main.cpp
-	g++ -o Logus.exe src\main.cpp -std=c++17 -O3 -s -D SHOWCURSOR
-	@echo release with cursor build done!
-updater: src\updater.cpp
-	g++ -o updater.exe src\updater.cpp -Ofast -s
-	@echo done!
-spamer: m.cpp
-	g++ -o a.exe m.cpp -Ofast -std=c++17 -s
-	@echo done!
+
+clean:
+	del /s *.o

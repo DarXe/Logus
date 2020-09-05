@@ -1,8 +1,9 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include "dealer.hpp"
 
-bool genDealerDatabase(std::string file = "cars.txt")
+bool genDealerDatabase(std::string file)
 {
 	std::fstream cars;
 	cars.open(file, std::ios::out);
@@ -225,7 +226,7 @@ void dealerInfo(bool isBuy)
 	}
 }
 
-void printDatabase(bool showDiff = false)
+void printDatabase(bool showDiff)
 {
 	std::string line;
 	std::fstream cars;

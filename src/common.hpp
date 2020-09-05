@@ -4,6 +4,16 @@
 #ifndef _COMMON_HPP
 #define _COMMON_HPP
 
+#include "..\src\libs.hpp"
+#include "..\src\var.hpp"
+
+std::string getCurrentTime();
+
+std::string getMTALocation();
+
+std::string getNickFromMTAConfig();
+
+std::string removeSpaces(std::string &line);
 
 int losuj(int from, int to);
 

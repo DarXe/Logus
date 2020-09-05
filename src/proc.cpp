@@ -1,6 +1,7 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include "proc.hpp"
 
 void color(std::string value)
 {
@@ -26,7 +27,7 @@ bool runLiveChat()//flc
 	return 1;
 }
 
-bool closeLogus(std::string text = "Bye bye")
+bool closeLogus(std::string text)
 {
 	cls();
 	saveConfig();
@@ -49,7 +50,7 @@ void dots(short duration, short amount)
 	}
 }
 
-int cfgInputInt(bool preHead, bool isCls, std::string text = "", std::string inputText = "", std::string errorText = "", std::string minMaxText = "", int min = 0, int max = 0)
+int cfgInputInt(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText, std::string minMaxText, int min, int max)
 {
 	if(isCls) cls();
 	if(preHead) std::cout<<" _______________________Logus_pre-config_______________________\n";
@@ -71,7 +72,7 @@ int cfgInputInt(bool preHead, bool isCls, std::string text = "", std::string inp
 	return temp;
 }
 
-std::string cfgInputString(bool preHead, bool isCls, std::string text = "", std::string inputText = "", std::string errorText = "")
+std::string cfgInputString(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText)
 {
 	std::string temp;
 	if(isCls) cls();
@@ -94,11 +95,11 @@ std::string cfgInputString(bool preHead, bool isCls, std::string text = "", std:
 }
 
 int cfgSelection(bool preHead,
-				std::string Question = "",
-				std::string Answer = "",
-				std::string Answer2 = "",
-				std::string Answer3 = "",
-				std::string Answer4 = "")
+				std::string Question,
+				std::string Answer,
+				std::string Answer2,
+				std::string Answer3,
+				std::string Answer4)
 {
 		bool sel = 1;
 		do {
@@ -153,14 +154,14 @@ int cfgSelection(bool preHead,
 		return 0;
 }
 
-std::string cfgSelectionStr(std::string Question = "",
-							std::string Answer = "",
-							std::string Answer2 = "",
-							std::string Answer3 = "",
-							std::string Answer4 = "",
-							std::string Answer5 = "",
-							std::string Answer6 = "",
-							std::string Answer7 = "")
+std::string cfgSelectionStr(std::string Question,
+							std::string Answer,
+							std::string Answer2,
+							std::string Answer3,
+							std::string Answer4,
+							std::string Answer5,
+							std::string Answer6,
+							std::string Answer7)
 {
 		bool sel = 1;
 		cls(); 

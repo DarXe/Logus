@@ -1,11 +1,7 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-#include "livechat.cpp"
-#include "..\addons\loglookup.cpp"
-#include "..\addons\dealer.cpp"
-#include "..\addons\randomLogus.cpp"
-#include "settings.cpp"
+#include "menu.hpp"
 
 int menu() //con
 {

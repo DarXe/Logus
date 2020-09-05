@@ -1,27 +1,7 @@
 // Copyright © 2018-2020  DarXe
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-#define q(var) std::cout<<#var<<"="<<var<<"\n";
-#include <iostream>
-#include <fstream>
-#include <ctime>
-#include <cmath>
-#include <conio.h>
-#include <windows.h>
-#include <vector>
-#include <filesystem>
-#include <thread>
-
-#include "ver.cpp"
-#include "var.hpp"
-#include "common.cpp"
-#include "config.cpp"
-#include "updater.cpp"
-bool liveChat();
-void wersja();
-#include "proc.cpp" //procedures
-
-#include "menu\menu.cpp"
+#include "main.hpp"
 
 int main(int argc, char** argv) //maa main
 {	
