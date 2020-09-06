@@ -3,8 +3,6 @@
 
 #include "var.hpp"
 
-std::string genVer();
-
 //var (ZMIENNE)
 //logus.ini
 std::string relVer;

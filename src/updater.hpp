@@ -6,11 +6,13 @@
 
 #include "..\src\libs.hpp"
 #include "..\src\var.hpp"
+#include "..\src\config.hpp"
+#include "..\src\ver.hpp"
 
-void checkUpdate();
+void checkLogusUpdate();
 
 void updateDependencies();
 
-void runUpdater();
+void checkUpdates();
 
 #endif

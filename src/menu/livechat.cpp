@@ -151,8 +151,8 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 	//check filelc size and then load filelc content into string
 		auto read = std::chrono::high_resolution_clock::now();
 	std::ifstream from(consoleLogPath, std::ios::binary);
-    std::string fromContent(size,0);
-    from.read(&fromContent[0],size);
+	std::string fromContent(size,0);
+	from.read(&fromContent[0],size);
 	from.close();
 		auto read1 = std::chrono::high_resolution_clock::now();
 		auto readshow = std::chrono::duration_cast<std::chrono::nanoseconds>(read1 - read).count();
@@ -185,7 +185,7 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 		 << writeshow << "ns (" << writeshow/1000000 << "ms), łączny czas: "
 		 << readshow+writeshow+clearlshow << "ns ("
 		 << std::chrono::duration_cast<std::chrono::milliseconds>(write1 - write).count() +
-		    std::chrono::duration_cast<std::chrono::milliseconds>(read1 - read).count() + 
+			std::chrono::duration_cast<std::chrono::milliseconds>(read1 - read).count() + 
 			std::chrono::duration_cast<std::chrono::milliseconds>(clearl1 - clearl).count() << "ms)\n";
 	save.close();
 	size = std::filesystem::file_size(consoleLogPath);

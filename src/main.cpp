@@ -5,6 +5,14 @@
 
 int main(int argc, char** argv) //maa main
 {	
+	if (argc != 1)
+	{
+		std::fstream file;
+		file.open("version", std::ios::out);
+		file << genVer();
+		file.close();
+		return 0;
+	}
 	std::fstream inifile;
 	inifile.open("logus.ini");
 	if(inifile.good())
@@ -13,7 +21,7 @@ int main(int argc, char** argv) //maa main
 	}
 	else
 	{
-		// installed OS detection, might be working funky :-D
+		// installed OS detection, might be working funky :-)
 		DWORD val;
 		DWORD dataSize = sizeof(val);
 		if (ERROR_SUCCESS == RegGetValueA(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentMajorVersionNumber", RRF_RT_DWORD, nullptr, &val, &dataSize) && val>=10)
@@ -90,6 +98,7 @@ int main(int argc, char** argv) //maa main
 	fileInit.open(consoleLog5Path, std::ios::app); fileInit.close();
 	fileInit.open("liveChatInfoOutput.log", std::ios::app); fileInit.close();
 	fileInit.open("logus.log", std::ios::app); fileInit.close();
+	updateDependencies();
 
 	cls();
 	#ifndef SHOWCURSOR
@@ -103,13 +112,7 @@ int main(int argc, char** argv) //maa main
 	std::srand(time(NULL));
 	color(kolorGlowny);
 
-	if (getVer() != ver)
-		showUpdateInfo();
-	else
-	{
-		if (updateChannel != "disable")
-			runUpdater();
-	}
+	checkUpdates();
 
 	switch (fastStart)
 	{

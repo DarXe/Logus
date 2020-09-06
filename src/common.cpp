@@ -16,8 +16,8 @@ void cls()
 std::string getCurrentTime()
 {
 	auto in_time_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    std::stringstream ss;
-    ss << std::put_time(std::localtime(&in_time_t), "[%Y-%m-%d %H:%M:%S] ");
+	std::stringstream ss;
+	ss << std::put_time(std::localtime(&in_time_t), "[%Y-%m-%d %H:%M:%S] ");
 	return ss.str();
 }
 
@@ -29,22 +29,22 @@ std::string getMTALocation()
 	#elif _WIN32
 	std::wstring mtaRegKey = L"SOFTWARE\\Multi Theft Auto: San Andreas All\\1.5";
 	#endif
-    std::wstring valueBuf;
-    valueBuf.resize(bufferSize);
-    auto cbData = static_cast<DWORD>(bufferSize * sizeof(wchar_t));
-    auto rc = RegGetValueW(
-        HKEY_LOCAL_MACHINE,
-        mtaRegKey.c_str(),
-        L"Last Run Location",
-        RRF_RT_REG_SZ,
-        nullptr,
-        static_cast<void*>(valueBuf.data()),
-        &cbData
-    );
+	std::wstring valueBuf;
+	valueBuf.resize(bufferSize);
+	auto cbData = static_cast<DWORD>(bufferSize * sizeof(wchar_t));
+	auto rc = RegGetValueW(
+		HKEY_LOCAL_MACHINE,
+		mtaRegKey.c_str(),
+		L"Last Run Location",
+		RRF_RT_REG_SZ,
+		nullptr,
+		static_cast<void*>(valueBuf.data()),
+		&cbData
+	);
 	if (rc == ERROR_SUCCESS)
 	{
 		cbData /= sizeof(wchar_t);
-        valueBuf.resize(static_cast<size_t>(cbData - 1));
+		valueBuf.resize(static_cast<size_t>(cbData - 1));
 		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> conv;
 		return conv.to_bytes(valueBuf);
 	}

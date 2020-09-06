@@ -367,9 +367,9 @@ void lottoLogusReplay(std::vector <std::string> &nicknames, std::vector <short> 
 
 void lottoLogusStats(std::vector <std::string> &nicknames)
 {
-    if(nicknames.size()<=4) {std::cout<<" Za mało graczy!\a"; Sleep(500);}
-    else
-    {
+	if(nicknames.size()<=4) {std::cout<<" Za mało graczy!\a"; Sleep(500);}
+	else
+	{
 		std::vector <std::string> winners;
 		std::vector <int> playersId;
 		std::vector <short> randoms;
@@ -380,8 +380,8 @@ void lottoLogusStats(std::vector <std::string> &nicknames)
 		cls();
 		log.open("lottoLogus.log", std::ios::out);
 
-        int licznik = 1;
-        const int start = 1000;
+		int licznik = 1;
+		const int start = 1000;
 		int los;
 		
 		while(randoms.size()<4)
@@ -396,120 +396,120 @@ void lottoLogusStats(std::vector <std::string> &nicknames)
 		}
 		randoms.push_back(6); //"pusty los"
 
-        float srednia; float Msrednia=0; float msrednia=1000;
-        float srednia2; float Msrednia2=0; float msrednia2=1000;
-        t = clock();
-        int count = 10000;
+		float srednia; float Msrednia=0; float msrednia=1000;
+		float srednia2; float Msrednia2=0; float msrednia2=1000;
+		t = clock();
+		int count = 10000;
 
-        while(licznik<=count)
-        {
-            if(winners.empty())
-            {
-                std::vector <int> tempNum(nicknames.size(),1);
+		while(licznik<=count)
+		{
+			if(winners.empty())
+			{
+				std::vector <int> tempNum(nicknames.size(),1);
 				short a = 1, b = nicknames.size()-1;
-                playersId.push_back(0);
-                do
-                {
-                    temp = losuj(a, b);
+				playersId.push_back(0);
+				do
+				{
+					temp = losuj(a, b);
 					if(a == temp) a++; if(b == temp) b--;
-                    if(tempNum.at(temp))
-                    {
-                        playersId.push_back(temp);
-                        tempNum.at(temp) = 0;
-                    }
-                }while(playersId.size()!=nicknames.size());
-            }
+					if(tempNum.at(temp))
+					{
+						playersId.push_back(temp);
+						tempNum.at(temp) = 0;
+					}
+				}while(playersId.size()!=nicknames.size());
+			}
 
-            while(winners.size()<4)
-            {
-                temp = losuj(1, playersId.size()-1);
-                if(playersId.at(temp))
-                {   
-                    nick = nicknames.at(playersId.at(temp));
-                    winners.push_back(nick);
-                    if(playersId.at(temp) == randoms.at(0)) randomsC[0]++;
-                    if(playersId.at(temp) == randoms.at(1)) randomsC[1]++;
-                    if(playersId.at(temp) == randoms.at(2)) randomsC[2]++;
-                    if(playersId.at(temp) == randoms.at(3)) randomsC[3]++;
-                    if(playersId.at(temp)%6 == 0) randomsC[4]++; //pusty los
+			while(winners.size()<4)
+			{
+				temp = losuj(1, playersId.size()-1);
+				if(playersId.at(temp))
+				{   
+					nick = nicknames.at(playersId.at(temp));
+					winners.push_back(nick);
+					if(playersId.at(temp) == randoms.at(0)) randomsC[0]++;
+					if(playersId.at(temp) == randoms.at(1)) randomsC[1]++;
+					if(playersId.at(temp) == randoms.at(2)) randomsC[2]++;
+					if(playersId.at(temp) == randoms.at(3)) randomsC[3]++;
+					if(playersId.at(temp)%6 == 0) randomsC[4]++; //pusty los
 
-                    if(licznik>start)
-                    {
-                        log<<"Licz="<<licznik<<"\t ";
+					if(licznik>start)
+					{
+						log<<"Licz="<<licznik<<"\t ";
 						for (size_t i = 0; i < 4; i++)
 						{
 							srednia2 = randomsC[i]/licznik;
 							if(srednia2<msrednia2) msrednia2 = srednia2;
-                        	if(srednia2>Msrednia2) Msrednia2 = srednia2;
+							if(srednia2>Msrednia2) Msrednia2 = srednia2;
 							log<<nicknames.at(randoms[i])<<"="<<srednia2*100<<"%\t ";
 						}
 						srednia = randomsC[4]/licznik;
 						if(srednia<msrednia) msrednia = srednia;
 						if(srednia>Msrednia) Msrednia = srednia;
 						log<<"Pusty los"<<"="<<srednia*100<<"%\t ";
-                        log<<nick<<std::endl;
-                    }
-                    playersId.at(temp) = 0;
-                }
-            }
-            if(licznik>start) log<<std::endl;
-            licznik++;
-            winners.clear();
-            playersId.clear();
-        }
+						log<<nick<<std::endl;
+					}
+					playersId.at(temp) = 0;
+				}
+			}
+			if(licznik>start) log<<std::endl;
+			licznik++;
+			winners.clear();
+			playersId.clear();
+		}
 
-        std::cout<<"Losowań: "<<count<<std::endl;
-        std::cout<<"Ilość wygranych:"<<std::endl;
-        std::cout<<nicknames.at(randoms[0])<<": "<<randomsC[0]<<std::endl;
-        std::cout<<nicknames.at(randoms[1])<<": "<<randomsC[1]<<std::endl;
-        std::cout<<nicknames.at(randoms[2])<<": "<<randomsC[2]<<std::endl;
-        std::cout<<nicknames.at(randoms[3])<<": "<<randomsC[3]<<std::endl;
-        std::cout<<"Pusty Los: "<<randomsC[4]<<std::endl;
-        std::cout<<"TIME: "<<clock()-t<<"ms\n\n";
+		std::cout<<"Losowań: "<<count<<std::endl;
+		std::cout<<"Ilość wygranych:"<<std::endl;
+		std::cout<<nicknames.at(randoms[0])<<": "<<randomsC[0]<<std::endl;
+		std::cout<<nicknames.at(randoms[1])<<": "<<randomsC[1]<<std::endl;
+		std::cout<<nicknames.at(randoms[2])<<": "<<randomsC[2]<<std::endl;
+		std::cout<<nicknames.at(randoms[3])<<": "<<randomsC[3]<<std::endl;
+		std::cout<<"Pusty Los: "<<randomsC[4]<<std::endl;
+		std::cout<<"TIME: "<<clock()-t<<"ms\n\n";
 
-        std::cout<<"Zapisanych na PTS TOTOLOTEK: "<<nicknames.size()-1-((nicknames.size()-1)/6)<<std::endl;
-        std::cout<<"Pustych losów: "<<(nicknames.size()-1)/6<<std::endl;
+		std::cout<<"Zapisanych na PTS TOTOLOTEK: "<<nicknames.size()-1-((nicknames.size()-1)/6)<<std::endl;
+		std::cout<<"Pustych losów: "<<(nicknames.size()-1)/6<<std::endl;
 		for (size_t i = 0; i < 4; i++)
 		{
 			std::cout<<nicknames.at(randoms[i])<<": "<<randomsC[i]/licznik*100<<"%\n";
 		}
-        std::cout<<"Pusty: "<<srednia*100<<"%\n\n";
+		std::cout<<"Pusty: "<<srednia*100<<"%\n\n";
 
-        std::cout<<"MaxWin: "<<Msrednia2*100<<"%\n";
-        std::cout<<"minWin: "<<msrednia2*100<<"%\n";
-        std::cout<<"MaxPusty: "<<Msrednia*100<<"%\n";
-        std::cout<<"minPusty: "<<msrednia*100<<"%\n";
+		std::cout<<"MaxWin: "<<Msrednia2*100<<"%\n";
+		std::cout<<"minWin: "<<msrednia2*100<<"%\n";
+		std::cout<<"MaxPusty: "<<Msrednia*100<<"%\n";
+		std::cout<<"minPusty: "<<msrednia*100<<"%\n";
 
 
-        log<<"Losowań: "<<count<<std::endl;
-        log<<"Ilość wygranych:"<<std::endl;
-        log<<nicknames.at(randoms[0])<<": "<<randomsC[0]<<std::endl;
-        log<<nicknames.at(randoms[1])<<": "<<randomsC[1]<<std::endl;
-        log<<nicknames.at(randoms[2])<<": "<<randomsC[2]<<std::endl;
-        log<<nicknames.at(randoms[3])<<": "<<randomsC[3]<<std::endl;
-        log<<"Pusty Los: "<<randomsC[4]<<std::endl;
-        log<<"TIME: "<<clock()-t<<"ms\n\n";
+		log<<"Losowań: "<<count<<std::endl;
+		log<<"Ilość wygranych:"<<std::endl;
+		log<<nicknames.at(randoms[0])<<": "<<randomsC[0]<<std::endl;
+		log<<nicknames.at(randoms[1])<<": "<<randomsC[1]<<std::endl;
+		log<<nicknames.at(randoms[2])<<": "<<randomsC[2]<<std::endl;
+		log<<nicknames.at(randoms[3])<<": "<<randomsC[3]<<std::endl;
+		log<<"Pusty Los: "<<randomsC[4]<<std::endl;
+		log<<"TIME: "<<clock()-t<<"ms\n\n";
 
-        log<<"Zapisanych na PTS TOTOLOTEK: "<<nicknames.size()-1-((nicknames.size()-1)/6)<<std::endl;
-        log<<"Pustych losów: "<<(nicknames.size()-1)/6<<std::endl;
+		log<<"Zapisanych na PTS TOTOLOTEK: "<<nicknames.size()-1-((nicknames.size()-1)/6)<<std::endl;
+		log<<"Pustych losów: "<<(nicknames.size()-1)/6<<std::endl;
 		for (size_t i = 0; i < 4; i++)
 		{
 			log<<nicknames.at(randoms[i])<<": "<<randomsC[i]/licznik*100<<"%\n";
 		}
-        log<<"Pusty: "<<srednia*100<<"%\n\n";
+		log<<"Pusty: "<<srednia*100<<"%\n\n";
 
-        log<<"MaxWin: "<<Msrednia2*100<<"%\n";
-        log<<"minWin: "<<msrednia2*100<<"%\n";
-        log<<"MaxPusty: "<<Msrednia*100<<"%\n";
-        log<<"minPusty: "<<msrednia*100<<"%\n";
+		log<<"MaxWin: "<<Msrednia2*100<<"%\n";
+		log<<"minWin: "<<msrednia2*100<<"%\n";
+		log<<"MaxPusty: "<<Msrednia*100<<"%\n";
+		log<<"minPusty: "<<msrednia*100<<"%\n";
 
-        log.close();
+		log.close();
 
 		std::cout<<"\nRozszerzone informacje zostaly wygenerowane w pliku lottoLogus.log";
 		std::cout<<"\nZnajduje sie on tam, gdzie wklejany jest program - w logach MTA";
 		std::cout<<"\n\nWciśnij dowolny klawisz...";
 		getch();
-    }
+	}
 }
 
 void testLos()

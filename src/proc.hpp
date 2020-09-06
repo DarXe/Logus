@@ -30,13 +30,13 @@ int cfgSelection(bool preHead,
 				std::string Answer4 = "");
 
 std::string cfgSelectionStr(std::string Question = "",
-            std::string Answer = "",
-            std::string Answer2 = "",
-            std::string Answer3 = "",
-            std::string Answer4 = "",
-            std::string Answer5 = "",
-            std::string Answer6 = "",
-            std::string Answer7 = "");
+			std::string Answer = "",
+			std::string Answer2 = "",
+			std::string Answer3 = "",
+			std::string Answer4 = "",
+			std::string Answer5 = "",
+			std::string Answer6 = "",
+			std::string Answer7 = "");
 
 void preConfig();
 

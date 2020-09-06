@@ -3,30 +3,82 @@
 
 #include "updater.hpp"
 
-void updateDependecies()
+void updateDependencies()
 {
-    if (!std::filesystem::exists("bin\\curl.exe"))
-    {
-        std::filesystem::create_directory("bin");
-        std::filesystem::copy("c:\\windows\\system32\\curl.exe", "bin\\curl.exe");
-        if (!std::filesystem::exists("bin\\curl.exe"))
-            engLang? std::cout<<"Couldn't find curl, auto-update will be limited.\n":
-            std::cout<<"Nie udało się znaleźć curl. Możliwości auto-update będą ograniczone.\n";
-    }
-
-        std::filesystem::create_directory("bin");
-        system("bin\\curl https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe -z bin\\pasteCmd.exe -o bin\\pasteCmd.exe --locatio");
+	std::filesystem::create_directory("bin");
+	if (!std::filesystem::exists("bin\\curl.exe"))
+	{
+		std::filesystem::copy("c:\\windows\\system32\\curl.exe", "bin\\curl.exe");
+		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe -o bin\\pasteCmd.exe");
+		if (!std::filesystem::exists("bin\\curl.exe"))
+			engLang? std::cout<<"Couldn't find curl, auto-update will be limited.\n":
+			std::cout<<"Nie udało się znaleźć curl. Możliwości auto-update będą ograniczone.\n";
+	}
 }
 
-void checkUpdate()
+void checkLogusUpdate()
 {
-    if (updateChannel == "release")
-    {
-
-    }
+	if (updateChannel == "release")
+	{
+		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/master/version -o version.tmp");
+		std::fstream check; std::string versc;
+		check.open("version.tmp");
+		if (check.good())
+		{
+			getline(check, versc);
+			if (versc.find(":") == std::string::npos && versc != ver)
+			{
+				rename("Logus.exe", "Logus1.exe");
+				system("bin\\curl --silent --location https://github.com/DarXe/Logus/releases/latest/download/Logus.exe -o Logus.exe");
+			}
+		}
+		check.close();
+	}
+	else if (updateChannel == "nightly")
+	{
+		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/experimental/version -o version.tmp");
+		std::fstream check; std::string versc;
+		check.open("version.tmp");
+		if (check.good())
+		{
+			check >> versc;
+			if (versc != ver)
+			{
+				rename("Logus.exe", "Logus1.exe");
+				system("bin\\curl --silent --location https://raw.githubusercontent.com/DarXe/Logus/experimental/Logus.exe -o Logus.exe");
+			}
+		}
+		check.close();
+	}
+	else if (updateChannel == "pre-release")
+	{
+		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/master/version -o version.tmp");
+		std::fstream check; std::string versc;
+		check.open("version.tmp");
+		if (check.good())
+		{
+			check >> versc;
+			if (versc != ver)
+			{
+				rename("Logus.exe", "Logus1.exe");
+				system("bin\\curl --silent --location https://raw.githubusercontent.com/DarXe/Logus/master/Logus.exe -o Logus.exe");
+			}
+		}
+		check.close();
+	}
+	remove("version.tmp");
 }
 
-void runUpdater()
+void checkUpdates()
 {
-    updateDependecies();
+	if (getVer() != ver)
+	{
+		saveConfig(0);
+		showUpdateInfo();
+	}
+	else
+	{
+		if (updateChannel != "disable")
+			checkLogusUpdate();
+	}
 }
