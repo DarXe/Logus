@@ -169,6 +169,16 @@ void readConfig(bool showInfo)
 
 		else if (templine.find("s_Update channel:") != std::string::npos)
 			updateChannel = clearConfigValue(templine, "s_Update channel:");
+
+		else if (templine.find("i_Highest salary:") != std::string::npos)
+			maxsalary = stoi(clearConfigValue(templine, "i_Highest salary:"));
+		else if (templine.find("i_Najwyższy zarobek:") != std::string::npos)
+			maxsalary = stoi(clearConfigValue(templine, "i_Najwyższy zarobek:"));
+
+		else if (templine.find("i_Lowest salary:") != std::string::npos)
+			minsalary = stoi(clearConfigValue(templine, "i_Lowest salary:"));
+		else if (templine.find("i_Najniższy zarobek:") != std::string::npos)
+			minsalary = stoi(clearConfigValue(templine, "i_Najniższy zarobek:"));
 	}
 
 	consoleLogPath = mtaLocation + "\\MTA\\logs\\console.log";
@@ -257,6 +267,8 @@ void saveConfig(bool showInfo)
 		file<<"b_Delivery type: "<<random<<"\n";
 		file<<"i_Money: "<<money<<"\n";
 		file<<"i_Courses: "<<courses<<"\n";
+		file<<"i_Lowest salary: "<<minsalary<<"\n";
+		file<<"i_Highest salary: "<<maxsalary<<"\n";
 		file<<"i_Fast start mode: "<<fastStart<<"\n";
 		file<<"b_Codepage 852: "<<codePage852<<"\n";
 		file<<"i_Route: "<<trackId<<"\n";
@@ -303,6 +315,8 @@ void saveConfig(bool showInfo)
 		file<<"b_Sposób dostawy: "<<random<<"\n";
 		file<<"i_Kasa: "<<money<<"\n";
 		file<<"i_Kursy: "<<courses<<"\n";
+		file<<"i_Najniższy zarobek: "<<minsalary<<"\n";
+		file<<"i_Najwyższy zarobek: "<<maxsalary<<"\n";
 		file<<"i_Autostart: "<<fastStart<<"\n";
 		file<<"b_Codepage 852: "<<codePage852<<"\n";
 		file<<"i_Trasa: "<<trackId<<"\n";

@@ -57,6 +57,12 @@ void salaryForTransport(std::string &line)
 	tempSalary = line.substr(delim+3, delim1-delim-3);
 	money += stoi(tempSalary);
 	courses++;
+
+	if (stoi(tempSalary) < minsalary || minsalary == 0)
+		minsalary = stoi(tempSalary);
+	if (stoi(tempSalary) > maxsalary)
+		maxsalary = stoi(tempSalary);
+
 	saveConfig(0);
 }
 

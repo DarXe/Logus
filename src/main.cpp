@@ -178,6 +178,7 @@ void wersja()
 	std::cout<<" WRZESIEŃ"<<std::endl;
 
 	SetConsoleTextAttribute(h, 6);
+	std::cout<<" 209_06 Min i max zarobek (resetowalny przez ustawienia lub komendę set re)\n";
 	std::cout<<" 209_06 Przebudowa kodu... (znowu)\n";
 	std::cout<<" 209_06 Auto-updater i wybór kanału aktualizacji!\n";
 	std::cout<<" 209_02-06 Poprawki błędów (znowu)\n";

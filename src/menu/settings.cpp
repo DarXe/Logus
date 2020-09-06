@@ -264,6 +264,8 @@ void settings()
 				if(getch() == 27) break;
 				money = 0;
 				courses = 0;
+				minsalary = 0;
+				maxsalary = 0;
 				cls();
 				engLang?std::cout<<"(INFO) Money and courses has been cleared.\n":
 				std::cout<<"(INFO) Wyzerowano.\n";

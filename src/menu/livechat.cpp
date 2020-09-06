@@ -41,7 +41,7 @@ void liveChatHead() //head
 	SetConsoleTextAttribute(h, 12);
 	std::cout<<"###############################LiveChat###############################\n";
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lcLineCount<<" # Rozmiar:"<<std::setprecision(3)<<sizei<<sizet<<" # [ESC]MENU \n";
+	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lcLineCount<<" # Rozmiar:"<<std::setprecision(3)<<sizei<<sizet<<" # [Esc] Menu \n";
 	if(isTimer)
 	{
 		SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
@@ -54,11 +54,10 @@ void liveChatHead() //head
 		SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
 		std::cout<<" [t]Timer                  # F4 ";
 	}
-	if(courses) std::cout<<"$"<<money<<" # Courses:"<<courses<<" # Avg $"<<money/courses<<"                  ";
-	else      std::cout<<"$"<<0<<" # Courses:"<<0<<" # Avg $"<<0<<"                  ";
+	std::cout<<"$"<<money<<" # Kursy:"<<courses<<" # Śr $"<<((courses)?money/courses:0)<<"       ";
 	SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
 	int payment(0); payment = ((money>0)?((money*0.87)-3500)*grade:0);
-	std::cout<<" [Tab]Timestamps #"<<track[trackId]<<" # "<<"Payment $"<<payment;
+	std::cout<<track[trackId]<<"              # "<<"Wypłata $"<<payment<<" # Min $"<<minsalary<<" # Max $"<<maxsalary;
 	SetConsoleTextAttribute(h, 204);
 	pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); std::cout<<" ";
 	pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); std::cout<<" ";
@@ -78,16 +77,33 @@ void showChat()
 		bool notif = fNicknames(nline)||fTransport(nline)||fKomunikat(nline)||fPrzelewyOd(nline)||fPwOd(nline)||fTeam(nline,0);
 		if(notif)
 		{
-			if(timestamps)
+			SetConsoleTextAttribute(h, 160); std::cout<<"=>";
+			SetConsoleTextAttribute(h, 10);
+			if(nline.length() > gt)
+				nline = nline.erase(0, gt);		
+			for (size_t i = 0; i < nline.length(); i++)
 			{
-				SetConsoleTextAttribute(h, 160); std::cout<<" "<<nline<<std::endl;
+				if(nline[i] == ':')
+				{
+					std::cout<<nline[i];
+					SetConsoleTextAttribute(h, 15);
+					continue;
+				}
+				std::cout<<nline[i];
+			} std::cout<<"\n";
+		}
+		else
+		{
+			if(nline.length() > gt)
+				nline = nline.erase(0, gt);	
+			if(nline[0] == '*')
+			{
+				SetConsoleTextAttribute(h, 14);
+				std::cout<<nline<<std::endl;
 			}
 			else
 			{
-				SetConsoleTextAttribute(h, 160); std::cout<<"=>";
 				SetConsoleTextAttribute(h, 10);
-				if(nline.length() > gt)
-					nline = nline.erase(0, gt);		
 				for (size_t i = 0; i < nline.length(); i++)
 				{
 					if(nline[i] == ':')
@@ -98,38 +114,6 @@ void showChat()
 					}
 					std::cout<<nline[i];
 				} std::cout<<"\n";
-			}
-		}
-		else
-		{
-			if(timestamps)
-			{
-				SetConsoleTextAttribute(h, 170); std::cout<<" ";
-				SetConsoleTextAttribute(h, 10); std::cout<<nline<<std::endl;
-			}
-			else
-			{
-				if(nline.length() > gt)
-					nline = nline.erase(0, gt);	
-				if(nline[0] == '*')
-				{
-					SetConsoleTextAttribute(h, 14);
-					std::cout<<nline<<std::endl;
-				}
-				else
-				{
-					SetConsoleTextAttribute(h, 10);
-					for (size_t i = 0; i < nline.length(); i++)
-					{
-						if(nline[i] == ':')
-						{
-							std::cout<<nline[i];
-							SetConsoleTextAttribute(h, 15);
-							continue;
-						}
-						std::cout<<nline[i];
-					} std::cout<<"\n";
-				}
 			}
 		}
 	}
@@ -373,12 +357,6 @@ bool liveChat() //lc
 				moveLogs();
 			}
 			break;
-			case '\t':
-			{
-				timestamps = timestamps ? 0 : 1;
-				showChat();
-				break;
-			}
 			case 48: //48? it's funny, because it's 0 :D //clear track
 			{
 				trackId = trackId ? 0 : 1;

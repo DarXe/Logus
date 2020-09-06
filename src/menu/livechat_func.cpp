@@ -292,6 +292,8 @@ char fConsoleInput(const std::string &line)//fci
 			{
 				money = 0;
 				courses = 0;
+				minsalary = 0;
+				maxsalary = 0;
 				saveConfig(0);
 				return 1;
 			}

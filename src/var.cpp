@@ -29,6 +29,8 @@ int czas = 90; //TIMER time set by the player in seconds to load / unload the ca
 bool random = 0; //TIMER random unloading, TRUE = 'skrypt' FALSE = 'sam wybiore'
 int money = 0; //courses calculator - money for delivered courses //pieniądze za kursy
 int courses = 0; //courses calculator - number of courses //ilość kursów
+int maxsalary = 0;
+int minsalary = 0;
 short fastStart = 0; //start Logus + LiveChat with MTA or skipping the version info
 bool codePage852 = 0; //false:UTF-8 lub true:852 (jesli wystepuja krytyczne bugi)
 short trackId = 0; //ap-ls ls-ap itp itd
@@ -67,5 +69,4 @@ int timer = 0; //TIMER countdown of time for unloading //odliczanie czasu do roz
 bool isTimer = 0; //TIMER aux var //pomocnicza zmienna - czy timer ma odliczac
 bool isCzas = 0; //TIMER aux var //pomocnicza zmienna - czas po zaladowaniu, odliczanie
 int avg = 0; //courses calculator - average //średnia kursów
-bool timestamps = 0; //show timestamps in LiveChat //pokaż date obok logów w LiveChat
 clock_t t; // clock to check code speed

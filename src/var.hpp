@@ -35,6 +35,8 @@ extern int czas; //TIMER time set by the player in seconds to load / unload the 
 extern bool random; //TIMER random unloading, TRUE = 'skrypt' FALSE = 'sam wybiore'
 extern int money; //courses calculator - money for delivered courses //pieniądze za kursy
 extern int courses; //courses calculator - number of courses //ilość kursów
+extern int maxsalary;
+extern int minsalary;
 extern short fastStart; //start Logus + LiveChat with MTA or skipping the version info
 extern bool codePage852; //false:UTF-8 lub true:852 (jesli wystepuja krytyczne bugi)
 extern short trackId; //ap-ls ls-ap itp itd
@@ -73,7 +75,6 @@ extern int timer; //TIMER countdown of time for unloading //odliczanie czasu do 
 extern bool isTimer; //TIMER aux var //pomocnicza zmienna - czy timer ma odliczac
 extern bool isCzas; //TIMER aux var //pomocnicza zmienna - czas po zaladowaniu, odliczanie
 extern int avg; //courses calculator - average //średnia kursów
-extern bool timestamps; //show timestamps in LiveChat //pokaż date obok logów w LiveChat
 extern clock_t t; // clock to check code speed
 
 #endif
