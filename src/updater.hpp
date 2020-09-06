@@ -4,10 +4,9 @@
 #ifndef UPDATER_HPP_INCLUDED
 #define UPDATER_HPP_INCLUDED
 
-#include "..\src\libs.hpp"
-#include "..\src\var.hpp"
-#include "..\src\config.hpp"
-#include "..\src\ver.hpp"
+#include "libs.hpp"
+#include "config.hpp"
+#include "ver.hpp"
 
 void checkLogusUpdate();
 

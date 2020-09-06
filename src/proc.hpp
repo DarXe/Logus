@@ -4,7 +4,7 @@
 #ifndef PROC_HPP_INCLUDED
 #define PROC_HPP_INCLUDED
 
-#include "..\src\libs.hpp"
+#include "libs.hpp"
 #include "config.hpp"
 bool liveChat();
 

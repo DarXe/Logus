@@ -13,6 +13,6 @@
 #include <thread>
 #include <deque>
 
-#include "..\src\common.hpp"
+#include "common.hpp"
 
 #endif

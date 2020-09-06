@@ -12,6 +12,6 @@ void wersja();
 #include "..\addons\loglookup.hpp"
 #include "..\addons\dealer.hpp"
 #include "..\addons\randomLogus.hpp"
-#include "..\menu\settings.hpp"
+#include "settings.hpp"
 
 #endif

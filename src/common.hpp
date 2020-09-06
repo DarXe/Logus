@@ -4,8 +4,8 @@
 #ifndef _COMMON_HPP
 #define _COMMON_HPP
 
-#include "..\src\libs.hpp"
-#include "..\src\var.hpp"
+#include "libs.hpp"
+#include "var.hpp"
 
 std::string getCurrentTime();
 

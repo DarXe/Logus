@@ -4,7 +4,7 @@
 #ifndef VAR_HPP_INCLUDED
 #define VAR_HPP_INCLUDED
 
-#include "..\src\libs.hpp"
+#include "libs.hpp"
 
 std::string genVer();
 

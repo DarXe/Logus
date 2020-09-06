@@ -4,12 +4,10 @@
 #ifndef _MAIN_INCLUDED_
 #define _MAIN_INCLUDED_
 
-#include "..\src\libs.hpp"
-#include "..\src\var.hpp"
+#include "libs.hpp"
 #include "ver.hpp"
 #include "updater.hpp"
 #include "config.hpp"
-#include "common.hpp"
 bool liveChat();
 void wersja();
 #include "proc.hpp" //procedures

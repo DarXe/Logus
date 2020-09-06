@@ -4,8 +4,8 @@
 #ifndef CONFIG_HPP_INCLUDED
 #define CONFIG_HPP_INCLUDED
 
-#include "..\src\libs.hpp"
-#include "..\src\var.hpp"
+#include "libs.hpp"
+#include "var.hpp"
 
 std::string clearConfigValue(std::string &line, std::string cfgname);
 

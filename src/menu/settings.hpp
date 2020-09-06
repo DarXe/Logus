@@ -8,7 +8,7 @@
 #include "..\var.hpp"
 #include "..\proc.hpp"
 #include "..\config.hpp"
-#include "..\menu\livechat_func.hpp"
+#include "livechat_func.hpp"
 
 void settings();
 

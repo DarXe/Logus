@@ -4,8 +4,8 @@
 #ifndef VER_HPP_INCLUDED
 #define VER_HPP_INCLUDED
 
-#include "..\src\libs.hpp"
-#include "..\src\var.hpp"
+#include "common.hpp"
+
 std::string genVer();
 
 #endif
