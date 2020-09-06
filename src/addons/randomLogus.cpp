@@ -7,8 +7,8 @@
 #include <ctime>
 #include <conio.h>
 
-#include "..\common.hpp"
-#include "..\var.hpp"
+#include "../common.hpp"
+#include "../var.hpp"
 #include "randomLogus.hpp"
 
 int lottoLogus()

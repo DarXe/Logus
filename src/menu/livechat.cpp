@@ -10,10 +10,10 @@
 
 #include "livechat_proc.hpp"
 #include "livechat_func.hpp"
-#include "..\var.hpp"
-#include "..\config.hpp"
-#include "..\common.hpp"
-#include "..\proc.hpp"
+#include "../var.hpp"
+#include "../config.hpp"
+#include "../common.hpp"
+#include "../proc.hpp"
 #include "livechat.hpp"
 
 std::deque <std::string> lastLines;

@@ -5,8 +5,8 @@
 #include <ctime>
 #include <windows.h>
 
-#include "..\var.hpp"
-#include "..\config.hpp"
+#include "../var.hpp"
+#include "../config.hpp"
 #include "livechat_proc.hpp"
 
 void startTimer(short getSeconds)

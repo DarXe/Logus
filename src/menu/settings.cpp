@@ -6,10 +6,10 @@
 #include <windows.h>
 #include <conio.h>
 
-#include "..\var.hpp"
-#include "..\common.hpp"
-#include "..\proc.hpp"
-#include "..\config.hpp"
+#include "../var.hpp"
+#include "../common.hpp"
+#include "../proc.hpp"
+#include "../config.hpp"
 #include "livechat_func.hpp"
 #include "settings.hpp"
 

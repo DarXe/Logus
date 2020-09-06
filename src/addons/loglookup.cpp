@@ -9,10 +9,10 @@
 #include <thread>
 #include <filesystem>
 
-#include "..\common.hpp"
-#include "..\var.hpp"
-#include "..\proc.hpp"
-#include "..\menu\livechat_func.hpp"
+#include "../common.hpp"
+#include "../var.hpp"
+#include "../proc.hpp"
+#include "../menu/livechat_func.hpp"
 #include "loglookup.hpp"
 
 bool checkDate(std::string line, const std::string &date, const bool &checkHour)

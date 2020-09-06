@@ -10,3 +10,4 @@ cars.t*
 Logusold.exe
 res.res
 *.o
+*.d

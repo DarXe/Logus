@@ -7,9 +7,9 @@
 #include <fstream>
 #include <vector>
 
-#include "..\var.hpp"
-#include "..\config.hpp"
-#include "..\common.hpp"
+#include "../var.hpp"
+#include "../config.hpp"
+#include "../common.hpp"
 #include "livechat_proc.hpp"
 #include "livechat_func.hpp"
 

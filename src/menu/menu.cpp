@@ -7,14 +7,14 @@
 #include <ctime>
 
 #include "livechat.hpp"
-#include "..\addons\loglookup.hpp"
-#include "..\addons\dealer.hpp"
-#include "..\addons\randomLogus.hpp"
+#include "../addons/loglookup.hpp"
+#include "../addons/dealer.hpp"
+#include "../addons/randomLogus.hpp"
 #include "settings.hpp"
-#include "..\config.hpp"
-#include "..\common.hpp"
-#include "..\proc.hpp"
-#include "..\var.hpp"
+#include "../config.hpp"
+#include "../common.hpp"
+#include "../proc.hpp"
+#include "../var.hpp"
 #include "menu.hpp"
 
 int menu() //con

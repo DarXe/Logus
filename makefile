@@ -1,10 +1,11 @@
 CC             = g++
-CFLAGS         = -g -O3 -std=c++17
+CFLAGS         = -g -MMD -O3 -std=c++17
 EXEFLAGS       = $(CFLAGS) -s
 PROGRAM_NAME   = Logus
 SRCFILES      := $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
 SRCFILES      += $(patsubst %.cpp,%.o,$(wildcard src/menu/*.cpp))
 SRCFILES      += $(patsubst %.cpp,%.o,$(wildcard src/addons/*.cpp))
+DEPS := $(SRCFILES:.o=.d)
 
 default: release
 
@@ -25,8 +26,10 @@ res.res: res.rc
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	del /s *.o
+	del /s *.o *.d
 
 rebuild:
-	del /s *.o
+	del /s *.o *.d
 	$(MAKE) --no-print-directory release
+
+-include $(DEPS)

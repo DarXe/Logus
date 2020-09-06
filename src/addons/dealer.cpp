@@ -6,10 +6,10 @@
 #include <fstream>
 #include <conio.h>
 
-#include "..\common.hpp"
-#include "..\var.hpp"
-#include "..\proc.hpp"
-#include "..\config.hpp"
+#include "../common.hpp"
+#include "../var.hpp"
+#include "../proc.hpp"
+#include "../config.hpp"
 #include "dealer.hpp"
 
 bool genDealerDatabase(std::string file)
