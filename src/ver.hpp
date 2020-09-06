@@ -4,7 +4,8 @@
 #ifndef VER_HPP_INCLUDED
 #define VER_HPP_INCLUDED
 
-#include "common.hpp"
+#include <string>
+extern std::string relVer;
 
 std::string genVer();
 

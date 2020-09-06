@@ -144,6 +144,8 @@ void settings()
 					updateChannel = "nightly";
 				else if (updateChannel == "nightly")
 					updateChannel = "disable";
+				else if (updateChannel == "disable")
+					updateChannel = "release";
 				break;
 			}
 			case '1':

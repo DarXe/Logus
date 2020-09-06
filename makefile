@@ -1,27 +1,32 @@
 CC             = g++
-CFLAGS         = -O3 -std=c++17
+CFLAGS         = -g -O3 -std=c++17
+EXEFLAGS       = $(CFLAGS) -s
 PROGRAM_NAME   = Logus
 SRCFILES      := $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
 SRCFILES      += $(patsubst %.cpp,%.o,$(wildcard src/menu/*.cpp))
 SRCFILES      += $(patsubst %.cpp,%.o,$(wildcard src/addons/*.cpp))
 
+default: release
 
-default: $(PROGRAM_NAME)
-
-$(PROGRAM_NAME): $(SRCFILES) res.res
-	$(CC) $(CFLAGS) -s -o $(PROGRAM_NAME) $^
-	Logus "placeholder"
+release: $(SRCFILES) res.res
+	$(CC) $(CFLAGS) -c -o src/ver.o src/ver.cpp
+	$(CC) $(EXEFLAGS) -o $(PROGRAM_NAME) $^
+	@Logus "placeholder"
 	@echo kompilacja boza poszla pomyslnie
 
 debug: $(SRCFILES) res.res
-	$(CC) -g $(CFLAGS) -o $(PROGRAM_NAME) $^
+	$(CC) $(CFLAGS) -o $(PROGRAM_NAME) $^
 	@echo kompilacja debug poszla pomyslnie
 
 res.res: res.rc
-	windres res.rc -O coff -o res.res
+	windres $< -O coff -o $@
 
 %.o: %.cpp
-	$(CC) -g $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	del /s *.o
+
+rebuild:
+	del /s *.o
+	$(MAKE) --no-print-directory release

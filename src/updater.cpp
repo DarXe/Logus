@@ -75,6 +75,7 @@ void checkUpdates()
 	{
 		saveConfig(0);
 		showUpdateInfo();
+		remove("Logus1.exe");
 	}
 	else
 	{
