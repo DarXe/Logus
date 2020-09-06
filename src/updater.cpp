@@ -1,6 +1,13 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include <filesystem>
+#include <iostream>
+#include <fstream>
+
+#include "config.hpp"
+#include "var.hpp"
+#include "ver.hpp"
 #include "updater.hpp"
 
 void updateDependencies()

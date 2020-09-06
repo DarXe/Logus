@@ -4,7 +4,9 @@
 #ifndef VAR_HPP_INCLUDED
 #define VAR_HPP_INCLUDED
 
-#include "libs.hpp"
+#include <windows.h>
+#include <vector>
+#include <ctime>
 
 std::string genVer();
 

@@ -4,8 +4,8 @@
 #ifndef PROC_HPP_INCLUDED
 #define PROC_HPP_INCLUDED
 
-#include "libs.hpp"
-#include "config.hpp"
+#include <string>
+
 bool liveChat();
 
 void color(std::string value);

@@ -1,6 +1,20 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+#include <ctime>
+
+#include "livechat.hpp"
+#include "..\addons\loglookup.hpp"
+#include "..\addons\dealer.hpp"
+#include "..\addons\randomLogus.hpp"
+#include "settings.hpp"
+#include "..\config.hpp"
+#include "..\common.hpp"
+#include "..\proc.hpp"
+#include "..\var.hpp"
 #include "menu.hpp"
 
 int menu() //con

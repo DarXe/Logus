@@ -1,6 +1,15 @@
 // Copyright © 2018-2020  DarXe
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include <iostream>
+#include <fstream>
+#include <ctime>
+#include <conio.h>
+#include <windows.h>
+#include <codecvt>
+#include <iomanip>
+#include <thread>
+#include "var.hpp"
 #include "common.hpp"
 
 int losuj(int od, int doo)

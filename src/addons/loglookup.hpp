@@ -4,9 +4,7 @@
 #ifndef LL_HPP_INCLUDED
 #define LL_HPP_INCLUDED
 
-#include "..\libs.hpp"
-#include "..\proc.hpp"
-#include "..\menu\livechat_func.hpp"
+#include <vector>
 
 bool checkDate(std::string line, const std::string &date, const bool &checkHour = 0);
 

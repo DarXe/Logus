@@ -4,9 +4,6 @@
 #ifndef VER_HPP_INCLUDED
 #define VER_HPP_INCLUDED
 
-#include <string>
-extern std::string relVer;
-
 std::string genVer();
 
 #endif

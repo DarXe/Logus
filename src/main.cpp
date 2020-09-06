@@ -1,6 +1,20 @@
 // Copyright © 2018-2020  DarXe
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include <iostream>
+#include <fstream>
+#include <windows.h>
+#include <conio.h>
+#include <ctime>
+#include <vector>
+
+#include "common.hpp"
+#include "var.hpp"
+#include "ver.hpp"
+#include "updater.hpp"
+#include "config.hpp"
+#include "proc.hpp" //procedures
+#include "menu\menu.hpp"
 #include "main.hpp"
 
 int main(int argc, char** argv) //maa main

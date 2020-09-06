@@ -1,7 +1,20 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include <windows.h>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <vector>
+
+#include "..\var.hpp"
+#include "..\config.hpp"
+#include "..\common.hpp"
+#include "livechat_proc.hpp"
 #include "livechat_func.hpp"
+
+void serverConnect();
+void stopTimer();
 
 bool fTeam(const std::string &line, bool e)
 {

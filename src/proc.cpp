@@ -1,6 +1,13 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include <iostream>
+#include <conio.h>
+#include <windows.h>
+
+#include "common.hpp"
+#include "var.hpp"
+#include "config.hpp"
 #include "proc.hpp"
 
 void color(std::string value)

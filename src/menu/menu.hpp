@@ -4,14 +4,7 @@
 #ifndef MENU_HPP_INCLUDED
 #define MENU_HPP_INCLUDED
 
-#include "..\libs.hpp"
-#include "livechat.hpp"
-
 int menu();
 void wersja();
-#include "..\addons\loglookup.hpp"
-#include "..\addons\dealer.hpp"
-#include "..\addons\randomLogus.hpp"
-#include "settings.hpp"
 
 #endif

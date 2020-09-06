@@ -1,7 +1,10 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#include <string>
 #include "ver.hpp"
+
+extern std::string relVer;
 
 std::string genVer()
 {

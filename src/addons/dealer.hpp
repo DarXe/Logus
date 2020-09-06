@@ -4,11 +4,6 @@
 #ifndef DEALER_HPP_INCLUDED
 #define DEALER_HPP_INCLUDED
 
-#include "..\libs.hpp"
-#include "..\var.hpp"
-#include "..\proc.hpp"
-#include "..\config.hpp"
-
 bool genDealerDatabase(std::string file = "cars.txt");
 
 void databaseCheckout();

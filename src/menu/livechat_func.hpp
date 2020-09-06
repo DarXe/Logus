@@ -4,13 +4,6 @@
 #ifndef LCFUNC_HPP_INCLUDED
 #define LCFUNC_HPP_INCLUDED
 
-#include "..\libs.hpp"
-#include "..\var.hpp"
-#include "..\config.hpp"
-#include "livechat_proc.hpp"
-
-void serverConnect();
-void stopTimer();
 
 bool fTeam(const std::string &line, bool e);
 

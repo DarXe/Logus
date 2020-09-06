@@ -4,10 +4,9 @@
 #ifndef LC_HPP_INCLUDED
 #define LC_HPP_INCLUDED
 
-#include "..\libs.hpp"
-#include "livechat_proc.hpp"
-#include "livechat_func.hpp"
-#include "..\proc.hpp"
+#include <deque>
+#include <vector>
+#include <string>
 
 extern std::deque <std::string> lastLines;
 extern std::vector <std::string> newLines;

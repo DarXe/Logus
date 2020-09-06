@@ -4,8 +4,6 @@
 #ifndef LCPROC_HPP_INCLUDED
 #define LCPROC_HPP_INCLUDED
 
-#include "..\libs.hpp"
-#include "..\config.hpp"
 
 void startTimer(short getSeconds = 0);
 

@@ -4,12 +4,6 @@
 #ifndef _SETTINGS_HPP_INCLUDED
 #define _SETTINGS_HPP_INCLUDED
 
-#include "..\libs.hpp"
-#include "..\var.hpp"
-#include "..\proc.hpp"
-#include "..\config.hpp"
-#include "livechat_func.hpp"
-
 void settings();
 
 #endif
