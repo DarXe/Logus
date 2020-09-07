@@ -133,7 +133,8 @@ int menu() //con
 		}
 		case '1':
 		{
-			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") : cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
+			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") :
+			cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
 			cls();
 			if (filen == "WYJŚCIE")
 			{
@@ -145,7 +146,8 @@ int menu() //con
 		}
 		case '2':
 		{
-			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") : cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
+			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") :
+			cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
 			cls();
 			if (filen == "WYJŚCIE")
 			{
@@ -194,7 +196,8 @@ int menu() //con
 		}
 		case 'p':
 		{
-			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") : cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
+			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") :
+			cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
 			cls();
 			if (filen == "WYJŚCIE")
 			{

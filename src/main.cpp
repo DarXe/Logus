@@ -81,7 +81,8 @@ int main(int argc, char **argv) //maa main
 			std::cout << ((engLang) ? " Found MTA Path: " : " Znaleziona ścieżka MTA: ");
 			std::cout << mtaLocation << '\n';
 			std::cout << ((engLang) ? " MTA directory found, but console.log file couldn't been found\n" : " Udało się znaleźć lokalizację MTA, ale nie znaleziono pliku console.log\n");
-			std::cout << ((engLang) ? " Make sure you ran MTA after it's installation. If you did so and it's still not working, pray and blame your computer\n Press any key to try find MTA path again" : " Upewnij się, że MTA zostało uruchomione po jego zainstalowaniu.\n Jeśli poblem nadal występuje, pomódl się i poprzeklinaj na kąkuter\n Wciśnij dowolny klawisz aby spróbować znaleźć lokalizację MTA ponownie");
+			std::cout << ((engLang) ? " Make sure you ran MTA after it's installation. If you did so and it's still not working, pray and blame your computer\n Press any key to try find MTA path again" :
+			" Upewnij się, że MTA zostało uruchomione po jego zainstalowaniu.\n Jeśli poblem nadal występuje, pomódl się i poprzeklinaj na kąkuter\n Wciśnij dowolny klawisz aby spróbować znaleźć lokalizację MTA ponownie");
 			getch();
 			mtaLocation = getMTALocation();
 		}
