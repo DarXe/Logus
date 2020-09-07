@@ -18,7 +18,6 @@
 #include "../menu/livechat_func.hpp"
 #include "loglookup.hpp"
 
-
 bool checkDate(std::string line, const std::string &date, const bool &checkHour)
 {
 	//used date format (same as in mta logs) [2020-08-28 02:30:15]
@@ -26,11 +25,11 @@ bool checkDate(std::string line, const std::string &date, const bool &checkHour)
 	{
 		line = line.substr(1, 10);
 		int l_year, l_month, l_day,
-		d_year, d_month, d_day;
+			d_year, d_month, d_day;
 		sscanf_s(line.c_str(), "%4d-%2d-%2d",
-		&l_year, &l_month, &l_day);
+				 &l_year, &l_month, &l_day);
 		sscanf_s(date.c_str(), "%4d-%2d-%2d",
-		&d_year, &d_month, &d_day);
+				 &d_year, &d_month, &d_day);
 
 		if (l_year >= d_year)
 			if (l_month >= d_month)
@@ -43,9 +42,9 @@ bool checkDate(std::string line, const std::string &date, const bool &checkHour)
 		int l_year, l_month, l_day, l_hour, l_minute,
 			d_year, d_month, d_day, d_hour, d_minute;
 		sscanf_s(line.c_str(), "%4d-%2d-%2d %2d:%2d",
-		&l_year, &l_month, &l_day, &l_hour, &l_minute);
+				 &l_year, &l_month, &l_day, &l_hour, &l_minute);
 		sscanf_s(date.c_str(), "%4d-%2d-%2d %2d:%2d",
-		&d_year, &d_month, &d_day, &d_hour, &d_minute);
+				 &d_year, &d_month, &d_day, &d_hour, &d_minute);
 
 		if (l_year >= d_year)
 			if (l_month >= d_month)
@@ -57,12 +56,12 @@ bool checkDate(std::string line, const std::string &date, const bool &checkHour)
 	return 0;
 }
 
-bool showFileContent(const std::string &filename, const uintmax_t &filesize, const std::vector <std::string> &foundLines)
+bool showFileContent(const std::string &filename, const uintmax_t &filesize, const std::vector<std::string> &foundLines)
 {
 	if (foundLines.size() == 0)
 	{
 		cls();
-		std::cout<< ((engLang)?" (INFO) Nothing has been found\n":" (INFO) Nic nie znaleziono\n");
+		std::cout << ((engLang) ? " (INFO) Nothing has been found\n" : " (INFO) Nic nie znaleziono\n");
 		return 1;
 	}
 	std::fstream showFile("content.txt", std::ios::out | std::ios::binary);
@@ -77,16 +76,17 @@ bool showFileContent(const std::string &filename, const uintmax_t &filesize, con
 	auto fshow = std::chrono::duration_cast<std::chrono::nanoseconds>(showf1 - showf).count();
 	std::ofstream save;
 	save.open("debugInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
-	save << getCurrentTime() <<"showFileContent: plik: " << filename
-		 << " wielkość pliku: " << filesize/1000 << "KB, czas zapisu: " 
-		 << fshow << "ns (" << fshow/1000000 << "ms)\n";
+	save << getCurrentTime() << "showFileContent: plik: " << filename
+		 << " wielkość pliku: " << filesize / 1000 << "KB, czas zapisu: "
+		 << fshow << "ns (" << fshow / 1000000 << "ms)\n";
 	save.close();
 	showFile.close();
 	cls();
-	std::cout << ((engLang)?"Current file: ":"Aktualny plik: ") << filename <<((engLang)?"\nFound content will be shown in default program associated with .txt extension\nPress ESC to return to menu or any other key to continue":
+	std::cout << ((engLang) ? "Current file: " : "Aktualny plik: ") << filename <<
+	((engLang) ? "\nFound content will be shown in default program associated with .txt extension\nPress ESC to return to menu or any other key to continue" :
 	"\nZnaleziona zawartość pokaże się w edytorze domyślnie ustalonym dla rozszerzenia .txt\nWciśnij klawisz ESC aby powrócić do MENU lub inny żeby kontynuować");
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	ShellExecute(0, 0, "content.txt", 0, 0 , SW_SHOW );
+	ShellExecute(0, 0, "content.txt", 0, 0, SW_SHOW);
 	if (getch() == 27)
 	{
 		remove("content.txt");
@@ -102,16 +102,16 @@ bool checkFileNicknames(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector <std::string> foundLines;
+	std::vector<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
-	if (filesize>1000000000)
+	if (filesize > 1000000000)
 	{
-		std::cout<< ((engLang)?" (INFO) File is to big\n":" (INFO) Plik jest za duży\n");
+		std::cout << ((engLang) ? " (INFO) File is to big\n" : " (INFO) Plik jest za duży\n");
 		return 1;
 	}
 
 	fileCheck.open(filename, std::ios::in | std::ios::binary);
-	while(!fileCheck.eof())
+	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
 		if (fNicknames(line))
@@ -128,16 +128,16 @@ bool checkFilePM(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector <std::string> foundLines;
+	std::vector<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
-	if (filesize>1000000000)
+	if (filesize > 1000000000)
 	{
-		std::cout<< ((engLang)?" (INFO) File is to big\n":" (INFO) Plik jest za duży\n");
+		std::cout << ((engLang) ? " (INFO) File is to big\n" : " (INFO) Plik jest za duży\n");
 		return 1;
 	}
 
 	fileCheck.open(filename, std::ios::in | std::ios::binary);
-	while(!fileCheck.eof())
+	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
 		if (fPwOd(line) || fPwDo(line))
@@ -154,16 +154,16 @@ bool checkFileTransfers(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector <std::string> foundLines;
+	std::vector<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
-	if (filesize>1000000000)
+	if (filesize > 1000000000)
 	{
-		std::cout<< ((engLang)?" (INFO) File is to big\n":" (INFO) Plik jest za duży\n");
+		std::cout << ((engLang) ? " (INFO) File is to big\n" : " (INFO) Plik jest za duży\n");
 		return 1;
 	}
-	
+
 	fileCheck.open(filename, std::ios::in | std::ios::binary);
-	while(!fileCheck.eof())
+	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
 		if (fPrzelewyOd(line) || fPrzelewyDo(line))
@@ -180,16 +180,16 @@ bool checkFileTeam(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector <std::string> foundLines;
+	std::vector<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
-	if (filesize>1000000000)
+	if (filesize > 1000000000)
 	{
-		std::cout<< ((engLang)?" (INFO) File is to big\n":" (INFO) Plik jest za duży\n");
+		std::cout << ((engLang) ? " (INFO) File is to big\n" : " (INFO) Plik jest za duży\n");
 		return 1;
 	}
-	
+
 	fileCheck.open(filename, std::ios::in | std::ios::binary);
-	while(!fileCheck.eof())
+	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
 		if (fTeam(line, 1))
@@ -206,16 +206,16 @@ bool checkFileDateFromTo(const std::string &filename, const std::string &date, c
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector <std::string> foundLines;
+	std::vector<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
-	if (filesize>1000000000)
+	if (filesize > 1000000000)
 	{
-		std::cout<< ((engLang)?" (INFO) File is to big\n":" (INFO) Plik jest za duży\n");
+		std::cout << ((engLang) ? " (INFO) File is to big\n" : " (INFO) Plik jest za duży\n");
 		return 1;
 	}
-	
+
 	fileCheck.open(filename, std::ios::in | std::ios::binary);
-	while(!fileCheck.eof())
+	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
 		if (checkDate(line, date, checkHour))
@@ -224,7 +224,7 @@ bool checkFileDateFromTo(const std::string &filename, const std::string &date, c
 			break;
 		}
 	}
-	while(!fileCheck.eof())
+	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
 		foundLines.push_back(line);
@@ -241,15 +241,15 @@ void dateSelectionMenu()
 {
 	std::string date, dateEnd, filename;
 	cls();
-	filename = ((engLang)?cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"):
-									cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
+	filename = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") :
+	cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
 	if (filename == "WYJŚCIE")
 	{
 		cls();
 		return;
 	}
 	cls();
-	if(engLang)
+	if (engLang)
 	{
 		if (cfgSelection(0, "Do you want to also include the time in the search?", "Yes", "No"))
 		{

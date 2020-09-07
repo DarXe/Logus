@@ -12,7 +12,6 @@
 #include "var.hpp"
 #include "config.hpp"
 
-
 std::string clearConfigValue(std::string &line, std::string cfgname)
 {
 	line.erase(0, cfgname.size());
@@ -21,9 +20,10 @@ std::string clearConfigValue(std::string &line, std::string cfgname)
 
 void readConfig(bool showInfo)
 {
-	std::ifstream read; std::string templine;
+	std::ifstream read;
+	std::string templine;
 	read.open("logus.ini");
-	while(!read.eof())
+	while (!read.eof())
 	{
 		getline(read, templine);
 		if ((templine.find("//BAZA DANYCH NICKÓW") != std::string::npos) || (templine.find("//NICKNAMES DATABASE") != std::string::npos))
@@ -85,17 +85,17 @@ void readConfig(bool showInfo)
 		else if (templine.find("b_Mute fraction/cargo notifications:") != std::string::npos)
 			fLockKomunikat = stoi(clearConfigValue(templine, "b_Mute fraction/cargo notifications:"));
 		else if (templine.find("b_Blokada powiadomienia towaru/frakcji:") != std::string::npos)
-			fLockKomunikat= stoi(clearConfigValue(templine, "b_Blokada powiadomienia towaru/frakcji:"));
+			fLockKomunikat = stoi(clearConfigValue(templine, "b_Blokada powiadomienia towaru/frakcji:"));
 
 		else if (templine.find("b_Mute fraction/cargo notifications:") != std::string::npos)
 			fLockNick = stoi(clearConfigValue(templine, "b_Mute fraction/cargo notifications:"));
 		else if (templine.find("b_Blokada powiadomienia na wybrane nicki:") != std::string::npos)
-			fLockNick= stoi(clearConfigValue(templine, "b_Blokada powiadomienia na wybrane nicki:"));
+			fLockNick = stoi(clearConfigValue(templine, "b_Blokada powiadomienia na wybrane nicki:"));
 
 		else if (templine.find("b_Notify on any message:") != std::string::npos)
 			chatSound = stoi(clearConfigValue(templine, "b_Notify on any message:"));
 		else if (templine.find("b_Powiadomienia na każdą wiadomość:") != std::string::npos)
-			chatSound= stoi(clearConfigValue(templine, "b_Powiadomienia na każdą wiadomość:"));
+			chatSound = stoi(clearConfigValue(templine, "b_Powiadomienia na każdą wiadomość:"));
 
 		else if (templine.find("b_Dynamic refresh:") != std::string::npos)
 			dynamicRefresh = stoi(clearConfigValue(templine, "b_Dynamic refresh:"));
@@ -193,9 +193,9 @@ void readConfig(bool showInfo)
 	consoleLog4Path = mtaLocation + "\\MTA\\logs\\console.log.4";
 	consoleLog5Path = mtaLocation + "\\MTA\\logs\\console.log.5";
 
-	getline(read, templine);//jump to actual nicknames
+	getline(read, templine); //jump to actual nicknames
 	nicknames.clear();
-	while(true)
+	while (true)
 	{
 		getline(read, templine);
 		if (read.eof())
@@ -203,18 +203,18 @@ void readConfig(bool showInfo)
 		nicknames.push_back(templine);
 	}
 	read.close();
-	if(showInfo) 
+	if (showInfo)
 	{
-			engLang?std::cout<<" (INFO) Settings has been loaded.":
-			std::cout<<" (INFO) Wczytano ustawienia.\n";
+		engLang ? std::cout << " (INFO) Settings has been loaded." : std::cout << " (INFO) Wczytano ustawienia.\n";
 	}
 }
 
 std::string getVer()
 {
-	std::fstream file; std::string templine;
+	std::fstream file;
+	std::string templine;
 	file.open("logus.ini");
-	while(!file.eof())
+	while (!file.eof())
 	{
 		getline(file, templine);
 		if (templine.find("s_version:") != std::string::npos)
@@ -233,113 +233,111 @@ std::string getVer()
 
 void showUpdateInfo()
 {
-	engLang?std::cout<<" (INFO) Settings loaded. Succesfully updated do "<<ver<<'\n':
-		std::cout<<" (INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji "<<ver<<'\n';
+	engLang ? std::cout << " (INFO) Settings loaded. Succesfully updated do " << ver << '\n' : std::cout << " (INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji " << ver << '\n';
 }
 
 void saveConfig(bool showInfo)
 { //saa save
 	std::fstream file;
-	if(engLang)
+	if (engLang)
 	{
 		file.open("logus.ini", std::ios::out);
-		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		file<<"//Welcome to the config file. Feel free to change settings as you like (don't edit version tho)\n";
-		file<<"//Setting prefixes: s = text variable, i = integer variable, f = float, b = 0/1 variable (bool)\n";
-		file<<"//Colors: 1-9, A-F"<<std::endl;
-		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		file<<"s_version: "<<ver<<"\n";
-		file<<"s_Update channel: " <<updateChannel<<'\n';
-		file<<"s_MTA server IP: "<<serverIP<<"\n";
-		file<<"s_MTA Path: "<<mtaLocation<<"\n";
-		file<<"s_Nickname: "<<nick<<"\n";
-		file<<"i_Main sound: "<<dzwiekGlowny<<"\n";
-		file<<"s_Main color: "<<kolorGlowny<<"\n";
-		file<<"b_Language (0 = POL, 1 = ENG): "<<engLang<<"\n";
-		file<<"i_Amount of lines displayed: "<<wyswietlaneWiersze<<"\n";
-		file<<"i_Refresh: "<<refresh<<"\n";
-		file<<"i_Delay between sounds: "<<interval<<"\n";
-		file<<"b_Mute team notifications: "<<fLockTeam<<"\n";
-		file<<"b_Mute PM notifications: "<<fLockPW<<"\n";
-		file<<"b_Mute fraction/cargo notifications: "<<fLockKomunikat<<"\n";
-		file<<"b_Mute nicknames notifications: "<<fLockNick<<"\n";
-		file<<"b_Toggle auto gate opening (open at the end of PM): "<<autoOpenGate<<"\n";
-		file<<"b_Notify on any message: "<<chatSound<<"\n";
-		file<<"b_Dynamic refresh: "<<dynamicRefresh<<"\n";
-		file<<"i_Min dynamic refresh: "<<minRefresh<<"\n";
-		file<<"i_Max dynamic refresh: "<<maxRefresh<<"\n";
-		file<<"i_Unloading time: "<<czas<<"\n";
-		file<<"b_Delivery type: "<<random<<"\n";
-		file<<"i_Money: "<<money<<"\n";
-		file<<"i_Courses: "<<courses<<"\n";
-		file<<"i_Lowest salary: "<<minsalary<<"\n";
-		file<<"i_Highest salary: "<<maxsalary<<"\n";
-		file<<"i_Fast start mode: "<<fastStart<<"\n";
-		file<<"b_Codepage 852: "<<codePage852<<"\n";
-		file<<"i_Route: "<<trackId<<"\n";
-		file<<"b_Automatic log mover: "<<autoMoveLogs<<"\n";
-		file<<"f_Grade: "<<grade<<"\n";
-		file<<"f_Komis stawka sprzedaż osobówki: "<<base_dealerSellCar<<"\n";
-		file<<"f_Komis stawka sprzedaż dostawczego: "<<base_dealerSellTransport<<"\n";
-		file<<"f_Komis stawka skup: "<<base_dealerBuy<<"\n";
-		file<<"b_Manualna edycja cars.txt: "<<dealerManual<<"\n";
-		file<<"//NICKNAMES DATABASE////////////////////////////////////////////////////////////////////////////\n";
-		file<<"Nicknames in database: "<< nicknames.size() << '\n';
-		for(int i = 0; i < nicknames.size(); i++)
-			file<<nicknames.at(i)<<'\n';
+		file << "////////////////////////////////////////////////////////////////////////////////////////////////\n";
+		file << "//Welcome to the config file. Feel free to change settings as you like (don't edit version tho)\n";
+		file << "//Setting prefixes: s = text variable, i = integer variable, f = float, b = 0/1 variable (bool)\n";
+		file << "//Colors: 1-9, A-F" << std::endl;
+		file << "////////////////////////////////////////////////////////////////////////////////////////////////\n";
+		file << "s_version: " << ver << "\n";
+		file << "s_Update channel: " << updateChannel << '\n';
+		file << "s_MTA server IP: " << serverIP << "\n";
+		file << "s_MTA Path: " << mtaLocation << "\n";
+		file << "s_Nickname: " << nick << "\n";
+		file << "i_Main sound: " << dzwiekGlowny << "\n";
+		file << "s_Main color: " << kolorGlowny << "\n";
+		file << "b_Language (0 = POL, 1 = ENG): " << engLang << "\n";
+		file << "i_Amount of lines displayed: " << wyswietlaneWiersze << "\n";
+		file << "i_Refresh: " << refresh << "\n";
+		file << "i_Delay between sounds: " << interval << "\n";
+		file << "b_Mute team notifications: " << fLockTeam << "\n";
+		file << "b_Mute PM notifications: " << fLockPW << "\n";
+		file << "b_Mute fraction/cargo notifications: " << fLockKomunikat << "\n";
+		file << "b_Mute nicknames notifications: " << fLockNick << "\n";
+		file << "b_Toggle auto gate opening (open at the end of PM): " << autoOpenGate << "\n";
+		file << "b_Notify on any message: " << chatSound << "\n";
+		file << "b_Dynamic refresh: " << dynamicRefresh << "\n";
+		file << "i_Min dynamic refresh: " << minRefresh << "\n";
+		file << "i_Max dynamic refresh: " << maxRefresh << "\n";
+		file << "i_Unloading time: " << czas << "\n";
+		file << "b_Delivery type: " << random << "\n";
+		file << "i_Money: " << money << "\n";
+		file << "i_Courses: " << courses << "\n";
+		file << "i_Lowest salary: " << minsalary << "\n";
+		file << "i_Highest salary: " << maxsalary << "\n";
+		file << "i_Fast start mode: " << fastStart << "\n";
+		file << "b_Codepage 852: " << codePage852 << "\n";
+		file << "i_Route: " << trackId << "\n";
+		file << "b_Automatic log mover: " << autoMoveLogs << "\n";
+		file << "f_Grade: " << grade << "\n";
+		file << "f_Komis stawka sprzedaż osobówki: " << base_dealerSellCar << "\n";
+		file << "f_Komis stawka sprzedaż dostawczego: " << base_dealerSellTransport << "\n";
+		file << "f_Komis stawka skup: " << base_dealerBuy << "\n";
+		file << "b_Manualna edycja cars.txt: " << dealerManual << "\n";
+		file << "//NICKNAMES DATABASE////////////////////////////////////////////////////////////////////////////\n";
+		file << "Nicknames in database: " << nicknames.size() << '\n';
+		for (int i = 0; i < nicknames.size(); i++)
+			file << nicknames.at(i) << '\n';
 	}
 	else
 	{
 		file.open("logus.ini", std::ios::out);
-		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		file<<"//Witaj w pliku konfiguracyjnym. Edytuj go do woli, ale używaj poprawnych typów wartości\n";
-		file<<"//Typy wartości: s = tekst, i = liczba, f = liczba zmiennoprzecinkowa, b = 0/1 (bool)\n";
-		file<<"//Kolory: 1-9, A-F"<<std::endl;
-		file<<"////////////////////////////////////////////////////////////////////////////////////////////////\n";
-		file<<"s_wersja: "<<ver<<"\n";
-		file<<"s_IP serwera MTA: "<<serverIP<<"\n";
-		file<<"s_Update channel: " <<updateChannel<<'\n';
-		file<<"s_Ścieżka MTA: "<<mtaLocation<<"\n";
-		file<<"s_Nickname: "<<nick<<"\n";
-		file<<"i_Dźwięk główny: "<<dzwiekGlowny<<"\n";
-		file<<"s_Kolor główny: "<<kolorGlowny<<"\n";
-		file<<"b_Język (0 = POL, 1 = ENG): "<<engLang<<"\n";
-		file<<"i_Liczba wyświetlanych linii: "<<wyswietlaneWiersze<<"\n";
-		file<<"i_Odświeżanie: "<<refresh<<"\n";
-		file<<"i_Odstep między dźwiękami: "<<interval<<"\n";
-		file<<"b_Blokada powiadomienia Team: "<<fLockTeam<<"\n";
-		file<<"b_Blokada powiadomienia PM: "<<fLockPW<<"\n";
-		file<<"b_Blokada powiadomienia towaru/frakcji: "<<fLockKomunikat<<"\n";
-		file<<"b_Blokada powiadomienia na wybrane nicki: "<<fLockNick<<"\n";
-		file<<"b_Włącz automatyczne otwieranie bramy (open na końcu PW): "<<autoOpenGate<<"\n";
-		file<<"b_Powiadomienia na każdą wiadomość: "<<chatSound<<"\n";
-		file<<"b_Odświeżanie dynamiczne: "<<dynamicRefresh<<"\n";
-		file<<"i_Min dynamiczne odświeżanie: "<<minRefresh<<"\n";
-		file<<"i_Max dynamiczne odświeżanie: "<<maxRefresh<<"\n";
-		file<<"i_Czas rozładunku: "<<czas<<"\n";
-		file<<"b_Sposób dostawy: "<<random<<"\n";
-		file<<"i_Kasa: "<<money<<"\n";
-		file<<"i_Kursy: "<<courses<<"\n";
-		file<<"i_Najniższy zarobek: "<<minsalary<<"\n";
-		file<<"i_Najwyższy zarobek: "<<maxsalary<<"\n";
-		file<<"i_Autostart: "<<fastStart<<"\n";
-		file<<"b_Codepage 852: "<<codePage852<<"\n";
-		file<<"i_Trasa: "<<trackId<<"\n";
-		file<<"b_Automatyczne przenoszenie logów: "<<autoMoveLogs<<"\n";
-		file<<"f_Płaca w firmie: "<<grade<<"\n";
-		file<<"f_Komis stawka sprzedaż osobówki: "<<base_dealerSellCar<<"\n";
-		file<<"f_Komis stawka sprzedaż dostawczego: "<<base_dealerSellTransport<<"\n";
-		file<<"f_Komis stawka skup: "<<base_dealerBuy<<"\n";
-		file<<"b_Manualna edycja cars.txt: "<<dealerManual<<"\n";
-		file<<"//BAZA DANYCH NICKÓW////////////////////////////////////////////////////////////////////////////\n";
-		file<<"Nicki w bazie danych: "<< nicknames.size() << '\n';
-		for(int i = 0; i < nicknames.size(); i++)
-			file<<nicknames.at(i)<<'\n';
+		file << "////////////////////////////////////////////////////////////////////////////////////////////////\n";
+		file << "//Witaj w pliku konfiguracyjnym. Edytuj go do woli, ale używaj poprawnych typów wartości\n";
+		file << "//Typy wartości: s = tekst, i = liczba, f = liczba zmiennoprzecinkowa, b = 0/1 (bool)\n";
+		file << "//Kolory: 1-9, A-F" << std::endl;
+		file << "////////////////////////////////////////////////////////////////////////////////////////////////\n";
+		file << "s_wersja: " << ver << "\n";
+		file << "s_IP serwera MTA: " << serverIP << "\n";
+		file << "s_Update channel: " << updateChannel << '\n';
+		file << "s_Ścieżka MTA: " << mtaLocation << "\n";
+		file << "s_Nickname: " << nick << "\n";
+		file << "i_Dźwięk główny: " << dzwiekGlowny << "\n";
+		file << "s_Kolor główny: " << kolorGlowny << "\n";
+		file << "b_Język (0 = POL, 1 = ENG): " << engLang << "\n";
+		file << "i_Liczba wyświetlanych linii: " << wyswietlaneWiersze << "\n";
+		file << "i_Odświeżanie: " << refresh << "\n";
+		file << "i_Odstep między dźwiękami: " << interval << "\n";
+		file << "b_Blokada powiadomienia Team: " << fLockTeam << "\n";
+		file << "b_Blokada powiadomienia PM: " << fLockPW << "\n";
+		file << "b_Blokada powiadomienia towaru/frakcji: " << fLockKomunikat << "\n";
+		file << "b_Blokada powiadomienia na wybrane nicki: " << fLockNick << "\n";
+		file << "b_Włącz automatyczne otwieranie bramy (open na końcu PW): " << autoOpenGate << "\n";
+		file << "b_Powiadomienia na każdą wiadomość: " << chatSound << "\n";
+		file << "b_Odświeżanie dynamiczne: " << dynamicRefresh << "\n";
+		file << "i_Min dynamiczne odświeżanie: " << minRefresh << "\n";
+		file << "i_Max dynamiczne odświeżanie: " << maxRefresh << "\n";
+		file << "i_Czas rozładunku: " << czas << "\n";
+		file << "b_Sposób dostawy: " << random << "\n";
+		file << "i_Kasa: " << money << "\n";
+		file << "i_Kursy: " << courses << "\n";
+		file << "i_Najniższy zarobek: " << minsalary << "\n";
+		file << "i_Najwyższy zarobek: " << maxsalary << "\n";
+		file << "i_Autostart: " << fastStart << "\n";
+		file << "b_Codepage 852: " << codePage852 << "\n";
+		file << "i_Trasa: " << trackId << "\n";
+		file << "b_Automatyczne przenoszenie logów: " << autoMoveLogs << "\n";
+		file << "f_Płaca w firmie: " << grade << "\n";
+		file << "f_Komis stawka sprzedaż osobówki: " << base_dealerSellCar << "\n";
+		file << "f_Komis stawka sprzedaż dostawczego: " << base_dealerSellTransport << "\n";
+		file << "f_Komis stawka skup: " << base_dealerBuy << "\n";
+		file << "b_Manualna edycja cars.txt: " << dealerManual << "\n";
+		file << "//BAZA DANYCH NICKÓW////////////////////////////////////////////////////////////////////////////\n";
+		file << "Nicki w bazie danych: " << nicknames.size() << '\n';
+		for (int i = 0; i < nicknames.size(); i++)
+			file << nicknames.at(i) << '\n';
 	}
 	file.close();
-	if(showInfo)
-	engLang?std::cout<<" (INFO) Settings has been saved.\n":
-	std::cout<<" (INFO) Ustawienia zostaly zapisane.\n";
+	if (showInfo)
+		engLang ? std::cout << " (INFO) Settings has been saved.\n" : std::cout << " (INFO) Ustawienia zostaly zapisane.\n";
 }
 
 void readDefault()

@@ -77,64 +77,67 @@ void showChat()
 	std::string nline;
 	cls();
 	liveChatHead();
-	for(int i = 0; i<lastLines.size(); i++)
+	for (int i = 0; i < lastLines.size(); i++)
 	{
 		nline = lastLines.at(i);
-		bool notif = fNicknames(nline)||fTransport(nline)||fKomunikat(nline)||fPrzelewyOd(nline)||fPwOd(nline)||fTeam(nline,0);
-		if(notif)
+		bool notif = fNicknames(nline) || fTransport(nline) || fKomunikat(nline) || fPrzelewyOd(nline) || fPwOd(nline) || fTeam(nline, 0);
+		if (notif)
 		{
-			SetConsoleTextAttribute(h, 160); std::cout<<"=>";
+			SetConsoleTextAttribute(h, 160);
+			std::cout << "=>";
 			SetConsoleTextAttribute(h, 10);
-			if(nline.length() > gt)
-				nline = nline.erase(0, gt);		
+			if (nline.length() > gt)
+				nline = nline.erase(0, gt);
 			for (size_t i = 0; i < nline.length(); i++)
 			{
-				if(nline[i] == ':')
+				if (nline[i] == ':')
 				{
-					std::cout<<nline[i];
+					std::cout << nline[i];
 					SetConsoleTextAttribute(h, 15);
 					continue;
 				}
-				std::cout<<nline[i];
-			} std::cout<<"\n";
+				std::cout << nline[i];
+			}
+			std::cout << "\n";
 		}
 		else
 		{
-			if(nline.length() > gt)
-				nline = nline.erase(0, gt);	
-			if(nline[0] == '*')
+			if (nline.length() > gt)
+				nline = nline.erase(0, gt);
+			if (nline[0] == '*')
 			{
 				SetConsoleTextAttribute(h, 14);
-				std::cout<<nline<<std::endl;
+				std::cout << nline << std::endl;
 			}
 			else
 			{
 				SetConsoleTextAttribute(h, 10);
 				for (size_t i = 0; i < nline.length(); i++)
 				{
-					if(nline[i] == ':')
+					if (nline[i] == ':')
 					{
-						std::cout<<nline[i];
+						std::cout << nline[i];
 						SetConsoleTextAttribute(h, 15);
 						continue;
 					}
-					std::cout<<nline[i];
-				} std::cout<<"\n";
+					std::cout << nline[i];
+				}
+				std::cout << "\n";
 			}
 		}
 	}
 }
 
-void getChat(bool init)//gc
+void getChat(bool init) //gc
 {
 	if (init) //if it's init, open filelc first
 		filelc.open(consoleLogPath, std::ios::in | std::ios::binary);
-	while (!filelc.eof()) 
-	{	
+	while (!filelc.eof())
+	{
 		getline(filelc, linelc); //get linelc
-		if (filelc.eof()) //if above getline returns eof, do break
+		if (filelc.eof())		 //if above getline returns eof, do break
 			break;
-		
+
 		if (lastLines.size() >= wyswietlaneWiersze) //if array size exceds wyswietlaneWiersze size remove first element from aray
 			lastLines.pop_front();
 		lastLines.push_back(linelc); //add element to the end of array
@@ -147,49 +150,50 @@ void getChat(bool init)//gc
 	}
 }
 
-void moveLogs()//mv clean and move logs from console.log to logus.log
+void moveLogs() //mv clean and move logs from console.log to logus.log
 {
 	std::ofstream to;
 
 	//check filelc size and then load filelc content into string
-		auto read = std::chrono::high_resolution_clock::now();
+	auto read = std::chrono::high_resolution_clock::now();
 	std::ifstream from(consoleLogPath, std::ios::binary);
-	std::string fromContent(size,0);
-	from.read(&fromContent[0],size);
+	std::string fromContent(size, 0);
+	from.read(&fromContent[0], size);
 	from.close();
-		auto read1 = std::chrono::high_resolution_clock::now();
-		auto readshow = std::chrono::duration_cast<std::chrono::nanoseconds>(read1 - read).count();
+	auto read1 = std::chrono::high_resolution_clock::now();
+	auto readshow = std::chrono::duration_cast<std::chrono::nanoseconds>(read1 - read).count();
 
 	//clear console.log
-		auto clearl = std::chrono::high_resolution_clock::now();
+	auto clearl = std::chrono::high_resolution_clock::now();
 	std::ofstream clear;
 	clear.open(consoleLogPath, std::ios::out | std::ios::trunc);
 	clear.close();
 	//goto beginning of the console.log
 	filelc.clear();
-	filelc.seekg (0, std::ios::beg);
+	filelc.seekg(0, std::ios::beg);
 	lcLineCount = 0;
-		auto clearl1 = std::chrono::high_resolution_clock::now();
-		auto clearlshow = std::chrono::duration_cast<std::chrono::nanoseconds>(clearl1 - clearl).count();
+	auto clearl1 = std::chrono::high_resolution_clock::now();
+	auto clearlshow = std::chrono::duration_cast<std::chrono::nanoseconds>(clearl1 - clearl).count();
 
-		auto write = std::chrono::high_resolution_clock::now();
+	auto write = std::chrono::high_resolution_clock::now();
 	to.open("logus.log", std::ios::binary | std::ios::app);
 	to.write(fromContent.c_str(), size);
 	to.close();
-		auto write1 = std::chrono::high_resolution_clock::now();
-		auto writeshow = std::chrono::duration_cast<std::chrono::nanoseconds>(write1 - write).count();
+	auto write1 = std::chrono::high_resolution_clock::now();
+	auto writeshow = std::chrono::duration_cast<std::chrono::nanoseconds>(write1 - write).count();
 
 	//save moveLogs time to filelc liveChatInfoOutput.log
 	std::ofstream save;
 	save.open("debugInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
-	save << getCurrentTime() <<"moveLogs: wielkość pliku: " << size/1000 << "KB, odczyt: " 
-		 << readshow << "ns (" << readshow/1000000 << "ms), czyszczenie: "
-		 << clearlshow << "ns (" << clearlshow/1000000 << "ms), zapis: "
-		 << writeshow << "ns (" << writeshow/1000000 << "ms), łączny czas: "
-		 << readshow+writeshow+clearlshow << "ns ("
+	save << getCurrentTime() << "moveLogs: wielkość pliku: " << size / 1000 << "KB, odczyt: "
+		 << readshow << "ns (" << readshow / 1000000 << "ms), czyszczenie: "
+		 << clearlshow << "ns (" << clearlshow / 1000000 << "ms), zapis: "
+		 << writeshow << "ns (" << writeshow / 1000000 << "ms), łączny czas: "
+		 << readshow + writeshow + clearlshow << "ns ("
 		 << std::chrono::duration_cast<std::chrono::milliseconds>(write1 - write).count() +
-			std::chrono::duration_cast<std::chrono::milliseconds>(read1 - read).count() + 
-			std::chrono::duration_cast<std::chrono::milliseconds>(clearl1 - clearl).count() << "ms)\n";
+				std::chrono::duration_cast<std::chrono::milliseconds>(read1 - read).count() +
+				std::chrono::duration_cast<std::chrono::milliseconds>(clearl1 - clearl).count()
+		 << "ms)\n";
 	save.close();
 	size = std::filesystem::file_size(consoleLogPath);
 }
@@ -197,27 +201,26 @@ void moveLogs()//mv clean and move logs from console.log to logus.log
 void checkNotifications()
 {
 	if (newLines.size() > 1000)
-		for(int i = newLines.size() - 1000; i < newLines.size(); i++)
+		for (int i = newLines.size() - 1000; i < newLines.size(); i++)
 		{
 			liveChatBeep(newLines.at(i));
-			if(kbhit())
+			if (kbhit())
 			{
-				if(getch() == 27)
+				if (getch() == 27)
 					break;
 			}
 		}
 	else
-		for(int i = 0; i < newLines.size(); i++)
+		for (int i = 0; i < newLines.size(); i++)
 		{
 			liveChatBeep(newLines.at(i));
-			if(kbhit())
+			if (kbhit())
 			{
-				if(getch() == 27)
+				if (getch() == 27)
 					break;
 			}
 		}
 }
-
 
 bool liveChat() //lc
 {
@@ -240,35 +243,37 @@ bool liveChat() //lc
 
 	std::ofstream save;
 	save.open("debugInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
-	save << getCurrentTime() <<"initLiveChat: wielkość pliku: " << size/1000 
-		<< "KB, linie: " << lcLineCount << ", odczyt: " 
-		<< initspeedshow << "ns (" << initspeedshow/1000000 << "ms), wyświetlanie: "
-		<< initshowspeedshow << "ns (" << initshowspeedshow/1000000 << "ms), łączny czas: "
-		<< initspeedshow+initshowspeedshow << "ns ("
-		<< std::chrono::duration_cast<std::chrono::milliseconds>(initspeed1 - initspeed).count() +
-			std::chrono::duration_cast<std::chrono::milliseconds>(initshowspeed1 - initshowspeed).count() << "ms)\n";
+	save << getCurrentTime() << "initLiveChat: wielkość pliku: " << size / 1000
+		 << "KB, linie: " << lcLineCount << ", odczyt: "
+		 << initspeedshow << "ns (" << initspeedshow / 1000000 << "ms), wyświetlanie: "
+		 << initshowspeedshow << "ns (" << initshowspeedshow / 1000000 << "ms), łączny czas: "
+		 << initspeedshow + initshowspeedshow << "ns ("
+		 << std::chrono::duration_cast<std::chrono::milliseconds>(initspeed1 - initspeed).count() +
+				std::chrono::duration_cast<std::chrono::milliseconds>(initshowspeed1 - initshowspeed).count()
+		 << "ms)\n";
 	save.close();
 	//end
 
-	if(isTimer)
+	if (isTimer)
 	{
 		delay = clock();
-		timer -= (clock()-delay);
+		timer -= (clock() - delay);
 	}
 
-	while(true) //actual livechat infinite loop
+	while (true) //actual livechat infinite loop
 	{
-		if(isTimer) delay = clock();
+		if (isTimer)
+			delay = clock();
 
 		getChat();
 		if (isNewLine)
 		{
 			isNewLine = 0;
-			if(dynamicRefresh)
+			if (dynamicRefresh)
 			{
-				for(int i = 0; i<newLines.size(); i++)
+				for (int i = 0; i < newLines.size(); i++)
 				{
-					if(refresh <= minRefresh)
+					if (refresh <= minRefresh)
 					{
 						refresh = minRefresh;
 						break;
@@ -289,9 +294,9 @@ bool liveChat() //lc
 		}
 		else
 		{
-			if(dynamicRefresh)
+			if (dynamicRefresh)
 			{
-				if(refresh < maxRefresh)
+				if (refresh < maxRefresh)
 				{
 					refresh += 25;
 					liveChatHead();
@@ -308,30 +313,35 @@ bool liveChat() //lc
 				liveChatHead();
 		}
 
-		if(autoMoveLogs)
-			{
-				if (size >= 99000)
-					moveLogs();
-			}
+		if (autoMoveLogs)
+		{
+			if (size >= 99000)
+				moveLogs();
+		}
 
 		//darxe's shit
-		if(!isAutoJoin)
+		if (!isAutoJoin)
 		{
-			for(int i(0); i<20; i++) //wait time
+			for (int i(0); i < 20; i++) //wait time
 			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(refresh/20));
-				if(kbhit()) break;
+				std::this_thread::sleep_for(std::chrono::milliseconds(refresh / 20));
+				if (kbhit())
+					break;
 			}
 		}
 		else
 		{
 			serverConnect();
-			for(int i(5); i>0; i--) //wait 5s
+			for (int i(5); i > 0; i--) //wait 5s
 			{
-				pos.X=3; pos.Y=4; SetConsoleCursorPosition(h, pos);
-				SetConsoleTextAttribute(h, 12); std::cout<<" autoJoin: trying to connect in "<<i<<"s ";
+				pos.X = 3;
+				pos.Y = 4;
+				SetConsoleCursorPosition(h, pos);
+				SetConsoleTextAttribute(h, 12);
+				std::cout << " autoJoin: trying to connect in " << i << "s ";
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-				if(kbhit()) break;
+				if (kbhit())
+					break;
 			}
 		}
 
@@ -411,37 +421,37 @@ bool liveChat() //lc
 		}
 
 		//timer countdown
-		if(isTimer)
+		if (isTimer)
 		{
-			if(timer>0)
+			if (timer > 0)
 			{
-				timer -= (clock()-delay);
+				timer -= (clock() - delay);
 				delay = clock();
-				if(isCzas)
+				if (isCzas)
 				{
-					if(random)
+					if (random)
 					{
-						if(timer<300000)
+						if (timer < 300000)
 						{
-							Beep(dzwiekGlowny,150);
-							Beep(0,interval);
-							Beep(dzwiekGlowny+50,150);
-							Beep(0,interval);
-							Beep(dzwiekGlowny+100,150);
-							Beep(0,interval);
+							Beep(dzwiekGlowny, 150);
+							Beep(0, interval);
+							Beep(dzwiekGlowny + 50, 150);
+							Beep(0, interval);
+							Beep(dzwiekGlowny + 100, 150);
+							Beep(0, interval);
 							isCzas = 0;
 						}
 					}
 					else
 					{
-						if(timer<360000)
+						if (timer < 360000)
 						{
-							Beep(dzwiekGlowny,150);
-							Beep(0,interval);
-							Beep(dzwiekGlowny+50,150);
-							Beep(0,interval);
-							Beep(dzwiekGlowny+100,150);
-							Beep(0,interval);
+							Beep(dzwiekGlowny, 150);
+							Beep(0, interval);
+							Beep(dzwiekGlowny + 50, 150);
+							Beep(0, interval);
+							Beep(dzwiekGlowny + 100, 150);
+							Beep(0, interval);
 							isCzas = 0;
 						}
 					}
@@ -449,15 +459,17 @@ bool liveChat() //lc
 			}
 			else
 			{
-				Beep(dzwiekGlowny-100,150);
-				Beep(0,interval);
-				Beep(dzwiekGlowny-50,150);
-				Beep(0,interval);
-				Beep(dzwiekGlowny,150);
-				Beep(0,interval);
+				Beep(dzwiekGlowny - 100, 150);
+				Beep(0, interval);
+				Beep(dzwiekGlowny - 50, 150);
+				Beep(0, interval);
+				Beep(dzwiekGlowny, 150);
+				Beep(0, interval);
 				isTimer = 0;
-				pos.X=0; pos.Y=2; SetConsoleCursorPosition(h, pos);
-				std::cout<<"  [t]Timer                     ";
+				pos.X = 0;
+				pos.Y = 2;
+				SetConsoleCursorPosition(h, pos);
+				std::cout << "  [t]Timer                     ";
 			}
 		}
 
@@ -465,10 +477,10 @@ bool liveChat() //lc
 		if (isAutoJoin)
 		{
 			std::string tempLine;
-			for(int i = 0; i<newLines.size(); i++)
+			for (int i = 0; i < newLines.size(); i++)
 			{
 				tempLine = newLines.at(i);
-				if(tempLine[gt] != 'c')
+				if (tempLine[gt] != 'c')
 				{
 					stopAutoJoin(isAutoJoin);
 				}
@@ -479,8 +491,9 @@ bool liveChat() //lc
 			newLines.shrink_to_fit();
 		filelc.clear();
 		filelc.sync();
-		if(isTimer) timer -= (clock()-delay);
+		if (isTimer)
+			timer -= (clock() - delay);
 	}
 	filelc.close();
 	return 1;
-}//liveChat()
+} //liveChat()

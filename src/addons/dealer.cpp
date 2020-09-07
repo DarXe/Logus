@@ -15,7 +15,6 @@
 #include "../config.hpp"
 #include "dealer.hpp"
 
-
 bool genDealerDatabase(std::string file)
 {
 	std::fstream cars;
@@ -232,7 +231,8 @@ void dealerInfo(bool isBuy)
 					cls();
 					return;
 				}
-				else break;
+				else
+					break;
 			}
 		}
 		cars.close();
@@ -260,7 +260,7 @@ void printDatabase(bool showDiff)
 		diL.open("cars.txt", std::ios::in);
 		genDealerDatabase("cars.tmp");
 		diO.open("cars.tmp", std::ios::in);
-		while(true)
+		while (true)
 		{
 			dL = diL.get();
 			dO = diO.get();
@@ -270,12 +270,11 @@ void printDatabase(bool showDiff)
 				SetConsoleTextAttribute(h, 12);
 			else
 				SetConsoleTextAttribute(h, 7);
-			std::cout<<dL;
+			std::cout << dL;
 		}
 		diL.close();
 		diO.close();
 		remove("cars.tmp");
-
 	}
 	SetConsoleTextAttribute(h, 7);
 	std::cout << "\nDowolny klawisz - kontynuuj\n";
@@ -296,7 +295,8 @@ void dealer()
 		std::cout << " [2] (osobówka: " << base_dealerSellCar * 100 << "%, dostawczy: " << base_dealerSellTransport * 100 << "%) Sprzedaż z komisu - podaj dokładną nazwę pojazdu\n";
 		std::cout << " [3] Lista pojazdów\n";
 		std::cout << " [4] Ustaw stawkę bazową\n";
-		std::cout << " [0] Manualna edycja cars.txt: "; dealerManual ? std::cout << "TAK\n" : std::cout << "NIE\n";
+		std::cout << " [0] Manualna edycja cars.txt: ";
+		dealerManual ? std::cout << "TAK\n" : std::cout << "NIE\n";
 		std::cout << " [f] Ghetto diff tool\n";
 		std::cout << " [r] Reset bazy danych\n";
 		SetConsoleTextAttribute(h, 15);

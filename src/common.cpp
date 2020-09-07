@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <thread>
 
+
 //header includes
 #include "var.hpp"
 #include "common.hpp"
@@ -17,7 +18,7 @@
 
 int losuj(int od, int doo)
 {
-	return rand()%(doo - od + 1)+od;
+	return rand() % (doo - od + 1) + od;
 }
 
 void cls()
@@ -36,11 +37,11 @@ std::string getCurrentTime()
 std::string getMTALocation()
 {
 	size_t bufferSize = 0xFFF;
-	#ifdef _WIN64
+#ifdef _WIN64
 	std::wstring mtaRegKey = L"SOFTWARE\\WOW6432Node\\Multi Theft Auto: San Andreas All\\1.5";
-	#elif _WIN32
+#elif _WIN32
 	std::wstring mtaRegKey = L"SOFTWARE\\Multi Theft Auto: San Andreas All\\1.5";
-	#endif
+#endif
 	std::wstring valueBuf;
 	valueBuf.resize(bufferSize);
 	auto cbData = static_cast<DWORD>(bufferSize * sizeof(wchar_t));
@@ -50,9 +51,8 @@ std::string getMTALocation()
 		L"Last Run Location",
 		RRF_RT_REG_SZ,
 		nullptr,
-		static_cast<void*>(valueBuf.data()),
-		&cbData
-	);
+		static_cast<void *>(valueBuf.data()),
+		&cbData);
 	if (rc == ERROR_SUCCESS)
 	{
 		cbData /= sizeof(wchar_t);
@@ -66,39 +66,36 @@ std::string getMTALocation()
 std::string getNickFromMTAConfig()
 {
 	std::ifstream check(mtaLocation + "\\MTA\\config\\coreconfig.xml", std::ios::in | std::ios::binary);
-	if(!check.good())
+	if (!check.good())
 	{
 		check.close();
 		return "";
 	}
 	else
-	{	
+	{
 		std::string tempnick, newnick;
-		for(int i = 0; i < 3; i++)
+		for (int i = 0; i < 3; i++)
 			getline(check, tempnick);
 		int delim, delim1;
 
 		delim = tempnick.find("<nick>");
 		delim1 = tempnick.find("</nick>");
 		check.close();
-		return tempnick.substr(delim+6, delim1-delim-6);
-
+		return tempnick.substr(delim + 6, delim1 - delim - 6);
 	}
 	return "";
 }
 
 char wybor()
 {
-	engLang?std::cout<<"\n Choose an option (press a key)":
-	std::cout<<"\n Wybierz opcje (wciśnij klawisz)";
+	engLang ? std::cout << "\n Choose an option (press a key)" : std::cout << "\n Wybierz opcje (wciśnij klawisz)";
 	return getch();
 }
 
 void def()
 {
 	cls();
-	engLang?std::cout<<"\a (INFO) Option not found!\n":
-	std::cout<<"\a (INFO) Nie ma takiej opcji!\n";
+	engLang ? std::cout << "\a (INFO) Option not found!\n" : std::cout << "\a (INFO) Nie ma takiej opcji!\n";
 }
 
 std::string removeSpaces(std::string &line)
@@ -106,22 +103,23 @@ std::string removeSpaces(std::string &line)
 	if (isspace(line[0]))
 		line.erase(0, 1);
 	if (isspace(line.back()))
-		line.erase(line.size()-1);
+		line.erase(line.size() - 1);
 	return line;
 }
 
 void toClipboard(const std::string &s)
 {
 	OpenClipboard(0);
-	EmptyClipboard();	
-	HGLOBAL hg=GlobalAlloc(GMEM_MOVEABLE,s.size()+1);
-	if (!hg){
+	EmptyClipboard();
+	HGLOBAL hg = GlobalAlloc(GMEM_MOVEABLE, s.size() + 1);
+	if (!hg)
+	{
 		CloseClipboard();
 		return;
 	}
-	memcpy(GlobalLock(hg),s.c_str(),s.size()+1);
+	memcpy(GlobalLock(hg), s.c_str(), s.size() + 1);
 	GlobalUnlock(hg);
-	SetClipboardData(CF_TEXT,hg);
+	SetClipboardData(CF_TEXT, hg);
 	CloseClipboard();
 	GlobalFree(hg);
 }
@@ -129,9 +127,9 @@ void toClipboard(const std::string &s)
 int power(int x, int y)
 {
 	int z = 1;
-	for(int i = 0; i < y; i++)
+	for (int i = 0; i < y; i++)
 	{
-		z*=x;
+		z *= x;
 	}
 	return z;
 }
