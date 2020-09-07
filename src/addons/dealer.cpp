@@ -1,7 +1,6 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-#include <windows.h>
 #include <iostream>
 #include <fstream>
 #include <conio.h>

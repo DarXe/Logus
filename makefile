@@ -1,5 +1,5 @@
 CC             = g++
-CFLAGS         = -g -MMD -O3 -std=c++17
+CFLAGS         = -g -O3 -std=c++17
 EXEFLAGS       = $(CFLAGS) -s
 PROGRAM_NAME   = Logus
 SRCFILES      := $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
@@ -23,10 +23,13 @@ res.res: res.rc
 	windres $< -O coff -o $@
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) -MMD $(CFLAGS) -c -o $@ $<
 
 clean:
 	del /s *.o *.d
+
+cleanall:
+	del /s *.o *.d Logus.exe
 
 rebuild:
 	del /s *.o *.d

@@ -1,10 +1,8 @@
 // Copyright © 2018-2020  DarXe
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-#include <windows.h>
 #include <iostream>
 #include <fstream>
-#include <ctime>
 #include <conio.h>
 
 #include "../common.hpp"

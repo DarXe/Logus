@@ -1,9 +1,7 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-#include <vector>
 #include <iostream>
-#include <windows.h>
 #include <conio.h>
 
 #include "../var.hpp"

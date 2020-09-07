@@ -3,9 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <ctime>
 #include <conio.h>
-#include <windows.h>
 #include <codecvt>
 #include <iomanip>
 #include <thread>

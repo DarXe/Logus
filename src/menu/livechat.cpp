@@ -2,7 +2,6 @@
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
 #include <fstream>
-#include <windows.h>
 #include <filesystem>
 #include <iostream>
 #include <conio.h>
