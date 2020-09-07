@@ -17,9 +17,8 @@ release: $(CFILES) res.res
 	@Logus "placeholder"
 	@echo kompilacja boza poszla pomyslnie
 
-debug: $(CFILES) res.res
-	$(CC) $(CFLAGS) -c src/ver.cpp -o src/ver.o
-	$(CC) $(CFLAGS) $(SRCFILES) res.res -o $(PROGRAM_NAME) 
+debug: $(SRCFILES) res.res
+	$(CC) $(CFLAGS) $^ -o $(PROGRAM_NAME) 
 	@echo kompilacja debug poszla pomyslnie
 
 res.res: res.rc
