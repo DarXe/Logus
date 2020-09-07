@@ -1,10 +1,13 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-#include <string>
+//header includes
 #include "ver.hpp"
 
+
+//letting compiler know that this variable exists without actually including var.hpp
 extern std::string relVer;
+
 
 std::string genVer()
 {

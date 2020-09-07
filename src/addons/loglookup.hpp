@@ -1,10 +1,15 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
 #ifndef LL_HPP_INCLUDED
 #define LL_HPP_INCLUDED
 
+
+//standard libraries
 #include <vector>
+#include <string>
+
 
 bool checkDate(std::string line, const std::string &date, const bool &checkHour = 0);
 
@@ -21,5 +26,6 @@ bool checkFileTeam(const std::string &filename);
 bool checkFileDateFromTo(const std::string &filename, const std::string &date, const std::string &dateEnd, const bool &checkHour = 0);
 
 void dateSelectionMenu();
+
 
 #endif

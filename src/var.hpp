@@ -1,14 +1,17 @@
 // Copyright © 2018-2020  DarXe
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
 #ifndef VAR_HPP_INCLUDED
 #define VAR_HPP_INCLUDED
 
+
+//standard libraries
 #include <windows.h>
+#include <string>
 #include <vector>
 #include <ctime>
 
-std::string genVer();
 
 //var (ZMIENNE)
 //logus.ini
@@ -76,5 +79,6 @@ extern bool isTimer; //TIMER aux var //pomocnicza zmienna - czy timer ma odlicza
 extern bool isCzas; //TIMER aux var //pomocnicza zmienna - czas po zaladowaniu, odliczanie
 extern int avg; //courses calculator - average //średnia kursów
 extern clock_t t; // clock to check code speed
+
 
 #endif

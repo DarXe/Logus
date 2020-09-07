@@ -1,6 +1,8 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
+//standard libraries
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -8,11 +10,14 @@
 #include <thread>
 #include <filesystem>
 
+
+//header includes
 #include "../common.hpp"
 #include "../var.hpp"
 #include "../proc.hpp"
 #include "../menu/livechat_func.hpp"
 #include "loglookup.hpp"
+
 
 bool checkDate(std::string line, const std::string &date, const bool &checkHour)
 {

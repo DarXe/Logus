@@ -1,15 +1,19 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+//standard libraries
 #include <iostream>
 #include <conio.h>
 
+
+//header includes
 #include "../var.hpp"
 #include "../common.hpp"
 #include "../proc.hpp"
 #include "../config.hpp"
 #include "livechat_func.hpp"
 #include "settings.hpp"
+
 
 void settings()
 {

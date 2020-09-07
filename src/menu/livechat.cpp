@@ -1,12 +1,16 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
+//standard libraries
 #include <fstream>
 #include <filesystem>
 #include <iostream>
 #include <conio.h>
 #include <thread>
 
+
+//header includes
 #include "livechat_proc.hpp"
 #include "livechat_func.hpp"
 #include "../var.hpp"
@@ -15,6 +19,8 @@
 #include "../proc.hpp"
 #include "livechat.hpp"
 
+
+//variable declarations
 std::deque <std::string> lastLines;
 std::vector <std::string> newLines;
 int lcLineCount;
@@ -22,6 +28,7 @@ bool isNewLine = 0, isNewBeep = 0;
 std::ifstream filelc;
 std::string linelc;
 std::uintmax_t size;
+
 
 void liveChatHead() //head
 {

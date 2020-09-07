@@ -1,6 +1,8 @@
 // Copyright © 2018-2020  DarXe
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
+//standard libraries
 #include <iostream>
 #include <fstream>
 #include <windows.h>
@@ -8,14 +10,17 @@
 #include <ctime>
 #include <vector>
 
+
+//header includes
 #include "common.hpp"
 #include "var.hpp"
 #include "ver.hpp"
 #include "updater.hpp"
 #include "config.hpp"
-#include "proc.hpp" //procedures
+#include "proc.hpp"
 #include "menu\menu.hpp"
 #include "main.hpp"
+
 
 int main(int argc, char** argv) //maa main
 {	

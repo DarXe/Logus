@@ -1,10 +1,16 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
 #ifndef LCFUNC_HPP_INCLUDED
 #define LCFUNC_HPP_INCLUDED
 
 
+//standard libraries
+#include <string>
+
+
+//forward declarations
 bool fTeam(const std::string &line, bool e);
 
 void pKarambol(const std::string &line);
@@ -36,7 +42,6 @@ bool fPlayerCount(const std::string &line);
 char fConsoleInput(const std::string &line);
 
 bool liveChatBeep(std::string &ostatniaLinia);
-
 
 
 #endif

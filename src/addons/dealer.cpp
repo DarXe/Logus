@@ -1,15 +1,20 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
+//standard libraries
 #include <iostream>
 #include <fstream>
 #include <conio.h>
 
+
+//header includes
 #include "../common.hpp"
 #include "../var.hpp"
 #include "../proc.hpp"
 #include "../config.hpp"
 #include "dealer.hpp"
+
 
 bool genDealerDatabase(std::string file)
 {

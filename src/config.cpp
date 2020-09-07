@@ -1,12 +1,17 @@
 // Copyright © 2020  Niventill, Darxe
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
+//standard libraries
 #include <iostream>
 #include <fstream>
 
+
+//header includes
 #include "common.hpp"
 #include "var.hpp"
 #include "config.hpp"
+
 
 std::string clearConfigValue(std::string &line, std::string cfgname)
 {

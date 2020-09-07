@@ -1,11 +1,15 @@
 // Copyright © 2018-2020  DarXe, Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
+//standard libraries
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
 #include <ctime>
 
+
+//forward hpp declarations
 #include "livechat.hpp"
 #include "../addons/loglookup.hpp"
 #include "../addons/dealer.hpp"
@@ -16,6 +20,11 @@
 #include "../proc.hpp"
 #include "../var.hpp"
 #include "menu.hpp"
+
+
+//forward declarations
+void wersja(); //from main.hpp
+
 
 int menu() //con
 {

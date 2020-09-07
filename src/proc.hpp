@@ -1,13 +1,16 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+
 #ifndef PROC_HPP_INCLUDED
 #define PROC_HPP_INCLUDED
 
+
+//standard libraries
 #include <string>
 
-bool liveChat();
 
+//forward declarations
 void color(std::string value);
 
 void serverConnect();
@@ -39,7 +42,6 @@ std::string cfgSelectionStr(std::string Question = "",
 			std::string Answer7 = "");
 
 void preConfig();
-
 
 
 #endif
