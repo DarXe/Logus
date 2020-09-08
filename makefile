@@ -15,11 +15,11 @@ release: $(CFILES) res.res
 	$(CC) $(CFLAGS) -c src/ver.cpp -o src/ver.o
 	$(CC) $(EXEFLAGS) $(SRCFILES) res.res -o $(PROGRAM_NAME)
 	@Logus "placeholder"
-	@echo kompilacja boza poszla pomyslnie
 
 debug: $(SRCFILES) res.res
 	$(CC) $(CFLAGS) $^ -o $(PROGRAM_NAME) 
-	@echo kompilacja debug poszla pomyslnie
+
+headertest: $(PREH)
 
 res.res: res.rc
 	windres $< -O coff -o $@
@@ -28,7 +28,7 @@ res.res: res.rc
 	$(CC) -MMD $(CFLAGS) -c -o $@ $<
 
 %.hpp.gch: %.hpp
-	$(CC) $(CFLAGS) -x c++-header $<
+	$(CC) -fsyntax-only $(CFLAGS) -x c++-header $<
 
 clean:
 	del /s *.o *.d *.hpp.gch
