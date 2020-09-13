@@ -25,7 +25,7 @@ res.res: res.rc
 	windres $< -O coff -o $@
 
 %.o: %.cpp
-	$(CC) -MMD $(CFLAGS) -c -o $@ $<
+	$(CC) -MMD $(CFLAGS) -c $< -o $@
 
 %.hpp.gch: %.hpp
 	$(CC) -fsyntax-only $(CFLAGS) -x c++-header $<

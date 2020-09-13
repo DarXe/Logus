@@ -75,13 +75,13 @@ bool fPwDo(const std::string &line)
 void pNickChange(const std::string &line)
 {
 	//[2020-08-30 04:03:19] [Output] : * Niventill is now known as test
-	std::string tempnick = "* " + nick + " is now known as ";
+	std::string tempnick = "[Output] : * " + nick + " is now known as ";
 	if (line.find(tempnick) != std::string::npos)
 	{
 		std::string newnick, tempn;
 		tempnick = line.substr(gt, std::string::npos);
 		std::istringstream ss(tempnick);
-		ss >> tempn >> tempn >> tempn >> tempn >> tempn >> newnick;
+		ss >> tempn >> tempn >> tempn >> tempn >> tempn >> tempn >> newnick;
 		nick = newnick;
 	}
 }

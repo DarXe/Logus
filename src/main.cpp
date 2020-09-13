@@ -18,7 +18,7 @@
 #include "updater.hpp"
 #include "config.hpp"
 #include "proc.hpp"
-#include "menu\menu.hpp"
+#include "menu/menu.hpp"
 #include "main.hpp"
 
 int main(int argc, char **argv) //maa main
