@@ -215,18 +215,22 @@ bool checkFileDateFromTo(const std::string &filename, const std::string &date, c
 	}
 
 	fileCheck.open(filename, std::ios::in | std::ios::binary);
-	while (!fileCheck.eof())
+	while (true)
 	{
 		getline(fileCheck, line);
+		if (fileCheck.eof())
+			break;
 		if (checkDate(line, date, checkHour))
 		{
 			foundLines.push_back(line);
 			break;
 		}
 	}
-	while (!fileCheck.eof())
+	while (true)
 	{
 		getline(fileCheck, line);
+		if (fileCheck.eof())
+			break;
 		foundLines.push_back(line);
 		if (checkDate(line, dateEnd, checkHour))
 			break;
@@ -251,10 +255,12 @@ void dateSelectionMenu()
 	cls();
 	if (engLang)
 	{
-		if (cfgSelection(0, "Do you want to also include the time in the search?", "Yes", "No"))
+		if (cfgSelection(0, "Do you want to also include the time in the search?", "Yes", "No") == 1)
 		{
 			date = cfgInputString(0, 1, "Enter the starting date (for example 2020-08-28 21:37)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
 			dateEnd = cfgInputString(0, 1, "Enter the ending date (for example 2020-08-28 21:37)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			if (date.size() > 16 || dateEnd.size() > 16)
+				return;
 			checkFileDateFromTo(filename, date, dateEnd, 1);
 			return;
 		}
@@ -262,16 +268,20 @@ void dateSelectionMenu()
 		{
 			date = cfgInputString(0, 1, "Enter the starting date (for example 2020-08-28)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
 			dateEnd = cfgInputString(0, 1, "Enter the ending date (for example 2020-08-28)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			if (date.size() > 10 || dateEnd.size() > 10)
+				return;
 			checkFileDateFromTo(filename, date, dateEnd, 0);
 			return;
 		}
 	}
 	else
 	{
-		if (cfgSelection(0, "Czy chcesz uwzględnić w wyszukiwaniu także godzinę?", "Tak", "Nie"))
+		if (cfgSelection(0, "Czy chcesz uwzględnić w wyszukiwaniu także godzinę?", "Tak", "Nie") == 1)
 		{
 			date = cfgInputString(0, 1, "Podaj datę początkową (przykładowo 2020-08-28 21:37)", "Podaj datę (obowiązkowo format RRRR-MM-DD HH:MM):", "Nie wiem jak, ale coś podałeś źle");
 			dateEnd = cfgInputString(0, 1, "Podaj datę końcową (przykładowo 2020-08-29 21:37)", "Podaj datę (obowiązkowo format RRRR-MM-DD HH:MM):", "Nie wiem jak, ale coś podałeś źle");
+			if (date.size() > 16 || dateEnd.size() > 16)
+				return;
 			checkFileDateFromTo(filename, date, dateEnd, 1);
 			return;
 		}
@@ -279,6 +289,8 @@ void dateSelectionMenu()
 		{
 			date = cfgInputString(0, 1, "Podaj datę początkową (przykładowo 2020-08-28)", "Podaj datę (obowiązkowo format RRRR-MM-DD):", "Nie wiem jak, ale coś podałeś źle");
 			dateEnd = cfgInputString(0, 1, "Podaj datę końcową (przykładowo 2020-08-29)", "Podaj datę (obowiązkowo format RRRR-MM-DD):", "Nie wiem jak, ale coś podałeś źle");
+			if (date.size() > 10 || dateEnd.size() > 10)
+				return;
 			checkFileDateFromTo(filename, date, dateEnd, 0);
 			return;
 		}
