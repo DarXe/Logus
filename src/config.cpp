@@ -174,6 +174,8 @@ void readConfig(bool showInfo)
 
 		else if (templine.find("s_Update channel:") != std::string::npos)
 			updateChannel = clearConfigValue(templine, "s_Update channel:");
+		else if (templine.find("s_Kanał aktualizacji:") != std::string::npos)
+			updateChannel = clearConfigValue(templine, "s_Kanał aktualizacji:");
 
 		else if (templine.find("i_Highest salary:") != std::string::npos)
 			maxsalary = stoi(clearConfigValue(templine, "i_Highest salary:"));
@@ -297,7 +299,7 @@ void saveConfig(bool showInfo)
 		file << "////////////////////////////////////////////////////////////////////////////////////////////////\n";
 		file << "s_wersja: " << ver << "\n";
 		file << "s_IP serwera MTA: " << serverIP << "\n";
-		file << "s_Update channel: " << updateChannel << '\n';
+		file << "s_Kanał aktualizacji: " << updateChannel << '\n';
 		file << "s_Ścieżka MTA: " << mtaLocation << "\n";
 		file << "s_Nickname: " << nick << "\n";
 		file << "i_Dźwięk główny: " << dzwiekGlowny << "\n";
