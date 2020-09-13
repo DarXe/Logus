@@ -226,6 +226,8 @@ void wersja()
 	std::cout << " 208_31 Przebudowa niektórych komend w taki sposób, aby przyjmowały dowolne wartości\n";
 	std::cout << " 208_31 Nowe komendy w LiveChat - set n add nick i set n del nick (usuwa lub dodaje nick do bazy nicków)\n";
 	std::cout << " 208_31 Automatyczne wyszukiwanie nicku i lokalizacji MTA\n";
+	std::cout << " * Dodatkowo zmiana nicku przed konsolę lub czat także zmieni nick (w przypadku zmiany nicku z poziomu czatu\n"
+			  << " * pomyślność zmiany nicku zależy od tego czy nick obecny w configu Logusia pokrywa się z tym w MTA\n";
 	std::cout << " 208_25 Gruntowna przebudowa LiveChat, w końcu mniejsze zużycie I/O i brak pomijania logów!\n";
 	std::cout << " 208_17 Dodanie integracji z komisem, tj. możliwość sprawdzenia cen pojazdów w komisie\n";
 	std::cout << " * Niebawem zrobione będzie pełnoprawne wsparcie dla Win 7 (z pomocą conEmu)\n";

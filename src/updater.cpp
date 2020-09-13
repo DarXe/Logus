@@ -63,23 +63,6 @@ void checkLogusUpdate()
 		}
 		check.close();
 	}
-	else if (updateChannel == "pre-release")
-	{
-		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/master/version -o version.tmp");
-		std::fstream check;
-		std::string versc;
-		check.open("version.tmp");
-		if (check.good())
-		{
-			check >> versc;
-			if (versc != ver)
-			{
-				rename("Logus.exe", "Logus1.exe");
-				system("bin\\curl --silent --location https://raw.githubusercontent.com/DarXe/Logus/master/Logus.exe -o Logus.exe");
-			}
-		}
-		check.close();
-	}
 	remove("version.tmp");
 }
 

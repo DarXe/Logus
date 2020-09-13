@@ -170,8 +170,6 @@ void settings()
 		{
 			cls();
 			if (updateChannel == "release")
-				updateChannel = "pre-release";
-			else if (updateChannel == "pre-release")
 				updateChannel = "nightly";
 			else if (updateChannel == "nightly")
 				updateChannel = "disable";
