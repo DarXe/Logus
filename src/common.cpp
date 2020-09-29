@@ -4,6 +4,7 @@
 
 //standard libraries
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <conio.h>
 #include <codecvt>
@@ -132,6 +133,15 @@ int power(int x, int y)
 		z *= x;
 	}
 	return z;
+}
+
+std::string round(const long double x, const int dec)
+{
+    std::stringstream ss;
+    ss << std::fixed;
+    ss.precision(dec);
+    ss << x;
+    return ss.str();
 }
 
 /*

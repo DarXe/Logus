@@ -18,6 +18,7 @@
 #include "../common.hpp"
 #include "../proc.hpp"
 #include "livechat.hpp"
+#include "../stopwatch.hpp"
 
 
 //variable declarations
@@ -153,18 +154,16 @@ void getChat(bool init) //gc
 void moveLogs() //mv clean and move logs from console.log to logus.log
 {
 	std::ofstream to;
-
 	//check filelc size and then load filelc content into string
-	auto read = std::chrono::high_resolution_clock::now();
+	Stopwatch read;
 	std::ifstream from(consoleLogPath, std::ios::binary);
 	std::string fromContent(size, 0);
 	from.read(&fromContent[0], size);
 	from.close();
-	auto read1 = std::chrono::high_resolution_clock::now();
-	auto readshow = std::chrono::duration_cast<std::chrono::nanoseconds>(read1 - read).count();
+	read.stop();
 
 	//clear console.log
-	auto clearl = std::chrono::high_resolution_clock::now();
+	Stopwatch clears;
 	std::ofstream clear;
 	clear.open(consoleLogPath, std::ios::out | std::ios::trunc);
 	clear.close();
@@ -172,29 +171,18 @@ void moveLogs() //mv clean and move logs from console.log to logus.log
 	filelc.clear();
 	filelc.seekg(0, std::ios::beg);
 	lcLineCount = 0;
-	auto clearl1 = std::chrono::high_resolution_clock::now();
-	auto clearlshow = std::chrono::duration_cast<std::chrono::nanoseconds>(clearl1 - clearl).count();
+	clears.stop();
 
-	auto write = std::chrono::high_resolution_clock::now();
+	Stopwatch write;
 	to.open("logus.log", std::ios::binary | std::ios::app);
 	to.write(fromContent.c_str(), size);
 	to.close();
-	auto write1 = std::chrono::high_resolution_clock::now();
-	auto writeshow = std::chrono::duration_cast<std::chrono::nanoseconds>(write1 - write).count();
+	write.stop();
 
 	//save moveLogs time to filelc liveChatInfoOutput.log
-	std::ofstream save;
-	save.open("debugInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
-	save << getCurrentTime() << "moveLogs: wielkość pliku: " << size / 1000 << "KB, odczyt: "
-		 << readshow << "ns (" << readshow / 1000000 << "ms), czyszczenie: "
-		 << clearlshow << "ns (" << clearlshow / 1000000 << "ms), zapis: "
-		 << writeshow << "ns (" << writeshow / 1000000 << "ms), łączny czas: "
-		 << readshow + writeshow + clearlshow << "ns ("
-		 << std::chrono::duration_cast<std::chrono::milliseconds>(write1 - write).count() +
-				std::chrono::duration_cast<std::chrono::milliseconds>(read1 - read).count() +
-				std::chrono::duration_cast<std::chrono::milliseconds>(clearl1 - clearl).count()
-		 << "ms)\n";
-	save.close();
+	read.debugOutput("moveLogs: wielkość pliku: %sKB, odczyt: %s (%s), czyszczenie: %s (%s), zapis: %s (%s), łącznie: %sns (%sms)", 
+	{std::to_string(size/1000), read.pre("ns"), read.pre("ms", 2), clears.pre("ns"), clears.pre("ms", 2), write.pre("ns"), write.pre("ms", 2),
+	round(read.get("ns") + clears.get("ns") + write.get("ns"), 0), round(read.get("ms") + clears.get("ms") + write.get("ms"), 2)});
 	size = std::filesystem::file_size(consoleLogPath);
 }
 
@@ -230,28 +218,18 @@ bool liveChat() //lc
 	lcLineCount = 0;
 	bool isAutoJoin = false;
 	//load logs without checking notifications
-	auto initspeed = std::chrono::high_resolution_clock::now();
+	Stopwatch init;
 	getChat(1);
-	auto initspeed1 = std::chrono::high_resolution_clock::now();
-	auto initspeedshow = std::chrono::duration_cast<std::chrono::nanoseconds>(initspeed1 - initspeed).count();
+	init.stop();
 
-	auto initshowspeed = std::chrono::high_resolution_clock::now();
+	Stopwatch initshow;
 	size = std::filesystem::file_size(consoleLogPath);
 	showChat();
-	auto initshowspeed1 = std::chrono::high_resolution_clock::now();
-	auto initshowspeedshow = std::chrono::duration_cast<std::chrono::nanoseconds>(initshowspeed1 - initshowspeed).count();
+	initshow.stop();
 
-	std::ofstream save;
-	save.open("debugInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
-	save << getCurrentTime() << "initLiveChat: wielkość pliku: " << size / 1000
-		 << "KB, linie: " << lcLineCount << ", odczyt: "
-		 << initspeedshow << "ns (" << initspeedshow / 1000000 << "ms), wyświetlanie: "
-		 << initshowspeedshow << "ns (" << initshowspeedshow / 1000000 << "ms), łączny czas: "
-		 << initspeedshow + initshowspeedshow << "ns ("
-		 << std::chrono::duration_cast<std::chrono::milliseconds>(initspeed1 - initspeed).count() +
-				std::chrono::duration_cast<std::chrono::milliseconds>(initshowspeed1 - initshowspeed).count()
-		 << "ms)\n";
-	save.close();
+	init.debugOutput("initLiveChat: wielkość pliku: %sKB, linie: %s, odczyt: %s (%s), wyświetlanie: %s (%s), łącznie: %sns (%sms)", 
+	{std::to_string(size/1000), std::to_string(lcLineCount), init.pre("ns"), init.pre("ms", 2), initshow.pre("ns"), initshow.pre("ms", 2),
+	round(init.get("ns") + initshow.get("ns"), 0), round(init.get("ms") + initshow.get("ms"), 2)});
 	//end
 
 	if (isTimer)

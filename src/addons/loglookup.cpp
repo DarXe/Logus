@@ -17,6 +17,7 @@
 #include "../proc.hpp"
 #include "../menu/livechat_func.hpp"
 #include "loglookup.hpp"
+#include "../stopwatch.hpp"
 
 bool checkDate(std::string line, const std::string &date, const bool &checkHour)
 {
@@ -66,20 +67,15 @@ bool showFileContent(const std::string &filename, const uintmax_t &filesize, con
 	}
 	std::fstream showFile("content.txt", std::ios::out | std::ios::binary);
 	std::string line;
-	auto showf = std::chrono::high_resolution_clock::now();
+	Stopwatch showf;
 	for (int i = 0; i < foundLines.size(); i++)
 	{
 		line = foundLines.at(i);
 		showFile << line << '\n';
 	}
-	auto showf1 = std::chrono::high_resolution_clock::now();
-	auto fshow = std::chrono::duration_cast<std::chrono::nanoseconds>(showf1 - showf).count();
-	std::ofstream save;
-	save.open("debugInfoOutput.log", std::ios::out | std::ios::binary | std::ios::app);
-	save << getCurrentTime() << "showFileContent: plik: " << filename
-		 << " wielkość pliku: " << filesize / 1000 << "KB, czas zapisu: "
-		 << fshow << "ns (" << fshow / 1000000 << "ms)\n";
-	save.close();
+	showf.stop();
+	showf.debugOutput("showFileContent: plik: %s, wielkość pliku: %sKB, czas zapisu: %s (%s)", {filename, std::to_string(filesize / 1000),
+	showf.pre("ns"), showf.pre("ms", 2)});
 	showFile.close();
 	cls();
 	std::cout << ((engLang) ? "Current file: " : "Aktualny plik: ") << filename <<

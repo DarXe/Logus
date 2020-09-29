@@ -8,6 +8,7 @@
 
 //standard libraries
 #include <string>
+#define q(var) std::cout << #var << " = " << var << '\n';
 
 
 //foward declarations
@@ -18,6 +19,8 @@ std::string getMTALocation();
 std::string getNickFromMTAConfig();
 
 std::string removeSpaces(std::string &line);
+
+std::string round(const long double x, const int dec);
 
 int losuj(int from, int to);
 
