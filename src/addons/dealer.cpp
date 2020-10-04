@@ -9,10 +9,10 @@
 
 
 //header includes
-#include "../common.hpp"
-#include "../var.hpp"
-#include "../proc.hpp"
-#include "../config.hpp"
+#include <common/common.hpp>
+#include <common/var.hpp>
+#include <common/proc.hpp>
+#include <common/config.hpp>
 #include "dealer.hpp"
 
 bool genDealerDatabase(std::string file)

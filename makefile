@@ -1,10 +1,12 @@
 CC				 = g++
-CFLAGS			 = -g -Os -std=c++17
+CFLAGS			 = -g -Os -std=c++17 -I src
 EXEFLAGS		 = $(CFLAGS) -s
 PROGRAM_NAME	 = Logus
 SRCFILES		:= $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
+SRCFILES		+= $(patsubst %.cpp,%.o,$(wildcard src/common/*.cpp))
 SRCFILES		+= $(patsubst %.cpp,%.o,$(wildcard src/menu/*.cpp))
 SRCFILES		+= $(patsubst %.cpp,%.o,$(wildcard src/addons/*.cpp))
+SRCFILES		+= $(patsubst %.cpp,%.o,$(wildcard src/menu/livechat/*.cpp))
 CFILES			:= $(subst src/ver.o,,${SRCFILES})
 DEPS			:= $(SRCFILES:.o=.d)
 PREH			:= $(SRCFILES:.o=.hpp.gch)

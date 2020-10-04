@@ -10,15 +10,15 @@
 
 
 //forward hpp declarations
-#include "livechat.hpp"
+#include "livechat/livechat.hpp"
 #include "../addons/loglookup.hpp"
 #include "../addons/dealer.hpp"
 #include "../addons/randomLogus.hpp"
 #include "settings.hpp"
-#include "../config.hpp"
-#include "../common.hpp"
-#include "../proc.hpp"
-#include "../var.hpp"
+#include <common/config.hpp>
+#include <common/common.hpp>
+#include <common/proc.hpp>
+#include <common/var.hpp>
 #include "menu.hpp"
 
 

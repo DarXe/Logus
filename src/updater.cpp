@@ -9,8 +9,8 @@
 
 
 //header includes
-#include "config.hpp"
-#include "var.hpp"
+#include <common/config.hpp>
+#include <common/var.hpp>
 #include "ver.hpp"
 #include "updater.hpp"
 
