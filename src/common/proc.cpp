@@ -73,7 +73,7 @@ void dots(short duration, short amount)
 	}
 }
 
-int cfgInputInt(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText, std::string minMaxText, int min, int max)
+int cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText, std::string minMaxText, int min, int max)
 {
 	if (isCls)
 		cls();
@@ -99,7 +99,7 @@ int cfgInputInt(bool preHead, bool isCls, std::string text, std::string inputTex
 	return temp;
 }
 
-std::string cfgInputString(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText)
+std::string cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText)
 {
 	std::string temp;
 	if (isCls)
@@ -389,12 +389,12 @@ void preConfig()
 			}
 			case 2:
 			{
-				grade = cfgInputInt(1, 1, "Specify your pay wage.", "Pay wage:", "Error. Specify correct pay wage:", "Min 50 max 100.", 50, 100);
+				grade = cfgInput(1, 1, "Specify your pay wage.", "Pay wage:", "Error. Specify correct pay wage:", "Min 50 max 100.", 50, 100);
 				grade /= 100;
 
-				courses = cfgInputInt(1, 1, "Enter courses that you have on your F4.", "Courses:", "Error. Specify correct amount of courses:", "Number cannot be negative.", 0, INT_MAX);
+				courses = cfgInput(1, 1, "Enter courses that you have on your F4.", "Courses:", "Error. Specify correct amount of courses:", "Number cannot be negative.", 0, INT_MAX);
 
-				money = cfgInputInt(1, 1, "Enter money that you have on your F4.", "Money:", "Error. Specify correct amount of money:", "Number cannot be negative.", 0, INT_MAX);
+				money = cfgInput(1, 1, "Enter money that you have on your F4.", "Money:", "Error. Specify correct amount of money:", "Number cannot be negative.", 0, INT_MAX);
 				break;
 			}
 			default:
@@ -421,12 +421,12 @@ void preConfig()
 			}
 			case 2:
 			{
-				grade = cfgInputInt(1, 1, "Podaj procent wyplaty.", "Procent wyplaty:", "Blad. Podaj prawidlowy procent wyplaty:", "Min 50 max 100.", 50, 100);
+				grade = cfgInput(1, 1, "Podaj procent wyplaty.", "Procent wyplaty:", "Blad. Podaj prawidlowy procent wyplaty:", "Min 50 max 100.", 50, 100);
 				grade /= 100;
 
-				courses = cfgInputInt(1, 1, "Podaj kursy ktore masz pod F4.", "Kursy:", "Blad. Podaj prawidlowa ilosc kursow:", "Liczba nie moze byc ujemna.", 0, INT_MAX);
+				courses = cfgInput(1, 1, "Podaj kursy ktore masz pod F4.", "Kursy:", "Blad. Podaj prawidlowa ilosc kursow:", "Liczba nie moze byc ujemna.", 0, INT_MAX);
 
-				money = cfgInputInt(1, 1, "Podaj zarobiona gotówkę pod F4.", "Gotowka:", "Blad. Podaj prawidlowa ilosc gotowki:", "Liczba nie moze byc ujemna.", 0, INT_MAX);
+				money = cfgInput(1, 1, "Podaj zarobiona gotówkę pod F4.", "Gotowka:", "Blad. Podaj prawidlowa ilosc gotowki:", "Liczba nie moze byc ujemna.", 0, INT_MAX);
 				break;
 			}
 			default:
@@ -453,12 +453,12 @@ void preConfig()
 			}
 			case 2:
 			{
-				grade = cfgInputInt(1, 1, "Podaj procent wypłaty.", "Procent wypłaty:", "Błąd. Podaj prawidłowy procent wypłaty:", "Min 50 max 100.", 50, 100);
+				grade = cfgInput(1, 1, "Podaj procent wypłaty.", "Procent wypłaty:", "Błąd. Podaj prawidłowy procent wypłaty:", "Min 50 max 100.", 50, 100);
 				grade /= 100;
 
-				courses = cfgInputInt(1, 1, "Podaj kursy które masz pod F4.", "Kursy:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
+				courses = cfgInput(1, 1, "Podaj kursy które masz pod F4.", "Kursy:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
 
-				money = cfgInputInt(1, 1, "Podaj zarobioną gotówkę pod F4.", "Gotówka:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
+				money = cfgInput(1, 1, "Podaj zarobioną gotówkę pod F4.", "Gotówka:", "Błąd. Podaj prawidłową ilość kursów:", "Liczba nie może być ujemna.", 0, INT_MAX);
 				break;
 			}
 			default:
@@ -474,8 +474,8 @@ void preConfig()
 
 		if (cfgSelection(1, "Do you want to set loading time and transport method?", "Yes, I do", "Not really") == 1)
 		{
-			temp2 = cfgInputInt(1, 1, "Firstly we'll choose loading time.", "Enter minutes:", "Error. Enter correct number.", "It has to be a number", 0, INT_MAX);
-			temp = cfgInputInt(1, 1, "Now enter seconds.", "Enter seconds:", "Error. Enter correct number.", "It has to be a number", 0, INT_MAX);
+			temp2 = cfgInput(1, 1, "Firstly we'll choose loading time.", "Enter minutes:", "Error. Enter correct number.", "It has to be a number", 0, INT_MAX);
+			temp = cfgInput(1, 1, "Now enter seconds.", "Enter seconds:", "Error. Enter correct number.", "It has to be a number", 0, INT_MAX);
 			czas = (temp * 60) + temp2;
 
 			if (cfgSelection(1, "Specify loading method.", "Random", ""
@@ -489,13 +489,11 @@ void preConfig()
 
 		if (cfgSelection(1, "Chcesz wybrac sposob transportu i czas ladowania?", "Tak, chce", "Nie, nie chce") == 1)
 		{
-			temp2 = cfgInputInt(1, 1, "Na poczatek wybierzmy czas ladowania.", "Podaj minuty:", "Blad. Podaj prawidlowa liczbe.", "To musi byc liczba.", 0, INT_MAX);
-			temp = cfgInputInt(1, 1, "Teraz podaj sekundy.", "Podaj sekundy:", "Blad. Podaj prawidlowa liczbe.", "To musi byc liczba.", 0, INT_MAX);
+			temp2 = cfgInput(1, 1, "Na poczatek wybierzmy czas ladowania.", "Podaj minuty:", "Blad. Podaj prawidlowa liczbe.", "To musi byc liczba.", 0, INT_MAX);
+			temp = cfgInput(1, 1, "Teraz podaj sekundy.", "Podaj sekundy:", "Blad. Podaj prawidlowa liczbe.", "To musi byc liczba.", 0, INT_MAX);
 			czas = (temp * 60) + temp2;
 
-			if (cfgSelection(1, "Podaj sposob ladowania.", "Losowy", ""
-																	 "Sam wybiore"
-																	 "") == 1)
+			if (cfgSelection(1, "Podaj sposob ladowania.", "Losowy", "Sam wybiore") == 1)
 				random = 1;
 		}
 	}
@@ -504,13 +502,11 @@ void preConfig()
 
 		if (cfgSelection(1, "Chcesz wybrać sposób transportu i czas ładowania?", "Tak, chcę", "Nie, nie chcę") == 1)
 		{
-			temp2 = cfgInputInt(1, 1, "Na początek wybierzmy czas ładowania.", "Podaj minuty:", "Błąd. Podaj prawidłową liczbę.", "To musi być liczba.", 0, INT_MAX);
-			temp = cfgInputInt(1, 1, "Teraz podaj sekundy.", "Podaj sekundy:", "Błąd. Podaj prawidłową liczbę.", "To musi być liczba.", 0, INT_MAX);
+			temp2 = cfgInput(1, 1, "Na początek wybierzmy czas ładowania.", "Podaj minuty:", "Błąd. Podaj prawidłową liczbę.", "To musi być liczba.", 0, INT_MAX);
+			temp = cfgInput(1, 1, "Teraz podaj sekundy.", "Podaj sekundy:", "Błąd. Podaj prawidłową liczbę.", "To musi być liczba.", 0, INT_MAX);
 			czas = (temp * 60) + temp2;
 
-			if (cfgSelection(1, "Podaj sposób ładowania.", "Losowy", ""
-																	 "Sam wybiorę"
-																	 "") == 1)
+			if (cfgSelection(1, "Podaj sposób ładowania.", "Losowy", "Sam wybiorę") == 1)
 				random = 1;
 		}
 	}

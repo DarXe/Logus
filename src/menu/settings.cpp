@@ -179,15 +179,15 @@ void settings()
 		}
 		case '1':
 		{
-			wyswietlaneWiersze = (engLang ? cfgInputInt(0, 1, "Enter amount of displayed lines", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 100", 0, 100) :
-			cfgInputInt(0, 1, "Podaj ilość wyświetlanych wierszy", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 100", 0, 100));
+			wyswietlaneWiersze = (engLang ? cfgInput(0, 1, "Enter amount of displayed lines", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 100", 0, 100) :
+			cfgInput(0, 1, "Podaj ilość wyświetlanych wierszy", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 100", 0, 100));
 			cls();
 			break;
 		}
 		case '2':
 		{
-			refresh = (engLang ? cfgInputInt(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 1000", 0, 1000) :
-			cfgInputInt(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 1000", 0, 1000));
+			refresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 1000", 0, 1000) :
+			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 1000", 0, 1000));
 			cls();
 			break;
 		}
@@ -199,29 +199,29 @@ void settings()
 		}
 		case '4':
 		{
-			dzwiekGlowny = (engLang ? cfgInputInt(0, 1, "Enter new sound frequency", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 10000", 0, 10000) :
-			cfgInputInt(0, 1, "Podaj nową częstotliwość dźwięku", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 10000", 0, 10000));
+			dzwiekGlowny = (engLang ? cfgInput(0, 1, "Enter new sound frequency", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 10000", 0, 10000) :
+			cfgInput(0, 1, "Podaj nową częstotliwość dźwięku", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 10000", 0, 10000));
 			cls();
 			break;
 		}
 		case '5':
 		{
-			interval = (engLang ? cfgInputInt(0, 1, "Enter new delay between sounds", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 1000", 0, 1000) :
-			cfgInputInt(0, 1, "Podaj nowy odstęp między dźwiękami", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 1000", 0, 1000));
+			interval = (engLang ? cfgInput(0, 1, "Enter new delay between sounds", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 1000", 0, 1000) :
+			cfgInput(0, 1, "Podaj nowy odstęp między dźwiękami", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 1000", 0, 1000));
 			cls();
 			break;
 		}
 		case 'u':
 		{
-			minRefresh = (engLang ? cfgInputInt(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 1, Max 2000", 1, 2000) :
-			cfgInputInt(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 1, Max 2000", 1, 2000));
+			minRefresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 1, Max 2000", 1, 2000) :
+			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 1, Max 2000", 1, 2000));
 			cls();
 			break;
 		}
 		case 'o':
 		{
-			maxRefresh = (engLang ? cfgInputInt(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 1, Max 2000", 1, 2000) :
-			cfgInputInt(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 1, Max 2000", 1, 2000));
+			maxRefresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 1, Max 2000", 1, 2000) :
+			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 1, Max 2000", 1, 2000));
 			cls();
 			break;
 		}
@@ -239,10 +239,10 @@ void settings()
 		}
 		case '6':
 		{
-			temp2 = (engLang ? cfgInputInt(0, 1, "", "Enter minutes:", "Error. Entered wrong value", "Min 0, Max 10", 0, 10) :
-			cfgInputInt(0, 1, "", "Podaj minuty:", "Błąd. Podano błędną wartość", "Min 0, Max 10", 0, 10));
-			temp = (engLang ? cfgInputInt(0, 1, "", "Enter seconds:", "Error. Entered wrong value", "Min 0, Max 59", 0, 59) :
-			cfgInputInt(0, 1, "", "Podaj sekundy:", "Błąd. Podano błędną wartość", "Min 0, Max 59", 0, 59));
+			temp2 = (engLang ? cfgInput(0, 1, "", "Enter minutes:", "Error. Entered wrong value", "Min 0, Max 10", 0, 10) :
+			cfgInput(0, 1, "", "Podaj minuty:", "Błąd. Podano błędną wartość", "Min 0, Max 10", 0, 10));
+			temp = (engLang ? cfgInput(0, 1, "", "Enter seconds:", "Error. Entered wrong value", "Min 0, Max 59", 0, 59) :
+			cfgInput(0, 1, "", "Podaj sekundy:", "Błąd. Podano błędną wartość", "Min 0, Max 59", 0, 59));
 			czas = (temp2 * 60) + temp;
 			cls();
 			break;
@@ -255,22 +255,22 @@ void settings()
 		}
 		case '8':
 		{
-			money = (engLang ? cfgInputInt(0, 1, "Enter new amount of money (without $ etc)", "Enter a number:", "Error. Entered wrong value", "It has to be a number", 0, INT_MAX) :
-			cfgInputInt(0, 1, "Podaj nową ilość $ (sama liczba)", "Podaj liczbę:", "Błąd. Podano błędną wartość", "To musi być liczba", 0, INT_MAX));
+			money = (engLang ? cfgInput(0, 1, "Enter new amount of money (without $ etc)", "Enter a number:", "Error. Entered wrong value", "It has to be a number", 0, INT_MAX) :
+			cfgInput(0, 1, "Podaj nową ilość $ (sama liczba)", "Podaj liczbę:", "Błąd. Podano błędną wartość", "To musi być liczba", 0, INT_MAX));
 			cls();
 			break;
 		}
 		case '9':
 		{
-			courses = (engLang ? cfgInputInt(0, 1, "Enter new amount of courses", "Enter amount:", "Error. Entered wrong value", "It has to be a number", 0, INT_MAX) :
-			cfgInputInt(0, 1, "Podaj nową ilość kursów", "Podaj ilość:", "Błąd. Podano błędną wartość", "To musi być liczba", 0, INT_MAX));
+			courses = (engLang ? cfgInput(0, 1, "Enter new amount of courses", "Enter amount:", "Error. Entered wrong value", "It has to be a number", 0, INT_MAX) :
+			cfgInput(0, 1, "Podaj nową ilość kursów", "Podaj ilość:", "Błąd. Podano błędną wartość", "To musi być liczba", 0, INT_MAX));
 			cls();
 			break;
 		}
 		case '0':
 		{
-			grade = (engLang ? cfgInputInt(0, 1, "Enter new pay wage", "Enter amount:", "Error. Entered wrong value", "Min 50, Max 100", 50, 100) :
-			cfgInputInt(0, 1, "Podaj nowy procent wypłaty", "Podaj ilość:", "Błąd. Podano błędną wartość", "Min 50, Max 100", 50, 100));
+			grade = (engLang ? cfgInput(0, 1, "Enter new pay wage", "Enter amount:", "Error. Entered wrong value", "Min 50, Max 100", 50, 100) :
+			cfgInput(0, 1, "Podaj nowy procent wypłaty", "Podaj ilość:", "Błąd. Podano błędną wartość", "Min 50, Max 100", 50, 100));
 			grade /= 100;
 			cls();
 			break;
@@ -393,8 +393,8 @@ void settings()
 						{
 							std::cout << " " << i + 1 << ". " << nicknames.at(i) << "\n";
 						}
-						engLang ? cfgInputInt(0, 0, "Enter player's ID that you want to remove", "Enter ID:", "Error. Entered wrong value", "It has to be a number", 0, nicknames.size()) :
-						cfgInputInt(0, 0, "Podaj ID gracza którego chcesz usunąć", "Podaj ID:", "Błąd. Podaną błędną wartość", "To musi być liczba", 0, nicknames.size());
+						engLang ? cfgInput(0, 0, "Enter player's ID that you want to remove", "Enter ID:", "Error. Entered wrong value", "It has to be a number", 0, nicknames.size()) :
+						cfgInput(0, 0, "Podaj ID gracza którego chcesz usunąć", "Podaj ID:", "Błąd. Podaną błędną wartość", "To musi być liczba", 0, nicknames.size());
 						cls();
 						engLang ? std::cout << " Removed player " << nicknames.at(temp - 1) << "\n" : std::cout << " Usunieto gracza " << nicknames.at(temp - 1) << "\n";
 						nicknames.erase(nicknames.begin() + temp - 1);
