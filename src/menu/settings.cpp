@@ -7,10 +7,11 @@
 
 
 //header includes
-#include <common/var.hpp>
-#include <common/common.hpp>
-#include <common/proc.hpp>
-#include <common/config.hpp>
+#include <var.hpp>
+#include <common.hpp>
+#include <proc.hpp>
+#include <config.hpp>
+#include <commonConfig.hpp>
 #include "livechat/livechat_func.hpp"
 #include "settings.hpp"
 

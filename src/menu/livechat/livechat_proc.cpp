@@ -9,8 +9,8 @@
 
 
 //header includes
-#include <common/var.hpp>
-#include <common/config.hpp>
+#include <var.hpp>
+#include <config.hpp>
 #include "livechat_proc.hpp"
 
 void startTimer(short getSeconds)

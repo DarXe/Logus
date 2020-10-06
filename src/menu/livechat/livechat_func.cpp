@@ -10,9 +10,9 @@
 
 
 //header includes
-#include <common/var.hpp>
-#include <common/config.hpp>
-#include <common/common.hpp>
+#include <var.hpp>
+#include <config.hpp>
+#include <common.hpp>
 #include "livechat_proc.hpp"
 #include "livechat_func.hpp"
 

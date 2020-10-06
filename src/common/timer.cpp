@@ -16,7 +16,7 @@ Timer::Timer(int timer)
 	start(timer);
 }
 
-inline void Timer::start(clock_t timer) //in ms
+void Timer::start(clock_t timer) //in ms
 {
 	m_timer = timer;
 	m_delay = clock();

@@ -9,8 +9,8 @@
 
 
 //header includes
-#include <common/common.hpp>
-#include <common/var.hpp>
+#include <common.hpp>
+#include <var.hpp>
 #include "randomLogus.hpp"
 
 int lottoLogus()

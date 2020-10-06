@@ -21,26 +21,6 @@ bool closeLogus(std::string text = "Bye bye");
 
 void dots(short duration, short amount);
 
-int cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText, std::string minMaxText, int min = 0, int max = 0);
-
-std::string cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText);
-
-int cfgSelection(bool preHead,
-				std::string Question = "",
-				std::string Answer = "",
-				std::string Answer2 = "",
-				std::string Answer3 = "",
-				std::string Answer4 = "");
-
-std::string cfgSelectionStr(std::string Question = "",
-			std::string Answer = "",
-			std::string Answer2 = "",
-			std::string Answer3 = "",
-			std::string Answer4 = "",
-			std::string Answer5 = "",
-			std::string Answer6 = "",
-			std::string Answer7 = "");
-
 void preConfig();
 
 

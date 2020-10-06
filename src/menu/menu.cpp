@@ -15,10 +15,11 @@
 #include "../addons/dealer.hpp"
 #include "../addons/randomLogus.hpp"
 #include "settings.hpp"
-#include <common/config.hpp>
-#include <common/common.hpp>
-#include <common/proc.hpp>
-#include <common/var.hpp>
+#include <commonConfig.hpp>
+#include <config.hpp>
+#include <common.hpp>
+#include <proc.hpp>
+#include <var.hpp>
 #include "menu.hpp"
 
 

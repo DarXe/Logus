@@ -13,12 +13,12 @@
 //header includes
 #include "livechat_proc.hpp"
 #include "livechat_func.hpp"
-#include <common/var.hpp>
-#include <common/config.hpp>
-#include <common/common.hpp>
-#include <common/proc.hpp>
+#include <var.hpp>
+#include <config.hpp>
+#include <common.hpp>
+#include <proc.hpp>
 #include "livechat.hpp"
-#include <common/stopwatch.hpp>
+#include <stopwatch.hpp>
 
 
 //variable declarations

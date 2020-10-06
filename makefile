@@ -1,5 +1,5 @@
 CC				 = g++
-CFLAGS			 = -g -Os -std=c++17 -I src
+CFLAGS			 = -g -Os -std=c++17 -I src/common
 EXEFLAGS		 = $(CFLAGS) -s
 PROGRAM_NAME	 = Logus
 SRCFILES		:= $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))

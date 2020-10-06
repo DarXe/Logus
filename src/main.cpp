@@ -12,12 +12,12 @@
 
 
 //header includes
-#include <common/common.hpp>
-#include <common/var.hpp>
+#include <common.hpp>
+#include <var.hpp>
 #include "ver.hpp"
 #include "updater.hpp"
-#include <common/config.hpp>
-#include <common/proc.hpp>
+#include <config.hpp>
+#include <proc.hpp>
 #include "menu/menu.hpp"
 #include "main.hpp"
 

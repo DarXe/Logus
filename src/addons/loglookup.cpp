@@ -12,12 +12,14 @@
 
 
 //header includes
-#include <common/common.hpp>
-#include <common/var.hpp>
-#include <common/proc.hpp>
+#include <common.hpp>
+#include <var.hpp>
+#include <proc.hpp>
+#include <commonConfig.hpp>
 #include "../menu/livechat/livechat_func.hpp"
+#include <stopwatch.hpp>
 #include "loglookup.hpp"
-#include <common/stopwatch.hpp>
+
 
 bool checkDate(std::string line, const std::string &date, const bool &checkHour)
 {
