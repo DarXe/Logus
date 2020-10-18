@@ -192,6 +192,20 @@ void wersja()
 	////////////////////////////////////////////////////////////////// news goes here ////////////////////////////
 
 	SetConsoleTextAttribute(h, 4);
+	std::cout << " PAŹDZIERNIK" << std::endl;
+
+	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2010_18 Dodano komendę set hre (hard reset), która poza resetowaniem kursów i gotówki resetuje także min i max zarobek\n";
+	std::cout << " 2010_18 Komendy set n add i set n del zmieniły nazwę na nickdb add i nickdb del\n";
+	std::cout << " 209_06 Przebudowa kodu... (znowu)\n";
+	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)" << std::endl;
+	if (getch() == 27)
+	{
+		cls();
+		return;
+	}
+	cls();
+	SetConsoleTextAttribute(h, 4);
 	std::cout << " WRZESIEŃ" << std::endl;
 
 	SetConsoleTextAttribute(h, 6);
@@ -200,9 +214,7 @@ void wersja()
 	std::cout << " 209_06 Auto-updater i wybór kanału aktualizacji!\n";
 	std::cout << " 209_02-06 Poprawki błędów (znowu)\n";
 	std::cout << " 209_01 Wykrycie wypadku uruchomi teraz także timer (resetując przy okazji inne timery)\n";
-	std::cout << " 209_01 Dodano nowe ustawienie - automatyczne otwieranie bramy po otrzymaniu PW kończącego się na "
-				 "open"
-				 "\n";
+	std::cout << " 209_01 Dodano nowe ustawienie - automatyczne otwieranie bramy po otrzymaniu PW kończącego się na ""open""\n";
 	std::cout << " 209_01 Poprawiono kilka błędów powstałych po optymalizacji liveChat, teraz powinno być git\n";
 
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)" << std::endl;
