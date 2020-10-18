@@ -40,8 +40,6 @@ bool runLiveChat() //flc
 	cls();
 	Beep(dzwiekGlowny, 100);
 	liveChat();
-	if (_quit == 2)
-		return 0;
 	return 1;
 }
 
@@ -63,7 +61,7 @@ bool closeLogus(std::string text)
 		Sleep(400);
 	}
 	Beep(dzwiekGlowny + 100, 250);
-	return 0;
+	exit(0);
 }
 
 void dots(short duration, short amount)

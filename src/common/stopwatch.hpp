@@ -17,9 +17,9 @@ public:
 	~Stopwatch();
 
 	void stop();
-	long double get(std::string type);
+	long double get(const std::string &type);
 
-	std::string pre(std::string type, int precision = 0);
+	std::string pre(const std::string &type, const int &precision = 0);
 
-	void debugOutput(std::string text, std::vector <std::string> content);
+	void debugOutput(std::string text, const std::vector <std::string> &content);
 };

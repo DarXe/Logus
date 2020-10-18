@@ -13,6 +13,10 @@
 #include <ctime>
 
 
+//header includes
+#include <timer.hpp>
+
+
 //var (ZMIENNE)
 //logus.ini
 extern std::string relVer;
@@ -73,10 +77,7 @@ extern clock_t delay, delay2; //pomiary delay
 extern int temp; //aux var //pomocnicza zmienna iloscLinijek w LiveChat
 extern int temp2; //aux var //pomocnicza2 w LiveChat
 extern std::string s_temp; //string temp
-extern char _quit; //used in fConsoleInput (quits logus if mta was closed via "quit" in mta console)
-extern int timer; //TIMER countdown of time for unloading //odliczanie czasu do rozładowania
-extern bool isTimer; //TIMER aux var //pomocnicza zmienna - czy timer ma odliczac
-extern bool isCzas; //TIMER aux var //pomocnicza zmienna - czas po zaladowaniu, odliczanie
+extern Timer mainTimer; //TIMER countdown of time for unloading //odliczanie czasu do rozładowania
 extern int avg; //courses calculator - average //średnia kursów
 extern clock_t t; // clock to check code speed
 

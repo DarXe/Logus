@@ -29,6 +29,7 @@ bool isNewLine = 0, isNewBeep = 0;
 std::ifstream filelc;
 std::string linelc;
 std::uintmax_t size;
+static bool isAutoJoin;
 
 
 void liveChatHead() //head
@@ -49,12 +50,10 @@ void liveChatHead() //head
 	std::cout<<"###############################LiveChat###############################\n";
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
 	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lcLineCount<<" # Rozmiar:"<<std::setprecision(3)<<sizei<<sizet<<" # [Esc] Menu \n";
-	if(isTimer)
+	if(mainTimer.m_running)
 	{
 		SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-		std::cout<<" Timer "<<timer/1000/60;
-		if((timer/1000)%60<10) std::cout<<":0"; else std::cout<<":";
-		std::cout<<(timer/1000)%60<<"  [s]Stop Timer # F4 ";
+		std::cout<<" Timer "<<mainTimer.getTime()<<"  [s]Stop Timer # F4 ";
 	}
 	else
 	{
@@ -139,7 +138,7 @@ void getChat(bool init) //gc
 		if (filelc.eof())		 //if above getline returns eof, do break
 			break;
 
-		if (lastLines.size() >= wyswietlaneWiersze) //if array size exceds wyswietlaneWiersze size remove first element from aray
+		if (lastLines.size() >= wyswietlaneWiersze) //if array size exceds wyswietlaneWiersze size remove first element from array
 			lastLines.pop_front();
 		lastLines.push_back(linelc); //add element to the end of array
 		++lcLineCount;
@@ -210,13 +209,91 @@ void checkNotifications()
 		}
 }
 
+bool liveChatInput()
+{
+	if (kbhit())
+	{
+		switch (getch())
+		{
+		case 27:
+		{
+			cls();
+			filelc.close();
+			return 1;
+		}
+		case 't':
+			startCounter();
+			break;
+		case 's':
+			stopCounter();
+			liveChatHead();
+			break;
+		case 'm':
+		{
+			cls();
+			std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda\n";
+			if (getch() == 27)
+				break;
+			showChat();
+			moveLogs();
+		}
+		break;
+		case 48: //48? it's funny, because it's 0 :D //clear track
+		{
+			trackId = trackId ? 0 : 1;
+			liveChatHead();
+			break;
+		}
+		case 13: //enter start autoJoin
+		{
+			isAutoJoin = true;
+			pos.X = 3;
+			pos.Y = 4;
+			SetConsoleCursorPosition(h, pos);
+			SetConsoleTextAttribute(h, 12);
+			std::cout << "    START autoJoin    ";
+			Beep(dzwiekGlowny, 750);
+		}
+		break;
+		case 'v': //save
+		{
+			pos.X = 10;
+			pos.Y = 0;
+			SetConsoleCursorPosition(h, pos);
+			Beep(dzwiekGlowny, 100);
+			std::cout << "ZAPISANO!";
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			saveConfig(0);
+		}
+		break;
+		case 'r': //read
+		{
+			pos.X = 10;
+			pos.Y = 0;
+			SetConsoleCursorPosition(h, pos);
+			Beep(dzwiekGlowny, 100);
+			std::cout << "WCZYTANO!";
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			readConfig(0);
+		}
+		break;
+		default:
+		{
+			std::cout << '\a';
+			break;
+		}
+		}
+	}
+	return 0;
+}
+
 bool liveChat() //lc
 {
 	//reset some things
 	lastLines.clear();
 	lastLines.shrink_to_fit();
 	lcLineCount = 0;
-	bool isAutoJoin = false;
+	isAutoJoin = false;
 	//load logs without checking notifications
 	Stopwatch init;
 	getChat(1);
@@ -224,6 +301,7 @@ bool liveChat() //lc
 
 	Stopwatch initshow;
 	size = std::filesystem::file_size(consoleLogPath);
+	mainTimer.update();
 	showChat();
 	initshow.stop();
 
@@ -232,16 +310,9 @@ bool liveChat() //lc
 	round(init.get("ns") + initshow.get("ns"), 0), round(init.get("ms") + initshow.get("ms"), 2)});
 	//end
 
-	if (isTimer)
-	{
-		delay = clock();
-		timer -= (clock() - delay);
-	}
-
 	while (true) //actual livechat infinite loop
 	{
-		if (isTimer)
-			delay = clock();
+		mainTimer.update();
 
 		getChat();
 		if (isNewLine)
@@ -264,11 +335,6 @@ bool liveChat() //lc
 			size = std::filesystem::file_size(consoleLogPath);
 			showChat();
 			checkNotifications();
-			if (_quit == 2)
-			{
-				filelc.close();
-				return 0;
-			}
 		}
 		else
 		{
@@ -284,7 +350,7 @@ bool liveChat() //lc
 					refresh = maxRefresh;
 					liveChatHead();
 				}
-				else if ((refresh == maxRefresh) && isTimer)
+				else if ((refresh == maxRefresh) && mainTimer.m_running)
 					liveChatHead();
 			}
 			else
@@ -324,132 +390,10 @@ bool liveChat() //lc
 		}
 
 		//if key pressed
-		if (kbhit())
-		{
-			switch (getch())
-			{
-			case 27:
-			{
-				cls();
-				filelc.close();
-				return 1;
-			}
-			case 't':
-				startTimer();
-				break;
-			case 's':
-				stopTimer();
-				liveChatHead();
-				break;
-			case 'm':
-			{
-				cls();
-				std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda\n";
-				if (getch() == 27)
-					break;
-				showChat();
-				moveLogs();
-			}
-			break;
-			case 48: //48? it's funny, because it's 0 :D //clear track
-			{
-				trackId = trackId ? 0 : 1;
-				liveChatHead();
-				break;
-			}
-			case 13: //enter start autoJoin
-			{
-				isAutoJoin = true;
-				pos.X = 3;
-				pos.Y = 4;
-				SetConsoleCursorPosition(h, pos);
-				SetConsoleTextAttribute(h, 12);
-				std::cout << "    START autoJoin    ";
-				Beep(dzwiekGlowny, 750);
-			}
-			break;
-			case 'v': //save
-			{
-				pos.X = 10;
-				pos.Y = 0;
-				SetConsoleCursorPosition(h, pos);
-				Beep(dzwiekGlowny, 100);
-				std::cout << "ZAPISANO!";
-				std::this_thread::sleep_for(std::chrono::milliseconds(500));
-				saveConfig(0);
-			}
-			break;
-			case 'r': //read
-			{
-				pos.X = 10;
-				pos.Y = 0;
-				SetConsoleCursorPosition(h, pos);
-				Beep(dzwiekGlowny, 100);
-				std::cout << "WCZYTANO!";
-				std::this_thread::sleep_for(std::chrono::milliseconds(500));
-				readConfig(0);
-			}
-			break;
-			default:
-			{
-				std::cout << '\a';
-				break;
-			}
-			}
-		}
+		if (liveChatInput() == 1)
+			return 1;
 
-		//timer countdown
-		if (isTimer)
-		{
-			if (timer > 0)
-			{
-				timer -= (clock() - delay);
-				delay = clock();
-				if (isCzas)
-				{
-					if (random)
-					{
-						if (timer < 300000)
-						{
-							Beep(dzwiekGlowny, 150);
-							Beep(0, interval);
-							Beep(dzwiekGlowny + 50, 150);
-							Beep(0, interval);
-							Beep(dzwiekGlowny + 100, 150);
-							Beep(0, interval);
-							isCzas = 0;
-						}
-					}
-					else
-					{
-						if (timer < 360000)
-						{
-							Beep(dzwiekGlowny, 150);
-							Beep(0, interval);
-							Beep(dzwiekGlowny + 50, 150);
-							Beep(0, interval);
-							Beep(dzwiekGlowny + 100, 150);
-							Beep(0, interval);
-							isCzas = 0;
-						}
-					}
-				}
-			}
-			else
-			{
-				Beep(dzwiekGlowny - 100, 150);
-				Beep(0, interval);
-				Beep(dzwiekGlowny - 50, 150);
-				Beep(0, interval);
-				Beep(dzwiekGlowny, 150);
-				Beep(0, interval);
-				isTimer = 0;
-				pos.X = 0;
-				pos.Y = 2;
-				SetConsoleCursorPosition(h, pos);
-				std::cout << "  [t]Timer                     ";
-			}
-		}
+		mainTimer.beep();
 
 		//end of darxe's shit
 		if (isAutoJoin)
@@ -469,8 +413,6 @@ bool liveChat() //lc
 			newLines.shrink_to_fit();
 		filelc.clear();
 		filelc.sync();
-		if (isTimer)
-			timer -= (clock() - delay);
 	}
 	filelc.close();
 	return 1;

@@ -150,9 +150,7 @@ int main(int argc, char **argv) //maa main
 	case 1:
 	{
 		runLiveChat();
-		mess = engLang ? "Closing MTA and Logus" : "Zamykanie MTA i programu";
-		if (_quit == 2)
-			return closeLogus(mess); //close Logus
+		break;
 	}
 	default:
 		break;

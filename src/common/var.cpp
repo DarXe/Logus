@@ -70,9 +70,6 @@ clock_t delay = 0, delay2 = 0; //pomiary delay
 int temp = 0; //aux var //pomocnicza zmienna iloscLinijek w LiveChat
 int temp2 = 0; //aux var //pomocnicza2 w LiveChat
 std::string s_temp = ""; //string temp
-char _quit; //used in fConsoleInput (quits logus if mta was closed via "quit" in mta console)
-int timer = 0; //TIMER countdown of time for unloading //odliczanie czasu do rozładowania
-bool isTimer = 0; //TIMER aux var //pomocnicza zmienna - czy timer ma odliczac
-bool isCzas = 0; //TIMER aux var //pomocnicza zmienna - czas po zaladowaniu, odliczanie
+Timer mainTimer;
 int avg = 0; //courses calculator - average //średnia kursów
 clock_t t; // clock to check code speed

@@ -13,39 +13,32 @@
 #include <config.hpp>
 #include "livechat_proc.hpp"
 
-void startTimer(short getSeconds)
+void startCounter(short getSeconds)
 {
-	Beep(dzwiekGlowny, 100);
-	delay = clock();
 	if (getSeconds)
 	{
-		timer = getSeconds * 1000;
+		mainTimer.start(getSeconds * 1000);
 	}
 	else
 	{
-		timer = czas * 1000;
-		if (random)
-			timer += 300000;
+		mainTimer.start(czas * 1000);
+		/*if (random)
+			mainTimer.m_timer += 300000;
 		else
-			timer += 360000;
-		isCzas = 1;
+			mainTimer.m_timer += 360000;*/
+		mainTimer.m_loaded = true;
 	}
-	isTimer = 1;
 	pos.X = 0;
 	pos.Y = 2;
 	SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 170);
 	std::cout << " ";
 	SetConsoleTextAttribute(h, 12);
-	std::cout << " Timer 0:00  [s]Stop Timer   ";
 }
 
-void stopTimer()
+void stopCounter()
 {
-	Beep(dzwiekGlowny, 500);
-	isTimer = 0;
-	isCzas = 0;
-	timer = 0;
+	mainTimer.stop();
 	pos.X = 0;
 	pos.Y = 2;
 	SetConsoleCursorPosition(h, pos);

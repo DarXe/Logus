@@ -15,6 +15,7 @@
 #include <common.hpp>
 #include "livechat_proc.hpp"
 #include "livechat_func.hpp"
+#include "livechat_cmd.hpp"
 
 
 //foward declarations
@@ -44,7 +45,7 @@ void pKarambol(const std::string &line)
 		delim = line.find(" Za ");
 		delim1 = line.find(" sek ");
 		var = stoi(line.substr(delim + 4, delim1 - delim - 4));
-		startTimer(var);
+		startCounter(var);
 	}
 	else if (line.find("[Output] : There's no medics right here on the serwer. Wait ") != std::string::npos)
 	{
@@ -52,7 +53,7 @@ void pKarambol(const std::string &line)
 		delim = line.find(" Wait ");
 		delim1 = line.find(" sek ");
 		var = stoi(line.substr(delim + 6, delim1 - delim - 6));
-		startTimer(var);
+		startCounter(var);
 	}
 }
 
@@ -170,160 +171,6 @@ bool fPlayerCount(const std::string &line)
 		//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
 		(line[gt] == 'P' && line[gt + 1] == 'i' && line[gt + 2] == 'e' && line[gt + 3] == 'n' && line[gt + 4] == 'i'))
 		return 1;
-	else
-		return 0;
-}
-
-char fConsoleInput(const std::string &line) //fci
-{
-	if (line[gt - 10] == 'I')
-	{
-		if (line[gt] == 'r' && line[gt + 1] == 'r') //rr /reconnect
-		{
-			serverConnect();
-			return 1;
-		}
-		else if (line[gt] == 'q' && line[gt + 1] == 'u' && line[gt + 2] == 'i' && line[gt + 3] == 't') //quit /close mta & Logus
-		{
-			return 2;
-		}
-		else if (line[gt] == 'e' && line[gt + 1] == 'x' && line[gt + 2] == 'i' && line[gt + 3] == 't') //quit /close mta & Logus
-		{
-			return 2;
-		}
-		else if (line[gt] == 't') //t START TIMER
-		{
-			if (line[gt + 1] == 't') //tt START TIMER waga 100%
-			{
-				startTimer();
-				temp = czas * 1000 / 1.1;
-				temp = czas * 1000 - temp;
-				timer -= temp;
-			}
-			else if (line[gt + 1] == '\'')
-				startTimer();
-			return 0;
-		}
-		else if (line.find("[Input]  : nick") != std::string::npos)
-		{ //[2020-08-30 04:03:24] [Input]  : nick Niventill
-			std::string tempnick = line.substr(gt, std::string::npos);
-			std::istringstream ss(tempnick);
-			ss >> tempnick >> tempnick;
-			nick = tempnick;
-			return 1;
-		}
-		else if (line[gt] == 's' && line[gt + 1] == 'e' && line[gt + 2] == 't')
-		{
-			if (line[gt + 4] == 't' && line[gt + 5] == 'r') //set tr xx //SET TRACK
-			{
-				if (line[gt + 7] == '0')
-				{
-					trackId = 0;
-					return 1;
-				}
-				else if (line[gt + 7] == 'a')
-				{
-					if (line[gt + 8] == '1')
-						trackId = 1;
-					else
-						trackId = 3;
-					return 1;
-				}
-				else
-				{
-					if (line[gt + 8] == '1')
-						trackId = 4;
-					else
-						trackId = 2;
-					return 1;
-				}
-				return 0;
-			}
-			else if (line[gt + 4] == 't') //set t m:ss || set t m ss //SET TIMER
-			{
-				if (line.find("[Input]  : set t ") != std::string::npos) //[Input]  : set t 00:00
-				{
-					std::string temptimer;
-					int minutes, seconds, delim;
-					delim = line.find("[Input]  : set t ");
-					temptimer = line.substr(delim + 17, std::string::npos);
-					sscanf_s(temptimer.c_str(), "%2d:%2d", &minutes, &seconds);
-					minutes *= 60;
-					minutes += seconds;
-					startTimer(minutes);
-				}
-				return 0;
-			}
-			else if (line[gt + 4] == 'n')
-			{ //[2020-03-01 02:16:00] [Input]  : set n add nick
-				if (line[gt + 6] == 'a' && line[gt + 7] == 'd' && line[gt + 8] == 'd')
-				{
-					std::string tempn;
-					int delim;
-					delim = line.find("[Input]  : set n add ");
-					tempn = line.substr(delim + 21, std::string::npos);
-					tempn = removeSpaces(tempn);
-					nicknames.push_back(tempn);
-					saveConfig(0);
-					return 1;
-				}
-				else if (line[gt + 6] == 'd' && line[gt + 7] == 'e' && line[gt + 8] == 'l')
-				{
-					std::string tempn;
-					int delim;
-					delim = line.find("[Input]  : set n del ");
-					tempn = line.substr(delim + 21, std::string::npos);
-					tempn = removeSpaces(tempn);
-					for (int i = 0; i < nicknames.size(); i++)
-					{
-						if (nicknames.at(i) == tempn)
-							nicknames.erase(nicknames.begin() + i);
-					}
-					saveConfig(0);
-					return 1;
-				}
-				else
-					return 0;
-			}
-			else if (line[gt + 4] == 'm') //set m x xx xxx.. //SET MONEY (f4)
-			{							  //[2020-03-01 02:16:00] [Input]  : set m x
-				if (line.find("[Input]  : set m ") != std::string::npos)
-				{
-					int delim = line.find("[Input]  : set m ");
-					std::string tmoney = line.substr(delim + 16, std::string::npos);
-					money = stoi(tmoney);
-					saveConfig(0);
-					return 1;
-				}
-				return 0;
-			}
-			else if (line[gt + 4] == 'c') //set c x //SET COURSES
-			{							  //[2020-03-01 02:16:00] [Input]  : set c x
-				if (line.find("[Input]  : set c ") != std::string::npos)
-				{
-					int delim = line.find("[Input]  : set c ");
-					std::string tcourses = line.substr(delim + 17, std::string::npos);
-					courses = stoi(tcourses);
-					saveConfig(0);
-					return 1;
-				}
-				return 0;
-			}
-			else if (line[gt + 4] == 'r' && line[gt + 5] == 'e') //reset kursow /set re
-			{
-				money = 0;
-				courses = 0;
-				minsalary = 0;
-				maxsalary = 0;
-				saveConfig(0);
-				return 1;
-			}
-			else
-				return 0;
-		}
-		else
-			return 0;
-	}
 	else
 		return 0;
 }
@@ -456,9 +303,9 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	//aktualna funkcja - start timera
 	if (fBindKey(ostatniaLinia))
 	{
-		if (isTimer)
+		if (mainTimer.m_running)
 		{
-			stopTimer();
+			stopCounter();
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
 			info << ostatniaLinia.substr(0, 33) << "Timer - STOP";
@@ -466,7 +313,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		}
 		else
 		{
-			startTimer();
+			startCounter();
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
 			info << ostatniaLinia.substr(0, 33) << "Timer - START";
@@ -477,19 +324,11 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 
 	pNickChange(ostatniaLinia);
 
-	_quit = fConsoleInput(ostatniaLinia);
-	if (_quit)
-	{
-		Beep(dzwiekGlowny, 100);
-		Beep(0, interval);
-		if (_quit == 2)
-			return 0; //close Logus
-	}
+	cmd.checkCommandInput(ostatniaLinia);
 
 	if (chatSound)
 	{
 		Beep(750, 50);
-		timer -= 50; //darxe po co to?
 	}
 
 	return 1;

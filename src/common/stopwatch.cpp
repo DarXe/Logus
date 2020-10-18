@@ -31,7 +31,7 @@ void Stopwatch::stop()
 	m_time = std::chrono::duration<long double, std::nano>(m_stop - m_start).count();
 }
 
-long double Stopwatch::get(std::string type)
+long double Stopwatch::get(const std::string &type)
 {
 	if (type == "s")
 		return std::chrono::duration<long double>(m_stop - m_start).count();
@@ -43,7 +43,7 @@ long double Stopwatch::get(std::string type)
 		return 0.0;
 }
 
-std::string Stopwatch::pre(std::string type, int precision) //precision of floating point
+std::string Stopwatch::pre(const std::string &type, const int &precision) //precision of floating point
 {
 	if (type == "s")
 		if (precision > 100)
@@ -64,7 +64,7 @@ std::string Stopwatch::pre(std::string type, int precision) //precision of float
 		return "NULL";
 }
 
-void Stopwatch::debugOutput(std::string text, std::vector <std::string> content)
+void Stopwatch::debugOutput(std::string text, const std::vector <std::string> &content)
 {
 	for(int i = 0; i < content.size(); i++)
 	{

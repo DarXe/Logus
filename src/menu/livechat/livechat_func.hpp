@@ -39,8 +39,6 @@ bool player(const std::string &line);
 
 bool fPlayerCount(const std::string &line);
 
-char fConsoleInput(const std::string &line);
-
 bool liveChatBeep(std::string &ostatniaLinia);
 
 

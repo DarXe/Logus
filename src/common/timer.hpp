@@ -14,15 +14,18 @@
 class Timer
 {
 private:
-	bool m_running;
-	int m_timer;
 	clock_t m_delay;
 public:
-	Timer(int timer);
+	int m_timer = 0;
+	bool m_running = 0;
+	bool m_loaded = 0;
+	bool m_beep = 0;
 
 	void start(clock_t delay);
 	void stop();
 	void update();
+	void beep();
+	
 
 	int getMs();
 	int getSec();

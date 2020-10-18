@@ -11,9 +11,9 @@
 
 
 //foward declarations
-void startTimer(short getSeconds = 0);
+void startCounter(short getSeconds = 0);
 
-void stopTimer();
+void stopCounter();
 
 void salaryForTransport(std::string &line);
 

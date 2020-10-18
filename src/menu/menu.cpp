@@ -30,8 +30,6 @@ int menu() //con
 {
 	while (true)
 	{
-		if (isTimer)
-			delay2 = clock();
 		color(kolorGlowny);
 		if (engLang)
 		{
@@ -216,12 +214,7 @@ int menu() //con
 		case 't':
 		{
 			cls();
-			if (isTimer)
-				timer -= (clock() - delay2);
 			liveChat(); //run LiveChat
-			mess = engLang ? "Closing MTA and Logus" : "Zamykanie MTA i programu";
-			if (_quit == 2)
-				return closeLogus(mess); //close Logus
 			break;
 		}
 		case 'l':
@@ -374,9 +367,6 @@ int menu() //con
 		{
 			cls();
 			runLiveChat();
-			mess = engLang ? "Closing MTA and Logus" : "Zamykanie MTA i programu";
-			if (_quit == 2)
-				return closeLogus(mess); //close Logus
 			break;
 		}
 		default:
