@@ -25,13 +25,16 @@ bool LCEvent::Team(const std::string &line, const bool &nicksearch)
 {
 	leng = nick.length();
 	if (line[gt] == '(' && line[gt + 1] == 'T' && line[gt + 2] == 'E' && line[gt + 3] == 'A' && line[gt + 4] == 'M')
+	{
 		if (nicksearch)
 			return 1;
 		if (line[gt + 6 + leng] != nick[leng - 1] || line[gt + 5 + leng] != nick[leng - 2] || line[gt + 4 + leng] != nick[leng - 3])
 			return 1;
 		else
 			return 0;
-	return 0;
+	}
+	else
+		return 0;
 }
 
 void pKarambol(const std::string &line)
