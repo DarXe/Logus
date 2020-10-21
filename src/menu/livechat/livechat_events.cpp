@@ -14,27 +14,24 @@
 #include <config.hpp>
 #include <common.hpp>
 #include "livechat_proc.hpp"
-#include "livechat_func.hpp"
+#include "livechat_events.hpp"
 #include "livechat_cmd.hpp"
 
 
 //foward declarations
 void serverConnect(); //from proc.hpp
 
-bool fTeam(const std::string &line, bool e)
+bool LCEvent::Team(const std::string &line, const bool &nicksearch)
 {
 	leng = nick.length();
 	if (line[gt] == '(' && line[gt + 1] == 'T' && line[gt + 2] == 'E' && line[gt + 3] == 'A' && line[gt + 4] == 'M')
-	{
-		if (e)
+		if (nicksearch)
 			return 1;
 		if (line[gt + 6 + leng] != nick[leng - 1] || line[gt + 5 + leng] != nick[leng - 2] || line[gt + 4 + leng] != nick[leng - 3])
 			return 1;
 		else
 			return 0;
-	}
-	else
-		return 0;
+	return 0;
 }
 
 void pKarambol(const std::string &line)
@@ -57,7 +54,7 @@ void pKarambol(const std::string &line)
 	}
 }
 
-bool fPwOd(const std::string &line)
+bool LCEvent::PwOd(const std::string &line)
 {
 	if ((line[gt] == '*' && line[gt + 2] == 'P' && line[gt + 3] == 'M') || (line[gt] == '*' && line[gt + 2] == 'P' && line[gt + 3] == 'W'))
 		return 1;
@@ -65,7 +62,7 @@ bool fPwOd(const std::string &line)
 		return 0;
 }
 
-bool fPwDo(const std::string &line)
+bool LCEvent::PwDo(const std::string &line)
 {
 	if (line[gt] == '-' && line[gt + 1] == '>')
 		return 1;
@@ -87,7 +84,7 @@ void pNickChange(const std::string &line)
 	}
 }
 
-bool fPrzelewyOd(const std::string &line)
+bool LCEvent::PrzelewyOd(const std::string &line)
 {
 	//[2020-08-09 21:06:56] [Output] : Gracz SpookyTank przelał tobie 1500$.
 	//[2020-08-30 16:35:09] [Output] : Player DarXe transferred to you $1.
@@ -97,7 +94,7 @@ bool fPrzelewyOd(const std::string &line)
 	return 0;
 }
 
-bool fPrzelewyDo(const std::string &line)
+bool LCEvent::PrzelewyDo(const std::string &line)
 {
 	//[2020-08-29 15:34:28] [Output] : Przelałeś 1000000$ graczowi DarXe.
 	//[2020-08-30 16:34:52] [Output] : You gave $1 to player DarXe.
@@ -107,7 +104,7 @@ bool fPrzelewyDo(const std::string &line)
 	return 0;
 }
 
-bool fKomunikat(const std::string &line)
+bool LCEvent::Komunikat(const std::string &line)
 {
 	if ((line[gt] == 'N' && line[gt + 1] == 'e' && line[gt + 3] == ' ' && line[gt + 8] == 'r') || (line[gt] == 'N' && line[gt + 1] == 'o' && line[gt + 3] == 'y' && line[gt + 4] == ' ' && line[gt + 9] == 'r'))
 		return 1;
@@ -115,7 +112,7 @@ bool fKomunikat(const std::string &line)
 		return 0;
 }
 
-bool fTransport(const std::string &line)
+bool LCEvent::Transport(const std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 	if ((line[gt] == 'Y' && line[gt + 4] == 'v' && line[gt + 14] == '$') ||
@@ -126,7 +123,7 @@ bool fTransport(const std::string &line)
 		return 0;
 }
 
-bool fNicknames(const std::string &line)
+bool LCEvent::Nicknames(const std::string &line)
 {
 	for (int i = 0; i < nicknames.size(); i++)
 	{
@@ -146,12 +143,12 @@ bool fNicknames(const std::string &line)
 }
 
 //[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
-bool fBindKey(const std::string &line)
+bool LCEvent::BindKey(const std::string &line)
 {
 	return (line[gt] == 'm' && line[gt + 1] == 's' && line[gt + 2] == 'g' && line[gt + 3] == ':' && line[gt + 5] == 'P');
 }
 
-bool fOpen(const std::string &line)
+bool LCEvent::Open(const std::string &line)
 {
 	if (autoOpenGate)
 		return (line[line.length() - 2] == 'n' && line[line.length() - 3] == 'e' && line[line.length() - 4] == 'p' && line[line.length() - 5] == 'o');
@@ -159,12 +156,12 @@ bool fOpen(const std::string &line)
 		return 0;
 }
 
-bool player(const std::string &line)
+bool LCEvent::Player(const std::string &line)
 {
 	return (line[gt] == '*' && line[gt] == '*');
 }
 
-bool fPlayerCount(const std::string &line)
+bool LCEvent::PlayerCount(const std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 	if ((line[gt] == 'Y' && line[gt + 4] == 'v' && line[gt + 14] == '$') ||
@@ -180,10 +177,10 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	//wiadomość pw
 	if (!fLockPW)
 	{
-		if (fPwOd(ostatniaLinia))
+		if (LCEvent::PwOd(ostatniaLinia))
 		{
 			//open the gate
-			if (fOpen(ostatniaLinia))
+			if (LCEvent::Open(ostatniaLinia))
 			{
 				system("start bin\\pasteCmd.exe");
 				toClipboard("open");
@@ -214,7 +211,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	//wiadomość teamowa
 	if (!fLockTeam)
 	{
-		if (fTeam(ostatniaLinia, 0))
+		if (LCEvent::Team(ostatniaLinia, 0))
 		{
 			Beep(dzwiekGlowny, 150);
 			Beep(0, interval);
@@ -232,7 +229,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	//nick z czatu dodany do ulubionych
 	if (!fLockNick)
 	{
-		if (fNicknames(ostatniaLinia))
+		if (LCEvent::Nicknames(ostatniaLinia))
 		{
 			Beep(dzwiekGlowny, 300);
 			Beep(0, interval);
@@ -243,7 +240,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	//dostarczenie towaru, raport z frakcji
 	if (!fLockKomunikat)
 	{
-		if (fTransport(ostatniaLinia))
+		if (LCEvent::Transport(ostatniaLinia))
 		{
 			salaryForTransport(ostatniaLinia);
 			if (trackId)
@@ -267,7 +264,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 			return 1;
 		}
 
-		if (fKomunikat(ostatniaLinia))
+		if (LCEvent::Komunikat(ostatniaLinia))
 		{
 			Beep(dzwiekGlowny, 150);
 			Beep(0, interval);
@@ -287,7 +284,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	}
 
 	//przelewy
-	if (fPrzelewyOd(ostatniaLinia))
+	if (LCEvent::PrzelewyOd(ostatniaLinia))
 	{
 		Beep(dzwiekGlowny, 400);
 		Beep(0, interval);
@@ -301,7 +298,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 
 	//klawisz zbindowany pod błąd /bind <key> <your_nick> msg x
 	//aktualna funkcja - start timera
-	if (fBindKey(ostatniaLinia))
+	if (LCEvent::BindKey(ostatniaLinia))
 	{
 		if (mainTimer.m_running)
 		{
@@ -324,7 +321,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 
 	pNickChange(ostatniaLinia);
 
-	cmd.checkCommandInput(ostatniaLinia);
+	LCCommand::checkCommandInput(ostatniaLinia);
 
 	if (chatSound)
 	{

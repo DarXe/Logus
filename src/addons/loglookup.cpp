@@ -16,8 +16,9 @@
 #include <var.hpp>
 #include <proc.hpp>
 #include <commonConfig.hpp>
-#include "../menu/livechat/livechat_func.hpp"
+#include "../menu/livechat/livechat_events.hpp"
 #include <stopwatch.hpp>
+#include <debug.hpp>
 #include "loglookup.hpp"
 
 
@@ -76,7 +77,7 @@ bool showFileContent(const std::string &filename, const uintmax_t &filesize, con
 		showFile << line << '\n';
 	}
 	showf.stop();
-	showf.debugOutput("showFileContent: plik: %s, wielkość pliku: %sKB, czas zapisu: %s (%s)", {filename, std::to_string(filesize / 1000),
+	LDebug::Output("showFileContent: plik: %s, wielkość pliku: %sKB, czas zapisu: %s (%s)", {filename, std::to_string(filesize / 1000),
 	showf.pre("ns"), showf.pre("ms", 2)});
 	showFile.close();
 	cls();
@@ -112,7 +113,7 @@ bool checkFileNicknames(const std::string &filename)
 	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
-		if (fNicknames(line))
+		if (LCEvent::Nicknames(line))
 			foundLines.push_back(line);
 	}
 	fileCheck.close();
@@ -138,7 +139,7 @@ bool checkFilePM(const std::string &filename)
 	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
-		if (fPwOd(line) || fPwDo(line))
+		if (LCEvent::PwOd(line) || LCEvent::PwDo(line))
 			foundLines.push_back(line);
 	}
 	fileCheck.close();
@@ -164,7 +165,7 @@ bool checkFileTransfers(const std::string &filename)
 	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
-		if (fPrzelewyOd(line) || fPrzelewyDo(line))
+		if (LCEvent::PrzelewyOd(line) || LCEvent::PrzelewyDo(line))
 			foundLines.push_back(line);
 	}
 	fileCheck.close();
@@ -190,7 +191,7 @@ bool checkFileTeam(const std::string &filename)
 	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
-		if (fTeam(line, 1))
+		if (LCEvent::Team(line, 1))
 			foundLines.push_back(line);
 	}
 	fileCheck.close();

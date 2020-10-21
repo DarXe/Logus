@@ -12,13 +12,14 @@
 
 //header includes
 #include "livechat_proc.hpp"
-#include "livechat_func.hpp"
+#include "livechat_events.hpp"
 #include <var.hpp>
 #include <config.hpp>
 #include <common.hpp>
 #include <proc.hpp>
-#include "livechat.hpp"
 #include <stopwatch.hpp>
+#include <debug.hpp>
+#include "livechat.hpp"
 
 
 //variable declarations
@@ -53,7 +54,7 @@ void liveChatHead() //head
 	if(mainTimer.m_running)
 	{
 		SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-		std::cout<<" Timer "<<mainTimer.getTime()<<"  [s]Stop Timer # F4 ";
+		std::cout<<" Timer "<<mainTimer.getTime()<<" [s]Stop Timer # F4 ";
 	}
 	else
 	{
@@ -80,7 +81,7 @@ void showChat()
 	for (int i = 0; i < lastLines.size(); i++)
 	{
 		nline = lastLines.at(i);
-		bool notif = fNicknames(nline) || fTransport(nline) || fKomunikat(nline) || fPrzelewyOd(nline) || fPwOd(nline) || fTeam(nline, 0);
+		bool notif = LCEvent::Nicknames(nline) || LCEvent::Transport(nline) || LCEvent::Komunikat(nline) || LCEvent::PrzelewyOd(nline) || LCEvent::PwOd(nline) || LCEvent::Team(nline, 0);
 		if (notif)
 		{
 			SetConsoleTextAttribute(h, 160);
@@ -179,7 +180,7 @@ void moveLogs() //mv clean and move logs from console.log to logus.log
 	write.stop();
 
 	//save moveLogs time to filelc liveChatInfoOutput.log
-	read.debugOutput("moveLogs: wielkość pliku: %sKB, odczyt: %s (%s), czyszczenie: %s (%s), zapis: %s (%s), łącznie: %sns (%sms)", 
+	LDebug::Output("moveLogs: wielkość pliku: %sKB, odczyt: %s (%s), czyszczenie: %s (%s), zapis: %s (%s), łącznie: %sns (%sms)", 
 	{std::to_string(size/1000), read.pre("ns"), read.pre("ms", 2), clears.pre("ns"), clears.pre("ms", 2), write.pre("ns"), write.pre("ms", 2),
 	round(read.get("ns") + clears.get("ns") + write.get("ns"), 0), round(read.get("ms") + clears.get("ms") + write.get("ms"), 2)});
 	size = std::filesystem::file_size(consoleLogPath);
@@ -305,7 +306,7 @@ bool liveChat() //lc
 	showChat();
 	initshow.stop();
 
-	init.debugOutput("initLiveChat: wielkość pliku: %sKB, linie: %s, odczyt: %s (%s), wyświetlanie: %s (%s), łącznie: %sns (%sms)", 
+	LDebug::Output("initLiveChat: wielkość pliku: %sKB, linie: %s, odczyt: %s (%s), wyświetlanie: %s (%s), łącznie: %sns (%sms)", 
 	{std::to_string(size/1000), std::to_string(lcLineCount), init.pre("ns"), init.pre("ms", 2), initshow.pre("ns"), initshow.pre("ms", 2),
 	round(init.get("ns") + initshow.get("ns"), 0), round(init.get("ms") + initshow.get("ms"), 2)});
 	//end

@@ -12,7 +12,7 @@
 #include <proc.hpp>
 #include <config.hpp>
 #include <commonConfig.hpp>
-#include "livechat/livechat_func.hpp"
+#include "livechat/livechat_events.hpp"
 #include "settings.hpp"
 
 void settings()

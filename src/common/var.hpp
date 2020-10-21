@@ -60,7 +60,7 @@ extern bool autoOpenGate;
 
 extern short gt; //auxiliary variable
 extern int leng; //length
-extern char wyb; //auxiliary variable //wybór w menu, tymczasowa w fTransport
+extern char wyb; //auxiliary variable //wybór w menu, tymczasowa w LCEvent::Transport
 extern HANDLE h;
 extern COORD pos;
 extern COORD tpos;

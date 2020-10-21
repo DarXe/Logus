@@ -20,6 +20,4 @@ public:
 	long double get(const std::string &type);
 
 	std::string pre(const std::string &type, const int &precision = 0);
-
-	void debugOutput(std::string text, const std::vector <std::string> &content);
 };

@@ -9,9 +9,8 @@
 //standard libraries
 #include <string>
 
-class LiveChatCMD
+namespace LCCommand
 {
-public:
 	void checkCommandInput(const std::string &line);
 
 	bool reconnect(const std::string &line);
@@ -26,8 +25,6 @@ public:
 	bool setCourses(const std::string &line);
 	bool reset(const std::string &line);
 	bool hardReset(const std::string &line);
-};
-
-extern LiveChatCMD cmd;
+}
 
 #endif

@@ -53,7 +53,7 @@ bool autoOpenGate = 0;
 
 short gt = 33; //auxiliary variable
 int leng = 0; //length
-char wyb = ' '; //auxiliary variable //wybór w menu, tymczasowa w fTransport
+char wyb = ' '; //auxiliary variable //wybór w menu, tymczasowa w LCEvent::Transport
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD pos;
 COORD tpos;
