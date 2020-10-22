@@ -13,6 +13,8 @@
 #include <var.hpp>
 #include "randomLogus.hpp"
 
+static clock_t t;
+
 int lottoLogus()
 {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);

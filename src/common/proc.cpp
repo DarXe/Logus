@@ -28,10 +28,8 @@ void color(std::string value)
 
 void serverConnect() //flc
 {
-#ifndef dbg
 	s_temp = "start mtasa://" + serverIP;
 	system(s_temp.c_str());
-#endif
 }
 
 bool runLiveChat() //flc

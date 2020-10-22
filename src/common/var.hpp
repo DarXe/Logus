@@ -49,7 +49,6 @@ extern bool codePage852; //false:UTF-8 lub true:852 (jesli wystepuja krytyczne b
 extern short trackId; //ap-ls ls-ap itp itd
 extern bool autoMoveLogs; //amount of logs to move
 extern float grade; //pay grade
-extern std::string mess; // used in ifs to determine language
 extern float base_dealerBuy; //base price for skup pojazdu lol
 extern float base_dealerSellCar; //base price for sprzedaz pojazdu osobowego lol
 extern float base_dealerSellTransport; //base price for sprzedaz pojazdu dostawczego lol
@@ -58,10 +57,8 @@ extern short minRefresh; //minimal refresh in livechat
 extern short maxRefresh; //max refresh in livechat
 extern bool autoOpenGate;
 
-extern short gt; //auxiliary variable
-extern int leng; //length
-extern char wyb; //auxiliary variable //wybór w menu, tymczasowa w LCEvent::Transport
-extern HANDLE h;
+extern const short gt; //auxiliary variable
+extern const HANDLE h;
 extern COORD pos;
 extern COORD tpos;
  
@@ -72,14 +69,11 @@ extern std::string consoleLog3Path;
 extern std::string consoleLog4Path;
 extern std::string consoleLog5Path;
 
-extern std::string track[];
-extern clock_t delay, delay2; //pomiary delay
+extern const std::string track[];
 extern int temp; //aux var //pomocnicza zmienna iloscLinijek w LiveChat
 extern int temp2; //aux var //pomocnicza2 w LiveChat
 extern std::string s_temp; //string temp
 extern Timer mainTimer; //TIMER countdown of time for unloading //odliczanie czasu do rozładowania
 extern int avg; //courses calculator - average //średnia kursów
-extern clock_t t; // clock to check code speed
-
 
 #endif

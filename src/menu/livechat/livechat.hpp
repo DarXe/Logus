@@ -12,16 +12,6 @@
 #include <string>
 
 
-//foward variable declarations
-extern std::deque <std::string> lastLines;
-extern std::vector <std::string> newLines;
-extern int lcLineCount;
-extern bool isNewLine, isNewBeep;
-extern std::ifstream filelc;
-extern std::string linelc;
-extern std::uintmax_t size;
-
-
 //forward function declarations
 void liveChatHead();
 void showChat();

@@ -8,8 +8,8 @@
 
 
 //header includes
-#include "timer.hpp"
 #include <var.hpp>
+#include "timer.hpp"
 
 
 void Timer::start(clock_t timer) //in ms
@@ -46,35 +46,17 @@ void Timer::beep()
 		if (m_timer > 0)
 		{
 			update();
-			if (m_loaded)
-			{
-				if (random)
+			if (random && m_loaded)
+				if (m_timer < 300000 || m_timer < 360000)
 				{
-					if (m_timer < 300000)
-					{
-						Beep(dzwiekGlowny, 150);
-						Beep(0, interval);
-						Beep(dzwiekGlowny + 50, 150);
-						Beep(0, interval);
-						Beep(dzwiekGlowny + 100, 150);
-						Beep(0, interval);
-						m_loaded = 0;
-					}
+					Beep(dzwiekGlowny, 150);
+					Beep(0, interval);
+					Beep(dzwiekGlowny + 50, 150);
+					Beep(0, interval);
+					Beep(dzwiekGlowny + 100, 150);
+					Beep(0, interval);
+					m_loaded = 0;
 				}
-				else
-				{
-					if (m_timer < 360000)
-					{
-						Beep(dzwiekGlowny, 150);
-						Beep(0, interval);
-						Beep(dzwiekGlowny + 50, 150);
-						Beep(0, interval);
-						Beep(dzwiekGlowny + 100, 150);
-						Beep(0, interval);
-						m_loaded = 0;
-					}
-				}
-			}
 		}
 		else
 		{

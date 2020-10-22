@@ -38,10 +38,10 @@ namespace LCEvent
 
 }
 
-	bool liveChatBeep(std::string &ostatniaLinia);
+	void pNickChange(const std::string &line);
 
 	void pKarambol(const std::string &line);
 
-
+	bool liveChatBeep(std::string &ostatniaLinia);
 
 #endif

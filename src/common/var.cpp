@@ -42,7 +42,6 @@ bool codePage852 = 0; //false:UTF-8 lub true:852 (jesli wystepuja krytyczne bugi
 short trackId = 0; //ap-ls ls-ap itp itd
 bool autoMoveLogs = 0; //amount of logs to move
 float grade = 0; //pay grade
-std::string mess; // used in ifs to determine language
 float base_dealerBuy = 0.40; //base price for skup pojazdu lol
 float base_dealerSellCar = 0.65; //base price for sprzedaz pojazdu osobowego lol
 float base_dealerSellTransport = 0.80; //base price for sprzedaz pojazdu dostawczego lol
@@ -51,10 +50,8 @@ short minRefresh = 250; //minimal refresh in livechat
 short maxRefresh = 1250; //max refresh in livechat
 bool autoOpenGate = 0;
 
-short gt = 33; //auxiliary variable
-int leng = 0; //length
-char wyb = ' '; //auxiliary variable //wybór w menu, tymczasowa w LCEvent::Transport
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+const short gt = 33; //auxiliary variable
+const HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD pos;
 COORD tpos;
 
@@ -65,11 +62,9 @@ std::string consoleLog3Path;
 std::string consoleLog4Path;
 std::string consoleLog5Path;
 
-std::string track[5] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
-clock_t delay = 0, delay2 = 0; //pomiary delay
+const std::string track[5] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
 int temp = 0; //aux var //pomocnicza zmienna iloscLinijek w LiveChat
 int temp2 = 0; //aux var //pomocnicza2 w LiveChat
 std::string s_temp = ""; //string temp
 Timer mainTimer;
 int avg = 0; //courses calculator - average //średnia kursów
-clock_t t; // clock to check code speed

@@ -329,7 +329,8 @@ void settings()
 					std::cout << " ________________________________________________________________\n";
 					std::cout << "                       [ESC] Powrót i zapis                      \n";
 				}
-				switch (wyb = wybor())
+				char wyb = wybor();
+				switch (wyb)
 				{
 				case 27:
 				{

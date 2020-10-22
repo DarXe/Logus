@@ -23,7 +23,7 @@ void serverConnect(); //from proc.hpp
 
 bool LCEvent::Team(const std::string &line, const bool &nicksearch)
 {
-	leng = nick.length();
+	short leng = nick.length();
 	if (line[gt] == '(' && line[gt + 1] == 'T' && line[gt + 2] == 'E' && line[gt + 3] == 'A' && line[gt + 4] == 'M')
 	{
 		if (nicksearch)
@@ -35,26 +35,6 @@ bool LCEvent::Team(const std::string &line, const bool &nicksearch)
 	}
 	else
 		return 0;
-}
-
-void pKarambol(const std::string &line)
-{
-	if (line.find("[Output] : Nie ma lekarzy na serwerze. Za ") != std::string::npos)
-	{
-		int delim, delim1, var;
-		delim = line.find(" Za ");
-		delim1 = line.find(" sek ");
-		var = stoi(line.substr(delim + 4, delim1 - delim - 4));
-		startCounter(var);
-	}
-	else if (line.find("[Output] : There's no medics right here on the serwer. Wait ") != std::string::npos)
-	{
-		int delim, delim1, var;
-		delim = line.find(" Wait ");
-		delim1 = line.find(" sek ");
-		var = stoi(line.substr(delim + 6, delim1 - delim - 6));
-		startCounter(var);
-	}
 }
 
 bool LCEvent::PwOd(const std::string &line)
@@ -71,20 +51,6 @@ bool LCEvent::PwDo(const std::string &line)
 		return 1;
 	else
 		return 0;
-}
-
-void pNickChange(const std::string &line)
-{
-	//[2020-08-30 04:03:19] [Output] : * Niventill is now known as test
-	std::string tempnick = "[Output] : * " + nick + " is now known as ";
-	if (line.find(tempnick) != std::string::npos)
-	{
-		std::string newnick, tempn;
-		tempnick = line.substr(gt, std::string::npos);
-		std::istringstream ss(tempnick);
-		ss >> tempn >> tempn >> tempn >> tempn >> tempn >> tempn >> newnick;
-		nick = newnick;
-	}
 }
 
 bool LCEvent::PrzelewyOd(const std::string &line)
@@ -131,7 +97,7 @@ bool LCEvent::Nicknames(const std::string &line)
 	for (int i = 0; i < nicknames.size(); i++)
 	{
 		s_temp = nicknames.at(i);
-		leng = s_temp.length() - 1;
+		short leng = s_temp.length() - 1;
 		//chat
 		//if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
 		//	return 0;
@@ -173,6 +139,40 @@ bool LCEvent::PlayerCount(const std::string &line)
 		return 1;
 	else
 		return 0;
+}
+
+void pKarambol(const std::string &line)
+{
+	if (line.find("[Output] : Nie ma lekarzy na serwerze. Za ") != std::string::npos)
+	{
+		int delim, delim1, var;
+		delim = line.find(" Za ");
+		delim1 = line.find(" sek ");
+		var = stoi(line.substr(delim + 4, delim1 - delim - 4));
+		startCounter(var);
+	}
+	else if (line.find("[Output] : There's no medics right here on the serwer. Wait ") != std::string::npos)
+	{
+		int delim, delim1, var;
+		delim = line.find(" Wait ");
+		delim1 = line.find(" sek ");
+		var = stoi(line.substr(delim + 6, delim1 - delim - 6));
+		startCounter(var);
+	}
+}
+
+void pNickChange(const std::string &line)
+{
+	//[2020-08-30 04:03:19] [Output] : * Niventill is now known as test
+	std::string tempnick = "[Output] : * " + nick + " is now known as ";
+	if (line.find(tempnick) != std::string::npos)
+	{
+		std::string newnick, tempn;
+		tempnick = line.substr(gt, std::string::npos);
+		std::istringstream ss(tempnick);
+		ss >> tempn >> tempn >> tempn >> tempn >> tempn >> tempn >> newnick;
+		nick = newnick;
+	}
 }
 
 bool liveChatBeep(std::string &ostatniaLinia) //bee

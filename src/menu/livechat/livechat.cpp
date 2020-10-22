@@ -23,13 +23,13 @@
 
 
 //variable declarations
-std::deque <std::string> lastLines;
-std::vector <std::string> newLines;
-int lcLineCount;
-bool isNewLine = 0, isNewBeep = 0;
-std::ifstream filelc;
-std::string linelc;
-std::uintmax_t size;
+static std::deque <std::string> lastLines;
+static std::vector <std::string> newLines;
+static int lcLineCount;
+static bool isNewLine = 0, isNewBeep = 0;
+static std::ifstream filelc;
+static std::string linelc;
+static std::uintmax_t size;
 static bool isAutoJoin;
 
 
@@ -63,7 +63,7 @@ void liveChatHead() //head
 	}
 	std::cout<<"$"<<money<<" # Kursy:"<<courses<<" # Śr $"<<((courses)?money/courses:0)<<"       ";
 	SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
-	int payment(0); payment = ((money>0)?((money*0.87)-3500)*grade:0);
+	int payment(0); payment = ((money>0)?((money*0.9)-3500)*grade:0);
 	std::cout<<track[trackId]<<"              # "<<"Wypłata $"<<payment<<" # Min $"<<minsalary<<" # Max $"<<maxsalary;
 	SetConsoleTextAttribute(h, 204);
 	pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); std::cout<<" ";

@@ -49,10 +49,9 @@ bool LCCommand::reconnect(const std::string &line)
 
 bool LCCommand::quit(const std::string &line)
 {
-	if (line.find("[Input]  : quit") != std::string::npos)
+	if (line.find("[Input]  : quit ") != std::string::npos)
 	{
-		mess = engLang ? "Closing MTA and Logus" : "Zamykanie MTA i programu";
-		closeLogus(mess);
+		closeLogus(((engLang)?"Closing MTA and Logus":"Zamykanie MTA i programu"));
 		return 1;
 	}
 	return 0;

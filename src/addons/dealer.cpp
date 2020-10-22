@@ -304,7 +304,7 @@ void dealer()
 		SetConsoleTextAttribute(h, 15);
 		std::cout << " __________________________________________________________________________________\n";
 		std::cout << "                                [ESC] Wyjście i zapis                              \n";
-		wyb = wybor();
+		char wyb = wybor();
 		SetConsoleTextAttribute(h, 7);
 		switch (wyb)
 		{
