@@ -61,13 +61,14 @@ bool LCCommand::startTimer(const std::string &line)
 {
 	if (line.find("[Input]  : tt") != std::string::npos)
 	{
-		startCounter();
+		mainTimer.startCounter();
+		int temp;
 		temp = czas * 1000 / 1.1;
 		temp = czas * 1000 - temp;
 		mainTimer.m_timer -= temp;
 	}
 	else if (line.find("[Input]  : t\'") != std::string::npos)
-		startCounter();
+		mainTimer.startCounter();
 	return 0;
 }
 
@@ -122,7 +123,8 @@ bool LCCommand::setTimer(const std::string &line)
 		delim = line.find("[Input]  : set t ");
 		temptimer = line.substr(delim + 17, std::string::npos);
 		sscanf_s(temptimer.c_str(), "%2d:%2d", &minutes, &seconds);
-		minutes *= 60;
+		minutes *= 60000;
+		seconds *= 1000;
 		minutes += seconds;
 		mainTimer.start(minutes);
 		return 1;

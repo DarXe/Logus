@@ -59,8 +59,6 @@ extern bool autoOpenGate;
 
 extern const short gt; //auxiliary variable
 extern const HANDLE h;
-extern COORD pos;
-extern COORD tpos;
  
 extern std::string consoleLogPath;
 extern std::string consoleLog1Path;
@@ -70,9 +68,6 @@ extern std::string consoleLog4Path;
 extern std::string consoleLog5Path;
 
 extern const std::string track[];
-extern int temp; //aux var //pomocnicza zmienna iloscLinijek w LiveChat
-extern int temp2; //aux var //pomocnicza2 w LiveChat
-extern std::string s_temp; //string temp
 extern Timer mainTimer; //TIMER countdown of time for unloading //odliczanie czasu do rozładowania
 extern int avg; //courses calculator - average //średnia kursów
 

@@ -13,40 +13,6 @@
 #include <config.hpp>
 #include "livechat_proc.hpp"
 
-void startCounter(short getSeconds)
-{
-	if (getSeconds)
-	{
-		mainTimer.start(getSeconds * 1000);
-	}
-	else
-	{
-		mainTimer.start(czas * 1000);
-		/*if (random)
-			mainTimer.m_timer += 300000;
-		else
-			mainTimer.m_timer += 360000;*/
-		mainTimer.m_loaded = true;
-	}
-	pos.X = 0;
-	pos.Y = 2;
-	SetConsoleCursorPosition(h, pos);
-	SetConsoleTextAttribute(h, 170);
-	std::cout << " ";
-	SetConsoleTextAttribute(h, 12);
-}
-
-void stopCounter()
-{
-	mainTimer.stop();
-	pos.X = 0;
-	pos.Y = 2;
-	SetConsoleCursorPosition(h, pos);
-	SetConsoleTextAttribute(h, 204);
-	std::cout << " ";
-	SetConsoleTextAttribute(h, 12);
-}
-
 void salaryForTransport(std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
@@ -77,6 +43,7 @@ void salaryForTransport(std::string &line)
 
 void stopAutoJoin(bool &isAutoJoin)
 {
+	COORD pos;
 	isAutoJoin = false;
 	pos.X = 3;
 	pos.Y = 4;

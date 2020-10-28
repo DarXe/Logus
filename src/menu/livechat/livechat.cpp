@@ -46,6 +46,7 @@ void liveChatHead() //head
 		sizei /= 1000;
 		sizet = "KB";
 	}
+	COORD pos;
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
 	std::cout<<"###############################LiveChat###############################\n";
@@ -214,6 +215,7 @@ bool liveChatInput()
 {
 	if (kbhit())
 	{
+		COORD pos;
 		switch (getch())
 		{
 		case 27:
@@ -223,10 +225,10 @@ bool liveChatInput()
 			return 1;
 		}
 		case 't':
-			startCounter();
+			mainTimer.startCounter();
 			break;
 		case 's':
-			stopCounter();
+			mainTimer.stopCounter();
 			liveChatHead();
 			break;
 		case 'm':
@@ -295,6 +297,7 @@ bool liveChat() //lc
 	lastLines.shrink_to_fit();
 	lcLineCount = 0;
 	isAutoJoin = false;
+	COORD pos;
 	//load logs without checking notifications
 	Stopwatch init;
 	getChat(1);

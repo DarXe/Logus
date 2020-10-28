@@ -23,6 +23,8 @@ public:
 
 	void start(clock_t delay);
 	void stop();
+	void startCounter(short getSeconds = 0);
+	void stopCounter();
 	void update();
 	void beep();
 	

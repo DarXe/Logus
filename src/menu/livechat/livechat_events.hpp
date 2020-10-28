@@ -11,37 +11,22 @@
 
 namespace LCEvent
 {
-
 	bool Team(const std::string &line, const bool &nicksearch);
-
 	bool PwOd(const std::string &line);
-
 	bool PwDo(const std::string &line);
-
 	bool PrzelewyOd(const std::string &line);
-
 	bool PrzelewyDo(const std::string &line);
-
 	bool Komunikat(const std::string &line);
-
 	bool Transport(const std::string &line);
-
 	bool Nicknames(const std::string &line);
-
 	bool BindKey(const std::string &line);
-
 	bool Open(const std::string &line);
-
 	bool PlayerCount(const std::string &line);
-
 	bool Player(const std::string &line);
+} // namespace LCEvent
 
-}
-
-	void pNickChange(const std::string &line);
-
-	void pKarambol(const std::string &line);
-
-	bool liveChatBeep(std::string &ostatniaLinia);
+void pNickChange(const std::string &line);
+void pKarambol(const std::string &line);
+bool liveChatBeep(std::string &ostatniaLinia);
 
 #endif

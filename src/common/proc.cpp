@@ -28,7 +28,7 @@ void color(std::string value)
 
 void serverConnect() //flc
 {
-	s_temp = "start mtasa://" + serverIP;
+	std::string s_temp = "start mtasa://" + serverIP;
 	system(s_temp.c_str());
 }
 
@@ -75,6 +75,7 @@ void preConfig()
 {
 	SetConsoleOutputCP(65001);
 	SetConsoleCP(65001); // should work on Win 7
+	int temp2, temp;
 	std::string _versionName_ = "Logus - preconfig";
 	SetConsoleTitleA(_versionName_.c_str());
 	SetConsoleTextAttribute(h, 10);

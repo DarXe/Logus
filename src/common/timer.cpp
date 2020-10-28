@@ -31,6 +31,42 @@ void Timer::stop()
 	}
 }
 
+void Timer::startCounter(short getSeconds)
+{
+	if (getSeconds)
+	{
+		start(getSeconds * 1000);
+	}
+	else
+	{
+		start(czas * 1000);
+		if (random)
+			m_timer += 300000;
+		else
+			m_timer += 360000;
+		m_loaded = true;
+	}
+	COORD pos;
+	pos.X = 0;
+	pos.Y = 2;
+	SetConsoleCursorPosition(h, pos);
+	SetConsoleTextAttribute(h, 170);
+	std::cout << " ";
+	SetConsoleTextAttribute(h, 12);
+}
+
+void Timer::stopCounter()
+{
+	COORD pos;
+	stop();
+	pos.X = 0;
+	pos.Y = 2;
+	SetConsoleCursorPosition(h, pos);
+	SetConsoleTextAttribute(h, 204);
+	std::cout << " ";
+	SetConsoleTextAttribute(h, 12);
+}
+
 void Timer::update()
 {
 	if (m_running)
@@ -67,6 +103,7 @@ void Timer::beep()
 			Beep(dzwiekGlowny, 150);
 			Beep(0, interval);
 			mainTimer.stop();
+			COORD pos;
 			pos.X = 0;
 			pos.Y = 2;
 			SetConsoleCursorPosition(h, pos);

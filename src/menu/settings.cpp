@@ -240,9 +240,9 @@ void settings()
 		}
 		case '6':
 		{
-			temp2 = (engLang ? cfgInput(0, 1, "", "Enter minutes:", "Error. Entered wrong value", "Min 0, Max 10", 0, 10) :
+			int temp2 = (engLang ? cfgInput(0, 1, "", "Enter minutes:", "Error. Entered wrong value", "Min 0, Max 10", 0, 10) :
 			cfgInput(0, 1, "", "Podaj minuty:", "Błąd. Podano błędną wartość", "Min 0, Max 10", 0, 10));
-			temp = (engLang ? cfgInput(0, 1, "", "Enter seconds:", "Error. Entered wrong value", "Min 0, Max 59", 0, 59) :
+			int temp = (engLang ? cfgInput(0, 1, "", "Enter seconds:", "Error. Entered wrong value", "Min 0, Max 59", 0, 59) :
 			cfgInput(0, 1, "", "Podaj sekundy:", "Błąd. Podano błędną wartość", "Min 0, Max 59", 0, 59));
 			czas = (temp2 * 60) + temp;
 			cls();
@@ -344,6 +344,7 @@ void settings()
 					while (true)
 					{
 						engLang ? std::cout << " Enter exact player name: " : std::cout << " Podaj dokładną nazwę gracza: ";
+						std::string s_temp;
 						std::cin >> s_temp;
 						if (s_temp.length() < 3)
 							engLang ? std::cout << " Nickname has to be at least 3 characters long!\n" : std::cout << " Minimum 3 znaki!\n";
@@ -395,11 +396,12 @@ void settings()
 						{
 							std::cout << " " << i + 1 << ". " << nicknames.at(i) << "\n";
 						}
-						engLang ? cfgInput(0, 0, "Enter player's ID that you want to remove", "Enter ID:", "Error. Entered wrong value", "It has to be a number", 0, nicknames.size()) :
-						cfgInput(0, 0, "Podaj ID gracza którego chcesz usunąć", "Podaj ID:", "Błąd. Podaną błędną wartość", "To musi być liczba", 0, nicknames.size());
+						int result;
+						engLang ? result = cfgInput(0, 0, "Enter player's ID that you want to remove", "Enter ID:", "Error. Entered wrong value", "It has to be a number", 0, nicknames.size()) :
+						result = cfgInput(0, 0, "Podaj ID gracza którego chcesz usunąć", "Podaj ID:", "Błąd. Podaną błędną wartość", "To musi być liczba", 0, nicknames.size());
 						cls();
-						engLang ? std::cout << " Removed player " << nicknames.at(temp - 1) << "\n" : std::cout << " Usunieto gracza " << nicknames.at(temp - 1) << "\n";
-						nicknames.erase(nicknames.begin() + temp - 1);
+						engLang ? std::cout << " Removed player " << nicknames.at(result - 1) << "\n" : std::cout << " Usunieto gracza " << nicknames.at(result - 1) << "\n";
+						nicknames.erase(nicknames.begin() + result - 1);
 					}
 					break;
 				}

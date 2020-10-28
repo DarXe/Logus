@@ -52,8 +52,6 @@ bool autoOpenGate = 0;
 
 const short gt = 33; //auxiliary variable
 const HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-COORD pos;
-COORD tpos;
 
 std::string consoleLogPath;
 std::string consoleLog1Path;
@@ -62,9 +60,6 @@ std::string consoleLog3Path;
 std::string consoleLog4Path;
 std::string consoleLog5Path;
 
-const std::string track[5] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
-int temp = 0; //aux var //pomocnicza zmienna iloscLinijek w LiveChat
-int temp2 = 0; //aux var //pomocnicza2 w LiveChat
-std::string s_temp = ""; //string temp
+const std::string track[] = {"     [0]     "," (AP1 - LOT1)"," (LOT2 - AP1)"," (AP2 - LOT2)"," (LOT1 - AP2)"};
 Timer mainTimer;
 int avg = 0; //courses calculator - average //średnia kursów

@@ -16,6 +16,7 @@
 
 int cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText, std::string minMaxText, int min, int max)
 {
+	int temp;
 	if (isCls)
 		cls();
 	if (preHead)

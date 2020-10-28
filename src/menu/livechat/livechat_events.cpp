@@ -96,7 +96,7 @@ bool LCEvent::Nicknames(const std::string &line)
 {
 	for (int i = 0; i < nicknames.size(); i++)
 	{
-		s_temp = nicknames.at(i);
+		std::string s_temp = nicknames.at(i);
 		short leng = s_temp.length() - 1;
 		//chat
 		//if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
@@ -149,7 +149,7 @@ void pKarambol(const std::string &line)
 		delim = line.find(" Za ");
 		delim1 = line.find(" sek ");
 		var = stoi(line.substr(delim + 4, delim1 - delim - 4));
-		startCounter(var);
+		mainTimer.startCounter(var);
 	}
 	else if (line.find("[Output] : There's no medics right here on the serwer. Wait ") != std::string::npos)
 	{
@@ -157,7 +157,7 @@ void pKarambol(const std::string &line)
 		delim = line.find(" Wait ");
 		delim1 = line.find(" sek ");
 		var = stoi(line.substr(delim + 6, delim1 - delim - 6));
-		startCounter(var);
+		mainTimer.startCounter(var);
 	}
 }
 
@@ -305,7 +305,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 	{
 		if (mainTimer.m_running)
 		{
-			stopCounter();
+			mainTimer.stopCounter();
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
 			info << ostatniaLinia.substr(0, 33) << "Timer - STOP";
@@ -313,7 +313,7 @@ bool liveChatBeep(std::string &ostatniaLinia) //bee
 		}
 		else
 		{
-			startCounter();
+			mainTimer.startCounter();
 			std::fstream info;
 			info.open("liveChatInfoOutput.log", std::ios::app);
 			info << ostatniaLinia.substr(0, 33) << "Timer - START";
