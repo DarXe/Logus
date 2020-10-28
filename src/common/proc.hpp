@@ -19,6 +19,8 @@ bool runLiveChat();
 
 bool closeLogus(std::string text = "Bye bye");
 
+void stopAutoJoin(bool &isAutoJoin);
+
 void dots(short duration, short amount);
 
 void preConfig();

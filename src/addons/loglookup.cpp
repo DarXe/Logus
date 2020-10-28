@@ -77,7 +77,7 @@ bool showFileContent(const std::string &filename, const uintmax_t &filesize, con
 		showFile << line << '\n';
 	}
 	showf.stop();
-	LDebug::Output("showFileContent: plik: %s, wielkość pliku: %sKB, czas zapisu: %s (%s)", {filename, std::to_string(filesize / 1000),
+	LDebug::DebugOutput("showFileContent: plik: %s, wielkość pliku: %sKB, czas zapisu: %s (%s)", {filename, std::to_string(filesize / 1000),
 	showf.pre("ns"), showf.pre("ms", 2)});
 	showFile.close();
 	cls();
@@ -139,7 +139,7 @@ bool checkFilePM(const std::string &filename)
 	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
-		if (LCEvent::PwOd(line) || LCEvent::PwDo(line))
+		if (LCEvent::PmFrom(line) || LCEvent::PmTo(line))
 			foundLines.push_back(line);
 	}
 	fileCheck.close();
@@ -165,7 +165,7 @@ bool checkFileTransfers(const std::string &filename)
 	while (!fileCheck.eof())
 	{
 		getline(fileCheck, line);
-		if (LCEvent::PrzelewyOd(line) || LCEvent::PrzelewyDo(line))
+		if (LCEvent::TransfersFrom(line) || LCEvent::TransfersTo(line))
 			foundLines.push_back(line);
 	}
 	fileCheck.close();

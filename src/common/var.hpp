@@ -27,7 +27,7 @@ extern std::string mtaLocation;
 extern int dzwiekGlowny; //sound message //dźwięk komunikatów
 extern bool fLockTeam; //lock beep(TEAM)
 extern bool fLockPW; //lock beep priv message
-extern bool fLockKomunikat; //lock beep for transport
+extern bool fLockReport; //lock beep for transport
 extern bool fLockNick; //lock beep nick 'nick: message'
 extern bool engLang; // Logus in English
 extern bool chatSound; //the sound of any chat message //dźwięk każdej wiadomości na czacie
@@ -37,7 +37,8 @@ extern int refresh; //refresh<ms> in LiveChat
 extern int interval; //time interval between sounds //odstęp czasowy(ms) między kolejnymi dźwiękami
 extern std::string nick; //nickname on MTA
 extern bool dynamicRefresh; //dynamic refresh in LiveChat //dynamiczne odświeżanie w LC
-extern std::vector<std::string> nicknames; //nicknames database
+extern std::vector <std::string> nicknames; //nicknames database
+extern std::vector <std::string> phrases; //player nick's variants to look for
 extern int czas; //TIMER time set by the player in seconds to load / unload the cargo
 extern bool random; //TIMER random unloading, TRUE = 'skrypt' FALSE = 'sam wybiore'
 extern int money; //courses calculator - money for delivered courses //pieniądze za kursy

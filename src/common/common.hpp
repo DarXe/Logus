@@ -22,7 +22,7 @@ std::string removeSpaces(std::string &line);
 
 std::string round(const long double x, const int dec);
 
-int losuj(int from, int to);
+int randomize(int from, int to);
 
 void cls();
 

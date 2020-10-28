@@ -14,30 +14,30 @@
 #include <config.hpp>
 #include <common.hpp>
 #include <proc.hpp>
-#include "livechat_proc.hpp"
+#include "livechat_actions.hpp"
 #include "livechat_cmd.hpp"
 
 
 //foward declarations
 void serverConnect(); //from proc.hpp
 
-void LCCommand::checkCommandInput(const std::string &line)
+void LCCommand::CheckCommandInput(const std::string &line)
 {
-	reconnect(line);
-	quit(line);
-	startTimer(line);
-	setNick(line);
-	setTrack(line);
-	setTimer(line);
-	addNickname(line);
-	delNickname(line);
-	setMoney(line);
-	setCourses(line);
-	reset(line);
-	hardReset(line);
+	Reconnect(line);
+	Quit(line);
+	StartTimer(line);
+	SetNick(line);
+	SetTrack(line);
+	SetTimer(line);
+	AddNickname(line);
+	DelNickname(line);
+	SetMoney(line);
+	SetCourses(line);
+	Reset(line);
+	HardReset(line);
 }
 
-bool LCCommand::reconnect(const std::string &line)
+bool LCCommand::Reconnect(const std::string &line)
 {
 	if (line.find("[Input]  : rr") != std::string::npos)
 	{
@@ -47,7 +47,7 @@ bool LCCommand::reconnect(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::quit(const std::string &line)
+bool LCCommand::Quit(const std::string &line)
 {
 	if (line.find("[Input]  : quit ") != std::string::npos)
 	{
@@ -57,7 +57,7 @@ bool LCCommand::quit(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::startTimer(const std::string &line)
+bool LCCommand::StartTimer(const std::string &line)
 {
 	if (line.find("[Input]  : tt") != std::string::npos)
 	{
@@ -72,7 +72,7 @@ bool LCCommand::startTimer(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::setNick(const std::string &line)
+bool LCCommand::SetNick(const std::string &line)
 {
 	if (line.find("[Input]  : nick ") != std::string::npos)
 	{ //[2020-08-30 04:03:24] [Input]  : nick Niventill
@@ -85,7 +85,7 @@ bool LCCommand::setNick(const std::string &line)
 	return 0;
 }
 
-short LCCommand::setTrack(const std::string &line)
+short LCCommand::SetTrack(const std::string &line)
 {
 	if (line.find("[Input]  : set tr") != std::string::npos) //set tr xx //SET TRACK
 	{
@@ -114,7 +114,7 @@ short LCCommand::setTrack(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::setTimer(const std::string &line)
+bool LCCommand::SetTimer(const std::string &line)
 {
 	if (line.find("[Input]  : set t ") != std::string::npos) //[Input]  : set t 00:00
 	{
@@ -132,7 +132,7 @@ bool LCCommand::setTimer(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::addNickname(const std::string &line)
+bool LCCommand::AddNickname(const std::string &line)
 {
 	if (line.find("[Input]  : nickdb add ") != std::string::npos)
 	{
@@ -148,7 +148,7 @@ bool LCCommand::addNickname(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::delNickname(const std::string &line)
+bool LCCommand::DelNickname(const std::string &line)
 {
 	if (line.find("[Input]  : nickdb del ") != std::string::npos)
 	{
@@ -168,7 +168,7 @@ bool LCCommand::delNickname(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::setMoney(const std::string &line)
+bool LCCommand::SetMoney(const std::string &line)
 {
 	if (line.find("[Input]  : set m ") != std::string::npos)
 	{
@@ -181,7 +181,7 @@ bool LCCommand::setMoney(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::setCourses(const std::string &line)
+bool LCCommand::SetCourses(const std::string &line)
 {
 	if (line.find("[Input]  : set c ") != std::string::npos)
 	{
@@ -194,7 +194,7 @@ bool LCCommand::setCourses(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::hardReset(const std::string &line)
+bool LCCommand::HardReset(const std::string &line)
 {
 	if (line.find("[Input]  : set hre") != std::string::npos) //reset kursow /set re
 	{
@@ -208,7 +208,7 @@ bool LCCommand::hardReset(const std::string &line)
 	return 0;
 }
 
-bool LCCommand::reset(const std::string &line)
+bool LCCommand::Reset(const std::string &line)
 {
 	if (line.find("[Input]  : set re") != std::string::npos) //reset kursow /set re
 	{

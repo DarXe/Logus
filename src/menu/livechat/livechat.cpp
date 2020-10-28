@@ -11,7 +11,7 @@
 
 
 //header includes
-#include "livechat_proc.hpp"
+#include "livechat_actions.hpp"
 #include "livechat_events.hpp"
 #include <var.hpp>
 #include <config.hpp>
@@ -76,13 +76,12 @@ void liveChatHead() //head
 
 void showChat()
 {
-	std::string nline;
 	cls();
 	liveChatHead();
 	for (int i = 0; i < lastLines.size(); i++)
 	{
-		nline = lastLines.at(i);
-		bool notif = LCEvent::Nicknames(nline) || LCEvent::Transport(nline) || LCEvent::Komunikat(nline) || LCEvent::PrzelewyOd(nline) || LCEvent::PwOd(nline) || LCEvent::Team(nline, 0);
+		std::string nline = lastLines.at(i);
+		bool notif = (LCEvent::Nicknames(nline) || LCEvent::Transport(nline) || LCEvent::Report(nline) || LCEvent::TransfersFrom(nline) || LCEvent::PmFrom(nline) || LCEvent::ContainsPhrase(nline) || LCEvent::Team(nline, 0));
 		if (notif)
 		{
 			SetConsoleTextAttribute(h, 160);
@@ -181,18 +180,18 @@ void moveLogs() //mv clean and move logs from console.log to logus.log
 	write.stop();
 
 	//save moveLogs time to filelc liveChatInfoOutput.log
-	LDebug::Output("moveLogs: wielkość pliku: %sKB, odczyt: %s (%s), czyszczenie: %s (%s), zapis: %s (%s), łącznie: %sns (%sms)", 
+	LDebug::DebugOutput("moveLogs: wielkość pliku: %sKB, odczyt: %s (%s), czyszczenie: %s (%s), zapis: %s (%s), łącznie: %sns (%sms)", 
 	{std::to_string(size/1000), read.pre("ns"), read.pre("ms", 2), clears.pre("ns"), clears.pre("ms", 2), write.pre("ns"), write.pre("ms", 2),
 	round(read.get("ns") + clears.get("ns") + write.get("ns"), 0), round(read.get("ms") + clears.get("ms") + write.get("ms"), 2)});
 	size = std::filesystem::file_size(consoleLogPath);
 }
 
-void checkNotifications()
+void checkMessages()
 {
 	if (newLines.size() > 1000)
 		for (int i = newLines.size() - 1000; i < newLines.size(); i++)
 		{
-			liveChatBeep(newLines.at(i));
+			LCAction::CheckActions(newLines[i]);
 			if (kbhit())
 			{
 				if (getch() == 27)
@@ -202,7 +201,7 @@ void checkNotifications()
 	else
 		for (int i = 0; i < newLines.size(); i++)
 		{
-			liveChatBeep(newLines.at(i));
+			LCAction::CheckActions(newLines[i]);
 			if (kbhit())
 			{
 				if (getch() == 27)
@@ -234,9 +233,12 @@ bool liveChatInput()
 		case 'm':
 		{
 			cls();
-			std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nESC - Anuluj | Inny klawisz - zgoda\n";
-			if (getch() == 27)
+			std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nENTER - Zgoda | Inny klawisz - anuluj\n";
+			if (getch() != 13)
+			{
+				showChat();
 				break;
+			}
 			showChat();
 			moveLogs();
 		}
@@ -249,6 +251,13 @@ bool liveChatInput()
 		}
 		case 13: //enter start autoJoin
 		{
+			cls();
+			std::cout << "CZY NA PEWNO CHCESZ WŁĄCZYĆ AUTO RECONNECT?\nENTER - Zgoda | Inny klawisz - anuluj\n";
+			if (getch() != 13)
+			{
+				showChat();
+				break;
+			}
 			isAutoJoin = true;
 			pos.X = 3;
 			pos.Y = 4;
@@ -309,7 +318,7 @@ bool liveChat() //lc
 	showChat();
 	initshow.stop();
 
-	LDebug::Output("initLiveChat: wielkość pliku: %sKB, linie: %s, odczyt: %s (%s), wyświetlanie: %s (%s), łącznie: %sns (%sms)", 
+	LDebug::DebugOutput("initLiveChat: wielkość pliku: %sKB, linie: %s, odczyt: %s (%s), wyświetlanie: %s (%s), łącznie: %sns (%sms)", 
 	{std::to_string(size/1000), std::to_string(lcLineCount), init.pre("ns"), init.pre("ms", 2), initshow.pre("ns"), initshow.pre("ms", 2),
 	round(init.get("ns") + initshow.get("ns"), 0), round(init.get("ms") + initshow.get("ms"), 2)});
 	//end
@@ -338,7 +347,7 @@ bool liveChat() //lc
 			refreshf.close();
 			size = std::filesystem::file_size(consoleLogPath);
 			showChat();
-			checkNotifications();
+			checkMessages();
 		}
 		else
 		{
@@ -414,7 +423,11 @@ bool liveChat() //lc
 		}
 		newLines.clear();
 		if (newLines.capacity() > 100000)
+		{
+			LDebug::DebugOutput("newLinesCapacity: wielkość pliku: %sKB, newLines.capacity() = %s",
+			{std::to_string(size / 1000), std::to_string(newLines.capacity())});
 			newLines.shrink_to_fit();
+		}
 		filelc.clear();
 		filelc.sync();
 	}

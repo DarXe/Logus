@@ -12,7 +12,8 @@
 
 namespace LDebug
 {
-	void Output(std::string text, const std::vector <std::string> &content);
+	void DebugOutput(std::string text, const std::vector <std::string> &content);
+	void InfoOutput(const std::string &line);
 }
 
 #endif

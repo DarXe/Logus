@@ -83,9 +83,9 @@ void readConfig(bool showInfo)
 			fLockPW = stoi(clearConfigValue(templine, "b_Blokada powiadomienia PM:"));
 
 		else if (templine.find("b_Mute fraction/cargo notifications:") != std::string::npos)
-			fLockKomunikat = stoi(clearConfigValue(templine, "b_Mute fraction/cargo notifications:"));
+			fLockReport = stoi(clearConfigValue(templine, "b_Mute fraction/cargo notifications:"));
 		else if (templine.find("b_Blokada powiadomienia towaru/frakcji:") != std::string::npos)
-			fLockKomunikat = stoi(clearConfigValue(templine, "b_Blokada powiadomienia towaru/frakcji:"));
+			fLockReport = stoi(clearConfigValue(templine, "b_Blokada powiadomienia towaru/frakcji:"));
 
 		else if (templine.find("b_Mute fraction/cargo notifications:") != std::string::npos)
 			fLockNick = stoi(clearConfigValue(templine, "b_Mute fraction/cargo notifications:"));
@@ -200,9 +200,17 @@ void readConfig(bool showInfo)
 	while (true)
 	{
 		getline(read, templine);
-		if (read.eof())
+		if ((templine.find("//BAZA DANYCH FRAZ") != std::string::npos) || (templine.find("//PHRASE DATABASE") != std::string::npos) || read.eof())
 			break;
 		nicknames.push_back(templine);
+	}
+	phrases.clear();
+	while (true)
+	{
+		getline(read, templine);
+		if(read.eof())
+			break;
+		phrases.push_back(templine);
 	}
 	read.close();
 	if (showInfo)
@@ -262,7 +270,7 @@ void saveConfig(bool showInfo)
 		file << "i_Delay between sounds: " << interval << "\n";
 		file << "b_Mute team notifications: " << fLockTeam << "\n";
 		file << "b_Mute PM notifications: " << fLockPW << "\n";
-		file << "b_Mute fraction/cargo notifications: " << fLockKomunikat << "\n";
+		file << "b_Mute fraction/cargo notifications: " << fLockReport << "\n";
 		file << "b_Mute nicknames notifications: " << fLockNick << "\n";
 		file << "b_Toggle auto gate opening (open at the end of PM): " << autoOpenGate << "\n";
 		file << "b_Notify on any message: " << chatSound << "\n";
@@ -288,6 +296,9 @@ void saveConfig(bool showInfo)
 		file << "Nicknames in database: " << nicknames.size() << '\n';
 		for (int i = 0; i < nicknames.size(); i++)
 			file << nicknames.at(i) << '\n';
+		file << "//PHRASE DATABASE///////////////////////////////////////////////////////////////////////////////\n";
+		for (int i = 0; i < phrases.size(); i++)
+			file << phrases.at(i) << '\n';
 	}
 	else
 	{
@@ -310,7 +321,7 @@ void saveConfig(bool showInfo)
 		file << "i_Odstep między dźwiękami: " << interval << "\n";
 		file << "b_Blokada powiadomienia Team: " << fLockTeam << "\n";
 		file << "b_Blokada powiadomienia PM: " << fLockPW << "\n";
-		file << "b_Blokada powiadomienia towaru/frakcji: " << fLockKomunikat << "\n";
+		file << "b_Blokada powiadomienia towaru/frakcji: " << fLockReport << "\n";
 		file << "b_Blokada powiadomienia na wybrane nicki: " << fLockNick << "\n";
 		file << "b_Włącz automatyczne otwieranie bramy (open na końcu PW): " << autoOpenGate << "\n";
 		file << "b_Powiadomienia na każdą wiadomość: " << chatSound << "\n";
@@ -336,6 +347,9 @@ void saveConfig(bool showInfo)
 		file << "Nicki w bazie danych: " << nicknames.size() << '\n';
 		for (int i = 0; i < nicknames.size(); i++)
 			file << nicknames.at(i) << '\n';
+		file << "//BAZA DANYCH FRAZ//////////////////////////////////////////////////////////////////////////////\n";
+		for (int i = 0; i < phrases.size(); i++)
+			file << phrases.at(i) << '\n';
 	}
 	file.close();
 	if (showInfo)
@@ -347,7 +361,7 @@ void readDefault()
 	dzwiekGlowny = 1777;
 	fLockTeam = 0;
 	fLockPW = 0;
-	fLockKomunikat = 0;
+	fLockReport = 0;
 	fLockNick = 0;
 	engLang = 0;
 	chatSound = 0;

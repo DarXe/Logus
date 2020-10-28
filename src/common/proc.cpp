@@ -62,6 +62,18 @@ bool closeLogus(std::string text)
 	exit(0);
 }
 
+void stopAutoJoin(bool &isAutoJoin)
+{
+	COORD pos;
+	isAutoJoin = false;
+	pos.X = 3;
+	pos.Y = 4;
+	SetConsoleCursorPosition(h, pos);
+	SetConsoleTextAttribute(h, 12);
+	std::cout << "       CONNECTED!       ";
+	Beep(dzwiekGlowny, 500);
+}
+
 void dots(short duration, short amount)
 {
 	for (int i = 0; i < amount; i++)

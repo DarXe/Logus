@@ -13,7 +13,7 @@
 #include <var.hpp>
 #include <config.hpp>
 #include <common.hpp>
-#include "livechat_proc.hpp"
+#include "livechat_actions.hpp"
 #include "livechat_events.hpp"
 #include "livechat_cmd.hpp"
 
@@ -21,315 +21,130 @@
 //foward declarations
 void serverConnect(); //from proc.hpp
 
-bool LCEvent::Team(const std::string &line, const bool &nicksearch)
+bool LCEvent::Team(const std::string &line, const bool &includePlayer)
 {
-	short leng = nick.length();
-	if (line[gt] == '(' && line[gt + 1] == 'T' && line[gt + 2] == 'E' && line[gt + 3] == 'A' && line[gt + 4] == 'M')
+	// [2020-10-28 17:42:08] [Output] : (TEAM) Niventill: ess
+	if (line.find("[Output] : (TEAM) ") != std::string::npos)
 	{
-		if (nicksearch)
-			return 1;
-		if (line[gt + 6 + leng] != nick[leng - 1] || line[gt + 5 + leng] != nick[leng - 2] || line[gt + 4 + leng] != nick[leng - 3])
-			return 1;
-		else
-			return 0;
+		if (line.find("[Output] : (TEAM) " + nick) != std::string::npos)
+			if (includePlayer)
+				return 1;
+			else
+				return 0;
+		return 1;
 	}
 	else
 		return 0;
 }
 
-bool LCEvent::PwOd(const std::string &line)
+bool LCEvent::PmFrom(const std::string &line)
 {
-	if ((line[gt] == '*' && line[gt + 2] == 'P' && line[gt + 3] == 'M') || (line[gt] == '*' && line[gt + 2] == 'P' && line[gt + 3] == 'W'))
-		return 1;
-	else
-		return 0;
+	return (line.find("[Output] : * PW od ") != std::string::npos || line.find("[Output] : * PM from ") != std::string::npos);
 }
 
-bool LCEvent::PwDo(const std::string &line)
+bool LCEvent::PmTo(const std::string &line)
 {
-	if (line[gt] == '-' && line[gt + 1] == '>')
-		return 1;
-	else
-		return 0;
+	return (line.find("[Output] : -> ") != std::string::npos);
 }
 
-bool LCEvent::PrzelewyOd(const std::string &line)
+bool LCEvent::TransfersFrom(const std::string &line)
 {
 	//[2020-08-09 21:06:56] [Output] : Gracz SpookyTank przelał tobie 1500$.
 	//[2020-08-30 16:35:09] [Output] : Player DarXe transferred to you $1.
 	if ((line.find("[Output] : Gracz ") != std::string::npos) || (line.find("[Output] : Player ") != std::string::npos))
-		if ((line.find(" przelał tobie ") != std::string::npos) || (line.find(" transferred to you") != std::string::npos))
-			return 1;
+		return ((line.find(" przelał tobie ") != std::string::npos) || (line.find(" transferred to you") != std::string::npos));
 	return 0;
 }
 
-bool LCEvent::PrzelewyDo(const std::string &line)
+bool LCEvent::TransfersTo(const std::string &line)
 {
 	//[2020-08-29 15:34:28] [Output] : Przelałeś 1000000$ graczowi DarXe.
 	//[2020-08-30 16:34:52] [Output] : You gave $1 to player DarXe.
 	if ((line.find("[Output] : Przelałeś ") != std::string::npos) || (line.find("[Output] : You gave $") != std::string::npos))
-		if ((line.find(" to player ") != std::string::npos) || (line.find(" graczowi ") != std::string::npos))
-			return 1;
+		return ((line.find(" to player ") != std::string::npos) || (line.find(" graczowi ") != std::string::npos));
 	return 0;
 }
 
-bool LCEvent::Komunikat(const std::string &line)
+bool LCEvent::Report(const std::string &line)
 {
-	if ((line[gt] == 'N' && line[gt + 1] == 'e' && line[gt + 3] == ' ' && line[gt + 8] == 'r') || (line[gt] == 'N' && line[gt + 1] == 'o' && line[gt + 3] == 'y' && line[gt + 4] == ' ' && line[gt + 9] == 'r'))
-		return 1;
-	else
-		return 0;
+	// [Output] : Nowy raport - autor: Niventill, kategoria: Naprawa
+	// [Output] : author: Niventill, category: Repair
+	return (line.find("[Output] : Nowy raport - ") != std::string::npos || line.find("[Output] : New report - ") != std::string::npos);
 }
 
 bool LCEvent::Transport(const std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
-	if ((line[gt] == 'Y' && line[gt + 4] == 'v' && line[gt + 14] == '$') ||
-		//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
-		(line[gt] == 'P' && line[gt + 1] == 'i' && line[gt + 2] == 'e' && line[gt + 3] == 'n' && line[gt + 4] == 'i'))
-		return 1;
-	else
-		return 0;
+	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
+	return (line.find("[Output] : Pieniądze za ") != std::string::npos || line.find("[Output] : You've ") != std::string::npos);
 }
 
 bool LCEvent::Nicknames(const std::string &line)
 {
+	//[2020-10-28 18:29:00] [Output] : Gracz Niventill zaraz wraca.
+	//[2020-10-28 18:29:00] [Output] : Player Niventill is away from keyboard.
+	//[2020-10-28 18:29:01] [Output] : Gracz Niventill wrócił.
+	//[2020-10-28 18:29:00] [Output] : Player Niventill returned.
+	//[2020-10-28 19:05:51] [Output] : * SpookyTank has joined the game
 	for (int i = 0; i < nicknames.size(); i++)
 	{
-		std::string s_temp = nicknames.at(i);
-		short leng = s_temp.length() - 1;
 		//chat
 		//if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
 		//	return 0;
 		//join
-		if (line[gt] == '*' && line[gt + leng + 3] == ' ' && line[gt + leng + 2] == s_temp[leng] && line[gt + leng + 1] == s_temp[leng - 1] && line[gt + leng] == s_temp[leng - 2])
+		if (line.find("[Output] : * " + nicknames.at(i)) != std::string::npos)
 			return 1;
 		//afk
-		if (line[gt + 3] == 'c' && line[gt + 4] == 'z' && line[gt + 5] == ' ' && line[gt + leng + 7] == ' ' && line[gt + leng + 6] == s_temp[leng] && line[gt + leng + 5] == s_temp[leng - 1] && line[gt + leng + 4] == s_temp[leng - 2])
+		if (line.find("[Output] : Gracz " + nicknames.at(i) + " zaraz ") != std::string::npos || line.find("[Output] : Player " + nicknames.at(i) + " is away ") != std::string::npos)
+			return 1;
+		if (line.find("[Output] : Gracz " + nicknames.at(i) + " wrócił ") != std::string::npos || line.find("[Output] : Player " + nicknames.at(i) + " returned ") != std::string::npos)
 			return 1;
 	}
 	return 0;
 }
 
-//[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
 bool LCEvent::BindKey(const std::string &line)
 {
-	return (line[gt] == 'm' && line[gt + 1] == 's' && line[gt + 2] == 'g' && line[gt + 3] == ':' && line[gt + 5] == 'P');
+	//[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
+	return (line.find("[Output] : msg: You cannot ") != std::string::npos);
 }
 
 bool LCEvent::Open(const std::string &line)
 {
-	if (autoOpenGate)
-		return (line[line.length() - 2] == 'n' && line[line.length() - 3] == 'e' && line[line.length() - 4] == 'p' && line[line.length() - 5] == 'o');
-	else
-		return 0;
+	return (line[line.length() - 2] == 'n' && line[line.length() - 3] == 'e' && line[line.length() - 4] == 'p' && line[line.length() - 5] == 'o');
 }
 
-bool LCEvent::Player(const std::string &line)
+/*bool LCEvent::Player(const std::string &line)
 {
 	return (line[gt] == '*' && line[gt] == '*');
-}
+}*/
 
-bool LCEvent::PlayerCount(const std::string &line)
+/*bool LCEvent::PlayerCount(const std::string &line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
-	if ((line[gt] == 'Y' && line[gt + 4] == 'v' && line[gt + 14] == '$') ||
-		//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
-		(line[gt] == 'P' && line[gt + 1] == 'i' && line[gt + 2] == 'e' && line[gt + 3] == 'n' && line[gt + 4] == 'i'))
-		return 1;
-	else
-		return 0;
-}
+	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
+	return ((line[gt] == 'Y' && line[gt + 4] == 'v' && line[gt + 14] == '$') || (line[gt] == 'P' && line[gt + 1] == 'i' && line[gt + 2] == 'e' && line[gt + 3] == 'n' && line[gt + 4] == 'i'));
+}*/
 
-void pKarambol(const std::string &line)
+bool LCEvent::Freeze(const std::string &line)
 {
-	if (line.find("[Output] : Nie ma lekarzy na serwerze. Za ") != std::string::npos)
-	{
-		int delim, delim1, var;
-		delim = line.find(" Za ");
-		delim1 = line.find(" sek ");
-		var = stoi(line.substr(delim + 4, delim1 - delim - 4));
-		mainTimer.startCounter(var);
-	}
-	else if (line.find("[Output] : There's no medics right here on the serwer. Wait ") != std::string::npos)
-	{
-		int delim, delim1, var;
-		delim = line.find(" Wait ");
-		delim1 = line.find(" sek ");
-		var = stoi(line.substr(delim + 6, delim1 - delim - 6));
-		mainTimer.startCounter(var);
-	}
+	return (line.find("[Output] : Nie ma lekarzy na serwerze. Za ") != std::string::npos || line.find("[Output] : There's no medics right here on the serwer. Wait ") != std::string::npos);
 }
 
-void pNickChange(const std::string &line)
+bool LCEvent::NickChange(const std::string &line)
 {
 	//[2020-08-30 04:03:19] [Output] : * Niventill is now known as test
-	std::string tempnick = "[Output] : * " + nick + " is now known as ";
-	if (line.find(tempnick) != std::string::npos)
-	{
-		std::string newnick, tempn;
-		tempnick = line.substr(gt, std::string::npos);
-		std::istringstream ss(tempnick);
-		ss >> tempn >> tempn >> tempn >> tempn >> tempn >> tempn >> newnick;
-		nick = newnick;
-	}
+	return (line.find("[Output] : * " + nick + " is now known as ") != std::string::npos);
 }
 
-bool liveChatBeep(std::string &ostatniaLinia) //bee
+bool LCEvent::ContainsPhrase(const std::string &line)
 {
-	//wiadomość pw
-	if (!fLockPW)
+	if (LCEvent::PmFrom(line) || LCEvent::Team(line, 0) || line.find("[Output] : " + nick) != std::string::npos)
+		return 0;
+	for (int i = 0; i < phrases.size(); i++)
 	{
-		if (LCEvent::PwOd(ostatniaLinia))
-		{
-			//open the gate
-			if (LCEvent::Open(ostatniaLinia))
-			{
-				system("start bin\\pasteCmd.exe");
-				toClipboard("open");
-
-				Beep(dzwiekGlowny, 400);
-				Beep(0, interval);
-
-				std::fstream info;
-				info.open("liveChatInfoOutput.log", std::ios::app);
-				info << ostatniaLinia;
-				info.close();
-				return 1;
-			}
-			//other PM
-			Beep(dzwiekGlowny, 300);
-			Beep(0, interval);
-			Beep(dzwiekGlowny, 300);
-			Beep(0, interval);
-
-			std::fstream info;
-			info.open("liveChatInfoOutput.log", std::ios::app);
-			info << ostatniaLinia;
-			info.close();
+		if (line.find(phrases[i], line.find(":", gt)) != std::string::npos)
 			return 1;
-		}
 	}
-
-	//wiadomość teamowa
-	if (!fLockTeam)
-	{
-		if (LCEvent::Team(ostatniaLinia, 0))
-		{
-			Beep(dzwiekGlowny, 150);
-			Beep(0, interval);
-			Beep(dzwiekGlowny, 150);
-			Beep(0, interval);
-
-			std::fstream info;
-			info.open("liveChatInfoOutput.log", std::ios::app);
-			info << ostatniaLinia;
-			info.close();
-			return 1;
-		}
-	}
-
-	//nick z czatu dodany do ulubionych
-	if (!fLockNick)
-	{
-		if (LCEvent::Nicknames(ostatniaLinia))
-		{
-			Beep(dzwiekGlowny, 300);
-			Beep(0, interval);
-			return 1;
-		}
-	}
-
-	//dostarczenie towaru, raport z frakcji
-	if (!fLockKomunikat)
-	{
-		if (LCEvent::Transport(ostatniaLinia))
-		{
-			salaryForTransport(ostatniaLinia);
-			if (trackId)
-			{
-				if (trackId == 4)
-					trackId = 1;
-				else
-					trackId++;
-			}
-			Beep(dzwiekGlowny, 150);
-			Beep(0, interval);
-			Beep(dzwiekGlowny, 150);
-			Beep(0, interval);
-			Beep(dzwiekGlowny, 150);
-			Beep(0, interval);
-
-			std::fstream info;
-			info.open("liveChatInfoOutput.log", std::ios::app);
-			info << ostatniaLinia;
-			info.close();
-			return 1;
-		}
-
-		if (LCEvent::Komunikat(ostatniaLinia))
-		{
-			Beep(dzwiekGlowny, 150);
-			Beep(0, interval);
-			Beep(dzwiekGlowny, 150);
-			Beep(0, interval);
-			Beep(dzwiekGlowny, 150);
-			Beep(0, interval);
-
-			std::fstream info;
-			info.open("liveChatInfoOutput.log", std::ios::app);
-			info << ostatniaLinia;
-			info.close();
-			return 1;
-		}
-
-		pKarambol(ostatniaLinia);
-	}
-
-	//przelewy
-	if (LCEvent::PrzelewyOd(ostatniaLinia))
-	{
-		Beep(dzwiekGlowny, 400);
-		Beep(0, interval);
-
-		std::fstream info;
-		info.open("liveChatInfoOutput.log", std::ios::app);
-		info << ostatniaLinia;
-		info.close();
-		return 1;
-	}
-
-	//klawisz zbindowany pod błąd /bind <key> <your_nick> msg x
-	//aktualna funkcja - start timera
-	if (LCEvent::BindKey(ostatniaLinia))
-	{
-		if (mainTimer.m_running)
-		{
-			mainTimer.stopCounter();
-			std::fstream info;
-			info.open("liveChatInfoOutput.log", std::ios::app);
-			info << ostatniaLinia.substr(0, 33) << "Timer - STOP";
-			info.close();
-		}
-		else
-		{
-			mainTimer.startCounter();
-			std::fstream info;
-			info.open("liveChatInfoOutput.log", std::ios::app);
-			info << ostatniaLinia.substr(0, 33) << "Timer - START";
-			info.close();
-		}
-		return 1;
-	}
-
-	pNickChange(ostatniaLinia);
-
-	LCCommand::checkCommandInput(ostatniaLinia);
-
-	if (chatSound)
-	{
-		Beep(750, 50);
-	}
-
-	return 1;
+	return 0;
 }

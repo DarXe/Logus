@@ -200,7 +200,7 @@ int lottoLogus()
 					playersId.push_back(0);
 					do //tasowanie graczy bez powtorzen
 					{
-						temp = losuj(a, b);
+						temp = randomize(a, b);
 						if (a == temp)
 							a++;
 						if (b == temp)
@@ -251,7 +251,7 @@ int lottoLogus()
 					//losowanie wygranych, bez powtórzen
 					while (winners.size() < 4)
 					{
-						temp = losuj(1, playersId.size() - 1);
+						temp = randomize(1, playersId.size() - 1);
 						//std::cout<<temp<<" Wylosowano: "<<nicknames.at(playersId.at(temp))<<"\n";
 						if (playersId.at(temp))
 						{
@@ -457,7 +457,7 @@ void lottoLogusStats(std::vector<std::string> &nicknames)
 
 		while (randoms.size() < 4)
 		{
-			los = losuj(1, nicknames.size() - 1);
+			los = randomize(1, nicknames.size() - 1);
 			for (int i : randoms)
 			{
 				if (i == los)
@@ -486,7 +486,7 @@ void lottoLogusStats(std::vector<std::string> &nicknames)
 				playersId.push_back(0);
 				do
 				{
-					temp = losuj(a, b);
+					temp = randomize(a, b);
 					if (a == temp)
 						a++;
 					if (b == temp)
@@ -501,7 +501,7 @@ void lottoLogusStats(std::vector<std::string> &nicknames)
 
 			while (winners.size() < 4)
 			{
-				temp = losuj(1, playersId.size() - 1);
+				temp = randomize(1, playersId.size() - 1);
 				if (playersId.at(temp))
 				{
 					nick = nicknames.at(playersId.at(temp));
@@ -611,7 +611,7 @@ void testLos()
 	cls();
 	while (true)
 	{
-		a = losuj(1000, 6000);
+		a = randomize(1000, 6000);
 		//getch();
 		Sleep(5);
 		pos.X = 0;

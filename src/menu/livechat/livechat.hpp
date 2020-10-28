@@ -17,7 +17,7 @@ void liveChatHead();
 void showChat();
 void getChat(bool init = 0);
 void moveLogs();
-void checkNotifications();
+void checkMessages();
 bool liveChatInput();
 bool liveChat();
 

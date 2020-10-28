@@ -20,7 +20,7 @@ std::string mtaLocation = "";
 int dzwiekGlowny = 1777; //sound message //dźwięk komunikatów
 bool fLockTeam = 0; //lock beep(TEAM)
 bool fLockPW = 0; //lock beep priv message
-bool fLockKomunikat = 0; //lock beep for transport
+bool fLockReport = 0; //lock beep for transport
 bool fLockNick = 0; //lock beep nick 'nick: message'
 bool engLang = 0; // Logus in English
 bool chatSound = 0; //the sound of any chat message //dźwięk każdej wiadomości na czacie
@@ -30,7 +30,8 @@ int refresh = 300; //refresh<ms> in LiveChat
 int interval = 50; //time interval between sounds //odstęp czasowy(ms) między kolejnymi dźwiękami
 std::string nick = "PodajSwojNick"; //nickname on MTA
 bool dynamicRefresh = 0; //dynamic refresh in LiveChat //dynamiczne odświeżanie w LC
-std::vector<std::string> nicknames; //nicknames database
+std::vector <std::string> nicknames; //nicknames database
+std::vector <std::string> phrases; //player nick's variants to look for
 int czas = 90; //TIMER time set by the player in seconds to load / unload the cargo
 bool random = 0; //TIMER random unloading, TRUE = 'skrypt' FALSE = 'sam wybiore'
 int money = 0; //courses calculator - money for delivered courses //pieniądze za kursy

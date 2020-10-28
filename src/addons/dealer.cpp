@@ -396,8 +396,8 @@ void dealer()
 		case 'r':
 		{
 			cls();
-			std::cout << " CZY NA PEWNO CHCESZ ZRESETOWAĆ BAZĘ DANYCH? TEJ AKCJI NIE MOŻNA COFNĄĆ\n ESC = ANULUJ, INNY KLAWISZ = RESET\n";
-			if (getch() == 27)
+			std::cout << " CZY NA PEWNO CHCESZ ZRESETOWAĆ BAZĘ DANYCH? TEJ AKCJI NIE MOŻNA COFNĄĆ\n ENTER - Reset, INNY KLAWISZ - Anuluj\n";
+			if (getch() != 13)
 				break;
 			genDealerDatabase();
 			cls();

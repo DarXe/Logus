@@ -17,7 +17,7 @@
 #include "common.hpp"
 
 
-int losuj(int od, int doo)
+int randomize(int od, int doo)
 {
 	return rand() % (doo - od + 1) + od;
 }

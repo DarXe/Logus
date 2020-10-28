@@ -276,7 +276,7 @@ int menu() //con
 		case '9':
 		{
 			cls();
-			dzwiekGlowny = losuj(50, 10000);
+			dzwiekGlowny = randomize(50, 10000);
 			std::cout << dzwiekGlowny << std::endl;
 			break;
 		}

@@ -195,6 +195,9 @@ void wersja()
 	std::cout << " PAŹDZIERNIK" << std::endl;
 
 	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2010_28 Dodano bazę fraz - tj. listę wyrazów do szukania w wiadomości gracza\n";
+	std::cout << " * Główne zastosowanie to zapis wariantów nicku użytkownika Logusia\n";
+	std::cout << " * Np.: Dar, dar, darXe, Darks itp. itd.\n";
 	std::cout << " 2010_18 Dodano komendę set hre (hard reset), która poza resetowaniem kursów i gotówki resetuje także min i max zarobek\n";
 	std::cout << " 2010_18 Komendy set n add i set n del zmieniły nazwę na nickdb add i nickdb del\n";
 	std::cout << " 209_06 Przebudowa kodu... (znowu)\n";

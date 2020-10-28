@@ -28,7 +28,7 @@ void settings()
 			SetConsoleTextAttribute(h, 14);
 			std::cout << " [p] Notify on private message: " << ((!fLockPW) ? "YES" : "NO") << "\n";
 			std::cout << " [t] Notify on team message: " << ((!fLockTeam) ? "YES" : "NO") << "\n";
-			std::cout << " [s] Notify on report or transport message: " << ((!fLockKomunikat) ? "YES" : "NO") << "\n";
+			std::cout << " [s] Notify on report or transport message: " << ((!fLockReport) ? "YES" : "NO") << "\n";
 			std::cout << " [k] Chat notifications - choosen nicknames: " << ((!fLockNick) ? "YES" : "NO") << "\n";
 			std::cout << " [c] Notify on any message: " << ((chatSound) ? "YES" : "NO") << "\n";
 			std::cout << " [a] Update channel: " << updateChannel << "\n";
@@ -58,11 +58,10 @@ void settings()
 			payment = ((money * 0.87) - 3500) * grade;
 			std::cout << " # # Payment is "
 					  << "$" << payment << "\n";
-			if (courses)
-				std::cout << " # # Average per course is $" << money / courses << "\n";
 			std::cout << " [x] Reset money and courses state\n";
 			SetConsoleTextAttribute(h, 14);
-			std::cout << " [b] Nicknames - database of chosen nicknames\n";
+			std::cout << " [b] Players - database of chosen players\n";
+			std::cout << " [v] Phrase database - database of phrases to look for in messages\n";
 			std::cout << " [n] Nickname: " << nick << "\n";
 			SetConsoleTextAttribute(h, 10);
 			std::cout << " _____________________________________________________________________\n";
@@ -77,7 +76,7 @@ void settings()
 			SetConsoleTextAttribute(h, 14);
 			std::cout << " [p] Dźwięk wiadomości PW: " << ((!fLockPW) ? "TAK" : "NIE") << "\n";
 			std::cout << " [t] Dźwięk wiadomości teamowych: " << ((!fLockTeam) ? "TAK" : "NIE") << "\n";
-			std::cout << " [s] Dźwięk komunikatow(raport, transport): " << ((!fLockKomunikat) ? "TAK" : "NIE") << "\n";
+			std::cout << " [s] Dźwięk komunikatów(raport, transport): " << ((!fLockReport) ? "TAK" : "NIE") << "\n";
 			std::cout << " [k] Powiadomienia na czacie - wybrane nicki: " << ((!fLockNick) ? "TAK" : "NIE") << "\n";
 			std::cout << " [c] Dźwięk każdej wiadomości na czacie: " << ((chatSound) ? "TAK" : "NIE") << "\n";
 			std::cout << " [a] Kanał aktualizacji: " << updateChannel << "\n";
@@ -98,7 +97,7 @@ void settings()
 			std::cout << " [d] Automatyczne otwieranie bramy (open na końcu PW): " << autoOpenGate << "\n";
 			SetConsoleTextAttribute(h, 14);
 			std::cout << " [6] Czas rozładowywania towaru - " << czas / 60 << ((czas % 60 < 10) ? ":0" : ":") << czas % 60 << "\n";
-			std::cout << " [7] Sam wybiorę / Skrypt: " << ((random) ? "5min - Skrypt" : "6min - Sam wybiorę") << "\n";
+			std::cout << " [7] Sam wybiorę / Losowy: " << ((random) ? "5min - Losowy" : "6min - Sam wybiorę") << "\n";
 			SetConsoleTextAttribute(h, 7);
 			std::cout << " [8] F4 / zarobione pieniądze od ostatniego wyzerowania: $" << money << "\n";
 			std::cout << " [9] Liczba dostarczonych kursów: " << courses << "\n";
@@ -107,11 +106,10 @@ void settings()
 			payment = ((money * 0.87) - 3500) * grade;
 			std::cout << " # # Wyplata wynosi "
 					  << "$" << payment << "\n";
-			if (courses)
-				std::cout << " # # Średnia na kurs wynosi $" << money / courses << "\n";
 			std::cout << " [x] Wyzeruj stan F4 i kursów\n";
 			SetConsoleTextAttribute(h, 14);
-			std::cout << " [b] Nicknames - baza danych wybranych nicków\n";
+			std::cout << " [b] Gracze - baza danych wybranych graczy\n";
+			std::cout << " [v] Baza fraz do szukania w wiadomości\n";
 			std::cout << " [n] Nickname: " << nick << "\n";
 			SetConsoleTextAttribute(h, 10);
 			std::cout << " _____________________________________________________________________\n";
@@ -130,8 +128,8 @@ void settings()
 		case 'r':
 		{
 			cls();
-			engLang ? std::cout << "ARE YOU SURE? ESC - Cancel | Another key - accept\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? ESC - Anuluj | Inny klawisz - Zgoda\n";
-			if (getch() == 27)
+			engLang ? std::cout << "ARE YOU SURE? Enter - Accept | Any other key - Cancel\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? Enter - Akceptuj | Inny klawisz - Anuluj\n";
+			if (getch() != 13)
 				break;
 			readDefault();
 			engLang ? std::cout << "Settings has been succesfully reset to default!\n" : std::cout << "Ustawienia domyślne programu zostały przywrócone!\n";
@@ -152,7 +150,7 @@ void settings()
 		case 's':
 		{
 			cls();
-			fLockKomunikat = (fLockKomunikat) ? 0 : 1;
+			fLockReport = (fLockReport) ? 0 : 1;
 			break;
 		}
 		case 'k':
@@ -279,8 +277,8 @@ void settings()
 		case 'x':
 		{
 			cls();
-			engLang ? std::cout << "ARE YOU SURE? ESC - Cancel | Another key - accept\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? ESC - Anuluj | Inny klawisz - Zgoda\n";
-			if (getch() == 27)
+			engLang ? std::cout << "ARE YOU SURE? Enter - Accept | Any other key - Cancel\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? Enter - Akceptuj | Inny klawisz - Anuluj\n";
+			if (getch() != 13)
 				break;
 			money = 0;
 			courses = 0;
@@ -288,6 +286,146 @@ void settings()
 			maxsalary = 0;
 			cls();
 			engLang ? std::cout << "(INFO) Money and courses has been cleared.\n" : std::cout << "(INFO) Wyzerowano.\n";
+			break;
+		}
+		case 'v':
+		{
+			cls();
+			while (true)
+			{
+				SetConsoleTextAttribute(h, 10);
+				Beep(dzwiekGlowny, 100);
+				if (engLang)
+				{
+					std::cout << " ____________________Settings - Phrase database__________________\n";
+					std::cout << " (INFO) You can also enter phrases manually in logus.ini\n";
+					SetConsoleTextAttribute(h, 14);
+					std::cout << " [1] Add new phrase\n";
+					std::cout << " [2] Remove last phrase\n";
+					std::cout << " [3] Show list of added phrases\n";
+					std::cout << " [4] Delete phrase by ID\n";
+					SetConsoleTextAttribute(h, 7);
+					std::cout << " [r] Read from file\n";
+					std::cout << " [x] Remove all phrases\n";
+					SetConsoleTextAttribute(h, 10);
+					std::cout << " ________________________________________________________________\n";
+					std::cout << "                        [ESC] Return & Save                      \n";
+				}
+				else
+				{
+					std::cout << " _____________________Ustawienia - Baza fraz_____________________\n";
+					std::cout << " (INFO) Możesz też wpisywać frazy ręcznie w pliku logus.ini\n";
+					SetConsoleTextAttribute(h, 14);
+					std::cout << " [1] Dodaj nową frazę\n";
+					std::cout << " [2] Usuń ostatnio dodaną frazę\n";
+					std::cout << " [3] Wyświetl listę dodanych fraz\n";
+					std::cout << " [4] Usuń frazę o danym id z listy\n";
+					SetConsoleTextAttribute(h, 7);
+					std::cout << " [r] Wykonaj odczyt z pliku, jeśli fraza został dodany w logus.ini\n";
+					std::cout << " [x] Usuń wszystkie frazy\n";
+					SetConsoleTextAttribute(h, 10);
+					std::cout << " ________________________________________________________________\n";
+					std::cout << "                       [ESC] Powrót i zapis                      \n";
+				}
+				char wyb = wybor();
+				switch (wyb)
+				{
+				case 27:
+				{
+					cls();
+					saveConfig();
+					break;
+				}
+				case '1': //set2 SETTINGS two
+				{
+					cls();
+					while (true)
+					{
+						engLang ? std::cout << " Enter exact phrase: " : std::cout << " Podaj dokładną frazę: ";
+						std::string s_temp;
+						std::cin >> s_temp;
+						if (s_temp.length() < 2)
+							engLang ? std::cout << " Phrase has to be at least 2 characters long!\n" : std::cout << " Minimum 2 znaki!\n";
+						else
+						{
+							cls();
+							phrases.push_back(s_temp);
+							engLang ? std::cout << " Added phrase " << s_temp << "\n" : std::cout << " Dodano frazę " << s_temp << "\n";
+							break;
+						}
+					}
+					break;
+				}
+				case '2':
+				{
+					cls();
+					if (phrases.empty())
+						engLang ? std::cout << " (INFO) Phrase list is empty\n" : std::cout << " (INFO) Lista fraz jest pusta\n";
+					else
+					{
+						engLang? std::cout << " Removed phrase " << phrases.back() << "\n" : std::cout << " Usunięto frazę " << phrases.back() << "\n";
+						phrases.pop_back();
+					}
+					break;
+				}
+				case '3':
+				{
+					cls();
+					if (phrases.empty())
+						engLang ? std::cout << " (INFO) Phrase list is empty\n" : std::cout << " (INFO) Lista fraz jest pusta\n";
+					else
+					{
+						for (int i = 0; i < phrases.size(); i++)
+						{
+							std::cout << " " << i + 1 << ". " << phrases.at(i) << "\n";
+						}
+					}
+					break;
+				}
+				case '4':
+				{
+					cls();
+					if (phrases.empty())
+						engLang ? std::cout << " (INFO) Phrase list is empty\n" : std::cout << " (INFO) Lista fraz jest pusta\n";
+					else
+					{
+						cls();
+						for (int i = 0; i < phrases.size(); i++)
+						{
+							std::cout << " " << i + 1 << ". " << phrases.at(i) << "\n";
+						}
+						int result;
+						engLang ? result = cfgInput(0, 0, "Enter phrase's ID that you want to remove", "Enter ID:", "Error. Entered wrong value", "It has to be a number", 0, phrases.size()) :
+						result = cfgInput(0, 0, "Podaj ID frazy którą chcesz usunąć", "Podaj ID:", "Błąd. Podaną błędną wartość", "To musi być liczba", 0, phrases.size());
+						cls();
+						engLang ? std::cout << " Removed phrase " << phrases.at(result - 1) << "\n" : std::cout << " Usunieto frazę " << phrases.at(result - 1) << "\n";
+						phrases.erase(phrases.begin() + result - 1);
+					}
+					break;
+				}
+				case 'r':
+				{
+					cls();
+					readDefault();
+					saveConfig();
+					break;
+				}
+				case 'x':
+				{
+					cls();
+					engLang ? std::cout << "ARE YOU SURE? Enter - Accept | Any other key - Cancel\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? Enter - Akceptuj | Inny klawisz - Anuluj\n";
+					if (getch() != 13)
+						break;
+					nicknames.clear();
+					engLang ? std::cout << " Removed all phrases\n" : std::cout << " Usunięto wszystkie frazy\n";
+					break;
+				}
+				default:
+					def();
+				}
+				if (wyb == 27)
+					break;
+			}
 			break;
 		}
 		case 'b':
@@ -362,10 +500,10 @@ void settings()
 				{
 					cls();
 					if (nicknames.empty())
-						std::cout << " (INFO) Lista graczy jest pusta\n";
+						engLang ? std::cout << " (INFO) Player list is empty\n" : std::cout << " (INFO) Lista graczy jest pusta\n";
 					else
 					{
-						std::cout << " Usunieto gracza " << nicknames.back() << "\n";
+						engLang ? std::cout << " Removed player " << nicknames.back() << '\n' : std::cout << " Usunięto gracza " << nicknames.back() << "\n";
 						nicknames.pop_back();
 					}
 					break;
@@ -415,8 +553,8 @@ void settings()
 				case 'x':
 				{
 					cls();
-					engLang ? std::cout << "ARE YOU SURE? ESC - Cancel | Another key - accept\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? ESC - Anuluj | Inny klawisz - Zgoda\n";
-					if (getch() == 27)
+					engLang ? std::cout << "ARE YOU SURE? Enter - Accept | Any other key - Cancel\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? Enter - Akceptuj | Inny klawisz - Anuluj\n";
+					if (getch() != 13)
 						break;
 					nicknames.clear();
 					engLang ? std::cout << " Removed all players\n" : std::cout << " Usunięto wszystkich graczy\n";

@@ -11,20 +11,20 @@
 
 namespace LCCommand
 {
-	void checkCommandInput(const std::string &line);
+	void CheckCommandInput(const std::string &line);
 
-	bool reconnect(const std::string &line);
-	bool quit(const std::string &line);
-	bool startTimer(const std::string &line);
-	bool setNick(const std::string &line);
-	short setTrack(const std::string &line);
-	bool setTimer(const std::string &line);
-	bool addNickname(const std::string &line);
-	bool delNickname(const std::string &line);
-	bool setMoney(const std::string &line);
-	bool setCourses(const std::string &line);
-	bool reset(const std::string &line);
-	bool hardReset(const std::string &line);
+	bool Reconnect(const std::string &line);
+	bool Quit(const std::string &line);
+	bool StartTimer(const std::string &line);
+	bool SetNick(const std::string &line);
+	short SetTrack(const std::string &line);
+	bool SetTimer(const std::string &line);
+	bool AddNickname(const std::string &line);
+	bool DelNickname(const std::string &line);
+	bool SetMoney(const std::string &line);
+	bool SetCourses(const std::string &line);
+	bool Reset(const std::string &line);
+	bool HardReset(const std::string &line);
 } // namespace LCCommand
 
 #endif
