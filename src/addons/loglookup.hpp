@@ -11,19 +11,32 @@
 #include <string>
 
 
+enum Editor
+{
+	DefEditor,
+	Logus,
+	LiveChat
+};
+
 bool checkDate(std::string line, const std::string &date, const bool &checkHour = 0);
 
-bool showFileContent(const std::string &filename, const uintmax_t &filesize, const std::vector <std::string> &foundLines);
+void showLogContentInLiveChat(const std::string &filename, const uintmax_t &filesize, const std::vector<std::string> &foundLines);
 
-bool checkFileNicknames(const std::string &filename);
+bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesize, std::vector<std::string> &foundLines);
 
-bool checkFilePM(const std::string &filename);
+bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &filesize, const std::vector <std::string> &foundLines);
 
-bool checkFileTransfers(const std::string &filename);
+bool checkLogNicknames(const std::string &filename);
 
-bool checkFileTeam(const std::string &filename);
+bool checkLogPM(const std::string &filename, const Editor &editor = DefEditor);
 
-bool checkFileDateFromTo(const std::string &filename, const std::string &date, const std::string &dateEnd, const bool &checkHour = 0);
+bool checkLogTransfers(const std::string &filename, const Editor &editor = DefEditor);
+
+bool checkLogTransfersAll(const Editor &editor = Logus);
+
+bool checkLogTeam(const std::string &filename);
+
+bool CheckLogContentDateFromTo(const std::string &filename, const std::string &date, const std::string &dateEnd, const bool &checkHour = 0);
 
 void dateSelectionMenu();
 

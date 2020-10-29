@@ -13,6 +13,7 @@
 #include <var.hpp>
 #include <config.hpp>
 #include <common.hpp>
+#include "../addons/loglookup.hpp"
 #include <proc.hpp>
 #include "livechat_actions.hpp"
 #include "livechat_cmd.hpp"
@@ -35,6 +36,7 @@ void LCCommand::CheckCommandInput(const std::string &line)
 	SetCourses(line);
 	Reset(line);
 	HardReset(line);
+	CheckTransfers(line);
 }
 
 bool LCCommand::Reconnect(const std::string &line)
@@ -215,6 +217,16 @@ bool LCCommand::Reset(const std::string &line)
 		money = 0;
 		courses = 0;
 		saveConfig(0);
+		return 1;
+	}
+	return 0;
+}
+
+bool LCCommand::CheckTransfers(const std::string &line)
+{
+	if (line.find("[Input]  : show tf") !=std::string::npos)
+	{
+		checkLogTransfersAll(LiveChat);
 		return 1;
 	}
 	return 0;

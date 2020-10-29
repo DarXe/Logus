@@ -25,6 +25,7 @@ namespace LCCommand
 	bool SetCourses(const std::string &line);
 	bool Reset(const std::string &line);
 	bool HardReset(const std::string &line);
+	bool CheckTransfers(const std::string &line);
 } // namespace LCCommand
 
 #endif

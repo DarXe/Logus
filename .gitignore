@@ -12,3 +12,4 @@ res.res
 *.o
 *.d
 *.hpp.gch
+content.txt

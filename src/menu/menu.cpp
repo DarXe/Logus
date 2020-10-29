@@ -60,8 +60,9 @@ int menu() //con
 			std::cout << " [2] Search for private messages in .log files\n";
 			std::cout << " [3] Search for team messages in all .log files\n";
 			std::cout << " [4] Search for private messages and answers in all .log files\n";
+			std::cout << " [6] Search for payments in .log files\n";
 			SetConsoleTextAttribute(h, 12);
-			std::cout << " [p] Search for payments in .log files\n";
+			std::cout << " [p] Search for last 20 transfers in all .log files\n";
 			std::cout << " [o] Search in .log file with date from-to\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout << " [w] Pingtest - check connection to the internet\n";
@@ -104,8 +105,9 @@ int menu() //con
 			std::cout << " [2] Szukaj PW oraz odpowiedzi w plikach .log\n";
 			std::cout << " [3] Szukaj wiadomości teamowych we wszystkich plikach .log\n";
 			std::cout << " [4] Szukaj PW oraz odpowiedzi we wszystkich plikach .log\n";
+			std::cout << " [6] Szukaj przelewów od i do graczy w plikach .log\n";
 			SetConsoleTextAttribute(h, 12);
-			std::cout << " [p] Szukaj przelewów od i do graczy w plikach .log\n";
+			std::cout << " [p] Szukaj ostatnich 20 przelewów we wszystkich plikach .log\n";
 			std::cout << " [o] Szukaj w plikach .log po dacie od-do\n";
 			SetConsoleTextAttribute(h, 11);
 			std::cout << " [w] Test ping - szybkie sprawdzenie, czy jest internet\n";
@@ -140,7 +142,7 @@ int menu() //con
 				cls();
 				break;
 			}
-			checkFileTeam(filen);
+			checkLogTeam(filen);
 			break;
 		}
 		case '2':
@@ -153,47 +155,52 @@ int menu() //con
 				cls();
 				break;
 			}
-			checkFilePM(filen);
+			checkLogPM(filen);
 			break;
 		}
 		case '3':
 		{
-			if (!checkFileTeam(consoleLogPath))
+			if (!checkLogTeam(consoleLogPath))
 				break;
-			if (!checkFileTeam(consoleLog1Path))
+			if (!checkLogTeam(consoleLog1Path))
 				break;
-			if (!checkFileTeam(consoleLog2Path))
+			if (!checkLogTeam(consoleLog2Path))
 				break;
-			if (!checkFileTeam(consoleLog3Path))
+			if (!checkLogTeam(consoleLog3Path))
 				break;
-			if (!checkFileTeam(consoleLog4Path))
+			if (!checkLogTeam(consoleLog4Path))
 				break;
-			if (!checkFileTeam(consoleLog5Path))
+			if (!checkLogTeam(consoleLog5Path))
 				break;
-			if (!checkFileTeam("logus.log"))
+			if (!checkLogTeam("logus.log"))
 				break;
 			break;
 		}
 
 		case '4':
 		{
-			if (!checkFilePM(consoleLogPath))
+			if (!checkLogPM(consoleLogPath))
 				break;
-			if (!checkFilePM(consoleLog1Path))
+			if (!checkLogPM(consoleLog1Path))
 				break;
-			if (!checkFilePM(consoleLog2Path))
+			if (!checkLogPM(consoleLog2Path))
 				break;
-			if (!checkFilePM(consoleLog3Path))
+			if (!checkLogPM(consoleLog3Path))
 				break;
-			if (!checkFilePM(consoleLog4Path))
+			if (!checkLogPM(consoleLog4Path))
 				break;
-			if (!checkFilePM(consoleLog5Path))
+			if (!checkLogPM(consoleLog5Path))
 				break;
-			if (!checkFilePM("logus.log"))
+			if (!checkLogPM("logus.log"))
 				break;
 			break;
 		}
 		case 'p':
+		{
+			checkLogTransfersAll(Logus);
+			break;
+		}
+		case '6':
 		{
 			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") :
 			cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
@@ -203,7 +210,7 @@ int menu() //con
 				cls();
 				break;
 			}
-			checkFileTransfers(filen);
+			checkLogTransfers(filen);
 			break;
 		}
 		case 'o':
