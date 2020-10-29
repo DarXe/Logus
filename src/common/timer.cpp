@@ -83,8 +83,8 @@ void Timer::beep()
 		if (m_timer > 0)
 		{
 			update();
-			if (random && m_loaded)
-				if (m_timer < 300000 || m_timer < 360000)
+			if (m_loaded)
+				if (m_timer < 300000 && random || !random && m_timer < 360000)
 				{
 					Beep(dzwiekGlowny, 150);
 					Beep(0, interval);
