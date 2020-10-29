@@ -5,6 +5,8 @@
 //standard libraries
 #include <windows.h>
 #include <sstream>
+#include <iostream>
+#include <conio.h>
 #include <fstream>
 #include <vector>
 
@@ -186,8 +188,13 @@ bool LCCommand::SetMoney(const std::string &line)
 	if (line.find("[Input]  : set m ") != std::string::npos)
 	{
 		int delim = line.find("[Input]  : set m ");
-		std::string tmoney = line.substr(delim + 16, std::string::npos);
-		money = stoi(tmoney);
+		std::string tmoney = line.substr(delim + 17, std::string::npos);
+		try {
+			money = stoi(tmoney);
+		}
+		catch (const std::invalid_argument& arg) {
+			return 0;
+		}
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
 		return 1;
@@ -201,7 +208,12 @@ bool LCCommand::SetCourses(const std::string &line)
 	{
 		int delim = line.find("[Input]  : set c ");
 		std::string tcourses = line.substr(delim + 17, std::string::npos);
-		courses = stoi(tcourses);
+		try {
+			courses = stoi(tcourses);
+		}
+		catch (const std::invalid_argument& arg) {
+			return 0;
+		}
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
 		return 1;
