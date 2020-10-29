@@ -5,7 +5,6 @@
 //standard libraries
 #include <iostream>
 #include <fstream>
-#include <algorithm>
 #include <chrono>
 #include <conio.h>
 #include <thread>
@@ -61,7 +60,7 @@ bool checkDate(std::string line, const std::string &date, const bool &checkHour)
 	return 0;
 }
 
-bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesize, std::vector<std::string> &foundLines)
+bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesize, std::deque<std::string> &foundLines)
 {
 	if (foundLines.empty())
 	{
@@ -72,7 +71,6 @@ bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesiz
 	int page = 0;
 	int a = 0;
 	std::string b;
-	std::reverse(foundLines.begin(), foundLines.end());
 	while(true)
 	{
 		SetConsoleTextAttribute(h, 10);
@@ -102,24 +100,24 @@ bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesiz
 	return 1;
 }
 
-void showLogContentInLiveChat(const std::string &filename, const uintmax_t &filesize, const std::vector<std::string> &foundLines)
+void showLogContentInLiveChat(const std::deque<std::string> &foundLines)
 {
+	if (foundLines.size() == 0)
+		return;
 	std::fstream showFile("content.txt", std::ios::out | std::ios::binary);
-	std::string line;
 	Stopwatch showf;
 	for (int i = 0; i < foundLines.size(); i++)
 	{
-		line = foundLines.at(i);
+		std::string line = foundLines.at(i);
 		showFile << line << '\n';
 	}
 	showf.stop();
-	LDebug::DebugOutput("showLogContentInDefEditor: plik: %s, wielkość pliku: %sKB, czas zapisu: %s (%s)", {filename, std::to_string(filesize / 1000),
-	showf.pre("ns"), showf.pre("ms", 2)});
 	showFile.close();
+	LDebug::DebugOutput("showLogContentInLiveChat: czas zapisu: %s (%s)", {showf.pre("ns"), showf.pre("ms", 2)});
 	ShellExecute(0, 0, "content.txt", 0, 0, SW_SHOW);
 }
 
-bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &filesize, const std::vector<std::string> &foundLines)
+bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &filesize, const std::deque<std::string> &foundLines)
 {
 	if (foundLines.size() == 0)
 	{
@@ -128,12 +126,10 @@ bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &fil
 		return 1;
 	}
 	std::fstream showFile("content.txt", std::ios::out | std::ios::binary);
-	std::string line;
 	Stopwatch showf;
 	for (int i = 0; i < foundLines.size(); i++)
 	{
-		line = foundLines.at(i);
-		showFile << line << '\n';
+		showFile << foundLines[i] << '\n';
 	}
 	showf.stop();
 	LDebug::DebugOutput("showLogContentInDefEditor: plik: %s, wielkość pliku: %sKB, czas zapisu: %s (%s)", {filename, std::to_string(filesize / 1000),
@@ -158,7 +154,7 @@ bool checkLogNicknames(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector<std::string> foundLines;
+	std::deque<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
 	if (filesize > 1000000000)
 	{
@@ -184,7 +180,7 @@ bool checkLogPM(const std::string &filename, const Editor &editor)
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector<std::string> foundLines;
+	std::deque<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
 	if (filesize > 1000000000)
 	{
@@ -220,7 +216,7 @@ bool checkLogTransfersAll(const Editor &editor)
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector<std::string> foundLines;
+	std::deque<std::string> foundLines;
 	auto filesize = std::filesystem::file_size("logus.log");
 	if (filesize > 1000000000 && editor != LiveChat)
 	{
@@ -233,7 +229,7 @@ bool checkLogTransfersAll(const Editor &editor)
 	{
 		getline(fileCheck, line);
 		if (LCEvent::TransfersFrom(line) || LCEvent::TransfersTo(line))
-			foundLines.push_back(line);
+			foundLines.push_front(line);
 	}
 	fileCheck.close();
 	fileCheck.open(consoleLogPath, std::ios::in | std::ios::binary);
@@ -241,9 +237,10 @@ bool checkLogTransfersAll(const Editor &editor)
 	{
 		getline(fileCheck, line);
 		if (LCEvent::TransfersFrom(line) || LCEvent::TransfersTo(line))
-			foundLines.push_back(line);
+			foundLines.push_front(line);
 	}
 	fileCheck.close();
+
 	switch (editor)
 	{
 		case DefEditor:
@@ -251,11 +248,13 @@ bool checkLogTransfersAll(const Editor &editor)
 		{
 			if (!showLogContentInLogus("console.log", filesize, foundLines))
 				return 0;
+			break;
 		}
 		case LiveChat:
 		{
-			showLogContentInLiveChat("console.log", filesize, foundLines);
+			showLogContentInLiveChat(foundLines);
 			return 0;
+			break;
 		}
 	}
 	return 1;
@@ -265,7 +264,7 @@ bool checkLogTransfers(const std::string &filename, const Editor &editor)
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector<std::string> foundLines;
+	std::deque<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
 	if (filesize > 1000000000)
 	{
@@ -288,11 +287,13 @@ bool checkLogTransfers(const std::string &filename, const Editor &editor)
 		{
 			if (!showLogContentInDefEditor(filename, filesize, foundLines))
 				return 0;
+			break;
 		}
 		case Logus:
 		{
 			if (!showLogContentInLogus(filename, filesize, foundLines))
 				return 0;
+			break;
 		}
 	}
 	return 1;
@@ -302,7 +303,7 @@ bool checkLogTeam(const std::string &filename)
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector<std::string> foundLines;
+	std::deque<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
 	if (filesize > 1000000000)
 	{
@@ -328,7 +329,7 @@ bool CheckLogContentDateFromTo(const std::string &filename, const std::string &d
 {
 	std::ifstream fileCheck;
 	std::string line;
-	std::vector<std::string> foundLines;
+	std::deque<std::string> foundLines;
 	auto filesize = std::filesystem::file_size(filename);
 	if (filesize > 1000000000)
 	{
@@ -417,4 +418,76 @@ void dateSelectionMenu()
 			return;
 		}
 	}
+}
+
+void findWordAll_NonCaseSensitive(std::string &word)
+{
+	std::ifstream fileCheck;
+	std::string line, newline;
+	for (int i = 0; i < word.size(); i++)
+	{
+		if (isupper(word[i]))
+			word[i] = std::tolower(word[i]);
+	}
+	std::deque<std::string> foundLines;
+
+	fileCheck.open("logus.log", std::ios::in | std::ios::binary);
+	while (!fileCheck.eof())
+	{
+		getline(fileCheck, line);
+		newline = line;
+		for (int i = 0; i < line.size(); i++)
+		{
+			if (isupper(line[i]))
+				newline[i] = std::tolower(line[i]);
+		}
+		if (newline.find(word, gt) != std::string::npos && line.find("[Input]  : ") == std::string::npos)
+			foundLines.push_front(line);
+	}
+	fileCheck.close();
+	fileCheck.open(consoleLogPath, std::ios::in | std::ios::binary);
+	while (!fileCheck.eof())
+	{
+		getline(fileCheck, line);
+		newline = line;
+		for (int i = 0; i < line.size(); i++)
+		{
+			if (isupper(line[i]))
+				newline[i] = std::tolower(line[i]);
+		}
+		if (newline.find(word, gt) != std::string::npos && line.find("[Input]  : ") == std::string::npos)
+			foundLines.push_front(line);
+	}
+	fileCheck.close();
+	
+
+	showLogContentInLiveChat(foundLines);
+	return;
+}
+
+void findWordAll_CaseSensitive(std::string &word)
+{
+	std::ifstream fileCheck;
+	std::string line;
+	std::deque<std::string> foundLines;
+
+	fileCheck.open("logus.log", std::ios::in | std::ios::binary);
+	while (!fileCheck.eof())
+	{
+		getline(fileCheck, line);
+		if (line.find(word, gt) != std::string::npos && line.find("[Input]  : ") == std::string::npos)
+			foundLines.push_front(line);
+	}
+	fileCheck.close();
+	fileCheck.open(consoleLogPath, std::ios::in | std::ios::binary);
+	while (!fileCheck.eof())
+	{
+		getline(fileCheck, line);
+		if (line.find(word, gt) != std::string::npos && line.find("[Input]  : ") == std::string::npos)
+			foundLines.push_front(line);
+	}
+	fileCheck.close();
+	
+	showLogContentInLiveChat(foundLines);
+	return;
 }

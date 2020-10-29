@@ -105,8 +105,8 @@ bool LCEvent::Nicknames(const std::string &line)
 
 bool LCEvent::BindKey(const std::string &line)
 {
-	//[2020-06-12 00:11:39] [Output] : msg: You cannot message yourself
-	return (line.find("[Output] : msg: You cannot ") != std::string::npos);
+	//[2020-06-12 00:11:39] [Output] : msg: Player not found
+	return (line.find("[Output] : msg: Player not ") != std::string::npos);
 }
 
 bool LCEvent::Open(const std::string &line)
@@ -139,7 +139,10 @@ bool LCEvent::NickChange(const std::string &line)
 
 bool LCEvent::ContainsPhrase(const std::string &line)
 {
-	if (LCEvent::PmFrom(line) || LCEvent::Team(line, 0) || line.find("[Output] : " + nick) != std::string::npos)
+	// [2020-10-29 15:54:05] [Output] : Gracz: DarXe Team: 15, 3152$, Tytul: Gracz DarXe rozładował towar Pucolana, waga: 1.1, wynagrodzenie: 3152$.
+	// i sporo innych rzeczy, co sprawia, że if niżej jest nieczytelny
+	if (LCEvent::PmFrom(line) || LCEvent::Team(line, 1) || line.find("[Output] : " + nick) != std::string::npos || line.find("[Output] : Gracz: " + nick + " Team: ") != std::string::npos ||
+	line.find("[Output] : Name: " + nick + ", IP: ") != std::string::npos || line.find("[Input]  : ") != std::string::npos)
 		return 0;
 	for (int i = 0; i < phrases.size(); i++)
 	{

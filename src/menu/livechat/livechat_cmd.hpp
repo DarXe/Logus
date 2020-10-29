@@ -25,7 +25,11 @@ namespace LCCommand
 	bool SetCourses(const std::string &line);
 	bool Reset(const std::string &line);
 	bool HardReset(const std::string &line);
-	bool CheckTransfers(const std::string &line);
+	bool FindTransfers(const std::string &line);
+	bool FindWord(const std::string &line);
+	bool FindConfig(const std::string &line);
+	bool FindConsoleLog(const std::string &line);
+	bool FindLogusLog(const std::string &line);
 } // namespace LCCommand
 
 #endif

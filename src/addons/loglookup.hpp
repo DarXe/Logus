@@ -7,7 +7,7 @@
 
 
 //standard libraries
-#include <vector>
+#include <deque>
 #include <string>
 
 
@@ -20,11 +20,11 @@ enum Editor
 
 bool checkDate(std::string line, const std::string &date, const bool &checkHour = 0);
 
-void showLogContentInLiveChat(const std::string &filename, const uintmax_t &filesize, const std::vector<std::string> &foundLines);
+void showLogContentInLiveChat(const std::deque<std::string> &foundLines);
 
-bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesize, std::vector<std::string> &foundLines);
+bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesize, std::deque<std::string> &foundLines);
 
-bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &filesize, const std::vector <std::string> &foundLines);
+bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &filesize, const std::deque <std::string> &foundLines);
 
 bool checkLogNicknames(const std::string &filename);
 
@@ -40,5 +40,8 @@ bool CheckLogContentDateFromTo(const std::string &filename, const std::string &d
 
 void dateSelectionMenu();
 
+void findWordAll_NonCaseSensitive(std::string &word);
+
+void findWordAll_CaseSensitive(std::string &word);
 
 #endif

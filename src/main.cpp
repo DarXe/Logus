@@ -195,7 +195,9 @@ void wersja()
 	std::cout << " PAŹDZIERNIK" << std::endl;
 
 	SetConsoleTextAttribute(h, 6);
-	std::cout << " 2010_29 Dodano komendę ""show tf"", która otwiera domyślny edytor z wszystkimi przelewami\n";
+	std::cout << " 2010_29 Dodano komendę ""find console.log"" oraz ""find logus.log"", które otwierają plik z logami\n";
+	std::cout << " 2010_29 Dodano komendę ""find cfg"", która otwiera plik konfiguracyjny\n";
+	std::cout << " 2010_29 Dodano komendę ""find tf"", która otwiera domyślny edytor z wszystkimi przelewami\n";
 	std::cout << " 2010_29 Dodano (a raczej przywrócono) opcję sprawdzenia ostatnich 20 przelewów\n";
 	std::cout << " 2010_28 Dodano bazę fraz - tj. listę wyrazów do szukania w wiadomości gracza\n";
 	std::cout << " * Główne zastosowanie to zapis wariantów nicku użytkownika Logusia\n";

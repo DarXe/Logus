@@ -20,12 +20,13 @@ void Timer::start(clock_t timer) //in ms
 	Beep(dzwiekGlowny, 100);
 }
 
-void Timer::stop()
+void Timer::stop(const bool &beep)
 {
 	if (m_running)
 	{
 		m_timer = 0;
-		Beep(dzwiekGlowny, 500);
+		if (beep)
+			Beep(dzwiekGlowny, 500);
 		m_running = false;
 		m_loaded = false;
 	}
@@ -102,7 +103,7 @@ void Timer::beep()
 			Beep(0, interval);
 			Beep(dzwiekGlowny, 150);
 			Beep(0, interval);
-			mainTimer.stop();
+			mainTimer.stop(false);
 			COORD pos;
 			pos.X = 0;
 			pos.Y = 2;

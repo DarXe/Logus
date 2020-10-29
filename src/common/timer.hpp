@@ -22,7 +22,7 @@ public:
 	bool m_beep = 0;
 
 	void start(clock_t delay);
-	void stop();
+	void stop(const bool &beep = true);
 	void startCounter(short getSeconds = 0);
 	void stopCounter();
 	void update();

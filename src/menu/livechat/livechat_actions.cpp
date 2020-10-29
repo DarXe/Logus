@@ -113,7 +113,7 @@ void LCAction::Transport(const std::string &line)
 		Beep(0, interval);
 		Beep(dzwiekGlowny, 150);
 		Beep(0, interval);
-
+		saveConfig(0);
 		LDebug::InfoOutput(line);
 	}
 }
@@ -223,7 +223,6 @@ void LCAction::SalaryForTransport(const std::string &line)
 	if (stoi(tempSalary) > maxsalary)
 		maxsalary = stoi(tempSalary);
 
-	saveConfig(0);
 }
 
 void LCAction::ContainsPhrase(const std::string &line)
