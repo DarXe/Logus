@@ -3,10 +3,7 @@
 
 
 //standard libraries
-#include <windows.h>
-#include <sstream>
-#include <fstream>
-#include <vector>
+#include <string>
 
 
 //header includes

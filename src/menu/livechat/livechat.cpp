@@ -191,7 +191,7 @@ void checkMessages()
 	if (newLines.size() > 1000)
 		for (int i = newLines.size() - 1000; i < newLines.size(); i++)
 		{
-			LCAction::CheckActions(newLines[i]);
+			LCEventHandler::CheckActions(newLines[i]);
 			if (kbhit())
 			{
 				if (getch() == 27)
@@ -201,7 +201,7 @@ void checkMessages()
 	else
 		for (int i = 0; i < newLines.size(); i++)
 		{
-			LCAction::CheckActions(newLines[i]);
+			LCEventHandler::CheckActions(newLines[i]);
 			if (kbhit())
 			{
 				if (getch() == 27)

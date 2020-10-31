@@ -9,7 +9,7 @@
 //standard libraries
 #include <string>
 
-namespace LCAction
+namespace LCEventHandler
 {
 	void CheckActions(const std::string &line);
 
@@ -24,6 +24,6 @@ namespace LCAction
 	void NickChange(const std::string &line);
 	void SalaryForTransport(const std::string &line);
 	void ContainsPhrase(const std::string &line);
-} // namespace LCAction
+} // namespace LCEventHandler
 
 #endif
