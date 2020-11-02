@@ -4,6 +4,7 @@
 
 //standard libraries
 #include <sstream>
+#include <windows.h>
 
 
 //header includes
