@@ -51,6 +51,7 @@ void checkLogusUpdate()
 				if (system("bin\\curl --silent --fail --location https://github.com/DarXe/Logus/releases/latest/download/Logus.exe -o Logus.exe"))
 				{
 					engLang ? std::cout << " Update unsuccessful!\n" : std::cout << " Aktualizacja nie powiodła się!\n";
+					remove("Logus.exe");
 					rename("Logus1.exe", "Logus.exe");
 				}
 				else
@@ -79,6 +80,7 @@ void checkLogusUpdate()
 				if (system("bin\\curl --silent --fail --location https://raw.githubusercontent.com/DarXe/Logus/experimental/Logus.exe -o Logus.exe"))
 				{
 					engLang ? std::cout << " Update unsuccessful!\n" : std::cout << " Aktualizacja nie powiodła się!\n";
+					remove("Logus.exe");
 					rename("Logus1.exe", "Logus.exe");
 				}
 				else
