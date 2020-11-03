@@ -11,6 +11,7 @@
 //header includes
 #include <config.hpp>
 #include <var.hpp>
+#include <common.hpp>
 #include "ver.hpp"
 #include "updater.hpp"
 
@@ -23,8 +24,12 @@ void updateDependencies()
 		std::filesystem::copy("c:\\windows\\system32\\curl.exe", "bin\\curl.exe");
 		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe -o bin\\pasteCmd.exe");
 		if (!std::filesystem::exists("bin\\curl.exe"))
-			engLang ? std::cout << "Couldn't find curl, auto-update will be limited.\n" : std::cout << "Nie udało się znaleźć curl. Możliwości auto-update będą ograniczone.\n";
+			engLang ? std::cout << " Couldn't find curl, auto-update will be limited.\n" : std::cout << " Nie udało się znaleźć curl. Możliwości auto-update będą ograniczone.\n";
+		else
+			cls();
 	}
+	else
+		cls();
 }
 
 void checkLogusUpdate()
@@ -38,10 +43,21 @@ void checkLogusUpdate()
 		if (check.good())
 		{
 			getline(check, versc);
-			if (versc.find(":") == std::string::npos && versc != ver)
+			if (versc != ver)
 			{
+				engLang ? std::cout << " Updating Logus, please wait...\n" : std::cout << " Aktualizowanie Logusia. Proszę czekać...\n";
+				remove("version.tmp");
 				rename("Logus.exe", "Logus1.exe");
-				system("bin\\curl --silent --location https://github.com/DarXe/Logus/releases/latest/download/Logus.exe -o Logus.exe");
+				if (system("bin\\curl --silent --fail --location https://github.com/DarXe/Logus/releases/latest/download/Logus.exe -o Logus.exe"))
+				{
+					engLang ? std::cout << " Update unsuccessful!\n" : std::cout << " Aktualizacja nie powiodła się!\n";
+					rename("Logus1.exe", "Logus.exe");
+				}
+				else
+				{
+					engLang ? std::cout << " Update successful! Restart Logus to finish the installation.\n" :
+					std::cout << " Aktualizacja powiodła się! Zrestartuj Logusia aby dokończyć aktualizację.\n";
+				}
 			}
 		}
 		check.close();
@@ -57,13 +73,24 @@ void checkLogusUpdate()
 			check >> versc;
 			if (versc != ver)
 			{
+				engLang ? std::cout << " Updating Logus, please wait...\n" : std::cout << " Aktualizowanie Logusia. Proszę czekać...\n";
 				rename("Logus.exe", "Logus1.exe");
-				system("bin\\curl --silent --location https://raw.githubusercontent.com/DarXe/Logus/experimental/Logus.exe -o Logus.exe");
+				remove("version.tmp");
+				if (system("bin\\curl --silent --fail --location https://raw.githubusercontent.com/DarXe/Logus/experimental/Logus.exe -o Logus.exe"))
+				{
+					engLang ? std::cout << " Update unsuccessful!\n" : std::cout << " Aktualizacja nie powiodła się!\n";
+					rename("Logus1.exe", "Logus.exe");
+				}
+				else
+				{
+					engLang ? std::cout << " Update successful! Restart Logus to finish the installation.\n" :
+					std::cout << " Aktualizacja powiodła się! Zrestartuj Logusia aby dokończyć aktualizację.\n";
+				}
+				
 			}
 		}
 		check.close();
 	}
-	remove("version.tmp");
 }
 
 void checkUpdates()

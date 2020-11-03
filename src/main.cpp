@@ -21,7 +21,7 @@
 #include "menu/menu.hpp"
 #include "main.hpp"
 
-int main(int argc, char **argv) //maa main
+static bool init(const int &argc)
 {
 	if (argc != 1)
 	{
@@ -106,10 +106,18 @@ int main(int argc, char **argv) //maa main
 			break;
 		}
 	}
+	return 1;
+}
+
+int main(int argc, char **argv) //maa main
+{
+	//init check if config exists, search for mta path etc
+	if (!init(argc))
+		return 0;
 
 	//q(mtaLocation); q(consoleLogPath); q(consoleLog1Path); q(consoleLog2Path); q(consoleLog3Path); q(consoleLog4Path); q(consoleLog5Path); getch(); return 0;
 	std::fstream fileInit;
-	std::cout << " Updating files...\n\n";
+	std::cout << " Updating files...\n";
 	fileInit.open(consoleLogPath, std::ios::app);
 	fileInit.close();
 	fileInit.open(consoleLog1Path, std::ios::app);
@@ -128,7 +136,6 @@ int main(int argc, char **argv) //maa main
 	fileInit.close();
 	updateDependencies();
 
-	cls();
 #ifndef SHOWCURSOR
 	CONSOLE_CURSOR_INFO CURSOR;
 	CURSOR.dwSize = 1;

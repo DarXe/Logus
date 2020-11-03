@@ -243,7 +243,7 @@ std::string getVer()
 
 void showUpdateInfo()
 {
-	engLang ? std::cout << " (INFO) Settings loaded. Succesfully updated do " << ver << '\n' : std::cout << " (INFO) Wczytano ustawienia. Wykonano aktualizacje do wersji " << ver << '\n';
+	engLang ? std::cout << " (INFO) Settings loaded. Succesfully updated do " << ver << '\n' : std::cout << " (INFO) Wczytano ustawienia. Wykonano aktualizację do wersji " << ver << '\n';
 }
 
 void saveConfig(bool showInfo)
