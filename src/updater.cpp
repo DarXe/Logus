@@ -22,8 +22,7 @@ void updateDependencies()
 	if (!std::filesystem::exists("bin\\curl.exe"))
 	{
 		std::filesystem::copy("c:\\windows\\system32\\curl.exe", "bin\\curl.exe");
-		std::cout << ' ';
-		system("bin\\curl --progress-bar https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe -o bin\\pasteCmd.exe");
+		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe -o bin\\pasteCmd.exe");
 		if (!std::filesystem::exists("bin\\curl.exe"))
 			engLang ? std::cout << " Couldn't find curl, auto-update will be limited.\n" : std::cout << " Nie udało się znaleźć curl. Możliwości auto-update będą ograniczone.\n";
 		else
