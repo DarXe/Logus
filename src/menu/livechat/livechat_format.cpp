@@ -160,24 +160,52 @@ inline void LCFormat::Team(std::string_view line)
 	}
 }
 
+static size_t findPhrase(std::string_view line, const size_t &pos, size_t &len)
+{
+	for(int i = pos; i < line.size(); i++)
+	{
+		for (int a = 0; a < phrases.size(); a++)
+		{
+			if (line.substr(i, phrases[a].size()) == phrases[a])
+			{
+				len = phrases[a].size();
+				return i;		
+			}
+		}
+	}
+	return std::string_view::npos;
+}
+
 inline void LCFormat::ContainsPhrase(std::string_view line)
 {
-	std::string foundPhrase;
-	if (LCEvent::ContainsPhrase(line, foundPhrase))
+	if (LCEvent::ContainsPhrase(line))
 	{
 		if (line.size() > gt)
 			line.remove_prefix(gt);
-		int textPos = line.find(":");
-		int phrasePos = line.find(foundPhrase);
+		size_t pos = 0;
+		size_t phrasePos = 0, len = 0;
 
 		SetConsoleTextAttribute(h, 2);
-		if (textPos != std::string_view::npos)
+		if (pos != std::string_view::npos)
 		{
-			std::cout << line.substr(0, textPos+1);
+			//q(line);
+			std::cout << line.substr(0, line.find(":")+1); //dark green to ":"
+			line.remove_prefix(line.find(":")+1);
+			while (true)
+			{
+				phrasePos = findPhrase(line, pos, len);
+				if (phrasePos == std::string_view::npos)
+					break;
+
+				SetConsoleTextAttribute(h, 7); //gray
+				std::cout << line.substr(pos, phrasePos - pos); //gray from last occurence (or ":")to phrase occurence
+
+				SetConsoleTextAttribute(h, 9); //blue
+				std::cout << line.substr(phrasePos, len); //blue
+				pos = phrasePos + len;
+			}
 			SetConsoleTextAttribute(h, 7);
-			std::cout << line.substr(textPos+1, phrasePos - textPos - 1);
-			SetConsoleTextAttribute(h, 9);
-			std::cout << line.substr(phrasePos, std::string_view::npos) << '\n';
+			std::cout << line.substr(pos, std::string::npos) << '\n';
 		}
 		else
 		{

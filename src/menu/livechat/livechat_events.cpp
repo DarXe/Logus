@@ -150,24 +150,6 @@ bool LCEvent::ContainsPhrase(const std::string_view line)
 	return 0;
 }
 
-bool LCEvent::ContainsPhrase(const std::string_view line, std::string &foundPhrase)
-{
-	// [2020-10-29 15:54:05] [Output] : Gracz: DarXe Team: 15, 3152$, Tytul: Gracz DarXe rozładował towar Pucolana, waga: 1.1, wynagrodzenie: 3152$.
-	// i sporo innych rzeczy, co sprawia, że if niżej jest nieczytelny
-	if (LCEvent::PmFrom(line) || LCEvent::Team(line, 1) || LCEvent::PmTo(line) || line.find("[Output] : " + nick) != std::string::npos ||
-		line.find("[Output] : Gracz: " + nick + " Team: ") != std::string::npos || line.find("[Output] : Name: " + nick + ", IP: ") != std::string::npos || line.find("[Input]  : ") != std::string::npos)
-		return 0;
-	for (int i = 0; i < phrases.size(); i++)
-	{
-		if (line.find(phrases[i], line.find(":", gt)) != std::string::npos)
-		{
-			foundPhrase = phrases[i];
-			return 1;
-		}
-	}
-	return 0;
-}
-
 bool LCEvent::NormalMessage(const std::string_view line)
 {
 	for (int i = gt; i < line.size(); i++)

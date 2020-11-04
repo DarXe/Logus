@@ -9,7 +9,7 @@
 //standard libraries
 #include <string>
 #include <iosfwd>
-#define q(var) std::cout << #var << " = " << var << '\n';
+#define q(var) std::cout << #var << " = " << var << '\n'
 
 
 //foward declarations

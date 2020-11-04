@@ -1,6 +1,9 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
+#ifndef _STOPWATCH_INCLUDED_
+#define _STOPWATCH_INCLUDED_
+
 
 //standard libraries
 #include <string>
@@ -20,3 +23,5 @@ public:
 
 	std::string pre(const std::string &type, const int &precision = 0);
 };
+
+#endif
