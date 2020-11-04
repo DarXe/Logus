@@ -8,6 +8,7 @@
 
 //standard libraries
 #include <string>
+#include <ctime>
 
 
 class Timer

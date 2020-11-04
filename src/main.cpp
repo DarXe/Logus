@@ -199,6 +199,22 @@ void wersja()
 	////////////////////////////////////////////////////////////////// news goes here ////////////////////////////
 
 	SetConsoleTextAttribute(h, 4);
+	std::cout << " LISTOPAD" << std::endl;
+
+	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2011_04 Udoskonalono moduł automatycznej aktualizacji\n";
+	std::cout << " 2011_04 Dodano komendę ""set ts"", która przełącza widoczność timestampów\n";
+	std::cout << " 2011_04 Przebudowano system wyświetlania w liveChat, czego rezultatem jest przyśpieszenie programu o 3,5 raza!\n";
+	std::cout << " * Oprócz przyśpieszenia Logusia, po krótkim czasie nieobecności do Logusia wracają timestampy\n";
+	std::cout << " * Parser LCFormat z biegiem czasu będzie uzupełniany o nowe formatowanie\n";
+	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)" << std::endl;
+	if (getch() == 27)
+	{
+		cls();
+		return;
+	}
+	cls();
+	SetConsoleTextAttribute(h, 4);
 	std::cout << " PAŹDZIERNIK" << std::endl;
 
 	SetConsoleTextAttribute(h, 6);

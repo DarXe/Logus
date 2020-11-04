@@ -169,11 +169,13 @@ void settings()
 		{
 			cls();
 			if (updateChannel == "release")
-				updateChannel = "nightly";
-			else if (updateChannel == "nightly")
+				updateChannel = "experimental";
+			else if (updateChannel == "experimental")
 				updateChannel = "disable";
 			else if (updateChannel == "disable")
 				updateChannel = "release";
+			else
+				updateChannel = "disable";
 			break;
 		}
 		case '1':
@@ -212,15 +214,15 @@ void settings()
 		}
 		case 'u':
 		{
-			minRefresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 1, Max 2000", 1, 2000) :
-			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 1, Max 2000", 1, 2000));
+			minRefresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 2000", 0, 2000) :
+			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 2000", 0, 2000));
 			cls();
 			break;
 		}
 		case 'o':
 		{
-			maxRefresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 1, Max 2000", 1, 2000) :
-			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 1, Max 2000", 1, 2000));
+			maxRefresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 2000", 0, 2000) :
+			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 2000", 0, 2000));
 			cls();
 			break;
 		}

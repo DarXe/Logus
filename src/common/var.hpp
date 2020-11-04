@@ -57,6 +57,7 @@ extern bool dealerManual; //manual car database edit
 extern short minRefresh; //minimal refresh in livechat
 extern short maxRefresh; //max refresh in livechat
 extern bool autoOpenGate;
+extern bool timestamp;
 
 extern const short gt; //auxiliary variable
 extern const HANDLE h;

@@ -8,26 +8,29 @@
 
 //standard libraries
 #include <string>
+#include <string_view>
 
 namespace LCEvent
 {
-	bool Team(const std::string &line, const bool &includePlayer);
-	bool PmFrom(const std::string &line);
-	bool PmTo(const std::string &line);
-	bool TransfersFrom(const std::string &line);
-	bool TransfersTo(const std::string &line);
-	bool Report(const std::string &line);
-	bool Transport(const std::string &line);
-	bool Nicknames(const std::string &line);
-	bool BindKey(const std::string &line);
-	bool Open(const std::string &line);
-	//bool Player(const std::string &line);
-	//bool PlayerCount(const std::string &line);
-	bool Freeze(const std::string &line);
-	bool NickChange(const std::string &line);
-	bool ContainsPhrase(const std::string &line);
+	bool Team(const std::string_view line, const bool &includePlayer);
+	bool PmFrom(const std::string_view line);
+	bool PmTo(const std::string_view line);
+	bool TransfersFrom(const std::string_view line);
+	bool TransfersTo(const std::string_view line);
+	bool Report(const std::string_view line);
+	bool Transport(const std::string_view line);
+	bool Nicknames(const std::string_view line);
+	bool BindKey(const std::string_view line);
+	bool Open(const std::string_view line);
+	//bool Player(const std::string_view line);
+	//bool PlayerCount(const std::string_view line);
+	bool Freeze(const std::string_view line);
+	bool NickChange(const std::string_view line);
+	bool ContainsPhrase(const std::string_view line);
+	bool ContainsPhrase(const std::string_view line, std::string &foundPhrase);
+	bool NormalMessage(const std::string_view line);
+	bool Admin(const std::string_view line, const bool &includePlayer);
+	bool Input(const std::string_view line);
 } // namespace LCEvent
-
-bool liveChatBeep(std::string &ostatniaLinia);
 
 #endif

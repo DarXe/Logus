@@ -11,7 +11,7 @@
 
 namespace LCEventHandler
 {
-	void CheckActions(const std::string &line);
+	void CheckEventHandlers(const std::string &line);
 
 	void PmFrom(const std::string &line);
 	void Team(const std::string &line);

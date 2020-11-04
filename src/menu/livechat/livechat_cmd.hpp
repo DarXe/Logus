@@ -13,23 +13,24 @@ namespace LCCommand
 {
 	void CheckCommandInput(const std::string &line);
 
-	inline void Reconnect(const std::string &line);
-	inline void Quit(const std::string &line);
-	inline void StartTimer(const std::string &line);
-	inline void SetNick(const std::string &line);
-	inline void SetTrack(const std::string &line);
-	inline void SetTimer(const std::string &line);
-	inline void AddNickname(const std::string &line);
-	inline void DelNickname(const std::string &line);
-	inline void SetMoney(const std::string &line);
-	inline void SetCourses(const std::string &line);
-	inline void Reset(const std::string &line);
-	inline void HardReset(const std::string &line);
-	inline void FindTransfers(const std::string &line);
-	inline void FindWord(const std::string &line);
-	inline void FindConfig(const std::string &line);
-	inline void FindConsoleLog(const std::string &line);
-	inline void FindLogusLog(const std::string &line);
+	void Reconnect(const std::string &line);
+	void Quit(const std::string &line);
+	void StartTimer(const std::string &line);
+	void SetNick(const std::string &line);
+	void SetTrack(const std::string &line);
+	void SetTimer(const std::string &line);
+	void AddNickname(const std::string &line);
+	void DelNickname(const std::string &line);
+	void SetMoney(const std::string &line);
+	void SetCourses(const std::string &line);
+	void Reset(const std::string &line);
+	void HardReset(const std::string &line);
+	void FindTransfers(const std::string &line);
+	void FindWord(const std::string &line);
+	void FindConfig(const std::string &line);
+	void FindConsoleLog(const std::string &line);
+	void FindLogusLog(const std::string &line);
+	void Timestamp(const std::string &line);
 } // namespace LCCommand
 
 #endif

@@ -8,11 +8,14 @@
 #include <iostream>
 #include <conio.h>
 #include <thread>
+#include <string_view>
+#include <future>
 
 
 //header includes
-#include "livechat_actions.hpp"
+#include "livechat_eventhandlers.hpp"
 #include "livechat_events.hpp"
+#include "livechat_format.hpp"
 #include <var.hpp>
 #include <config.hpp>
 #include <common.hpp>
@@ -35,7 +38,7 @@ static bool isAutoJoin;
 
 void liveChatHead() //head
 {
-	std::string sizet; float sizei = size;
+	std::string sizet; float sizei = size; COORD pos;
 	if (size > 1000000)
 	{
 		sizei /= 1000000;
@@ -46,87 +49,46 @@ void liveChatHead() //head
 		sizei /= 1000;
 		sizet = "KB";
 	}
-	COORD pos;
+	
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
-	std::cout<<"###############################LiveChat###############################\n";
+	std::cout<<"##########################################LiveChat##########################################\n";
+
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
 	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lcLineCount<<" # Rozmiar:"<<std::setprecision(3)<<sizei<<sizet<<" # [Esc] Menu \n";
 	if(mainTimer.m_running)
 	{
 		SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-		std::cout<<" Timer "<<mainTimer.getTime()<<" [s]Stop Timer # F4 ";
+		std::cout<<" Timer "<<mainTimer.getTime()<<" [s]Stop Timer ";
 	}
 	else
 	{
 		SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-		std::cout<<" [t]Timer                  # F4 ";
+		std::cout<<" [t]Timer                  ";
 	}
-	std::cout<<"$"<<money<<" # Kursy:"<<courses<<" # Śr $"<<((courses)?money/courses:0)<<"       ";
-	SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
+
 	int payment(0); payment = ((money>0)?((money*0.9)-3500)*grade:0);
-	std::cout<<track[trackId]<<"              # "<<"Wypłata $"<<payment<<" # Min $"<<minsalary<<" # Max $"<<maxsalary;
+	std::cout<<"# Zarobek: $"<<money<<" # Kursy: "<<courses<<" # Wypłata: $"<<payment<<"         ";
+
+	SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
+	std::cout<<track[trackId]<<"              # "<<"Średnia: $"<<((courses)?money/courses:0)<<" # Min: $"<<minsalary<<" # Max: $"<<maxsalary;
+	
 	SetConsoleTextAttribute(h, 204);
-	pos.X=69; pos.Y=1; SetConsoleCursorPosition(h, pos); std::cout<<" ";
-	pos.X=69; pos.Y=2; SetConsoleCursorPosition(h, pos); std::cout<<" ";
-	pos.X=69; pos.Y=3; SetConsoleCursorPosition(h, pos); std::cout<<" ";
+	pos.X=91; pos.Y=1; SetConsoleCursorPosition(h, pos); std::cout<<" ";
+	pos.X=91; pos.Y=2; SetConsoleCursorPosition(h, pos); std::cout<<" ";
+	pos.X=91; pos.Y=3; SetConsoleCursorPosition(h, pos); std::cout<<" ";
 	SetConsoleTextAttribute(h, 12);
-	std::cout<<"\n################################################"<<"#####[m]moveLogs()####\n";
+	std::cout<<"\n##########################################################################[m]moveLogs#######\n";
 }
 
 void showChat()
 {
-	cls();
-	liveChatHead();
-	for (int i = 0; i < lastLines.size(); i++)
+	auto f = std::async(std::launch::async, []()
 	{
-		std::string nline = lastLines.at(i);
-		bool notif = (LCEvent::Nicknames(nline) || LCEvent::Transport(nline) || LCEvent::Report(nline) || LCEvent::TransfersFrom(nline) || LCEvent::PmFrom(nline) || LCEvent::ContainsPhrase(nline) || LCEvent::Team(nline, 0));
-		if (notif)
-		{
-			SetConsoleTextAttribute(h, 160);
-			std::cout << "=>";
-			SetConsoleTextAttribute(h, 10);
-			if (nline.length() > gt)
-				nline = nline.erase(0, gt);
-			for (size_t i = 0; i < nline.length(); i++)
-			{
-				if (nline[i] == ':')
-				{
-					std::cout << nline[i];
-					SetConsoleTextAttribute(h, 15);
-					continue;
-				}
-				std::cout << nline[i];
-			}
-			std::cout << "\n";
-		}
-		else
-		{
-			if (nline.length() > gt)
-				nline = nline.erase(0, gt);
-			if (nline[0] == '*')
-			{
-				SetConsoleTextAttribute(h, 14);
-				std::cout << nline << std::endl;
-			}
-			else
-			{
-				SetConsoleTextAttribute(h, 10);
-				for (size_t i = 0; i < nline.length(); i++)
-				{
-					if (nline[i] == ':')
-					{
-						std::cout << nline[i];
-						SetConsoleTextAttribute(h, 15);
-						continue;
-					}
-					std::cout << nline[i];
-				}
-				std::cout << "\n";
-			}
-		}
-	}
+		cls();
+		liveChatHead();
+		LCFormat::ParseLines(lastLines, timestamp);
+	});
 }
 
 void getChat(bool init) //gc
@@ -191,7 +153,7 @@ void checkMessages()
 	if (newLines.size() > 1000)
 		for (int i = newLines.size() - 1000; i < newLines.size(); i++)
 		{
-			LCEventHandler::CheckActions(newLines[i]);
+			LCEventHandler::CheckEventHandlers(newLines[i]);
 			if (kbhit())
 			{
 				if (getch() == 27)
@@ -201,7 +163,7 @@ void checkMessages()
 	else
 		for (int i = 0; i < newLines.size(); i++)
 		{
-			LCEventHandler::CheckActions(newLines[i]);
+			LCEventHandler::CheckEventHandlers(newLines[i]);
 			if (kbhit())
 			{
 				if (getch() == 27)

@@ -50,6 +50,7 @@ bool dealerManual = 0; //manual car database edit
 short minRefresh = 250; //minimal refresh in livechat
 short maxRefresh = 1250; //max refresh in livechat
 bool autoOpenGate = 0;
+bool timestamp = 0;
 
 const short gt = 33; //auxiliary variable
 const HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);

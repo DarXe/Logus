@@ -13,7 +13,7 @@
 #include <common.hpp>
 #include "../addons/loglookup.hpp"
 #include <proc.hpp>
-#include "livechat_actions.hpp"
+#include "livechat_eventhandlers.hpp"
 #include "livechat_cmd.hpp"
 
 
@@ -39,6 +39,7 @@ void LCCommand::CheckCommandInput(const std::string &line)
 	FindConfig(line);
 	FindConsoleLog(line);
 	FindLogusLog(line);
+	Timestamp(line);
 }
 
 inline void LCCommand::Reconnect(const std::string &line)
@@ -293,6 +294,17 @@ inline void LCCommand::FindLogusLog(const std::string &line)
 	{
 		saveConfig(0);
 		ShellExecute(0, 0, "logus.log", 0, 0, SW_SHOW);
+		Beep(dzwiekGlowny, 150);
+		throw 1;
+	}
+}
+
+inline void LCCommand::Timestamp(const std::string &line)
+{
+	if (line.find("[Input]  : set ts") != std::string::npos) //reset kursow /set re
+	{
+		timestamp ? timestamp = 0 : timestamp = 1;
+		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
 		throw 1;
 	}

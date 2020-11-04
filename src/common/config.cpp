@@ -186,6 +186,9 @@ void readConfig(bool showInfo)
 			minsalary = stoi(clearConfigValue(templine, "i_Lowest salary:"));
 		else if (templine.find("i_Najniższy zarobek:") != std::string::npos)
 			minsalary = stoi(clearConfigValue(templine, "i_Najniższy zarobek:"));
+
+		else if (templine.find("b_Timestamp:") != std::string::npos)
+			timestamp = stoi(clearConfigValue(templine, "b_Timestamp:"));
 	}
 
 	consoleLogPath = mtaLocation + "\\MTA\\logs\\console.log";
@@ -273,6 +276,7 @@ void saveConfig(bool showInfo)
 		file << "b_Mute fraction/cargo notifications: " << fLockReport << "\n";
 		file << "b_Mute nicknames notifications: " << fLockNick << "\n";
 		file << "b_Toggle auto gate opening (open at the end of PM): " << autoOpenGate << "\n";
+		file << "b_Timestamp: " << timestamp << '\n';
 		file << "b_Notify on any message: " << chatSound << "\n";
 		file << "b_Dynamic refresh: " << dynamicRefresh << "\n";
 		file << "i_Min dynamic refresh: " << minRefresh << "\n";
@@ -324,6 +328,7 @@ void saveConfig(bool showInfo)
 		file << "b_Blokada powiadomienia towaru/frakcji: " << fLockReport << "\n";
 		file << "b_Blokada powiadomienia na wybrane nicki: " << fLockNick << "\n";
 		file << "b_Włącz automatyczne otwieranie bramy (open na końcu PW): " << autoOpenGate << "\n";
+		file << "b_Timestamp: " << timestamp << '\n';
 		file << "b_Powiadomienia na każdą wiadomość: " << chatSound << "\n";
 		file << "b_Odświeżanie dynamiczne: " << dynamicRefresh << "\n";
 		file << "i_Min dynamiczne odświeżanie: " << minRefresh << "\n";
@@ -387,4 +392,5 @@ void readDefault()
 	dealerManual = 0;
 	minRefresh = 250;
 	maxRefresh = 1250;
+	timestamp = 0;
 }

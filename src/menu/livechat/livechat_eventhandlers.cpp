@@ -14,22 +14,22 @@
 #include <debug.hpp>
 #include "livechat_events.hpp"
 #include "livechat_cmd.hpp"
-#include "livechat_actions.hpp"
+#include "livechat_eventhandlers.hpp"
 
-void LCEventHandler::CheckActions(const std::string &line)
+void LCEventHandler::CheckEventHandlers(const std::string &line)
 {
 	try
 	{
-		LCEventHandler::PmFrom(line);
-		LCEventHandler::Team(line);
-		LCEventHandler::Nicknames(line);
-		LCEventHandler::Transport(line);
-		LCEventHandler::Report(line);
-		LCEventHandler::TransfersFrom(line);
-		LCEventHandler::BindKey(line);
-		LCEventHandler::Freeze(line);
-		LCEventHandler::NickChange(line);
-		LCEventHandler::ContainsPhrase(line);
+		PmFrom(line);
+		Team(line);
+		Nicknames(line);
+		Transport(line);
+		Report(line);
+		TransfersFrom(line);
+		BindKey(line);
+		Freeze(line);
+		NickChange(line);
+		ContainsPhrase(line);
 
 		LCCommand::CheckCommandInput(line);
 
