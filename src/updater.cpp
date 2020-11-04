@@ -36,7 +36,8 @@ void checkLogusUpdate()
 {
 	if (updateChannel == "release")
 	{
-		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/master/version -o version.tmp");
+		engLang? std::cout << " Checking updates, please wait...\n" : std::cout << " Sprawdzanie aktualizacji. Proszę czekać...\n";
+		system("bin\\curl --progress-bar https://raw.githubusercontent.com/DarXe/Logus/master/version -o version.tmp");
 		std::fstream check;
 		std::string versc;
 		check.open("version.tmp");
@@ -59,13 +60,19 @@ void checkLogusUpdate()
 					std::cout << " Aktualizacja powiodła się! Zrestartuj Logusia aby dokończyć aktualizację.\n";
 				}
 			}
+			else
+			{
+				engLang ? std::cout << " Checking successful! Logus is up to date.\n" :
+					std::cout << " Sprawdzanie powiodło się! Posiadasz najnowszą wersję.\n";
+			}
 		}
 		check.close();
 		remove("version.tmp");
 	}
 	else if (updateChannel == "experimental")
 	{
-		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/experimental/version -o version.tmp");
+		engLang? std::cout << " Checking updates, please wait...\n" : std::cout << " Sprawdzanie aktualizacji. Proszę czekać...\n";
+		system("bin\\curl --progress-bar https://raw.githubusercontent.com/DarXe/Logus/experimental/version -o version.tmp");
 		std::fstream check;
 		std::string versc;
 		check.open("version.tmp");
@@ -88,6 +95,11 @@ void checkLogusUpdate()
 					std::cout << " Aktualizacja powiodła się! Zrestartuj Logusia aby dokończyć aktualizację.\n";
 				}
 				
+			}
+			else
+			{
+				engLang ? std::cout << " Checking successful! Logus is up to date.\n" :
+					std::cout << " Sprawdzanie powiodło się! Posiadasz najnowszą wersję.\n";
 			}
 		}
 		check.close();
