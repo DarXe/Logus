@@ -190,12 +190,15 @@ bool LCEvent::Admin(const std::string_view line, const bool &includePlayer)
 		return 0;
 }
 
-#include <iostream>
-#include <conio.h>
 bool LCEvent::Input(const std::string_view line)
 {
 	// [2020-11-03 23:06:48] [Input]  : disconnect
 	if (line[gt - 10] == 'I')
 		return 1;
 	return 0;
+}
+
+bool notifCheck(std::string_view line)
+{
+	return (LCEvent::Nicknames(line) || LCEvent::Transport(line) || LCEvent::Report(line) || LCEvent::TransfersFrom(line) || LCEvent::PmFrom(line) || LCEvent::ContainsPhrase(line) || LCEvent::Team(line, 0));
 }

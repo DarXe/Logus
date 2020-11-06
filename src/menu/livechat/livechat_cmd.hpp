@@ -36,6 +36,8 @@ namespace LCCommand
 	void TimestampBeep(const std::string_view line);
 	void ClearEngine(const std::string_view line);
 	void ClearEngineBeep(const std::string_view line);
+	void ClearChat(const std::string_view line);
+	void ClearChatBeep(const std::string_view line);
 } // namespace LCCommand
 
 #endif

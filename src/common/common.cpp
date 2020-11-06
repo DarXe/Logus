@@ -219,6 +219,13 @@ std::string utf8_substr(const std::string &str, int start, int length)
     return str.substr(realstart,reallength);
 }
 
+int GetCursorPosX()
+{
+    CONSOLE_SCREEN_BUFFER_INFO cbsi;
+    GetConsoleScreenBufferInfo(h, &cbsi);
+    return cbsi.dwCursorPosition.X;
+}
+
 /*
 bool fNick(string &wyraz)
 {

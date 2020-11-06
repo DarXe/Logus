@@ -14,31 +14,21 @@
 
 //foward declarations
 std::string getCurrentTime();
-
 std::string getMTALocation();
-
 std::string getNickFromMTAConfig();
 
 std::string removeSpaces(std::string &line);
-
 std::string round(const long double x, const int dec);
 
 int randomize(int from, int to);
-
 void clslegacy();
-
 void cls();
-
 void clsa();
-
 char wybor();
-
 void def();
-
 void toClipboard(const std::string &s);
-
 int power(int x, int y);
-
 std::string utf8_substr(const std::string &str, int start, int length = INT_MAX);
+int GetCursorPosX();
 
 #endif

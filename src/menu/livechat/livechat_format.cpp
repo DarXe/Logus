@@ -11,10 +11,7 @@
 
 //header includes
 #include "livechat_events.hpp"
-#include "livechat.hpp"
 #include <common.hpp>
-#include <stopwatch.hpp>
-#include <debug.hpp>
 #include <var.hpp>
 #include "livechat_format.hpp"
 
@@ -281,7 +278,7 @@ void LCFormat::ParseLines(const std::deque<std::string> &lastLines, std::deque<i
 			LCFormat::SetColor(10);
 			std::cout << line.substr(0, 21) << ' ';
 		}
-		bool notif = (LCEvent::Nicknames(line) || LCEvent::Transport(line) || LCEvent::Report(line) || LCEvent::TransfersFrom(line) || LCEvent::PmFrom(line) || LCEvent::ContainsPhrase(line) || LCEvent::Team(line, 0));
+		bool notif = notifCheck(line);
 		if (notif)
 		{
 			LCFormat::SetColor(160);
@@ -304,7 +301,7 @@ void LCFormat::ParseLines(const std::deque<std::string> &lastLines, std::deque<i
 		catch(const int& e)
 		{
 			//q(lastLinesSize[i]); getch();
-			int size = GetLineSize(line, notif);
+			int size = GetCursorPosX();
 			int count = lastLinesSize[i] - size;
 			if (count > 0)
 			{

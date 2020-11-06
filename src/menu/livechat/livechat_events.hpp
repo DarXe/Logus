@@ -33,4 +33,6 @@ namespace LCEvent
 	bool Input(const std::string_view line);
 } // namespace LCEvent
 
+bool notifCheck(std::string_view line);
+
 #endif

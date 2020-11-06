@@ -51,13 +51,6 @@ std::string_view Status::Get()
 	return val;
 }
 
-static int GetCursorPosX()
-{
-    CONSOLE_SCREEN_BUFFER_INFO cbsi;
-    GetConsoleScreenBufferInfo(h, &cbsi);
-    return cbsi.dwCursorPosition.X;
-}
-
 void liveChatHead() //head
 {
 	std::string sizet; float sizei = size; COORD pos;
@@ -154,10 +147,13 @@ void getChat(const bool &init) //gc
 		int utfsize = linelc.size()-conv.from_bytes(linelc).size();
 		if (linelc.size() > 92 + gt + utfsize)
 		{
-			lastLines.push_back(utf8_substr(linelc, 0, 92 + gt));
-			lastLines.push_back(utf8_substr(linelc, 92 + gt));
+			int notif = 0;
+			if (notifCheck(linelc))
+				int notif = 2;
+			lastLines.push_back(utf8_substr(linelc, 0, 92 + gt - notif));
+			lastLines.push_back(utf8_substr(linelc, 92 + gt - notif));
 		}
-		else
+		else if (linelc.size() > gt)
 		{
 			lastLines.push_back(linelc); //add element to the end of array
 		}

@@ -25,6 +25,8 @@ void LCCommand::CheckCommandInput(const std::string &line)
 {
 	TimestampBeep(line);
 	ClearEngineBeep(line);
+	ClearChatBeep(line);
+
 	Reconnect(line);
 	Quit(line);
 	StartTimer(line);
@@ -50,6 +52,7 @@ void LCCommand::PreCheckCommandInput(const std::string &line)
 	{
 		Timestamp(line);
 		ClearEngine(line);
+		ClearChat(line);
 	}
 	catch (const int &e)
 	{}
@@ -342,6 +345,24 @@ inline void LCCommand::ClearEngine(const std::string_view line)
 inline void LCCommand::ClearEngineBeep(const std::string_view line)
 {
 	if (line.find("[Input]  : set engine") != std::string::npos) //reset kursow /set re
+	{
+		Beep(dzwiekGlowny, 150);
+		throw 1;
+	}
+}
+
+inline void LCCommand::ClearChat(const std::string_view line)
+{
+	if (line.find("[Input]  : cls") != std::string::npos) //reset kursow /set re
+	{
+		cls();
+		throw 1;
+	}
+}
+
+inline void LCCommand::ClearChatBeep(const std::string_view line)
+{
+	if (line.find("[Input]  : cls") != std::string::npos) //reset kursow /set re
 	{
 		Beep(dzwiekGlowny, 150);
 		throw 1;
