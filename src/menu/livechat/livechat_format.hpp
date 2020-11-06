@@ -12,6 +12,7 @@
 
 namespace LCFormat
 {
+	bool isNewLine(std::string_view line);
 	void Standard(std::string_view line);
 	void Pm(std::string_view line);
 	void Admin(std::string_view line);

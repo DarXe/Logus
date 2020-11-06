@@ -39,5 +39,6 @@ void toClipboard(const std::string &s);
 
 int power(int x, int y);
 
+std::string utf8_substr(const std::string &str, int start, int length = INT_MAX);
 
 #endif

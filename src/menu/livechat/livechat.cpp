@@ -154,8 +154,8 @@ void getChat(const bool &init) //gc
 		int utfsize = linelc.size()-conv.from_bytes(linelc).size();
 		if (linelc.size() > 92 + gt + utfsize)
 		{
-			lastLines.push_back(linelc.substr(0, 92 + gt + utfsize));
-			lastLines.push_back(linelc.substr(92 + gt + utfsize, std::string::npos));
+			lastLines.push_back(utf8_substr(linelc, 0, 92 + gt));
+			lastLines.push_back(utf8_substr(linelc, 92 + gt));
 		}
 		else
 		{

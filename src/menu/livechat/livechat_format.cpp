@@ -22,12 +22,17 @@
 //static variables
 static short lastcolor;
 
+inline bool LCFormat::isNewLine(std::string_view line)
+{
+	return (line[0] == '[' && line[5] == '-' && line[8] == '-' && line[14] == ':');
+}
+
 inline void LCFormat::Standard(std::string_view line)
 {
 	// [2020-11-03 19:40:09] [Output] : Niventill: ess 
 	if (LCEvent::NormalMessage(line))
 	{
-		if (line.size() > gt)
+		if (LCFormat::isNewLine(line))
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
@@ -39,9 +44,8 @@ inline void LCFormat::Standard(std::string_view line)
 			std::cout << line.substr(textPos+1, std::string_view::npos);
 		}
 		else
-		{
 			std::cout << line;
-		}
+
 		throw 1;
 	}
 }
@@ -53,7 +57,7 @@ inline void LCFormat::Pm(std::string_view line)
 	// [2020-11-03 19:40:09] [Output] : * PM from Niventill: ess 
 	if (LCEvent::PmFrom(line) || LCEvent::PmTo(line))
 	{
-		if (line.size() > gt)
+		if (LCFormat::isNewLine(line))
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
@@ -65,9 +69,8 @@ inline void LCFormat::Pm(std::string_view line)
 			std::cout << line.substr(textPos+1, std::string_view::npos);
 		}
 		else
-		{
 			std::cout << line;
-		}
+
 		throw 1;
 	}
 }
@@ -77,7 +80,7 @@ inline void LCFormat::Admin(std::string_view line)
 	// [2020-10-28 17:42:08] [Output] : (ADMIN) Niventill: ess
 	if (LCEvent::Admin(line, true))
 	{
-		if (line.size() > gt)
+		if (LCFormat::isNewLine(line))
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
@@ -89,9 +92,8 @@ inline void LCFormat::Admin(std::string_view line)
 			std::cout << line.substr(textPos+1, std::string_view::npos);
 		}
 		else
-		{
 			std::cout << line;
-		}
+
 		throw 1;
 	}
 }
@@ -104,11 +106,12 @@ inline void LCFormat::Transfers(std::string_view line)
 	//[2020-08-30 16:34:52] [Output] : You gave $1 to player DarXe.
 	if (LCEvent::TransfersFrom(line) || LCEvent::TransfersTo(line))
 	{
-		if (line.size() > gt)
+		if (LCFormat::isNewLine(line))
 			line.remove_prefix(gt);
 
 		LCFormat::SetColor(6);
 		std::cout << line;
+
 		throw 1;
 	}
 }
@@ -118,11 +121,12 @@ inline void LCFormat::Info(std::string_view line)
 	// [2020-10-28 17:42:08] [Output] : * typical wiadomosc
 	if (line[gt] == '*')
 	{
-		if (line.size() > gt)
+		if (LCFormat::isNewLine(line))
 			line.remove_prefix(gt);
 
 		LCFormat::SetColor(14);
 		std::cout << line;
+
 		throw 1;
 	}
 }
@@ -132,12 +136,10 @@ inline void LCFormat::Input(std::string_view line)
 	// [2020-11-03 23:06:48] [Input]  : disconnect
 	if (LCEvent::Input(line))
 	{
-		if (line.size() > gt)
-		{
+		if (LCFormat::isNewLine(line))
 			line.remove_prefix(gt);
-			LCFormat::SetColor(12);
-			std::cout << line;
-		}
+		LCFormat::SetColor(12);
+		std::cout << line;
 
 		throw 1;
 	}
@@ -148,7 +150,7 @@ inline void LCFormat::Team(std::string_view line)
 	// [2020-10-28 17:42:08] [Output] : (ADMIN) Niventill: ess
 	if (LCEvent::Team(line, true))
 	{
-		if (line.size() > gt)
+		if (LCFormat::isNewLine(line))
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
@@ -160,9 +162,8 @@ inline void LCFormat::Team(std::string_view line)
 			std::cout << line.substr(textPos+1, std::string_view::npos);
 		}
 		else
-		{
 			std::cout << line;
-		}
+
 		throw 1;
 	}
 }
@@ -187,7 +188,7 @@ inline void LCFormat::ContainsPhrase(std::string_view line)
 {
 	if (LCEvent::ContainsPhraseFormat(line))
 	{
-		if (line.size() > gt)
+		if (LCFormat::isNewLine(line))
 			line.remove_prefix(gt);
 		size_t pos = 0;
 		size_t phrasePos = 0, len = 0;
@@ -215,16 +216,15 @@ inline void LCFormat::ContainsPhrase(std::string_view line)
 			std::cout << line.substr(pos, std::string::npos);
 		}
 		else
-		{
 			std::cout << line;
-		}
+
 		throw 1;
 	}
 }
 
 inline void LCFormat::Default(std::string_view line)
 {
-	if (line.size() > gt)
+	if (LCFormat::isNewLine(line))
 	{
 		line.remove_prefix(gt);
 		LCFormat::SetColor(10);
@@ -232,15 +232,17 @@ inline void LCFormat::Default(std::string_view line)
 	else
 		LCFormat::SetColor(lastcolor);
 	std::cout << line;
+
 	throw 1;
 }
 
 inline void LCFormat::Nothing(std::string_view line)
 {
-	if (line.size() > gt)
+	if (LCFormat::isNewLine(line))
 		line.remove_prefix(gt);
 
 	std::cout << line;
+
 	throw 1;
 }
 
