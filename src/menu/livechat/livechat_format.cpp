@@ -11,6 +11,7 @@
 
 //header includes
 #include "livechat_events.hpp"
+#include "livechat_cmd.hpp"
 #include <common.hpp>
 #include <var.hpp>
 #include "livechat_format.hpp"
@@ -133,9 +134,12 @@ inline void LCFormat::Input(std::string_view line)
 	// [2020-11-03 23:06:48] [Input]  : disconnect
 	if (LCEvent::Input(line))
 	{
+		if (LCCmdEvent::CheckCommandEvents(line))
+			LCFormat::SetColor(4);
+		else
+			LCFormat::SetColor(12);
 		if (LCFormat::isNewLine(line))
 			line.remove_prefix(gt);
-		LCFormat::SetColor(12);
 		std::cout << line;
 
 		throw 1;

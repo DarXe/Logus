@@ -51,7 +51,7 @@ void LCCommand::PreCheckCommandInput(const std::string &line)
 	try
 	{
 		Timestamp(line);
-		ClearEngine(line);
+		RenderEngine(line);
 		ClearChat(line);
 	}
 	catch (const int &e)
@@ -60,7 +60,7 @@ void LCCommand::PreCheckCommandInput(const std::string &line)
 
 inline void LCCommand::Reconnect(const std::string_view line)
 {
-	if (line.find("[Input]  : rr") != std::string::npos)
+	if (LCCmdEvent::Reconnect(line))
 	{
 		serverConnect();
 		Beep(dzwiekGlowny, 150);
@@ -68,13 +68,23 @@ inline void LCCommand::Reconnect(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::Reconnect(const std::string_view line)
+{
+	return (line.find("[Input]  : rr") != std::string::npos);
+}
+
 inline void LCCommand::Quit(const std::string_view line)
 {
-	if (line.find("[Input]  : quit") != std::string::npos)
+	if (LCCmdEvent::Quit(line))
 	{
 		closeLogus(((engLang)?"Closing MTA and Logus":"Zamykanie MTA i programu"));
 		throw 1;
 	}
+}
+
+inline bool LCCmdEvent::Quit(const std::string_view line)
+{
+	return (line.find("[Input]  : quit") != std::string::npos);
 }
 
 inline void LCCommand::StartTimer(const std::string_view line)
@@ -91,9 +101,14 @@ inline void LCCommand::StartTimer(const std::string_view line)
 		mainTimer.startCounter();
 }
 
+inline bool LCCmdEvent::StartTimer(const std::string_view line)
+{
+	return (line.find("[Input]  : tt") != std::string::npos || line.find("[Input]  : t\'") != std::string::npos);
+}
+
 inline void LCCommand::SetNick(const std::string &line)
 {
-	if (line.find("[Input]  : nick ") != std::string::npos)
+	if (LCCmdEvent::SetNick(line))
 	{ //[2020-08-30 04:03:24] [Input]  : nick Niventill
 		std::string tempnick = line.substr(gt, std::string::npos);
 		std::istringstream ss(tempnick);
@@ -104,9 +119,14 @@ inline void LCCommand::SetNick(const std::string &line)
 	}
 }
 
+inline bool LCCmdEvent::SetNick(const std::string_view line)
+{
+	return (line.find("[Input]  : nick ") != std::string::npos);
+}
+
 inline void LCCommand::SetTrack(const std::string_view line)
 {
-	if (line.find("[Input]  : set tr") != std::string::npos) //set tr xx //SET TRACK
+	if (LCCmdEvent::SetTrack(line)) //set tr xx //SET TRACK
 	{
 		if (line[gt + 7] == '0')
 		{
@@ -135,9 +155,14 @@ inline void LCCommand::SetTrack(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::SetTrack(const std::string_view line)
+{
+	return (line.find("[Input]  : set tr ") != std::string::npos);
+}
+
 inline void LCCommand::SetTimer(const std::string_view line)
 {
-	if (line.find("[Input]  : set t ") != std::string::npos) //[Input]  : set t 00:00
+	if (LCCmdEvent::SetTimer(line)) //[Input]  : set t 00:00
 	{
 		std::string temptimer;
 		int minutes, seconds, delim;
@@ -152,9 +177,14 @@ inline void LCCommand::SetTimer(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::SetTimer(const std::string_view line)
+{
+	return (line.find("[Input]  : set t ") != std::string::npos);
+}
+
 inline void LCCommand::AddNickname(const std::string_view line)
 {
-	if (line.find("[Input]  : nickdb add ") != std::string::npos)
+	if (LCCmdEvent::AddNickname(line))
 	{
 		std::string tempn;
 		int delim;
@@ -168,9 +198,14 @@ inline void LCCommand::AddNickname(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::AddNickname(const std::string_view line)
+{
+	return (line.find("[Input]  : nickdb add ") != std::string::npos);
+}
+
 inline void LCCommand::DelNickname(const std::string_view line)
 {
-	if (line.find("[Input]  : nickdb del ") != std::string::npos)
+	if (LCCmdEvent::DelNickname(line))
 	{
 		std::string tempn;
 		int delim;
@@ -188,9 +223,14 @@ inline void LCCommand::DelNickname(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::DelNickname(const std::string_view line)
+{
+	return (line.find("[Input]  : nickdb del ") != std::string::npos);
+}
+
 inline void LCCommand::SetMoney(const std::string &line)
 {
-	if (line.find("[Input]  : set m ") != std::string::npos)
+	if (LCCmdEvent::SetMoney(line))
 	{
 		int delim = line.find("[Input]  : set m ");
 		std::string tmoney = line.substr(delim + 17, std::string::npos);
@@ -204,9 +244,14 @@ inline void LCCommand::SetMoney(const std::string &line)
 	}
 }
 
+inline bool LCCmdEvent::SetMoney(const std::string_view line)
+{
+	return (line.find("[Input]  : set m ") != std::string::npos);
+}
+
 inline void LCCommand::SetCourses(const std::string &line)
 {
-	if (line.find("[Input]  : set c ") != std::string::npos)
+	if (LCCmdEvent::SetCourses(line))
 	{
 		int delim = line.find("[Input]  : set c ");
 		std::string tcourses = line.substr(delim + 17, std::string::npos);
@@ -222,9 +267,14 @@ inline void LCCommand::SetCourses(const std::string &line)
 	}
 }
 
+inline bool LCCmdEvent::SetCourses(const std::string_view line)
+{
+	return (line.find("[Input]  : set c ") != std::string::npos);
+}
+
 inline void LCCommand::HardReset(const std::string_view line)
 {
-	if (line.find("[Input]  : set hre") != std::string::npos) //reset kursow /set re
+	if (LCCmdEvent::HardReset(line)) //reset kursow /set re
 	{
 		money = 0;
 		courses = 0;
@@ -236,9 +286,14 @@ inline void LCCommand::HardReset(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::HardReset(const std::string_view line)
+{
+	return (line.find("[Input]  : set hre") != std::string::npos);
+}
+
 inline void LCCommand::Reset(const std::string_view line)
 {
-	if (line.find("[Input]  : set re") != std::string::npos) //reset kursow /set re
+	if (LCCmdEvent::Reset(line)) //reset kursow /set re
 	{
 		money = 0;
 		courses = 0;
@@ -248,14 +303,24 @@ inline void LCCommand::Reset(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::Reset(const std::string_view line)
+{
+	return (line.find("[Input]  : set re") != std::string::npos);
+}
+
 inline void LCCommand::FindTransfers(const std::string_view line)
 {
-	if (line.find("[Input]  : find tf") !=std::string::npos)
+	if (LCCmdEvent::FindTransfers(line))
 	{
 		checkLogTransfersAll(LiveChat);
 		Beep(dzwiekGlowny, 150);
 		throw 1;
 	}
+}
+
+inline bool LCCmdEvent::FindTransfers(const std::string_view line)
+{
+	return (line.find("[Input]  : find tf") != std::string::npos);
 }
 
 inline void LCCommand::FindWord(const std::string &line)
@@ -280,9 +345,14 @@ inline void LCCommand::FindWord(const std::string &line)
 	}
 }
 
+inline bool LCCmdEvent::FindWord(const std::string_view line)
+{
+	return (line.find("[Input]  : find Word ") != std::string::npos || line.find("[Input]  : find word ") != std::string::npos);
+}
+
 inline void LCCommand::FindConfig(const std::string_view line)
 {
-	if (line.find("[Input]  : find cfg") !=std::string::npos)
+	if (LCCmdEvent::FindConfig(line))
 	{
 		saveConfig(0);
 		ShellExecute(0, 0, "logus.ini", 0, 0, SW_SHOW);
@@ -291,9 +361,14 @@ inline void LCCommand::FindConfig(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::FindConfig(const std::string_view line)
+{
+	return (line.find("[Input]  : find cfg") != std::string::npos);
+}
+
 inline void LCCommand::FindConsoleLog(const std::string_view line)
 {
-	if (line.find("[Input]  : find console.log") !=std::string::npos)
+	if (LCCmdEvent::FindConsoleLog(line))
 	{
 		saveConfig(0);
 		ShellExecute(0, 0, consoleLogPath.c_str(), 0, 0, SW_SHOW);
@@ -302,9 +377,14 @@ inline void LCCommand::FindConsoleLog(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::FindConsoleLog(const std::string_view line)
+{
+	return (line.find("[Input]  : find console.log") != std::string::npos);
+}
+
 inline void LCCommand::FindLogusLog(const std::string_view line)
 {
-	if (line.find("[Input]  : find logus.log") !=std::string::npos)
+	if (LCCmdEvent::FindLogusLog(line))
 	{
 		saveConfig(0);
 		ShellExecute(0, 0, "logus.log", 0, 0, SW_SHOW);
@@ -313,9 +393,14 @@ inline void LCCommand::FindLogusLog(const std::string_view line)
 	}
 }
 
+inline bool LCCmdEvent::FindLogusLog(const std::string_view line)
+{
+	return (line.find("[Input]  : find logus.log") != std::string::npos);
+}
+
 inline void LCCommand::Timestamp(const std::string_view line)
 {
-	if (line.find("[Input]  : set ts") != std::string::npos) //reset kursow /set re
+	if (LCCmdEvent::Timestamp(line)) //reset kursow /set re
 	{
 		timestamp ? timestamp = 0 : timestamp = 1;
 		saveConfig(0);
@@ -325,16 +410,21 @@ inline void LCCommand::Timestamp(const std::string_view line)
 
 inline void LCCommand::TimestampBeep(const std::string_view line)
 {
-	if (line.find("[Input]  : set ts") != std::string::npos) //reset kursow /set re
+	if (LCCmdEvent::Timestamp(line)) //reset kursow /set re
 	{
 		Beep(dzwiekGlowny, 150);
 		throw 1;
 	}
 }
 
-inline void LCCommand::ClearEngine(const std::string_view line)
+inline bool LCCmdEvent::Timestamp(const std::string_view line)
 {
-	if (line.find("[Input]  : set engine") != std::string::npos) //reset kursow /set re
+	return (line.find("[Input]  : set ts") != std::string::npos);
+}
+
+inline void LCCommand::RenderEngine(const std::string_view line)
+{
+	if (LCCmdEvent::RenderEngine(line)) //reset kursow /set re
 	{
 		renderEngine ? renderEngine = 0 : renderEngine = 1;
 		saveConfig(0);
@@ -344,16 +434,21 @@ inline void LCCommand::ClearEngine(const std::string_view line)
 
 inline void LCCommand::ClearEngineBeep(const std::string_view line)
 {
-	if (line.find("[Input]  : set engine") != std::string::npos) //reset kursow /set re
+	if (LCCmdEvent::RenderEngine(line)) //reset kursow /set re
 	{
 		Beep(dzwiekGlowny, 150);
 		throw 1;
 	}
 }
 
+inline bool LCCmdEvent::RenderEngine(const std::string_view line)
+{
+	return (line.find("[Input]  : set engine") != std::string::npos);
+}
+
 inline void LCCommand::ClearChat(const std::string_view line)
 {
-	if (line.find("[Input]  : cls") != std::string::npos) //reset kursow /set re
+	if (LCCmdEvent::ClearChat(line)) //reset kursow /set re
 	{
 		cls();
 		throw 1;
@@ -362,9 +457,60 @@ inline void LCCommand::ClearChat(const std::string_view line)
 
 inline void LCCommand::ClearChatBeep(const std::string_view line)
 {
-	if (line.find("[Input]  : cls") != std::string::npos) //reset kursow /set re
+	if (LCCmdEvent::ClearChat(line)) //reset kursow /set re
 	{
 		Beep(dzwiekGlowny, 150);
 		throw 1;
 	}
+}
+
+inline bool LCCmdEvent::ClearChat(const std::string_view line)
+{
+	return (line.find("[Input]  : cls") != std::string::npos);
+}
+
+bool LCCmdEvent::CheckCommandEvents(const std::string_view line)
+{
+	if (Reconnect(line))
+		return 1;
+	else if (Quit(line))
+		return 1;
+	else if (StartTimer(line))
+		return 1;
+	else if (SetNick(line))
+		return 1;
+	else if (SetTrack(line))
+		return 1;
+	else if (SetTimer(line))
+		return 1;
+	else if (AddNickname(line))
+		return 1;
+	else if (DelNickname(line))
+		return 1;
+	else if (SetMoney(line))
+		return 1;
+	else if (SetCourses(line))
+		return 1;
+	else if (Reset(line))
+		return 1;
+	else if (HardReset(line))
+		return 1;
+	else if (FindTransfers(line))
+		return 1;
+	else if (FindWord(line))
+		return 1;
+	else if (FindConfig(line))
+		return 1;
+	else if (FindConsoleLog(line))
+		return 1;
+	else if (FindLogusLog(line))
+		return 1;
+	else if (Timestamp(line))
+		return 1;
+	else if (RenderEngine(line))
+		return 1;
+	else if (ClearChat(line))
+		return 1;
+	else
+		return 0;
 }

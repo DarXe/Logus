@@ -34,10 +34,36 @@ namespace LCCommand
 	void FindLogusLog(const std::string_view line);
 	void Timestamp(const std::string_view line);
 	void TimestampBeep(const std::string_view line);
-	void ClearEngine(const std::string_view line);
+	void RenderEngine(const std::string_view line);
 	void ClearEngineBeep(const std::string_view line);
 	void ClearChat(const std::string_view line);
 	void ClearChatBeep(const std::string_view line);
+} // namespace LCCommand
+
+namespace LCCmdEvent
+{
+	bool Reconnect(const std::string_view line);
+	bool Quit(const std::string_view line);
+	bool StartTimer(const std::string_view linee);
+	bool SetNick(const std::string_view line);
+	bool SetTrack(const std::string_view line);
+	bool SetTimer(const std::string_view line);
+	bool AddNickname(const std::string_view line);
+	bool DelNickname(const std::string_view line);
+	bool SetMoney(const std::string_view line);
+	bool SetCourses(const std::string_view line);
+	bool Reset(const std::string_view line);
+	bool HardReset(const std::string_view line);
+	bool FindTransfers(const std::string_view line);
+	bool FindWord(const std::string_view line);
+	bool FindConfig(const std::string_view line);
+	bool FindConsoleLog(const std::string_view line);
+	bool FindLogusLog(const std::string_view line);
+	bool Timestamp(const std::string_view line);
+	bool RenderEngine(const std::string_view line);
+	bool ClearChat(const std::string_view line);
+
+	bool CheckCommandEvents(const std::string_view line);
 } // namespace LCCommand
 
 #endif
