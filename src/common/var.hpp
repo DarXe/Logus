@@ -41,8 +41,8 @@ extern std::vector <std::string> nicknames; //nicknames database
 extern std::vector <std::string> phrases; //player nick's variants to look for
 extern int czas; //TIMER time set by the player in seconds to load / unload the cargo
 extern bool random; //TIMER random unloading, TRUE = 'skrypt' FALSE = 'sam wybiore'
-extern int money; //courses calculator - money for delivered courses //pieniądze za kursy
-extern int courses; //courses calculator - number of courses //ilość kursów
+extern long long money; //courses calculator - money for delivered courses //pieniądze za kursy
+extern long long courses; //courses calculator - number of courses //ilość kursów
 extern int maxsalary;
 extern int minsalary;
 extern short fastStart; //start Logus + LiveChat with MTA or skipping the version info
@@ -58,6 +58,7 @@ extern short minRefresh; //minimal refresh in livechat
 extern short maxRefresh; //max refresh in livechat
 extern bool autoOpenGate;
 extern bool timestamp;
+extern bool renderEngine;
 
 extern const short gt; //auxiliary variable
 extern const HANDLE h;

@@ -150,6 +150,18 @@ bool LCEvent::ContainsPhrase(const std::string_view line)
 	return 0;
 }
 
+bool LCEvent::ContainsPhraseFormat(const std::string_view line)
+{
+	// [2020-10-29 15:54:05] [Output] : Gracz: DarXe Team: 15, 3152$, Tytul: Gracz DarXe rozładował towar Pucolana, waga: 1.1, wynagrodzenie: 3152$.
+	// i sporo innych rzeczy, co sprawia, że if niżej jest nieczytelny
+	for (int i = 0; i < phrases.size(); i++)
+	{
+		if (line.find(phrases[i], line.find(":", gt)) != std::string::npos)
+			return 1;
+	}
+	return 0;
+}
+
 bool LCEvent::NormalMessage(const std::string_view line)
 {
 	for (int i = gt; i < line.size(); i++)

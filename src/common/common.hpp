@@ -25,7 +25,11 @@ std::string round(const long double x, const int dec);
 
 int randomize(int from, int to);
 
+void clslegacy();
+
 void cls();
+
+void clsa();
 
 char wybor();
 

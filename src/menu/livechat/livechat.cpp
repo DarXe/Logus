@@ -15,9 +15,11 @@
 //header includes
 #include "livechat_eventhandlers.hpp"
 #include "livechat_events.hpp"
+#include "livechat_cmd.hpp"
 #include "livechat_format.hpp"
 #include <var.hpp>
 #include <config.hpp>
+#include <cpu.hpp>
 #include <common.hpp>
 #include <proc.hpp>
 #include <stopwatch.hpp>
@@ -27,6 +29,7 @@
 
 //variable declarations
 static std::deque <std::string> lastLines;
+static std::deque <int> lastLinesSize;
 static std::vector <std::string> newLines;
 static int lcLineCount;
 static bool isNewLine = 0, isNewBeep = 0;
@@ -34,7 +37,26 @@ static std::ifstream filelc;
 static std::string linelc;
 static std::uintmax_t size;
 static bool isAutoJoin;
+static CpuUsage cpu;
+static Status st;
+static int head1 = 0, head2 = 0, head3 = 0;
 
+std::string_view Status::Get()
+{
+	std::string_view val = stat[pos];
+	if (pos < 7)
+		pos++;
+	else
+		pos = 0;
+	return val;
+}
+
+static int GetCursorPosX()
+{
+    CONSOLE_SCREEN_BUFFER_INFO cbsi;
+    GetConsoleScreenBufferInfo(h, &cbsi);
+    return cbsi.dwCursorPosition.X;
+}
 
 void liveChatHead() //head
 {
@@ -55,56 +77,95 @@ void liveChatHead() //head
 	std::cout<<"##########################################LiveChat##########################################\n";
 
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-	std::cout<<" Refresh:"<<refresh<<"ms"<<" # Wierszy:"<<lcLineCount<<" # Rozmiar:"<<std::setprecision(3)<<sizei<<sizet<<" # [Esc] Menu \n";
+	std::cout<<" ["<<st.Get()<<"]Refresh:"<<refresh<<"ms # Wierszy:"<<lcLineCount<< " # CPU:" <<std::setprecision(2)<<cpu.getCpuUsage() << "% # Rozmiar: "<<std::setprecision(3)<<sizei<<sizet<<" # [Esc] Menu ";
+	if (head1-GetCursorPosX() > 0)
+	{
+		std::string h1(head1-GetCursorPosX(), ' '); std::cout << h1;
+	}
+	head1 = GetCursorPosX();
 	if(mainTimer.m_running)
 	{
-		SetConsoleTextAttribute(h, 170); std::cout<<" "; SetConsoleTextAttribute(h, 12);
+		SetConsoleTextAttribute(h, 170); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
 		std::cout<<" Timer "<<mainTimer.getTime()<<" [s]Stop Timer ";
 	}
 	else
 	{
-		SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
+		SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
 		std::cout<<" [t]Timer                  ";
 	}
 
-	int payment(0); payment = ((money>0)?((money*0.9)-3500)*grade:0);
-	std::cout<<"# Zarobek: $"<<money<<" # Kursy: "<<courses<<" # Wypłata: $"<<payment<<"         ";
+	long long payment = 0; payment = ((money>0)?((money*0.9)-3500)*grade:0);
+	std::cout<<"# Zarobek: $"<<money<<" # Kursy: "<<courses<<" # Wypłata: $"<<payment;
+	if (head2-GetCursorPosX() > 0)
+	{
+		std::string h2(head2-GetCursorPosX(), ' '); std::cout << h2;
+	}
+	head2 = GetCursorPosX();
 
 	SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
 	std::cout<<track[trackId]<<"              # "<<"Średnia: $"<<((courses)?money/courses:0)<<" # Min: $"<<minsalary<<" # Max: $"<<maxsalary;
+	if (head3-GetCursorPosX() > 0)
+	{
+		std::string h3(head3-GetCursorPosX(), ' '); std::cout << h3;
+	}
+	head3 = GetCursorPosX();
 	
 	SetConsoleTextAttribute(h, 204);
 	pos.X=91; pos.Y=1; SetConsoleCursorPosition(h, pos); std::cout<<" ";
 	pos.X=91; pos.Y=2; SetConsoleCursorPosition(h, pos); std::cout<<" ";
 	pos.X=91; pos.Y=3; SetConsoleCursorPosition(h, pos); std::cout<<" ";
 	SetConsoleTextAttribute(h, 12);
-	std::cout<<"\n##########################################################################[m]moveLogs#######\n";
+	if (renderEngine)
+		 std::cout<<"\n#####engine:experimental##################################################[m]moveLogs#######\n";
+	else std::cout<<"\n#####engine:stable########################################################[m]moveLogs#######\n";
+	
 }
 
-void showChat()
+void statusMeter()
 {
-	auto f = std::async(std::launch::async, []()
-	{
-		cls();
-		liveChatHead();
-		LCFormat::ParseLines(lastLines, timestamp);
-	});
+	COORD pos = {3, 1};
+	SetConsoleCursorPosition(h, pos); SetConsoleTextAttribute(h, 12);
+	std::cout << st.Get();
 }
 
-void getChat(bool init) //gc
+void showChat(const bool &init)
+{
+	//auto f = std::async(std::launch::async, [&init]()
+	//{
+		if (init || !renderEngine)
+			cls();
+		//clsa();
+		//clslegacy();
+		liveChatHead();
+		LCFormat::ParseLines(lastLines, lastLinesSize, timestamp);
+	//});
+}
+
+void getChat(const bool &init) //gc
 {
 	if (init) //if it's init, open filelc first
-		filelc.open(consoleLogPath, std::ios::in | std::ios::binary);
+		filelc.open(consoleLogPath, std::ios::in/* | std::ios::binary*/);
 	while (!filelc.eof())
 	{
 		getline(filelc, linelc); //get linelc
 		if (filelc.eof())		 //if above getline returns eof, do break
 			break;
-
-		if (lastLines.size() >= wyswietlaneWiersze) //if array size exceds wyswietlaneWiersze size remove first element from array
+		std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv;
+		int utfsize = linelc.size()-conv.from_bytes(linelc).size();
+		if (linelc.size() > 92 + gt + utfsize)
+		{
+			lastLines.push_back(linelc.substr(0, 92 + gt + utfsize));
+			lastLines.push_back(linelc.substr(92 + gt + utfsize, std::string::npos));
+		}
+		else
+		{
+			lastLines.push_back(linelc); //add element to the end of array
+		}
+		while (lastLines.size() > wyswietlaneWiersze)
+		{
 			lastLines.pop_front();
-		lastLines.push_back(linelc); //add element to the end of array
-		++lcLineCount;
+			++lcLineCount;
+		}
 		if (!init) //if eof isn't present (as there is a new linelc) AND it's not init = 1 save newlines
 		{
 			newLines.push_back(linelc); //add new lines to another array
@@ -148,28 +209,54 @@ void moveLogs() //mv clean and move logs from console.log to logus.log
 	size = std::filesystem::file_size(consoleLogPath);
 }
 
-void checkMessages()
+void checkMessages(const bool &pre)
 {
-	if (newLines.size() > 1000)
-		for (int i = newLines.size() - 1000; i < newLines.size(); i++)
-		{
-			LCEventHandler::CheckEventHandlers(newLines[i]);
-			if (kbhit())
+	if (pre)
+	{
+		if (newLines.size() > 1000)
+			for (int i = newLines.size() - 1000; i < newLines.size(); i++)
 			{
-				if (getch() == 27)
-					break;
+				LCCommand::PreCheckCommandInput(newLines[i]);
+				if (kbhit())
+				{
+					if (getch() == 27)
+						break;
+				}
 			}
-		}
+		else
+			for (int i = 0; i < newLines.size(); i++)
+			{
+				LCCommand::PreCheckCommandInput(newLines[i]);
+				if (kbhit())
+				{
+					if (getch() == 27)
+						break;
+				}
+			}
+	}
 	else
-		for (int i = 0; i < newLines.size(); i++)
-		{
-			LCEventHandler::CheckEventHandlers(newLines[i]);
-			if (kbhit())
+	{
+		if (newLines.size() > 1000)
+			for (int i = newLines.size() - 1000; i < newLines.size(); i++)
 			{
-				if (getch() == 27)
-					break;
+				LCEventHandler::CheckEventHandlers(newLines[i]);
+				if (kbhit())
+				{
+					if (getch() == 27)
+						break;
+				}
 			}
-		}
+		else
+			for (int i = 0; i < newLines.size(); i++)
+			{
+				LCEventHandler::CheckEventHandlers(newLines[i]);
+				if (kbhit())
+				{
+					if (getch() == 27)
+						break;
+				}
+			}
+	}
 }
 
 bool liveChatInput()
@@ -266,6 +353,8 @@ bool liveChat() //lc
 	//reset some things
 	lastLines.clear();
 	lastLines.shrink_to_fit();
+	for (int i = 0; i < wyswietlaneWiersze; i++)
+		lastLinesSize[i] = 0;
 	lcLineCount = 0;
 	isAutoJoin = false;
 	COORD pos;
@@ -277,7 +366,7 @@ bool liveChat() //lc
 	Stopwatch initshow;
 	size = std::filesystem::file_size(consoleLogPath);
 	mainTimer.update();
-	showChat();
+	showChat(1);
 	initshow.stop();
 
 	LDebug::DebugOutput("initLiveChat: wielkość pliku: %sKB, linie: %s, odczyt: %s (%s), wyświetlanie: %s (%s), łącznie: %sns (%sms)", 
@@ -308,8 +397,9 @@ bool liveChat() //lc
 			std::ifstream refreshf(consoleLogPath, std::ios::in | std::ios::binary);
 			refreshf.close();
 			size = std::filesystem::file_size(consoleLogPath);
+			checkMessages(true);
 			showChat();
-			checkMessages();
+			checkMessages(false);
 		}
 		else
 		{
@@ -327,6 +417,8 @@ bool liveChat() //lc
 				}
 				else if ((refresh == maxRefresh) && mainTimer.m_running)
 					liveChatHead();
+				else if (refresh == maxRefresh)
+					statusMeter();
 			}
 			else
 				liveChatHead();

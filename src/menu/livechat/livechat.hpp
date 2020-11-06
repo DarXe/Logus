@@ -13,11 +13,21 @@
 
 
 //forward function declarations
+
+class Status
+{
+	const std::string stat[8] = {"―", "\\", "|", "/", "―", "\\", "|", "/"};
+	short pos = 0;
+public:
+	std::string_view Get();
+};
+
 void liveChatHead();
-void showChat();
-void getChat(bool init = 0);
+void statusMeter();
+void showChat(const bool &init = false);
+void getChat(const bool &init = false);
 void moveLogs();
-void checkMessages();
+void checkMessages(const bool &pre);
 bool liveChatInput();
 bool liveChat();
 

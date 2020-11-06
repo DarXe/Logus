@@ -22,7 +22,9 @@ namespace LCFormat
 	void ContainsPhrase(std::string_view line);
 	void Default(std::string_view line);
 	void Nothing(std::string_view line);
-	void ParseLines(const std::deque<std::string> &lastLines, const bool &timestamp = false);
+	int GetLineSize(std::string_view line, const bool &notif);
+	void SetColor(const short &color);
+	void ParseLines(const std::deque<std::string> &lastLines, std::deque<int> &lastLinesSize, const bool &timestamp = false);
 } // namespace LCFormat
 
 #endif

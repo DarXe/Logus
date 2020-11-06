@@ -20,6 +20,8 @@ void LCEventHandler::CheckEventHandlers(const std::string &line)
 {
 	try
 	{
+		LCCommand::CheckCommandInput(line);
+
 		PmFrom(line);
 		Team(line);
 		Nicknames(line);
@@ -30,8 +32,6 @@ void LCEventHandler::CheckEventHandlers(const std::string &line)
 		Freeze(line);
 		NickChange(line);
 		ContainsPhrase(line);
-
-		LCCommand::CheckCommandInput(line);
 
 		if (chatSound)
 			Beep(750, 50);

@@ -15,6 +15,7 @@
 
 //header includes
 #include "var.hpp"
+#include "../menu/livechat/livechat.hpp"
 #include "common.hpp"
 
 
@@ -23,29 +24,43 @@ int randomize(int od, int doo)
 	return rand() % (doo - od + 1) + od;
 }
 
+void clslegacy()
+{
+	system("cls");
+}
+
 void cls()
 {
-	HANDLE                     hStdOut;
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	DWORD                      count;
 	DWORD                      cellCount;
-	COORD                      homeCoords = { 0, 0 };
-
-	hStdOut = GetStdHandle( STD_OUTPUT_HANDLE );
-	if (hStdOut == INVALID_HANDLE_VALUE) return;
+	COORD                      homeCoords = {0, 0};
 
 	/* Get the number of cells in the current buffer */
-	if (!GetConsoleScreenBufferInfo( hStdOut, &csbi )) return;
+	if (!GetConsoleScreenBufferInfo(h, &csbi )) return;
 	cellCount = csbi.dwSize.X *csbi.dwSize.Y;
 
 	/* Fill the entire buffer with spaces */
-	if (!FillConsoleOutputCharacter(hStdOut, (TCHAR) ' ', cellCount, homeCoords, &count)) return;
+	FillConsoleOutputCharacter(h, ' ', cellCount, homeCoords, &count);
+	FillConsoleOutputAttribute(h, csbi.wAttributes, cellCount, homeCoords, &count);
 
-	/* Fill the entire buffer with the current colors and attributes */
-	if (!FillConsoleOutputAttribute(hStdOut, csbi.wAttributes, cellCount, homeCoords, &count)) return;
+	/* Fill the entire buffer with the current colors and attributes
+	if (!FillConsoleOutputAttribute(h, csbi.wAttributes, cellCount, homeCoords, &count)) return;*/
 
 	/* Move the cursor home */
-	SetConsoleCursorPosition( hStdOut, homeCoords );
+	SetConsoleCursorPosition(h, homeCoords);
+}
+
+void clsa()
+{
+	COORD pos = {0, 0};
+	for (int i = 1; i < 4; i++)
+	{
+		pos.Y = i;
+		SetConsoleCursorPosition(h, pos);
+		std::cout << "                                                                                            ";
+	}
+	pos.X = 0; pos.Y = 0; SetConsoleCursorPosition(h, pos);
 }
 
 std::string getCurrentTime()
@@ -158,11 +173,11 @@ int power(int x, int y)
 
 std::string round(const long double x, const int dec)
 {
-    std::stringstream ss;
-    ss << std::fixed;
-    ss.precision(dec);
-    ss << x;
-    return ss.str();
+	std::stringstream ss;
+	ss << std::fixed;
+	ss.precision(dec);
+	ss << x;
+	return ss.str();
 }
 
 /*

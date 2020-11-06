@@ -5,6 +5,7 @@
 //standard libraries
 #include <iostream>
 #include <fstream>
+#include <future>
 
 
 //header includes
@@ -123,14 +124,14 @@ void readConfig(bool showInfo)
 			random = stoi(clearConfigValue(templine, "b_Sposób dostawy:"));
 
 		else if (templine.find("i_Money:") != std::string::npos)
-			money = stoi(clearConfigValue(templine, "i_Money:"));
+			money = stoll(clearConfigValue(templine, "i_Money:"));
 		else if (templine.find("i_Kasa:") != std::string::npos)
-			money = stoi(clearConfigValue(templine, "i_Kasa:"));
+			money = stoll(clearConfigValue(templine, "i_Kasa:"));
 
 		else if (templine.find("i_Courses:") != std::string::npos)
-			courses = stoi(clearConfigValue(templine, "i_Courses:"));
+			courses = stoll(clearConfigValue(templine, "i_Courses:"));
 		else if (templine.find("i_Kursy:") != std::string::npos)
-			courses = stoi(clearConfigValue(templine, "i_Kursy:"));
+			courses = stoll(clearConfigValue(templine, "i_Kursy:"));
 
 		else if (templine.find("i_Fast start mode:") != std::string::npos)
 			fastStart = stoi(clearConfigValue(templine, "i_Fast start mode:"));
@@ -189,6 +190,11 @@ void readConfig(bool showInfo)
 
 		else if (templine.find("b_Timestamp:") != std::string::npos)
 			timestamp = stoi(clearConfigValue(templine, "b_Timestamp:"));
+
+		else if (templine.find("b_Render engine:") != std::string::npos)
+			renderEngine = stoi(clearConfigValue(templine, "b_Render engine:"));
+		else if (templine.find("b_Silnik renderowania:") != std::string::npos)
+			renderEngine = stoi(clearConfigValue(templine, "b_Silnik renderowania:"));
 	}
 
 	consoleLogPath = mtaLocation + "\\MTA\\logs\\console.log";
@@ -251,6 +257,7 @@ void showUpdateInfo()
 
 void saveConfig(bool showInfo)
 { //saa save
+	auto f = std::async(std::launch::async, []{
 	std::fstream file;
 	if (engLang)
 	{
@@ -277,6 +284,7 @@ void saveConfig(bool showInfo)
 		file << "b_Mute nicknames notifications: " << fLockNick << "\n";
 		file << "b_Toggle auto gate opening (open at the end of PM): " << autoOpenGate << "\n";
 		file << "b_Timestamp: " << timestamp << '\n';
+		file << "b_Render engine: " << renderEngine << '\n';
 		file << "b_Notify on any message: " << chatSound << "\n";
 		file << "b_Dynamic refresh: " << dynamicRefresh << "\n";
 		file << "i_Min dynamic refresh: " << minRefresh << "\n";
@@ -329,6 +337,7 @@ void saveConfig(bool showInfo)
 		file << "b_Blokada powiadomienia na wybrane nicki: " << fLockNick << "\n";
 		file << "b_Włącz automatyczne otwieranie bramy (open na końcu PW): " << autoOpenGate << "\n";
 		file << "b_Timestamp: " << timestamp << '\n';
+		file << "b_Silnik renderowania: " << renderEngine << '\n';
 		file << "b_Powiadomienia na każdą wiadomość: " << chatSound << "\n";
 		file << "b_Odświeżanie dynamiczne: " << dynamicRefresh << "\n";
 		file << "i_Min dynamiczne odświeżanie: " << minRefresh << "\n";
@@ -357,8 +366,12 @@ void saveConfig(bool showInfo)
 			file << phrases.at(i) << '\n';
 	}
 	file.close();
+	});
 	if (showInfo)
+	{
+		f.wait();
 		engLang ? std::cout << " (INFO) Settings has been saved.\n" : std::cout << " (INFO) Ustawienia zostaly zapisane.\n";
+	}
 }
 
 void readDefault()
@@ -393,4 +406,5 @@ void readDefault()
 	minRefresh = 250;
 	maxRefresh = 1250;
 	timestamp = 0;
+	renderEngine = 1;
 }

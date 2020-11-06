@@ -202,6 +202,8 @@ void wersja()
 	std::cout << " LISTOPAD" << std::endl;
 
 	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2011_06 Od teraz LiveChat zawija zbyt długie wiersze\n";
+	std::cout << " 2011_06 Nowa komenda - ""set engine"", która zmienia tryb renderowania czatu\n";
 	std::cout << " 2011_04 Udoskonalono moduł automatycznej aktualizacji\n";
 	std::cout << " 2011_04 Dodano komendę ""set ts"", która przełącza widoczność timestampów\n";
 	std::cout << " 2011_04 Przebudowano system wyświetlania w liveChat, czego rezultatem jest przyśpieszenie programu o 3,5 raza!\n";

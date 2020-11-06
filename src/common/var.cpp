@@ -34,8 +34,8 @@ std::vector <std::string> nicknames; //nicknames database
 std::vector <std::string> phrases; //player nick's variants to look for
 int czas = 90; //TIMER time set by the player in seconds to load / unload the cargo
 bool random = 0; //TIMER random unloading, TRUE = 'skrypt' FALSE = 'sam wybiore'
-int money = 0; //courses calculator - money for delivered courses //pieniądze za kursy
-int courses = 0; //courses calculator - number of courses //ilość kursów
+long long money = 0; //courses calculator - money for delivered courses //pieniądze za kursy
+long long courses = 0; //courses calculator - number of courses //ilość kursów
 int maxsalary = 0;
 int minsalary = 0;
 short fastStart = 0; //start Logus + LiveChat with MTA or skipping the version info
@@ -51,6 +51,7 @@ short minRefresh = 250; //minimal refresh in livechat
 short maxRefresh = 1250; //max refresh in livechat
 bool autoOpenGate = 0;
 bool timestamp = 0;
+bool renderEngine = 1;
 
 const short gt = 33; //auxiliary variable
 const HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);

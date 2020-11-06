@@ -6,16 +6,21 @@
 #include <string_view>
 #include <windows.h>
 #include <iostream>
-#include <deque>
+#include <conio.h>
 
 
 //header includes
 #include "livechat_events.hpp"
+#include "livechat.hpp"
 #include <common.hpp>
 #include <stopwatch.hpp>
 #include <debug.hpp>
 #include <var.hpp>
 #include "livechat_format.hpp"
+
+
+//static variables
+static short lastcolor;
 
 inline void LCFormat::Standard(std::string_view line)
 {
@@ -26,16 +31,16 @@ inline void LCFormat::Standard(std::string_view line)
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
-		SetConsoleTextAttribute(h, 10);
+		LCFormat::SetColor(10);
 		if (textPos != std::string_view::npos)
 		{
 			std::cout << line.substr(0, textPos+1);
-			SetConsoleTextAttribute(h, 15);
-			std::cout << line.substr(textPos+1, std::string_view::npos) << '\n';
+			LCFormat::SetColor(15);
+			std::cout << line.substr(textPos+1, std::string_view::npos);
 		}
 		else
 		{
-			std::cout << line << '\n';
+			std::cout << line;
 		}
 		throw 1;
 	}
@@ -52,16 +57,16 @@ inline void LCFormat::Pm(std::string_view line)
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
-		SetConsoleTextAttribute(h, 2);
+		LCFormat::SetColor(2);
 		if (textPos != std::string_view::npos)
 		{
 			std::cout << line.substr(0, textPos+1);
-			SetConsoleTextAttribute(h, 7);
-			std::cout << line.substr(textPos+1, std::string_view::npos) << '\n';
+			LCFormat::SetColor(7);
+			std::cout << line.substr(textPos+1, std::string_view::npos);
 		}
 		else
 		{
-			std::cout << line << '\n';
+			std::cout << line;
 		}
 		throw 1;
 	}
@@ -76,16 +81,16 @@ inline void LCFormat::Admin(std::string_view line)
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
-		SetConsoleTextAttribute(h, 4);
+		LCFormat::SetColor(4);
 		if (textPos != std::string_view::npos)
 		{
 			std::cout << line.substr(0, textPos+1);
-			SetConsoleTextAttribute(h, 7);
-			std::cout << line.substr(textPos+1, std::string_view::npos) << '\n';
+			LCFormat::SetColor(7);
+			std::cout << line.substr(textPos+1, std::string_view::npos);
 		}
 		else
 		{
-			std::cout << line << '\n';
+			std::cout << line;
 		}
 		throw 1;
 	}
@@ -102,8 +107,8 @@ inline void LCFormat::Transfers(std::string_view line)
 		if (line.size() > gt)
 			line.remove_prefix(gt);
 
-		SetConsoleTextAttribute(h, 6);
-		std::cout << line << '\n';
+		LCFormat::SetColor(6);
+		std::cout << line;
 		throw 1;
 	}
 }
@@ -116,8 +121,8 @@ inline void LCFormat::Info(std::string_view line)
 		if (line.size() > gt)
 			line.remove_prefix(gt);
 
-		SetConsoleTextAttribute(h, 14);
-		std::cout << line << '\n';
+		LCFormat::SetColor(14);
+		std::cout << line;
 		throw 1;
 	}
 }
@@ -128,10 +133,12 @@ inline void LCFormat::Input(std::string_view line)
 	if (LCEvent::Input(line))
 	{
 		if (line.size() > gt)
+		{
 			line.remove_prefix(gt);
+			LCFormat::SetColor(12);
+			std::cout << line;
+		}
 
-		SetConsoleTextAttribute(h, 12);
-		std::cout << line << '\n';
 		throw 1;
 	}
 }
@@ -145,16 +152,16 @@ inline void LCFormat::Team(std::string_view line)
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
-		SetConsoleTextAttribute(h, 2);
+		LCFormat::SetColor(2);
 		if (textPos != std::string_view::npos)
 		{
 			std::cout << line.substr(0, textPos+1);
-			SetConsoleTextAttribute(h, 7);
-			std::cout << line.substr(textPos+1, std::string_view::npos) << '\n';
+			LCFormat::SetColor(7);
+			std::cout << line.substr(textPos+1, std::string_view::npos);
 		}
 		else
 		{
-			std::cout << line << '\n';
+			std::cout << line;
 		}
 		throw 1;
 	}
@@ -178,14 +185,14 @@ static size_t findPhrase(std::string_view line, const size_t &pos, size_t &len)
 
 inline void LCFormat::ContainsPhrase(std::string_view line)
 {
-	if (LCEvent::ContainsPhrase(line))
+	if (LCEvent::ContainsPhraseFormat(line))
 	{
 		if (line.size() > gt)
 			line.remove_prefix(gt);
 		size_t pos = 0;
 		size_t phrasePos = 0, len = 0;
 
-		SetConsoleTextAttribute(h, 2);
+		LCFormat::SetColor(2);
 		if (pos != std::string_view::npos)
 		{
 			//q(line);
@@ -197,19 +204,19 @@ inline void LCFormat::ContainsPhrase(std::string_view line)
 				if (phrasePos == std::string_view::npos)
 					break;
 
-				SetConsoleTextAttribute(h, 7); //gray
+				LCFormat::SetColor(7); //gray
 				std::cout << line.substr(pos, phrasePos - pos); //gray from last occurence (or ":")to phrase occurence
 
-				SetConsoleTextAttribute(h, 9); //blue
+				LCFormat::SetColor(9); //blue
 				std::cout << line.substr(phrasePos, len); //blue
 				pos = phrasePos + len;
 			}
-			SetConsoleTextAttribute(h, 7);
-			std::cout << line.substr(pos, std::string::npos) << '\n';
+			LCFormat::SetColor(7);
+			std::cout << line.substr(pos, std::string::npos);
 		}
 		else
 		{
-			std::cout << line << '\n';
+			std::cout << line;
 		}
 		throw 1;
 	}
@@ -218,10 +225,13 @@ inline void LCFormat::ContainsPhrase(std::string_view line)
 inline void LCFormat::Default(std::string_view line)
 {
 	if (line.size() > gt)
+	{
 		line.remove_prefix(gt);
-
-	SetConsoleTextAttribute(h, 10);
-	std::cout << line << '\n';
+		LCFormat::SetColor(10);
+	}
+	else
+		LCFormat::SetColor(lastcolor);
+	std::cout << line;
 	throw 1;
 }
 
@@ -230,23 +240,49 @@ inline void LCFormat::Nothing(std::string_view line)
 	if (line.size() > gt)
 		line.remove_prefix(gt);
 
-	std::cout << line << '\n';
+	std::cout << line;
 	throw 1;
 }
 
-void LCFormat::ParseLines(const std::deque<std::string> &lastLines, const bool &timestamp)
+inline int LCFormat::GetLineSize(std::string_view line, const bool &notif)
+{
+	int size = 0;
+	if (timestamp)
+		size += 22;
+	if (line.size() > gt)
+		size += line.size() - gt;
+	else
+		size += line.size();
+
+	if (notif)
+		size += 2;
+
+
+	return size;
+}
+
+inline void LCFormat::SetColor(const short &color)
+{
+	SetConsoleTextAttribute(h, color);
+	lastcolor = color;
+}
+
+void LCFormat::ParseLines(const std::deque<std::string> &lastLines, std::deque<int> &lastLinesSize, const bool &timestamp)
 {
 	for (int i = 0; i < lastLines.size(); i++)
 	{
 		std::string_view line = lastLines.at(i);
+		if (isspace(line.back()))
+			line.remove_suffix(1);
 		if (timestamp && line.size() > gt)
 		{
-			SetConsoleTextAttribute(h, 10);
+			LCFormat::SetColor(10);
 			std::cout << line.substr(0, 21) << ' ';
 		}
-		if (LCEvent::Nicknames(line) || LCEvent::Transport(line) || LCEvent::Report(line) || LCEvent::TransfersFrom(line) || LCEvent::PmFrom(line) || LCEvent::ContainsPhrase(line) || LCEvent::Team(line, 0))
+		bool notif = (LCEvent::Nicknames(line) || LCEvent::Transport(line) || LCEvent::Report(line) || LCEvent::TransfersFrom(line) || LCEvent::PmFrom(line) || LCEvent::ContainsPhrase(line) || LCEvent::Team(line, 0));
+		if (notif)
 		{
-			SetConsoleTextAttribute(h, 160);
+			LCFormat::SetColor(160);
 			std::cout << "=>";
 		}
 		try
@@ -264,6 +300,19 @@ void LCFormat::ParseLines(const std::deque<std::string> &lastLines, const bool &
 			LCFormat::Default(line);
 		}
 		catch(const int& e)
-		{}
+		{
+			//q(lastLinesSize[i]); getch();
+			int size = GetLineSize(line, notif);
+			int count = lastLinesSize[i] - size;
+			if (count > 0)
+			{
+				std::string d(count+2, ' ');
+				std::cout << d;
+			}
+			std::cout << '\n';
+			lastLinesSize[i] = size;
+			/*COORD pos; pos.X = lastLinesSize[i]; pos.Y = i;
+			SetConsoleCursorPosition(h, pos); std::cout << " << size: " << lastLinesSize[i] << '\n';*/
+		}
 	}
 }
