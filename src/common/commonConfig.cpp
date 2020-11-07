@@ -4,6 +4,7 @@
 
 //standard libraries
 #include <iostream>
+#include <string_view>
 #include <windows.h>
 #include <conio.h>
 
@@ -14,7 +15,7 @@
 #include "commonConfig.hpp"
 
 
-int cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText, std::string minMaxText, int min, int max)
+int cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText, std::string_view minMaxText, int min, int max)
 {
 	int temp;
 	if (isCls)
@@ -41,7 +42,7 @@ int cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, 
 	return temp;
 }
 
-std::string cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText)
+std::string cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText)
 {
 	std::string temp;
 	if (isCls)
@@ -69,11 +70,11 @@ std::string cfgInput(bool preHead, bool isCls, std::string text, std::string inp
 }
 
 int cfgSelection(bool preHead,
-				 std::string Question,
-				 std::string Answer,
-				 std::string Answer2,
-				 std::string Answer3,
-				 std::string Answer4)
+				 const std::string &Question,
+				 const std::string &Answer,
+				 const std::string &Answer2,
+				 const std::string &Answer3,
+				 const std::string &Answer4)
 {
 	bool sel = 1;
 	do
@@ -158,14 +159,14 @@ int cfgSelection(bool preHead,
 	return 0;
 }
 
-std::string cfgSelectionStr(std::string Question,
-							std::string Answer,
-							std::string Answer2,
-							std::string Answer3,
-							std::string Answer4,
-							std::string Answer5,
-							std::string Answer6,
-							std::string Answer7)
+std::string cfgSelectionStr(const std::string &Question,
+							const std::string &Answer,
+							const std::string &Answer2,
+							const std::string &Answer3,
+							const std::string &Answer4,
+							const std::string &Answer5,
+							const std::string &Answer6,
+							const std::string &Answer7)
 {
 	bool sel = 1;
 	cls();

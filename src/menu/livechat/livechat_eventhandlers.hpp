@@ -22,7 +22,7 @@ namespace LCEventHandler
 	void BindKey(const std::string &line);
 	void Freeze(const std::string &line);
 	void NickChange(const std::string &line);
-	void SalaryForTransport(const std::string &line);
+	void SalaryForTransport(const std::string &line, const bool &type);
 	void ContainsPhrase(const std::string &line);
 } // namespace LCEventHandler
 

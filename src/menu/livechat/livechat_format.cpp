@@ -30,7 +30,7 @@ inline void LCFormat::Standard(std::string_view line)
 	// [2020-11-03 19:40:09] [Output] : Niventill: ess 
 	if (LCEvent::NormalMessage(line))
 	{
-		if (LCFormat::isNewLine(line))
+		if (isNewLine(line))
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
@@ -55,7 +55,7 @@ inline void LCFormat::Pm(std::string_view line)
 	// [2020-11-03 19:40:09] [Output] : * PM from Niventill: ess 
 	if (LCEvent::PmFrom(line) || LCEvent::PmTo(line))
 	{
-		if (LCFormat::isNewLine(line))
+		if (isNewLine(line))
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
@@ -78,7 +78,7 @@ inline void LCFormat::Admin(std::string_view line)
 	// [2020-10-28 17:42:08] [Output] : (ADMIN) Niventill: ess
 	if (LCEvent::Admin(line, true))
 	{
-		if (LCFormat::isNewLine(line))
+		if (isNewLine(line))
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
@@ -104,7 +104,7 @@ inline void LCFormat::Transfers(std::string_view line)
 	//[2020-08-30 16:34:52] [Output] : You gave $1 to player DarXe.
 	if (LCEvent::TransfersFrom(line) || LCEvent::TransfersTo(line))
 	{
-		if (LCFormat::isNewLine(line))
+		if (isNewLine(line))
 			line.remove_prefix(gt);
 
 		LCFormat::SetColor(6);
@@ -119,7 +119,7 @@ inline void LCFormat::Info(std::string_view line)
 	// [2020-10-28 17:42:08] [Output] : * typical wiadomosc
 	if (line[gt] == '*')
 	{
-		if (LCFormat::isNewLine(line))
+		if (isNewLine(line))
 			line.remove_prefix(gt);
 
 		LCFormat::SetColor(14);
@@ -138,7 +138,7 @@ inline void LCFormat::Input(std::string_view line)
 			LCFormat::SetColor(4);
 		else
 			LCFormat::SetColor(12);
-		if (LCFormat::isNewLine(line))
+		if (isNewLine(line))
 			line.remove_prefix(gt);
 		std::cout << line;
 
@@ -151,7 +151,7 @@ inline void LCFormat::Team(std::string_view line)
 	// [2020-10-28 17:42:08] [Output] : (ADMIN) Niventill: ess
 	if (LCEvent::Team(line, true))
 	{
-		if (LCFormat::isNewLine(line))
+		if (isNewLine(line))
 			line.remove_prefix(gt);
 		int textPos = line.find(":");
 
@@ -189,32 +189,49 @@ inline void LCFormat::ContainsPhrase(std::string_view line)
 {
 	if (LCEvent::ContainsPhraseFormat(line))
 	{
-		if (LCFormat::isNewLine(line))
+		if (isNewLine(line))
 			line.remove_prefix(gt);
-		size_t pos = 0;
-		size_t phrasePos = 0, len = 0;
+		size_t pos = 0, phrasePos = 0, len = 0;
+		LCFormat::SetColor(2);
+		
+		//q(line);
+		std::cout << line.substr(0, line.find(":")+1); //dark green to ":"
+		line.remove_prefix(line.find(":")+1);
+		while (true)
+		{
+			phrasePos = findPhrase(line, pos, len);
+			if (phrasePos == std::string_view::npos)
+				break;
+
+			LCFormat::SetColor(7); //gray
+			std::cout << line.substr(pos, phrasePos - pos); //gray from last occurence (or ":")to phrase occurence
+
+			LCFormat::SetColor(9); //blue
+			std::cout << line.substr(phrasePos, len); //blue
+			pos = phrasePos + len;
+		}
+		LCFormat::SetColor(7);
+		std::cout << line.substr(pos, std::string::npos);
+
+		throw 1;
+	}
+}
+
+inline void LCFormat::CB(std::string_view line)
+{
+	// [2020-11-03 19:40:09] [Output] : (CB 19): ess 
+	if (LCEvent::CB(line))
+	{
+		if (isNewLine(line))
+			line.remove_prefix(gt);
+		int textPos = line.find(":");
 
 		LCFormat::SetColor(2);
-		if (pos != std::string_view::npos)
+		if (textPos != std::string_view::npos)
 		{
-			//q(line);
-			std::cout << line.substr(0, line.find(":")+1); //dark green to ":"
-			line.remove_prefix(line.find(":")+1);
-			while (true)
-			{
-				phrasePos = findPhrase(line, pos, len);
-				if (phrasePos == std::string_view::npos)
-					break;
-
-				LCFormat::SetColor(7); //gray
-				std::cout << line.substr(pos, phrasePos - pos); //gray from last occurence (or ":")to phrase occurence
-
-				LCFormat::SetColor(9); //blue
-				std::cout << line.substr(phrasePos, len); //blue
-				pos = phrasePos + len;
-			}
+			std::cout << line.substr(0, textPos+1);
 			LCFormat::SetColor(7);
-			std::cout << line.substr(pos, std::string::npos);
+			std::cout << line.substr(textPos+1, std::string_view::npos);
 		}
 		else
 			std::cout << line;
@@ -225,7 +242,7 @@ inline void LCFormat::ContainsPhrase(std::string_view line)
 
 inline void LCFormat::Default(std::string_view line)
 {
-	if (LCFormat::isNewLine(line))
+	if (isNewLine(line))
 	{
 		line.remove_prefix(gt);
 		LCFormat::SetColor(10);
@@ -239,7 +256,7 @@ inline void LCFormat::Default(std::string_view line)
 
 inline void LCFormat::Nothing(std::string_view line)
 {
-	if (LCFormat::isNewLine(line))
+	if (isNewLine(line))
 		line.remove_prefix(gt);
 
 	std::cout << line;
@@ -260,10 +277,10 @@ void LCFormat::ParseLines(const std::deque<std::string> &lastLines, std::deque<i
 		std::string_view line = lastLines.at(i);
 		if (isspace(line.back()))
 			line.remove_suffix(1);
-		if (timestamp && line.size() > gt)
+		if (timestamp && isNewLine(line))
 		{
 			LCFormat::SetColor(10);
-			std::cout << line.substr(0, 21) << ' ';
+			std::cout << '[' << line.substr(12, 10);
 		}
 		bool notif = notifCheck(line);
 		if (notif)
@@ -277,6 +294,7 @@ void LCFormat::ParseLines(const std::deque<std::string> &lastLines, std::deque<i
 			LCFormat::ContainsPhrase(line);
 			LCFormat::Standard(line);
 			LCFormat::Pm(line);
+			LCFormat::CB(line);
 			LCFormat::Admin(line);
 			LCFormat::Transfers(line);
 			LCFormat::Info(line);

@@ -17,15 +17,12 @@ static clock_t t;
 
 int lottoLogus()
 {
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD pos;
 	SetConsoleOutputCP(65001);
 	std::vector<std::string> nicknames;
 	std::vector<std::string> winners;
 	std::vector<short> winnersId;
 	std::vector<short> playersId; //lista do tasowania, losowanie wygranych bez powtorzen
-	std::string nick = "";
-	char wyb = ' ';
 	int temp(0);
 
 	while (true)
@@ -40,7 +37,7 @@ int lottoLogus()
 		std::cout << " [Esc] Exit" << std::endl;
 		std::cout << " _______________________________________________________________\n"
 				  << std::endl;
-		wyb = wybor();
+		char wyb = wybor();
 		SetConsoleTextAttribute(h, 15);
 		switch (wyb)
 		{
@@ -453,11 +450,10 @@ void lottoLogusStats(std::vector<std::string> &nicknames)
 
 		int licznik = 1;
 		const int start = 1000;
-		int los;
 
 		while (randoms.size() < 4)
 		{
-			los = randomize(1, nicknames.size() - 1);
+			int los = randomize(1, nicknames.size() - 1);
 			for (int i : randoms)
 			{
 				if (i == los)

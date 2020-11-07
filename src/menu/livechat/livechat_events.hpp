@@ -18,7 +18,8 @@ namespace LCEvent
 	bool TransfersFrom(const std::string_view line);
 	bool TransfersTo(const std::string_view line);
 	bool Report(const std::string_view line);
-	bool Transport(const std::string_view line);
+	bool TransportCompany(const std::string_view line);
+	bool TransportTruckerzy(const std::string_view line);
 	bool Nicknames(const std::string_view line);
 	bool BindKey(const std::string_view line);
 	bool Open(const std::string_view line);
@@ -31,6 +32,7 @@ namespace LCEvent
 	bool NormalMessage(const std::string_view line);
 	bool Admin(const std::string_view line, const bool &includePlayer);
 	bool Input(const std::string_view line);
+	bool CB(const std::string_view line);
 } // namespace LCEvent
 
 bool notifCheck(std::string_view line);

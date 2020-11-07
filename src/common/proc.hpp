@@ -8,16 +8,17 @@
 
 //standard libraries
 #include <string>
+#include <string_view>
 
 
 //forward declarations
-void color(std::string value);
+void color(const std::string &value);
 
 void serverConnect();
 
 bool runLiveChat();
 
-bool closeLogus(std::string text = "Bye bye");
+bool closeLogus(std::string_view text = "Bye bye");
 
 void stopAutoJoin(bool &isAutoJoin);
 

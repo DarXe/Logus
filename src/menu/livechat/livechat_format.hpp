@@ -21,6 +21,7 @@ namespace LCFormat
 	void Input(std::string_view line);
 	void Team(std::string_view line);
 	void ContainsPhrase(std::string_view line);
+	void CB(std::string_view line);
 	void Default(std::string_view line);
 	void Nothing(std::string_view line);
 	void SetColor(const short &color);

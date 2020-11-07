@@ -12,8 +12,6 @@
 
 class Stopwatch
 {
-	std::chrono::high_resolution_clock::time_point m_start, m_stop;
-	long double m_time;
 public:
 	Stopwatch();
 	~Stopwatch();
@@ -22,6 +20,9 @@ public:
 	long double get(const std::string &type);
 
 	std::string pre(const std::string &type, const int &precision = 0);
+private:
+	std::chrono::high_resolution_clock::time_point m_start, m_stop;
+	long double m_time;
 };
 
 #endif

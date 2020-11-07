@@ -102,9 +102,29 @@ inline void LCEventHandler::Nicknames(const std::string &line)
 inline void LCEventHandler::Transport(const std::string &line)
 {
 	// beep dostarczenie towaru, raport z frakcji
-	if (!fLockReport && LCEvent::Transport(line))
+	if (!fLockReport && LCEvent::TransportCompany(line))
 	{
-		SalaryForTransport(line);
+		SalaryForTransport(line, true);
+		if (trackId)
+		{
+			if (trackId == 4)
+				trackId = 1;
+			else
+				trackId++;
+		}
+		Beep(dzwiekGlowny, 150);
+		Beep(0, interval);
+		Beep(dzwiekGlowny, 150);
+		Beep(0, interval);
+		Beep(dzwiekGlowny, 150);
+		Beep(0, interval);
+		saveConfig(0);
+		LDebug::InfoOutput(line);
+		throw 1;
+	}
+	else if (!fLockReport && LCEvent::TransportTruckerzy(line))
+	{
+		SalaryForTransport(line, false);
 		if (trackId)
 		{
 			if (trackId == 4)
@@ -212,31 +232,56 @@ inline void LCEventHandler::NickChange(const std::string &line)
 	}
 }
 
-inline void LCEventHandler::SalaryForTransport(const std::string &line)
+inline void LCEventHandler::SalaryForTransport(const std::string &line, const bool &type)
 {
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 	short delim = 0, delim1 = 0;
 	std::string tempSalary;
-	if (line.find("rt ") != std::string::npos) //pol if
-		delim = line.find("rt ");
-	else if (line.find("d $") != std::string::npos) //eng if
-		delim = line.find("d $");
+	if (type)
+	{
+		if (line.find("rt ") != std::string::npos) //pol if
+			delim = line.find("rt ");
+		else if (line.find("d $") != std::string::npos) //eng if
+			delim = line.find("d $");
 
-	if (line.find("$ z") != std::string::npos) //pol if
-		delim1 = line.find("$ z");
-	else if (line.find(". I") != std::string::npos) //eng if
-		delim1 = line.find(". I");
+		if (line.find("$ z") != std::string::npos) //pol if
+			delim1 = line.find("$ z");
+		else if (line.find(". I") != std::string::npos) //eng if
+			delim1 = line.find(". I");
 
-	tempSalary = line.substr(delim + 3, delim1 - delim - 3);
-	money += stoi(tempSalary);
-	courses++;
+		tempSalary = line.substr(delim + 3, delim1 - delim - 3);
+		money += stoi(tempSalary);
+		courses++;
 
-	if (stoi(tempSalary) < minsalary || minsalary == 0)
-		minsalary = stoi(tempSalary);
-	if (stoi(tempSalary) > maxsalary)
-		maxsalary = stoi(tempSalary);
+		if (stoi(tempSalary) < minsalary || minsalary == 0)
+			minsalary = stoi(tempSalary);
+		if (stoi(tempSalary) > maxsalary)
+			maxsalary = stoi(tempSalary);
+	}
+	//[2020-11-07 21:56:04] [Output] : Otrzymałeś 44$ za transport.
+	//[2020-11-07 22:11:45] [Output] : Received $5 for transport.
+	else
+	{
+		if (line.find("eś ") != std::string::npos) //pol if
+			delim = line.find("eś ");
+		else if (line.find("d $") != std::string::npos) //eng if
+			delim = line.find("d $");
 
+		if (line.find("$ z") != std::string::npos) //pol if
+			delim1 = line.find("$ z");
+		else if (line.find(" fo") != std::string::npos) //eng if
+			delim1 = line.find(" fo");
+
+		tempSalary = line.substr(delim + 3, delim1 - delim - 3);
+		money += stoi(tempSalary);
+		courses++;
+
+		if (stoi(tempSalary) < minsalary || minsalary == 0)
+			minsalary = stoi(tempSalary);
+		if (stoi(tempSalary) > maxsalary)
+			maxsalary = stoi(tempSalary);
+	}
 }
 
 inline void LCEventHandler::ContainsPhrase(const std::string &line)

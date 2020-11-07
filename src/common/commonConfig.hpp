@@ -8,27 +8,28 @@
 
 //standard libraries
 #include <string>
+#include <string_view>
 
 
-int cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText, std::string minMaxText, int min = 0, int max = 0);
+int cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText, std::string_view minMaxText, int min = 0, int max = 0);
 
-std::string cfgInput(bool preHead, bool isCls, std::string text, std::string inputText, std::string errorText);
+std::string cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText);
 
 int cfgSelection(bool preHead,
-				std::string Question = "",
-				std::string Answer = "",
-				std::string Answer2 = "",
-				std::string Answer3 = "",
-				std::string Answer4 = "");
+				const std::string &Question = "",
+				const std::string &Answer = "",
+				const std::string &Answer2 = "",
+				const std::string &Answer3 = "",
+				const std::string &Answer4 = "");
 
-std::string cfgSelectionStr(std::string Question = "",
-			std::string Answer = "",
-			std::string Answer2 = "",
-			std::string Answer3 = "",
-			std::string Answer4 = "",
-			std::string Answer5 = "",
-			std::string Answer6 = "",
-			std::string Answer7 = "");
+std::string cfgSelectionStr(const std::string &Question = "",
+			const std::string &Answer = "",
+			const std::string &Answer2 = "",
+			const std::string &Answer3 = "",
+			const std::string &Answer4 = "",
+			const std::string &Answer5 = "",
+			const std::string &Answer6 = "",
+			const std::string &Answer7 = "");
 
 
 #endif

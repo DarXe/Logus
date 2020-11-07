@@ -68,11 +68,9 @@ bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesiz
 		std::cout << ((engLang) ? " (INFO) Nothing has been found\n" : " (INFO) Nic nie znaleziono\n");
 		return 1;
 	}
-	int page = 0;
-	int a = 0;
-	std::string b;
 	while(true)
 	{
+		int page = 0, a = 0; std::string b;
 		SetConsoleTextAttribute(h, 10);
 		cls();
 		a = 0;

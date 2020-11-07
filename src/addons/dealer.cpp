@@ -245,7 +245,6 @@ void printDatabase(bool showDiff)
 {
 	std::string line;
 	std::fstream cars;
-	char dL, dO;
 	if (showDiff == 0)
 	{
 		cars.open("cars.txt");
@@ -258,6 +257,7 @@ void printDatabase(bool showDiff)
 	}
 	else
 	{
+		char dL, dO;
 		std::fstream diL, diO;
 		diL.open("cars.txt", std::ios::in);
 		genDealerDatabase("cars.tmp");

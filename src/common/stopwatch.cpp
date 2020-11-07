@@ -7,9 +7,7 @@
 #include "common.hpp"
 
 Stopwatch::Stopwatch()
-{
-	m_start = std::chrono::high_resolution_clock::now();
-}
+	: m_start(std::chrono::high_resolution_clock::now()) {}
 
 Stopwatch::~Stopwatch()
 {

@@ -5,6 +5,7 @@
 //standard libraries
 #include <iostream>
 #include <conio.h>
+#include <string_view>
 #include <windows.h>
 
 
@@ -20,7 +21,7 @@
 bool liveChat();
 
 
-void color(std::string value)
+void color(const std::string &value)
 {
 	std::string value0 = "color 0" + value;
 	system(value0.c_str());
@@ -41,7 +42,7 @@ bool runLiveChat() //flc
 	return 1;
 }
 
-bool closeLogus(std::string text)
+bool closeLogus(std::string_view text)
 {
 	cls();
 	saveConfig();

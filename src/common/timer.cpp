@@ -11,7 +11,10 @@
 #include "timer.hpp"
 
 
-void Timer::start(clock_t timer) //in ms
+Timer::Timer()
+	: m_timer(0), m_running(0), m_loaded(0), m_beep(0) {}
+
+void Timer::start(const clock_t &timer) //in ms
 {
 	m_timer = timer;
 	m_delay = clock();
@@ -31,7 +34,7 @@ void Timer::stop(const bool &beep)
 	}
 }
 
-void Timer::startCounter(short getSeconds)
+void Timer::startCounter(const short &getSeconds)
 {
 	if (getSeconds)
 	{

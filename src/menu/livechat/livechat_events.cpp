@@ -72,11 +72,18 @@ bool LCEvent::Report(const std::string_view line)
 	return (line.find("[Output] : Nowy raport - ") != std::string::npos || line.find("[Output] : New report - ") != std::string::npos);
 }
 
-bool LCEvent::Transport(const std::string_view line)
+bool LCEvent::TransportCompany(const std::string_view line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
 	return (line.find("[Output] : Pieniądze za ") != std::string::npos || line.find("[Output] : You've ") != std::string::npos);
+}
+
+bool LCEvent::TransportTruckerzy(const std::string_view line)
+{
+	//[2020-11-07 21:56:04] [Output] : Otrzymałeś 44$ za transport.
+	//[2020-11-07 22:11:45] [Output] : Received $5 for transport.
+	return (line.find("[Output] : Otrzymałeś ") != std::string::npos || line.find("[Output] : Received $") != std::string::npos);
 }
 
 bool LCEvent::Nicknames(const std::string_view line)
@@ -202,7 +209,13 @@ bool LCEvent::Input(const std::string_view line)
 	return 0;
 }
 
+bool LCEvent::CB(const std::string_view line)
+{
+	// [2020-10-28 17:42:08] [Output] : (CB 19): ess
+	return (line.find("[Output] : (CB ") != std::string::npos);
+}
+
 bool notifCheck(std::string_view line)
 {
-	return (LCEvent::Nicknames(line) || LCEvent::Transport(line) || LCEvent::Report(line) || LCEvent::TransfersFrom(line) || LCEvent::PmFrom(line) || LCEvent::ContainsPhrase(line) || LCEvent::Team(line, 0));
+	return (LCEvent::Nicknames(line) || LCEvent::TransportCompany(line) || LCEvent::TransportTruckerzy(line) || LCEvent::Report(line) || LCEvent::TransfersFrom(line) || LCEvent::PmFrom(line) || LCEvent::ContainsPhrase(line) || LCEvent::Team(line, 0));
 }

@@ -16,14 +16,16 @@ class Timer
 private:
 	clock_t m_delay;
 public:
-	int m_timer = 0;
-	bool m_running = 0;
-	bool m_loaded = 0;
-	bool m_beep = 0;
+	int m_timer;
+	bool m_running;
+	bool m_loaded;
+	bool m_beep;
 
-	void start(clock_t delay);
+	Timer();
+
+	void start(const clock_t &timer);
 	void stop(const bool &beep = true);
-	void startCounter(short getSeconds = 0);
+	void startCounter(const short &getSeconds = 0);
 	void stopCounter();
 	void update();
 	void beep();

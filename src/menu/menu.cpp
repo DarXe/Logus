@@ -291,7 +291,6 @@ int menu() //con
 		case 'w':
 		{
 			cls();
-			clock_t p = 0;
 			std::string host = "";
 			std::cout << "Choose host: \n";
 			std::cout << "1. localhost\n";
@@ -325,7 +324,7 @@ int menu() //con
 			{
 				if (host == "")
 					break;
-				p = clock();
+				clock_t p = clock();
 				std::cout << "Any key - exit. ";
 				Sleep(1000);
 				system(host.c_str());
