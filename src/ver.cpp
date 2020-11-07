@@ -73,6 +73,6 @@ std::string genVer()
 	tempSeconds /= 60;							  //edit here if needed
 	seconds = std::to_string(tempSeconds);		  //convert int to string
 
-	relVer = year + "." + month;
-	return year + "." + month + "." + day + "-" + seconds;
+	relVer = year + "." + month + "." + day;
+	return relVer + "-" + seconds;
 }

@@ -35,9 +35,14 @@ namespace LCCommand
 	void Timestamp(const std::string_view line);
 	void TimestampBeep(const std::string_view line);
 	void RenderEngine(const std::string_view line);
-	void ClearEngineBeep(const std::string_view line);
+	void RenderEngineBeep(const std::string_view line);
 	void ClearChat(const std::string_view line);
 	void ClearChatBeep(const std::string_view line);
+	void SetMax(const std::string &line);
+	void SetMin(const std::string &line);
+	void SetRefresh(const std::string &line);
+	void SetDynamicRefresh(const std::string_view line);
+	void SetDynamicRefreshBeep(const std::string_view line);
 } // namespace LCCommand
 
 namespace LCCmdEvent
@@ -62,6 +67,10 @@ namespace LCCmdEvent
 	bool Timestamp(const std::string_view line);
 	bool RenderEngine(const std::string_view line);
 	bool ClearChat(const std::string_view line);
+	bool SetMax(const std::string_view line);
+	bool SetMin(const std::string_view line);
+	bool SetRefresh(const std::string_view line);
+	bool SetDynamicRefresh(const std::string_view line);
 
 	bool CheckCommandEvents(const std::string_view line);
 } // namespace LCCommand

@@ -44,9 +44,6 @@ void cls()
 	FillConsoleOutputCharacter(h, ' ', cellCount, homeCoords, &count);
 	FillConsoleOutputAttribute(h, csbi.wAttributes, cellCount, homeCoords, &count);
 
-	/* Fill the entire buffer with the current colors and attributes
-	if (!FillConsoleOutputAttribute(h, csbi.wAttributes, cellCount, homeCoords, &count)) return;*/
-
 	/* Move the cursor home */
 	SetConsoleCursorPosition(h, homeCoords);
 }

@@ -247,23 +247,6 @@ inline void LCFormat::Nothing(std::string_view line)
 	throw 1;
 }
 
-inline int LCFormat::GetLineSize(std::string_view line, const bool &notif)
-{
-	int size = 0;
-	if (timestamp)
-		size += 22;
-	if (line.size() > gt)
-		size += line.size() - gt;
-	else
-		size += line.size();
-
-	if (notif)
-		size += 2;
-
-
-	return size;
-}
-
 inline void LCFormat::SetColor(const short &color)
 {
 	SetConsoleTextAttribute(h, color);
@@ -306,10 +289,10 @@ void LCFormat::ParseLines(const std::deque<std::string> &lastLines, std::deque<i
 		{
 			//q(lastLinesSize[i]); getch();
 			int size = GetCursorPosX();
-			int count = lastLinesSize[i] - size;
-			if (count > 0)
+			int offset = lastLinesSize[i] - size;
+			if (offset > 0)
 			{
-				std::string d(count+2, ' ');
+				std::string d(offset, ' ');
 				std::cout << d;
 			}
 			std::cout << '\n';

@@ -202,6 +202,9 @@ void wersja()
 	std::cout << " LISTOPAD\n";
 
 	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2011_07 Nowa komenda - ""set minr <liczba>"" i ""set maxr <liczba>"", które ustawiają min i max dynamicznego odświeżania\n";
+	std::cout << " 2011_07 Nowa komenda - ""set dyn"", która przełącza dynamiczne odświeżanie\n";
+	std::cout << " 2011_07 Nowa komenda - ""set refr <liczba>"", która ustawia odświeżanie liveChat\n";
 	std::cout << " 2011_06 Nowa komenda - ""cls"", czyli czyszczenie ""buforu"" czatu\n";
 	std::cout << " 2011_06 Od teraz LiveChat zawija zbyt długie wiersze\n";
 	std::cout << " 2011_06 Nowa komenda - ""set engine"", która zmienia tryb renderowania czatu\n";

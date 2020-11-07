@@ -180,8 +180,8 @@ void settings()
 		}
 		case '1':
 		{
-			wyswietlaneWiersze = (engLang ? cfgInput(0, 1, "Enter amount of displayed lines", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 100", 0, 100) :
-			cfgInput(0, 1, "Podaj ilość wyświetlanych wierszy", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 100", 0, 100));
+			wyswietlaneWiersze = (engLang ? cfgInput(0, 1, "Enter amount of displayed lines", "Enter amount:", "Error. Entered wrong value", "Min 10, Max 50", 0, 50) :
+			cfgInput(0, 1, "Podaj ilość wyświetlanych wierszy", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 10, Max 50", 10, 50));
 			cls();
 			break;
 		}

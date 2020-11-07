@@ -202,12 +202,19 @@ bool checkLogPM(const std::string &filename, const Editor &editor)
 		{
 			if (!showLogContentInDefEditor(filename, filesize, foundLines))
 				return 0;
+			break;
 		}
 		case Logus:
 		{
 			if (!showLogContentInLogus(filename, filesize, foundLines))
 				return 0;
+			break;
 		}
+		default:
+		{
+			break;
+		}
+
 	}
 	return 1;
 }
@@ -256,6 +263,10 @@ bool checkLogTransfersAll(const Editor &editor)
 			return 0;
 			break;
 		}
+		default:
+		{
+			break;
+		}
 	}
 	return 1;
 }
@@ -293,6 +304,10 @@ bool checkLogTransfers(const std::string &filename, const Editor &editor)
 		{
 			if (!showLogContentInLogus(filename, filesize, foundLines))
 				return 0;
+			break;
+		}
+		default:
+		{
 			break;
 		}
 	}

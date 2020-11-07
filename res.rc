@@ -7,13 +7,13 @@ BEGIN
     BLOCK "040904E4"
     BEGIN
       VALUE "CompanyName", ""
-      VALUE "FileDescription", "Logi, logi i jeszcze raz logi... MTA oczywiscie."
-      VALUE "FileVersion", "20.09"
+      VALUE "FileDescription", "Logus"
+      VALUE "FileVersion", "20.11"
       VALUE "InternalName", "Logus"
       VALUE "LegalCopyright", "Copyright (C) 2018-2020 DarXe and Niventill"
       VALUE "OriginalFilename", "Logus.exe"
       VALUE "ProductName", "Logus"
-      VALUE "ProductVersion", "20.09"
+      VALUE "ProductVersion", "20.11"
     END
   END
   BLOCK "VarFileInfo"

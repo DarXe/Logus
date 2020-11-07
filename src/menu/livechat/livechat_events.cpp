@@ -25,10 +25,12 @@ bool LCEvent::Team(const std::string_view line, const bool &includePlayer)
 	if (line.find("[Output] : (TEAM) ") != std::string::npos)
 	{
 		if (line.find("[Output] : (TEAM) " + nick) != std::string::npos)
+		{
 			if (includePlayer)
 				return 1;
 			else
 				return 0;
+		}
 		return 1;
 	}
 	else
@@ -180,10 +182,12 @@ bool LCEvent::Admin(const std::string_view line, const bool &includePlayer)
 	if (line.find("[Output] : (ADMIN) ") != std::string::npos)
 	{
 		if (line.find("[Output] : (ADMIN) " + nick) != std::string::npos)
+		{
 			if (includePlayer)
 				return 1;
 			else
 				return 0;
+		}
 		return 1;
 	}
 	else

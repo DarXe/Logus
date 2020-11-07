@@ -32,7 +32,7 @@ static std::deque <std::string> lastLines;
 static std::deque <int> lastLinesSize;
 static std::vector <std::string> newLines;
 static int lcLineCount;
-static bool isNewLine = 0, isNewBeep = 0;
+static bool isNewLine = 0;
 static std::ifstream filelc;
 static std::string linelc;
 static std::uintmax_t size;
@@ -68,6 +68,8 @@ void liveChatHead() //head
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
 	std::cout<<"##########################################LiveChat##########################################\n";
+
+
 
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
 	std::cout<<" ["<<st.Get()<<"]Refresh:"<<refresh<<"ms # Wierszy:"<<lcLineCount<< " # CPU:" <<std::setprecision(2)<<cpu.getCpuUsage() << "% # Rozmiar: "<<std::setprecision(3)<<sizei<<sizet<<" # [Esc] Menu ";
@@ -109,15 +111,15 @@ void liveChatHead() //head
 	pos.X=91; pos.Y=3; SetConsoleCursorPosition(h, pos); std::cout<<" ";
 	SetConsoleTextAttribute(h, 12);
 	if (renderEngine)
-		 std::cout<<"\n#####engine:experimental##################################################[m]moveLogs#######\n";
-	else std::cout<<"\n#####engine:stable########################################################[m]moveLogs#######\n";
+		 std::cout<<"\n####engine:experimental###################################################[m]moveLogs#######\n";
+	else std::cout<<"\n####engine:stable#########################################################[m]moveLogs#######\n";
 	
 }
 
 void statusMeter()
 {
 	COORD pos = {3, 1};
-	SetConsoleCursorPosition(h, pos); SetConsoleTextAttribute(h, 12);
+	SetConsoleCursorPosition(h, pos); SetConsoleTextAttribute(h, 4);
 	std::cout << st.Get();
 }
 
@@ -149,7 +151,7 @@ void getChat(const bool &init) //gc
 		{
 			int notif = 0;
 			if (notifCheck(linelc))
-				int notif = 2;
+				notif = 2;
 			lastLines.push_back(utf8_substr(linelc, 0, 92 + gt - notif));
 			lastLines.push_back(utf8_substr(linelc, 92 + gt - notif));
 		}
@@ -264,7 +266,7 @@ bool liveChatInput()
 		{
 		case 27:
 		{
-			cls();
+			clslegacy();
 			filelc.close();
 			return 1;
 		}
@@ -352,6 +354,10 @@ bool liveChat() //lc
 	for (int i = 0; i < wyswietlaneWiersze; i++)
 		lastLinesSize[i] = 0;
 	lcLineCount = 0;
+	if (wyswietlaneWiersze > 50)
+		wyswietlaneWiersze = 50;
+	else if (wyswietlaneWiersze < 10)
+		wyswietlaneWiersze = 10;
 	isAutoJoin = false;
 	COORD pos;
 	//load logs without checking notifications
