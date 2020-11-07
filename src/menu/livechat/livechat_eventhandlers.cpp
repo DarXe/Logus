@@ -178,7 +178,7 @@ inline void LCEventHandler::BindKey(const std::string &line)
 {
 	if (LCEvent::BindKey(line))
 	{
-		if (mainTimer.m_running)
+		if (mainTimer.running)
 		{
 			mainTimer.stopCounter();
 			LDebug::InfoOutput(line);;
@@ -249,15 +249,6 @@ inline void LCEventHandler::SalaryForTransport(const std::string &line, const bo
 			delim1 = line.find("$ z");
 		else if (line.find(". I") != std::string::npos) //eng if
 			delim1 = line.find(". I");
-
-		tempSalary = line.substr(delim + 3, delim1 - delim - 3);
-		money += stoi(tempSalary);
-		courses++;
-
-		if (stoi(tempSalary) < minsalary || minsalary == 0)
-			minsalary = stoi(tempSalary);
-		if (stoi(tempSalary) > maxsalary)
-			maxsalary = stoi(tempSalary);
 	}
 	//[2020-11-07 21:56:04] [Output] : Otrzymałeś 44$ za transport.
 	//[2020-11-07 22:11:45] [Output] : Received $5 for transport.
@@ -272,16 +263,16 @@ inline void LCEventHandler::SalaryForTransport(const std::string &line, const bo
 			delim1 = line.find("$ z");
 		else if (line.find(" fo") != std::string::npos) //eng if
 			delim1 = line.find(" fo");
-
-		tempSalary = line.substr(delim + 3, delim1 - delim - 3);
-		money += stoi(tempSalary);
-		courses++;
-
-		if (stoi(tempSalary) < minsalary || minsalary == 0)
-			minsalary = stoi(tempSalary);
-		if (stoi(tempSalary) > maxsalary)
-			maxsalary = stoi(tempSalary);
 	}
+	
+	tempSalary = line.substr(delim + 3, delim1 - delim - 3);
+	money += stoi(tempSalary);
+	courses++;
+
+	if (stoi(tempSalary) < minsalary || minsalary == 0)
+		minsalary = stoi(tempSalary);
+	if (stoi(tempSalary) > maxsalary)
+		maxsalary = stoi(tempSalary);
 }
 
 inline void LCEventHandler::ContainsPhrase(const std::string &line)

@@ -40,6 +40,7 @@ static bool isAutoJoin;
 static CpuUsage cpu;
 static Status st;
 static int head1 = 0, head2 = 0, head3 = 0;
+static bool forceRedraw = 0;
 
 std::string_view Status::Get()
 {
@@ -78,7 +79,7 @@ void liveChatHead() //head
 		std::string h1(head1-GetCursorPosX(), ' '); std::cout << h1;
 	}
 	head1 = GetCursorPosX();
-	if(mainTimer.m_running)
+	if(mainTimer.running)
 	{
 		SetConsoleTextAttribute(h, 170); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
 		std::cout<<" Timer "<<mainTimer.getTime()<<" [s]Stop Timer ";
@@ -140,6 +141,24 @@ void getChat(const bool &init) //gc
 {
 	if (init) //if it's init, open filelc first
 		filelc.open(consoleLogPath, std::ios::in/* | std::ios::binary*/);
+
+	if (lastLines.size() > wyswietlaneWiersze)
+	{
+		cls();
+		forceRedraw = true;
+	}
+	else if (wyswietlaneWiersze > 50)
+	{
+		cls();
+		forceRedraw = true;
+		wyswietlaneWiersze = 50;
+	}
+	else if (wyswietlaneWiersze < 10)
+	{
+		forceRedraw = true;
+		wyswietlaneWiersze = 10;
+	}
+
 	while (!filelc.eof())
 	{
 		getline(filelc, linelc); //get linelc
@@ -305,12 +324,13 @@ bool liveChatInput()
 				showChat();
 				break;
 			}
+			showChat();
 			isAutoJoin = true;
 			pos.X = 3;
 			pos.Y = 4;
 			SetConsoleCursorPosition(h, pos);
 			SetConsoleTextAttribute(h, 12);
-			std::cout << "    START autoJoin    ";
+			std::cout << "####START autoJoin####";
 			Beep(dzwiekGlowny, 750);
 		}
 		break;
@@ -351,13 +371,9 @@ bool liveChat() //lc
 	//reset some things
 	lastLines.clear();
 	lastLines.shrink_to_fit();
-	for (int i = 0; i < wyswietlaneWiersze; i++)
+	for (int i = 0; i < 50; i++)
 		lastLinesSize[i] = 0;
 	lcLineCount = 0;
-	if (wyswietlaneWiersze > 50)
-		wyswietlaneWiersze = 50;
-	else if (wyswietlaneWiersze < 10)
-		wyswietlaneWiersze = 10;
 	isAutoJoin = false;
 	COORD pos;
 	//load logs without checking notifications
@@ -381,9 +397,10 @@ bool liveChat() //lc
 		mainTimer.update();
 
 		getChat();
-		if (isNewLine)
+		if (isNewLine || forceRedraw)
 		{
 			isNewLine = 0;
+			forceRedraw = false;
 			if (dynamicRefresh)
 			{
 				for (int i = 0; i < newLines.size(); i++)
@@ -417,7 +434,7 @@ bool liveChat() //lc
 					refresh = maxRefresh;
 					liveChatHead();
 				}
-				else if ((refresh == maxRefresh) && mainTimer.m_running)
+				else if ((refresh == maxRefresh) && mainTimer.running)
 					liveChatHead();
 				else if (refresh == maxRefresh)
 					statusMeter();
@@ -433,38 +450,6 @@ bool liveChat() //lc
 		}
 
 		//darxe's shit
-		if (!isAutoJoin)
-		{
-			for (int i(0); i < 20; i++) //wait time
-			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(refresh / 20));
-				if (kbhit())
-					break;
-			}
-		}
-		else
-		{
-			serverConnect();
-			for (int i(5); i > 0; i--) //wait 5s
-			{
-				pos.X = 3;
-				pos.Y = 4;
-				SetConsoleCursorPosition(h, pos);
-				SetConsoleTextAttribute(h, 12);
-				std::cout << " autoJoin: trying to connect in " << i << "s ";
-				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-				if (kbhit())
-					break;
-			}
-		}
-
-		//if key pressed
-		if (liveChatInput() == 1)
-			return 1;
-
-		mainTimer.beep();
-
-		//end of darxe's shit
 		if (isAutoJoin)
 		{
 			std::string tempLine;
@@ -477,6 +462,40 @@ bool liveChat() //lc
 				}
 			}
 		}
+
+		if (!isAutoJoin)
+		{
+			for (int i(0); i < 20; i++) //wait time
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(refresh / 20));
+				if (kbhit())
+					break;
+			}
+		}
+		else
+		{
+			serverConnect();
+			for (int i(10); i > 0; i--) //wait 5s
+			{
+				pos.X = 3;
+				pos.Y = 4;
+				SetConsoleCursorPosition(h, pos);
+				SetConsoleTextAttribute(h, 12);
+				std::cout << "#autoJoin: trying to connect in " << i << "s#";
+				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+				if (kbhit())
+					break;
+			}
+		}
+
+		//if key pressed
+		if (liveChatInput())
+			return 1;
+
+		mainTimer.beep();
+
+		//end of darxe's shit
+
 		newLines.clear();
 		if (newLines.capacity() > 100000)
 		{

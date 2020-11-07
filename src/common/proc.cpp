@@ -71,7 +71,7 @@ void stopAutoJoin(bool &isAutoJoin)
 	pos.Y = 4;
 	SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
-	std::cout << "       CONNECTED!       ";
+	std::cout << "#######CONNECTED!#######";
 	Beep(dzwiekGlowny, 500);
 }
 

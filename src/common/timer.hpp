@@ -13,17 +13,15 @@
 
 class Timer
 {
-private:
-	clock_t m_delay;
 public:
-	int m_timer;
-	bool m_running;
-	bool m_loaded;
-	bool m_beep;
+	int timer;
+	bool running;
+	bool loaded;
+	bool isbeep;
 
 	Timer();
 
-	void start(const clock_t &timer);
+	void start(const clock_t &_timer);
 	void stop(const bool &beep = true);
 	void startCounter(const short &getSeconds = 0);
 	void stopCounter();
@@ -35,6 +33,8 @@ public:
 	int getSec();
 
 	std::string getTime();
+private:
+	clock_t m_delay;
 };
 
 #endif

@@ -14,14 +14,11 @@ namespace LCFormat
 {
 	bool isNewLine(std::string_view line);
 	void Standard(std::string_view line);
-	void Pm(std::string_view line);
-	void Admin(std::string_view line);
+	void NonStandard(std::string_view line);
 	void Transfers(std::string_view line);
 	void Info(std::string_view line);
 	void Input(std::string_view line);
-	void Team(std::string_view line);
 	void ContainsPhrase(std::string_view line);
-	void CB(std::string_view line);
 	void Default(std::string_view line);
 	void Nothing(std::string_view line);
 	void SetColor(const short &color);

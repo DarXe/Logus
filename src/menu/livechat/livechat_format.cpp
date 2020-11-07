@@ -48,41 +48,14 @@ inline void LCFormat::Standard(std::string_view line)
 	}
 }
 
-inline void LCFormat::Pm(std::string_view line)
+inline void LCFormat::NonStandard(std::string_view line)
 {
-	// [2020-11-03 19:40:09] [Output] : * PW od Niventill: ess 
-	// [2020-11-03 19:40:09] [Output] : -> Niventill: ess
-	// [2020-11-03 19:40:09] [Output] : * PM from Niventill: ess 
-	if (LCEvent::PmFrom(line) || LCEvent::PmTo(line))
+	if (LCEvent::PmFrom(line) || LCEvent::PmTo(line) || LCEvent::Team(line, true) || LCEvent::CB(line) || LCEvent::Admin(line, true))
 	{
-		if (isNewLine(line))
-			line.remove_prefix(gt);
+		line.remove_prefix(gt);
 		int textPos = line.find(":");
 
 		LCFormat::SetColor(2);
-		if (textPos != std::string_view::npos)
-		{
-			std::cout << line.substr(0, textPos+1);
-			LCFormat::SetColor(7);
-			std::cout << line.substr(textPos+1, std::string_view::npos);
-		}
-		else
-			std::cout << line;
-
-		throw 1;
-	}
-}
-
-inline void LCFormat::Admin(std::string_view line)
-{
-	// [2020-10-28 17:42:08] [Output] : (ADMIN) Niventill: ess
-	if (LCEvent::Admin(line, true))
-	{
-		if (isNewLine(line))
-			line.remove_prefix(gt);
-		int textPos = line.find(":");
-
-		LCFormat::SetColor(4);
 		if (textPos != std::string_view::npos)
 		{
 			std::cout << line.substr(0, textPos+1);
@@ -146,29 +119,6 @@ inline void LCFormat::Input(std::string_view line)
 	}
 }
 
-inline void LCFormat::Team(std::string_view line)
-{
-	// [2020-10-28 17:42:08] [Output] : (ADMIN) Niventill: ess
-	if (LCEvent::Team(line, true))
-	{
-		if (isNewLine(line))
-			line.remove_prefix(gt);
-		int textPos = line.find(":");
-
-		LCFormat::SetColor(2);
-		if (textPos != std::string_view::npos)
-		{
-			std::cout << line.substr(0, textPos+1);
-			LCFormat::SetColor(7);
-			std::cout << line.substr(textPos+1, std::string_view::npos);
-		}
-		else
-			std::cout << line;
-
-		throw 1;
-	}
-}
-
 static size_t findPhrase(std::string_view line, const size_t &pos, size_t &len)
 {
 	for(int i = pos; i < line.size(); i++)
@@ -191,7 +141,7 @@ inline void LCFormat::ContainsPhrase(std::string_view line)
 	{
 		if (isNewLine(line))
 			line.remove_prefix(gt);
-		size_t pos = 0, phrasePos = 0, len = 0;
+		size_t pos = 0, len = 0;
 		LCFormat::SetColor(2);
 		
 		//q(line);
@@ -199,7 +149,7 @@ inline void LCFormat::ContainsPhrase(std::string_view line)
 		line.remove_prefix(line.find(":")+1);
 		while (true)
 		{
-			phrasePos = findPhrase(line, pos, len);
+			size_t phrasePos = findPhrase(line, pos, len);
 			if (phrasePos == std::string_view::npos)
 				break;
 
@@ -212,29 +162,6 @@ inline void LCFormat::ContainsPhrase(std::string_view line)
 		}
 		LCFormat::SetColor(7);
 		std::cout << line.substr(pos, std::string::npos);
-
-		throw 1;
-	}
-}
-
-inline void LCFormat::CB(std::string_view line)
-{
-	// [2020-11-03 19:40:09] [Output] : (CB 19): ess 
-	if (LCEvent::CB(line))
-	{
-		if (isNewLine(line))
-			line.remove_prefix(gt);
-		int textPos = line.find(":");
-
-		LCFormat::SetColor(2);
-		if (textPos != std::string_view::npos)
-		{
-			std::cout << line.substr(0, textPos+1);
-			LCFormat::SetColor(7);
-			std::cout << line.substr(textPos+1, std::string_view::npos);
-		}
-		else
-			std::cout << line;
 
 		throw 1;
 	}
@@ -293,13 +220,10 @@ void LCFormat::ParseLines(const std::deque<std::string> &lastLines, std::deque<i
 			//LCFormat::Nothing(line);
 			LCFormat::ContainsPhrase(line);
 			LCFormat::Standard(line);
-			LCFormat::Pm(line);
-			LCFormat::CB(line);
-			LCFormat::Admin(line);
+			LCFormat::NonStandard(line);
 			LCFormat::Transfers(line);
 			LCFormat::Info(line);
 			LCFormat::Input(line);
-			LCFormat::Team(line);
 
 			LCFormat::Default(line);
 		}

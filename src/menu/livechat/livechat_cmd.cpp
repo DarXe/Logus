@@ -103,7 +103,7 @@ inline void LCCommand::StartTimer(const std::string_view line)
 		int temp;
 		temp = czas * 1000 / 1.1;
 		temp = czas * 1000 - temp;
-		mainTimer.m_timer -= temp;
+		mainTimer.timer -= temp;
 	}
 	else if (line.find("[Input]  : t\'") != std::string::npos)
 		mainTimer.startCounter();

@@ -12,25 +12,25 @@
 
 
 Timer::Timer()
-	: m_timer(0), m_running(0), m_loaded(0), m_beep(0) {}
+	: timer(0), running(0), loaded(0), isbeep(0), m_delay(0) {}
 
-void Timer::start(const clock_t &timer) //in ms
+void Timer::start(const clock_t &_timer) //in ms
 {
-	m_timer = timer;
+	timer = _timer;
 	m_delay = clock();
-	m_running = true;
+	running = true;
 	Beep(dzwiekGlowny, 100);
 }
 
 void Timer::stop(const bool &beep)
 {
-	if (m_running)
+	if (running)
 	{
-		m_timer = 0;
+		timer = 0;
 		if (beep)
 			Beep(dzwiekGlowny, 500);
-		m_running = false;
-		m_loaded = false;
+		running = false;
+		loaded = false;
 	}
 }
 
@@ -44,10 +44,10 @@ void Timer::startCounter(const short &getSeconds)
 	{
 		start(czas * 1000);
 		if (random)
-			m_timer += 300000;
+			timer += 300000;
 		else
-			m_timer += 360000;
-		m_loaded = true;
+			timer += 360000;
+		loaded = true;
 	}
 	COORD pos;
 	pos.X = 0;
@@ -72,22 +72,22 @@ void Timer::stopCounter()
 
 void Timer::update()
 {
-	if (m_running)
+	if (running)
 	{
-		m_timer -= (clock() - m_delay);
+		timer -= (clock() - m_delay);
 		m_delay = clock();
 	}
 }
 
 void Timer::beep()
 {
-	if (m_running)
+	if (running)
 	{
-		if (m_timer > 0)
+		if (timer > 0)
 		{
 			update();
-			if (m_loaded)
-				if ((m_timer < 300000 && random) || (!random && m_timer < 360000))
+			if (loaded)
+				if ((timer < 300000 && random) || (!random && timer < 360000))
 				{
 					Beep(dzwiekGlowny, 150);
 					Beep(0, interval);
@@ -95,7 +95,7 @@ void Timer::beep()
 					Beep(0, interval);
 					Beep(dzwiekGlowny + 100, 150);
 					Beep(0, interval);
-					m_loaded = 0;
+					loaded = 0;
 				}
 		}
 		else
@@ -124,12 +124,12 @@ void Timer::beep()
 
 int Timer::getMs()
 {
-	return m_timer;
+	return timer;
 }
 
 int Timer::getSec()
 {
-	return m_timer / 1000;
+	return timer / 1000;
 }
 
 std::string Timer::getTime()
