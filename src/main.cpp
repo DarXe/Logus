@@ -9,6 +9,7 @@
 #include <conio.h>
 #include <ctime>
 #include <vector>
+#include <thread>
 
 
 //header includes
@@ -20,6 +21,18 @@
 #include <proc.hpp>
 #include "menu/menu.hpp"
 #include "main.hpp"
+
+static void hideConsoleCursor()
+{
+	while(true)
+	{
+		CONSOLE_CURSOR_INFO CURSOR;
+		CURSOR.dwSize = 1;
+		CURSOR.bVisible = FALSE;
+		SetConsoleCursorInfo(h, &CURSOR);
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
+}
 
 static bool init(const int &argc)
 {
@@ -56,7 +69,7 @@ static bool init(const int &argc)
 			nick = getNickFromMTAConfig();
 		preConfig();
 		saveConfig();
-		cls();
+		clslegacy();
 		wersja();
 	}
 	inifile.close();
@@ -136,10 +149,8 @@ int main(int argc, char **argv) //maa main
 	updateDependencies();
 
 #ifndef SHOWCURSOR
-	CONSOLE_CURSOR_INFO CURSOR;
-	CURSOR.dwSize = 1;
-	CURSOR.bVisible = FALSE;
-	SetConsoleCursorInfo(h, &CURSOR);
+	std::thread con(hideConsoleCursor);
+	con.detach();
 #endif
 	std::string _versionName_ = "Logus " + relVer;
 	SetConsoleTitleA(_versionName_.c_str()); //verr
@@ -193,7 +204,7 @@ void wersja()
 	Beep(dzwiekGlowny, 150);
 	std::cout << " Wciśnij klawisz, aby wyswietlić nowości" << std::endl;
 	getch();
-	cls();
+	clslegacy();
 
 	////////////////////////////////////////////////////////////////// news goes here ////////////////////////////
 
@@ -215,10 +226,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		cls();
+		clslegacy();
 		return;
 	}
-	cls();
+	clslegacy();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " PAŹDZIERNIK\n";
 
@@ -236,10 +247,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		cls();
+		clslegacy();
 		return;
 	}
-	cls();
+	clslegacy();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " WRZESIEŃ\n";
 
@@ -255,10 +266,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		cls();
+		clslegacy();
 		return;
 	}
-	cls();
+	clslegacy();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " SIERPIEŃ\n";
 
@@ -283,10 +294,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		cls();
+		clslegacy();
 		return;
 	}
-	cls();
+	clslegacy();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " CZERWIEC-LIPIEC\n";
 
@@ -306,10 +317,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		cls();
+		clslegacy();
 		return;
 	}
-	cls();
+	clslegacy();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " MAJ\n";
 
@@ -337,10 +348,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		cls();
+		clslegacy();
 		return;
 	}
-	cls();
+	clslegacy();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " MARZEC\n";
 
@@ -359,10 +370,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		cls();
+		clslegacy();
 		return;
 	}
-	cls();
+	clslegacy();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " ZMIANY - początek roku\n";
 	SetConsoleTextAttribute(h, 6);
@@ -375,5 +386,5 @@ void wersja()
 	std::cout << " 201_2 Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames\n";
 	std::cout << " Jeszcze w sierpniu zmieniono system sprawdzania nowych linii\n";
 
-	cls();
+	clslegacy();
 }

@@ -7,9 +7,9 @@
 #include <sstream>
 #include <fstream>
 #include <conio.h>
+#include <chrono>
 #include <codecvt>
 #include <iomanip>
-#include <thread>
 #include <windows.h>
 
 
@@ -46,18 +46,6 @@ void cls()
 
 	/* Move the cursor home */
 	SetConsoleCursorPosition(h, homeCoords);
-}
-
-void clsa()
-{
-	COORD pos = {0, 0};
-	for (int i = 1; i < 4; i++)
-	{
-		pos.Y = i;
-		SetConsoleCursorPosition(h, pos);
-		std::cout << "                                                                                            ";
-	}
-	pos.X = 0; pos.Y = 0; SetConsoleCursorPosition(h, pos);
 }
 
 std::string getCurrentTime()
@@ -128,7 +116,7 @@ char wybor()
 
 void def()
 {
-	cls();
+	clslegacy();
 	engLang ? std::cout << "\a (INFO) Option not found!\n" : std::cout << "\a (INFO) Nie ma takiej opcji!\n";
 }
 
@@ -179,7 +167,7 @@ std::string round(const long double x, const int dec)
 
 std::string utf8_substr(const std::string &str, int start, int length)
 {
-    int i,ix,j,realstart,reallength;
+	int i;
 	auto testlength = [&i, &str]()
 	{
 		unsigned char c= str[i];
@@ -188,6 +176,7 @@ std::string utf8_substr(const std::string &str, int start, int length)
 		else if (c>=240 && c<=247) i+=3;
 		else if (c>=248 && c<=255) throw 1;//invalid utf8
 	};
+	int ix, j, realstart, reallength;
 	try
 	{
 		if (length==0) return "";
@@ -225,6 +214,13 @@ int GetCursorPosX()
     CONSOLE_SCREEN_BUFFER_INFO cbsi;
     GetConsoleScreenBufferInfo(h, &cbsi);
     return cbsi.dwCursorPosition.X;
+}
+
+short GetConsoleRows()
+{
+	CONSOLE_SCREEN_BUFFER_INFO cbsi;
+    GetConsoleScreenBufferInfo(h, &cbsi);
+    return cbsi.srWindow.Bottom;
 }
 
 /*

@@ -36,7 +36,7 @@ void serverConnect() //flc
 bool runLiveChat() //flc
 {
 	serverConnect();
-	cls();
+	clslegacy();
 	Beep(dzwiekGlowny, 100);
 	liveChat();
 	return 1;
@@ -44,7 +44,7 @@ bool runLiveChat() //flc
 
 bool closeLogus(std::string_view text)
 {
-	cls();
+	clslegacy();
 	saveConfig();
 	Beep(dzwiekGlowny - 100, 250);
 	std::cout << "\n"
@@ -115,7 +115,7 @@ void preConfig()
 			case 1:
 			{
 				grade = 1;
-				cls();
+				clslegacy();
 				std::cout << " _______________________Logus_pre-config_______________________\n";
 				std::cout << " No worries, we set your pay wage to 100%.\n";
 				std::cout << " Press any key to continue...";
@@ -147,7 +147,7 @@ void preConfig()
 			case 1:
 			{
 				grade = 1;
-				cls();
+				clslegacy();
 				std::cout << " _______________________Logus_pre-config_______________________\n";
 				std::cout << " Chill utopia, ustawilismy procent wyplaty na 100%.\n";
 				std::cout << " Wcisnij dowolny klawisz aby kontynuowac...";
@@ -179,7 +179,7 @@ void preConfig()
 			case 1:
 			{
 				grade = 1;
-				cls();
+				clslegacy();
 				std::cout << " _______________________Logus_pre-config_______________________\n";
 				std::cout << " Chill utopia, ustawiliśmy procent wypłaty na 100%.\n";
 				std::cout << " Wciśnij dowolny klawisz aby kontynuować...";
@@ -346,7 +346,7 @@ void preConfig()
 
 	if (engLang)
 	{
-		cls();
+		clslegacy();
 		std::cout << " Preconfiguration ended succesfully.";
 		dots(100, 3);
 		std::cout << "\n You can always change settings in main menu! \n";
@@ -356,7 +356,7 @@ void preConfig()
 	else if (codePage852)
 	{
 
-		cls();
+		clslegacy();
 		std::cout << " Prekonfiguracja ukonczona pomyslnie.";
 		dots(100, 3);
 		std::cout << "\n Ustawienia mozesz w kazdej chwili zmienic w menu glownym!\n";
@@ -366,7 +366,7 @@ void preConfig()
 	else
 	{
 
-		cls();
+		clslegacy();
 		std::cout << " Prekonfiguracja ukończona pomyślnie.";
 		dots(100, 3);
 		std::cout << "\n Ustawienia możesz w każdej chwili zmienić w menu glównym!\n";

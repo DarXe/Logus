@@ -128,14 +128,12 @@ void statusMeter()
 	std::cout << st.get();
 }
 
-void showChat(const bool &init)
+void showChat()
 {
-	auto f = std::async(std::launch::async, [&init]()
+	auto f = std::async(std::launch::async, []()
 	{
-		if (init || !renderEngine)
-			cls();
-		//clsa();
-		//clslegacy();
+		if (!renderEngine)
+			clslegacy();
 		liveChatHead();
 		LCFormat::ParseLines(lastLines, lastLinesSize, timestamp);
 	});
@@ -143,44 +141,42 @@ void showChat(const bool &init)
 
 void getChat(const bool &init) //gc
 {
-	if (init) //if it's init, open filelc first
-		filelc.open(consoleLogPath, std::ios::in/* | std::ios::binary*/);
-
-	if (lastLines.size() > wyswietlaneWiersze)
+	if (lastLines.size() > wyswietlaneWiersze) //checks if user bruteforced lower "wyswietlaneWiersze" than is saved in deque
 	{
-		cls();
-		forceRedraw = true;
+		clslegacy(); //do a full console clean
+		forceRedraw = true; //tell livechat to redraw
 	}
-	else if (wyswietlaneWiersze > 50)
+	else if (wyswietlaneWiersze > 50) //check if user bruteforced higher "wyswietlaneWiersze" than is supported
 	{
-		cls();
-		forceRedraw = true;
-		wyswietlaneWiersze = 50;
+		clslegacy(); //do a full console clean
+		forceRedraw = true; //tell livechat to redraw
+		wyswietlaneWiersze = 50; //set "wyswietlaneWiersze" to max supported value
 	}
-	else if (wyswietlaneWiersze < 10)
+	else if (wyswietlaneWiersze < 10) //check if user bruteforced lower "wyswietlaneWiersze" than is supported
 	{
-		forceRedraw = true;
-		wyswietlaneWiersze = 10;
+		forceRedraw = true; //tell livechat to redraw
+		wyswietlaneWiersze = 10; //set "wyswietlaneWiersze" to max supported value
 	}
 
 	while (!filelc.eof())
 	{
 		getline(filelc, linelc); //get linelc
-		if (filelc.eof())		 //if above getline returns eof, do break
-			break;
-		std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv;
-		int utfsize = linelc.size()-conv.from_bytes(linelc).size();
-		if (linelc.size() > 92 + gt + utfsize)
+		if (filelc.eof())
+			break;				 //if above getline returns eof, do a break
+
+		std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv; 
+		int utfsize = linelc.size()-conv.from_bytes(linelc).size(); //get real string size (utf8)
+		if (linelc.size() > 92 + gt + utfsize) //split string to next line if it's too long
 		{
 			int notif = 0;
-			if (notifCheck(linelc))
+			if (notifCheck(linelc)) //offset if "beepable" message is present (as it occupies 2 chars)
 				notif = 2;
-			lastLines.push_back(utf8_substr(linelc, 0, 92 + gt - notif));
-			lastLines.push_back(utf8_substr(linelc, 92 + gt - notif));
+			lastLines.emplace_back(utf8_substr(linelc, 0, 92 + gt - notif)); 
+			lastLines.emplace_back(utf8_substr(linelc, 92 + gt - notif));
 		}
-		else if (linelc.size() > gt)
+		else if (linelc.size() > gt) //if line is fine and isn't too long, just emplace it all
 		{
-			lastLines.push_back(linelc); //add element to the end of array
+			lastLines.emplace_back(linelc); //add element to the end of array
 		}
 		while (lastLines.size() > wyswietlaneWiersze)
 		{
@@ -189,9 +185,15 @@ void getChat(const bool &init) //gc
 		}
 		if (!init) //if eof isn't present (as there is a new linelc) AND it's not init = 1 save newlines
 		{
-			newLines.push_back(linelc); //add new lines to another array
+			newLines.emplace_back(linelc); //add new lines to another array
 			isNewLine = 1;
 		}
+	}
+
+	if((lastLines.size()+5) > GetConsoleRows())
+	{
+		clslegacy();
+		forceRedraw = true;
 	}
 }
 
@@ -201,12 +203,13 @@ void moveLogs() //mv clean and move logs from console.log to logus.log
 	{
 		//read console.log
 		Stopwatch read;
+		size = std::filesystem::file_size(consoleLogPath);
 		std::ifstream from(consoleLogPath, std::ios::binary);
 		std::string fromContent(size, 0);
 		from.read(&fromContent[0], size);
 		from.close();
 		read.stop();
-
+		//asynchronously write to logus.log
 		auto f = std::async(std::launch::async, [&read, &fromContent]
 		{
 			Stopwatch write;
@@ -324,7 +327,7 @@ bool liveChatInput()
 			break;
 		case 'm':
 		{
-			cls();
+			clslegacy();
 			std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nENTER - Zgoda | Inny klawisz - anuluj\n";
 			if (getch() != 13)
 			{
@@ -343,7 +346,7 @@ bool liveChatInput()
 		}
 		case 13: //enter start autoJoin
 		{
-			cls();
+			clslegacy();
 			std::cout << "CZY NA PEWNO CHCESZ WŁĄCZYĆ AUTO RECONNECT?\nENTER - Zgoda | Inny klawisz - anuluj\n";
 			if (getch() != 13)
 			{
@@ -402,7 +405,8 @@ bool liveChat() //lc
 	lcLineCount = 0;
 	cpu.clear();
 	isAutoJoin = false;
-	COORD pos;
+	//init file stream
+	filelc.open(consoleLogPath, std::ios::in | std::ios::binary);
 	//load logs without checking notifications
 	Stopwatch init;
 	getChat(1);
@@ -411,7 +415,8 @@ bool liveChat() //lc
 	Stopwatch initshow;
 	size = std::filesystem::file_size(consoleLogPath);
 	mainTimer.update();
-	showChat(1);
+	clslegacy();
+	showChat();
 	initshow.stop();
 
 	LDebug::DebugOutput("initLiveChat: wielkość pliku: %sKB, linie: %s, odczyt: %s (%s), wyświetlanie: %s (%s), łącznie: %sns (%sms)", 
@@ -427,6 +432,7 @@ bool liveChat() //lc
 		if (isNewLine)
 		{
 			isNewLine = false;
+			forceRedraw = false;
 			if (dynamicRefresh)
 			{
 				for (int i = 0; i < newLines.size(); i++)
@@ -507,9 +513,7 @@ bool liveChat() //lc
 			serverConnect();
 			for (int i(15); i > 0; i--) //wait 5s
 			{
-				pos.X = 3;
-				pos.Y = 4;
-				SetConsoleCursorPosition(h, pos);
+				SetConsoleCursorPosition(h, {0, 0});
 				SetConsoleTextAttribute(h, 12);
 				std::cout << "#autoJoin: trying to connect in " << i << "s#";
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));

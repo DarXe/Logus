@@ -15,7 +15,7 @@ std::string genVer(); //from config.hpp
 std::string relVer;
 std::string serverIP = "185.62.189.174:22003"; //ip server
 std::string ver = genVer(); //version variable, not editable //zmienna wersji, nie wolno edytować
-std::string updateChannel = "release";
+std::string updateChannel = "experimental";
 std::string mtaLocation = "";
 int dzwiekGlowny = 1777; //sound message //dźwięk komunikatów
 bool fLockTeam = 0; //lock beep(TEAM)

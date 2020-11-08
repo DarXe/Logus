@@ -28,7 +28,7 @@ int lottoLogus()
 	while (true)
 	{
 		SetConsoleTextAttribute(h, 112);
-		cls();
+		clslegacy();
 		std::cout << " ________________________$ Lotto Logus $________________________" << std::endl;
 		std::cout << " [1] Dodaj graczy" << std::endl;
 		std::cout << " [L] Losowanie" << std::endl;
@@ -42,7 +42,7 @@ int lottoLogus()
 		switch (wyb)
 		{
 		case 27:
-			cls();
+			clslegacy();
 			return 0;
 		case 's':
 		case 'S':
@@ -51,10 +51,10 @@ int lottoLogus()
 
 		case '1':
 		{
-			cls();
+			clslegacy();
 			while (true)
 			{
-				cls();
+				clslegacy();
 				playerList(nicknames);
 				std::cout << " [1] Dodawanie..." << std::endl;
 				std::cout << " [x] Usuń ostatniego gracza" << std::endl;
@@ -71,7 +71,7 @@ int lottoLogus()
 				{
 					while (true)
 					{
-						cls();
+						clslegacy();
 						playerList(nicknames);
 
 						std::cout << " Podaj nick: ";
@@ -89,7 +89,7 @@ int lottoLogus()
 						else
 							nicknames.push_back(nick);
 
-						cls();
+						clslegacy();
 						playerList(nicknames);
 						std::cout << " [Esc] Zakończ | [Inny klawisz] Następny gracz" << std::endl;
 						if (getch() == 27)
@@ -119,7 +119,7 @@ int lottoLogus()
 					}
 					else
 					{
-						cls();
+						clslegacy();
 						std::cout << " Jesteś tego pewien?\n [Esc] Anuluj | [Inny klawisz] Tak\n";
 						if (getch() == 27)
 							break;
@@ -157,7 +157,7 @@ int lottoLogus()
 			}
 			else
 			{
-				cls();
+				clslegacy();
 				playerList(nicknames);
 				if (winners.empty())
 				{
@@ -340,11 +340,11 @@ void lottoLogusReplay(std::vector<std::string> &nicknames, std::vector<short> &p
 	} //fix crash program
 	else
 	{
-		cls();
+		clslegacy();
 		playerList(nicknames);
 
 		int temp = 0;
-		std::string nick = "";
+		std::string nick;
 		for (int i(1); i < nicknames.size(); i++)
 			if (!((i - 1) % 6))
 				temp++;
@@ -445,7 +445,7 @@ void lottoLogusStats(std::vector<std::string> &nicknames)
 		std::fstream log;
 		std::string nick = "";
 		int temp = 0;
-		cls();
+		clslegacy();
 		log.open("lottoLogus.log", std::ios::out);
 
 		int licznik = 1;
@@ -599,20 +599,15 @@ void lottoLogusStats(std::vector<std::string> &nicknames)
 
 void testLos()
 {
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD pos;
-	int temp;
-	int a = 0;
 	int b5 = 0, b6 = 0, b7 = 0, b8 = 0, b9 = 0;
-	cls();
+	clslegacy();
 	while (true)
 	{
-		a = randomize(1000, 6000);
+		int temp;
+		int a = randomize(1000, 6000);
 		//getch();
 		Sleep(5);
-		pos.X = 0;
-		pos.Y = 0;
-		SetConsoleCursorPosition(h, pos);
+		SetConsoleCursorPosition(h, {0, 0});
 		std::cout << a << std::endl;
 		if (a >= 1000 && a < 2000)
 			b5++;
@@ -624,9 +619,7 @@ void testLos()
 			b8++;
 		else
 			b9++;
-		pos.X = 0;
-		pos.Y = 1;
-		SetConsoleCursorPosition(h, pos);
+		SetConsoleCursorPosition(h, {0, 1});
 		temp = b5;
 		if (b6 > temp)
 			temp = b6;

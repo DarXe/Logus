@@ -8,6 +8,7 @@
 
 //standard libraries
 #include <string>
+#include <deque>
 #include <iosfwd>
 #define q(var) std::cout << #var << " = " << var << '\n'
 
@@ -23,12 +24,12 @@ std::string round(const long double x, const int dec);
 int randomize(int from, int to);
 void clslegacy();
 void cls();
-void clsa();
 char wybor();
 void def();
 void toClipboard(const std::string &s);
 int power(int x, int y);
 std::string utf8_substr(const std::string &str, int start, int length = INT_MAX);
 int GetCursorPosX();
+short GetConsoleRows();
 
 #endif

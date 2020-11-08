@@ -25,7 +25,7 @@ public:
 void liveChatHead();
 void cpuMeter(const bool &bypass = false);
 void statusMeter();
-void showChat(const bool &init = false);
+void showChat();
 void getChat(const bool &init = false);
 void moveLogs();
 void checkMessages(const bool &pre);

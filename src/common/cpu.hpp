@@ -22,8 +22,8 @@ public:
 	bool ready();
 
 private:
-	ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 	float avg;
+	ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 	unsigned long long avgcount;
 	size_t time;
 	int numProcessors;
