@@ -180,7 +180,7 @@ std::string round(const long double x, const int dec)
 std::string utf8_substr(const std::string &str, int start, int length)
 {
     int i,ix,j,realstart,reallength;
-	auto strlen = [&i, &str]()
+	auto testlength = [&i, &str]()
 	{
 		unsigned char c= str[i];
 		if (c>=192 && c<=223) i+=1;
@@ -196,7 +196,7 @@ std::string utf8_substr(const std::string &str, int start, int length)
 			//find j=utf8_strlen(str);
 			for(j=0,i=0,ix=str.length(); i<ix; i+=1, j++)
 			{
-				strlen();
+				testlength();
 			}
 			if (length !=INT_MAX && j+length-start<=0) return "";
 			if (start  < 0 ) start+=j;
@@ -208,7 +208,7 @@ std::string utf8_substr(const std::string &str, int start, int length)
 		{
 			if (j==start) { realstart=i; }
 			if (j>=start && (length==INT_MAX || j<=start+length)) { reallength=i-realstart; }
-			strlen();
+			testlength();
 		}
 		if (j==start) { realstart=i; }
 		if (j>=start && (length==INT_MAX || j<=start+length)) { reallength=i-realstart; }

@@ -38,21 +38,21 @@ std::string Stopwatch::pre(const unit &u, const int &precision) //precision of f
 	{
 		case s:
 		{
-			if (precision >= 0)
+			if (precision < 5)
 				return round(get(s), precision) + "s";
 			else
 				return std::to_string(get(s)) + "s";
 		}
 		case ms:
 		{
-			if (precision >= 0)
+			if (precision < 5)
 				return round(get(ms), precision) + "ms";
 			else
 				return std::to_string(get(ms)) + "ms";
 		}
 		case ns:
 		{
-			if (precision >= 0)
+			if (precision < 5)
 				return round(get(ns), precision) + "ns";
 			else
 				return std::to_string(get(ns)) + "ns";
