@@ -11,10 +11,6 @@
 
 class CpuUsage
 {
-	ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
-	long double avg;
-	int numProcessors;
-	HANDLE self;
 public:
 	int avgcount = 1;
 
@@ -22,6 +18,11 @@ public:
 	void init();
 	double getCpuUsage();
 	double getCpuAvg();
+private:
+	ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
+	long double avg;
+	int numProcessors;
+	HANDLE self;
 };
 
 #endif

@@ -27,6 +27,7 @@ void CpuUsage::init()
 }
 
 CpuUsage::CpuUsage()
+    : avg()
 {
 	init();
 }

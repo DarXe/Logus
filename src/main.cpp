@@ -117,7 +117,6 @@ int main(int argc, char **argv) //maa main
 
 	//q(mtaLocation); q(consoleLogPath); q(consoleLog1Path); q(consoleLog2Path); q(consoleLog3Path); q(consoleLog4Path); q(consoleLog5Path); getch(); return 0;
 	std::fstream fileInit;
-	std::cout << " Updating files...\n";
 	fileInit.open(consoleLogPath, std::ios::app);
 	fileInit.close();
 	fileInit.open(consoleLog1Path, std::ios::app);

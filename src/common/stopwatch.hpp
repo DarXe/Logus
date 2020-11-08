@@ -10,6 +10,13 @@
 #include <chrono>
 
 
+enum unit
+{
+	s,
+	ms,
+	ns
+};
+
 class Stopwatch
 {
 public:
@@ -17,9 +24,9 @@ public:
 	~Stopwatch();
 
 	void stop();
-	long double get(const std::string &type);
+	long double get(const unit &u);
 
-	std::string pre(const std::string &type, const int &precision = 0);
+	std::string pre(const unit &u, const int &precision = 0);
 private:
 	std::chrono::high_resolution_clock::time_point m_start, m_stop;
 	long double m_time;

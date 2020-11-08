@@ -126,15 +126,15 @@ void statusMeter()
 
 void showChat(const bool &init)
 {
-	//auto f = std::async(std::launch::async, [&init]()
-	//{
+	auto f = std::async(std::launch::async, [&init]()
+	{
 		if (init || !renderEngine)
 			cls();
 		//clsa();
 		//clslegacy();
 		liveChatHead();
 		LCFormat::ParseLines(lastLines, lastLinesSize, timestamp);
-	//});
+	});
 }
 
 void getChat(const bool &init) //gc
@@ -193,36 +193,59 @@ void getChat(const bool &init) //gc
 
 void moveLogs() //mv clean and move logs from console.log to logus.log
 {
-	std::ofstream to;
-	//check filelc size and then load filelc content into string
-	Stopwatch read;
 	std::ifstream from(consoleLogPath, std::ios::binary);
-	std::string fromContent(size, 0);
-	from.read(&fromContent[0], size);
-	from.close();
-	read.stop();
+	if (size > 1073741824)
+	{
+		//read console.log
+		Stopwatch read;
+		std::string fromContent(size, 0);
+		from.read(&fromContent[0], size);
+		from.close();
+		read.stop();
 
-	//clear console.log
-	Stopwatch clears;
-	std::ofstream clear;
-	clear.open(consoleLogPath, std::ios::out | std::ios::trunc);
-	clear.close();
-	//goto beginning of the console.log
-	filelc.clear();
-	filelc.seekg(0, std::ios::beg);
-	lcLineCount = 0;
-	clears.stop();
+		//clear console.log
+		Stopwatch clears;
+		std::ofstream clear;
+		clear.open(consoleLogPath, std::ios::out | std::ios::trunc);
+		clear.close();
+		//goto beginning of the console.log
+		filelc.clear();
+		filelc.seekg(0, std::ios::beg);
+		lcLineCount = 0;
+		clears.stop();
 
-	Stopwatch write;
-	to.open("logus.log", std::ios::binary | std::ios::app);
-	to.write(fromContent.c_str(), size);
-	to.close();
-	write.stop();
+		auto f = std::async(std::launch::async, [&read, &fromContent]
+		{
+			Stopwatch write;
+			std::ofstream to("logus.log", std::ios::binary | std::ios::app);
+			to.write(fromContent.c_str(), size);
+			to.close();
+			write.stop();
 
-	//save moveLogs time to filelc liveChatInfoOutput.log
-	LDebug::DebugOutput("moveLogs: wielkość pliku: %sKB, odczyt: %s (%s), czyszczenie: %s (%s), zapis: %s (%s), łącznie: %sns (%sms)", 
-	{std::to_string(size/1000), read.pre("ns"), read.pre("ms", 2), clears.pre("ns"), clears.pre("ms", 2), write.pre("ns"), write.pre("ms", 2),
-	round(read.get("ns") + clears.get("ns") + write.get("ns"), 0), round(read.get("ms") + clears.get("ms") + write.get("ms"), 2)});
+			//save moveLogs time to filelc liveChatInfoOutput.log
+			LDebug::DebugOutput("moveLogs: wielkość pliku: %sKB, odczyt: %s (%s), zapis: %s (%s), łącznie: %sns (%sms)", 
+			{std::to_string(size/1000), read.pre(ns), read.pre(ms, 2), write.pre(ns), write.pre(ms, 2),
+			round(read.get(ns) + + write.get(ns), 0), round(read.get(ms) + write.get(ms), 2)});
+		});
+
+	}
+	else
+	{
+		std::ofstream to("logus.log", std::ios::binary | std::ios::app);
+		Stopwatch copy;
+		while(true)
+		{
+			std::string content;
+			getline(from, content);
+			if (from.eof())
+				break;
+			to << content << '\n';
+		}
+		copy.stop();
+		//save moveLogs time to filelc liveChatInfoOutput.log
+		LDebug::DebugOutput("moveLogs: wielkość pliku: %sKB, łącznie: %s (%s)", {std::to_string(size), copy.pre(ns), copy.pre(ms, 2)});
+	}
+
 	size = std::filesystem::file_size(consoleLogPath);
 }
 
@@ -388,8 +411,8 @@ bool liveChat() //lc
 	initshow.stop();
 
 	LDebug::DebugOutput("initLiveChat: wielkość pliku: %sKB, linie: %s, odczyt: %s (%s), wyświetlanie: %s (%s), łącznie: %sns (%sms)", 
-	{std::to_string(size/1000), std::to_string(lcLineCount), init.pre("ns"), init.pre("ms", 2), initshow.pre("ns"), initshow.pre("ms", 2),
-	round(init.get("ns") + initshow.get("ns"), 0), round(init.get("ms") + initshow.get("ms"), 2)});
+	{std::to_string(size/1000), std::to_string(lcLineCount), init.pre(ns), init.pre(ms, 2), initshow.pre(ns), initshow.pre(ms, 2),
+	round(init.get(ns) + initshow.get(ns), 0), round(init.get(ms) + initshow.get(ms), 2)});
 	//end
 
 	while (true) //actual livechat infinite loop
@@ -436,11 +459,17 @@ bool liveChat() //lc
 				}
 				else if ((refresh == maxRefresh) && mainTimer.running)
 					liveChatHead();
-				else if (refresh == maxRefresh)
+				else
 					statusMeter();
 			}
 			else
 				liveChatHead();
+		}
+
+		if (autoMoveLogs)
+		{
+			if (size >= 99000)
+				moveLogs();
 		}
 
 		if (isAutoJoin)
@@ -486,12 +515,6 @@ bool liveChat() //lc
 			return 1;
 
 		mainTimer.beep();
-
-		if (autoMoveLogs)
-		{
-			if (size >= 99000)
-				moveLogs();
-		}
 
 		newLines.clear();
 		if (newLines.capacity() > 100000)

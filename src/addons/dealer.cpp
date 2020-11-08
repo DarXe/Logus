@@ -134,7 +134,6 @@ void databaseCheckout()
 {
 	SetConsoleTextAttribute(h, 6); //set info text to yellow
 	std::fstream cars, f1, f2;
-	char c1, c2;
 	cars.open("cars.txt");
 	if (!cars.good())
 	{
@@ -155,8 +154,8 @@ void databaseCheckout()
 		f2.open("cars.tmp", std::ios::in);
 		while (true)
 		{
-			c1 = f1.get();
-			c2 = f2.get();
+			char c1 = f1.get();
+			char c2 = f2.get();
 			if (c1 != c2)
 			{
 				std::cout << " LOKALNA BAZA DANYCH RÓŻNI SIĘ WZGLĘDEM ORYGINAŁU. NADPISYWANIE.\n";
@@ -177,7 +176,6 @@ void dealerInfo(bool isBuy)
 	std::string searchedVehicle, vehicle, kmph;
 	std::fstream cars;
 	int price, vmax;
-	bool isTransport = 0;
 	while (true)
 	{
 		cls();
@@ -190,7 +188,7 @@ void dealerInfo(bool isBuy)
 			if (isupper(searchedVehicle[i]))
 				searchedVehicle[i] = tolower(searchedVehicle[i]);
 		}
-		isTransport = 0;
+		bool isTransport = 0;
 		cars.open("cars.txt", std::ios::in);
 		while (!cars.eof())
 		{
@@ -257,15 +255,14 @@ void printDatabase(bool showDiff)
 	}
 	else
 	{
-		char dL, dO;
 		std::fstream diL, diO;
 		diL.open("cars.txt", std::ios::in);
 		genDealerDatabase("cars.tmp");
 		diO.open("cars.tmp", std::ios::in);
 		while (true)
 		{
-			dL = diL.get();
-			dO = diO.get();
+			char dL = diL.get();
+			char dO = diO.get();
 			if ((dL == EOF) || (dO == EOF))
 				break;
 			if (dL != dO)

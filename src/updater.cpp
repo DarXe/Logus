@@ -18,18 +18,22 @@
 
 void updateDependencies()
 {
-	std::filesystem::create_directory("bin");
+	if (!std::filesystem::exists("bin")) std::filesystem::create_directory("bin");
 	if (!std::filesystem::exists("bin\\curl.exe"))
 	{
-		std::filesystem::copy("c:\\windows\\system32\\curl.exe", "bin\\curl.exe");
-		system("bin\\curl --silent https://raw.githubusercontent.com/DarXe/Logus/master/pasteCmd.exe -o bin\\pasteCmd.exe");
+		if (std::filesystem::exists("c:\\windows\\system32\\curl.exe"))
+			std::filesystem::copy("c:\\windows\\system32\\curl.exe", "bin\\curl.exe");
 		if (!std::filesystem::exists("bin\\curl.exe"))
 			engLang ? std::cout << " Couldn't find curl, auto-update will be limited.\n" : std::cout << " Nie udało się znaleźć curl. Możliwości auto-update będą ograniczone.\n";
 		else
 			cls();
 	}
-	else
+	if (!std::filesystem::exists("bin\\pasteCmd.exe"))
+	{
+		if (system("bin\\curl --progress-bar --fail https://raw.githubusercontent.com/DarXe/Logus/experimental/bin/pasteCmd.exe -o bin\\pasteCmd.exe"))
+			remove("bin\\pasteCmd.exe");
 		cls();
+	}
 }
 
 void checkLogusUpdate()

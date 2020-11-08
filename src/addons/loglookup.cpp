@@ -68,12 +68,13 @@ bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesiz
 		std::cout << ((engLang) ? " (INFO) Nothing has been found\n" : " (INFO) Nic nie znaleziono\n");
 		return 1;
 	}
+	int page = 0;
 	while(true)
 	{
-		int page = 0, a = 0; std::string b;
+		std::string b;
 		SetConsoleTextAttribute(h, 10);
 		cls();
-		a = 0;
+		int a = 0;
 		for (int i = page*20; i < foundLines.size(); i++)
 		{
 			if (std::to_string(++a).size() == 1)
@@ -85,7 +86,7 @@ bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesiz
 			if (a == 20)
 				break;
 		}
-		if ((page)*20 >= foundLines.size())
+		if (page*20 >= foundLines.size())
 			break;
 		SetConsoleTextAttribute(h, 12);
 		std::cout << "<<< ESC - Wyjdź | Każdy inny klawisz - Kontynuuj | Strona: " << ++page << " >>>\n";
@@ -111,7 +112,7 @@ void showLogContentInLiveChat(const std::deque<std::string> &foundLines)
 	}
 	showf.stop();
 	showFile.close();
-	LDebug::DebugOutput("showLogContentInLiveChat: czas zapisu: %s (%s)", {showf.pre("ns"), showf.pre("ms", 2)});
+	LDebug::DebugOutput("showLogContentInLiveChat: czas zapisu: %s (%s)", {showf.pre(ns), showf.pre(ms, 2)});
 	ShellExecute(0, 0, "content.txt", 0, 0, SW_SHOW);
 }
 
@@ -131,7 +132,7 @@ bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &fil
 	}
 	showf.stop();
 	LDebug::DebugOutput("showLogContentInDefEditor: plik: %s, wielkość pliku: %sKB, czas zapisu: %s (%s)", {filename, std::to_string(filesize / 1000),
-	showf.pre("ns"), showf.pre("ms", 2)});
+	showf.pre(ns), showf.pre(ms, 2)});
 	showFile.close();
 	cls();
 	std::cout << ((engLang) ? "Current file: " : "Aktualny plik: ") << filename <<
@@ -259,7 +260,6 @@ bool checkLogTransfersAll(const Editor &editor)
 		{
 			showLogContentInLiveChat(foundLines);
 			return 0;
-			break;
 		}
 		default:
 		{
