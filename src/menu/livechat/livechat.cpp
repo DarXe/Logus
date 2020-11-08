@@ -133,7 +133,7 @@ void showChat()
 	auto f = std::async(std::launch::async, []()
 	{
 		if (!renderEngine)
-			clslegacy();
+			cls();
 		liveChatHead();
 		LCFormat::ParseLines(lastLines, lastLinesSize, timestamp);
 	});
@@ -143,12 +143,12 @@ void getChat(const bool &init) //gc
 {
 	if (lastLines.size() > wyswietlaneWiersze) //checks if user bruteforced lower "wyswietlaneWiersze" than is saved in deque
 	{
-		clslegacy(); //do a full console clean
+		cls(); //do a full console clean
 		forceRedraw = true; //tell livechat to redraw
 	}
 	else if (wyswietlaneWiersze > 50) //check if user bruteforced higher "wyswietlaneWiersze" than is supported
 	{
-		clslegacy(); //do a full console clean
+		cls(); //do a full console clean
 		forceRedraw = true; //tell livechat to redraw
 		wyswietlaneWiersze = 50; //set "wyswietlaneWiersze" to max supported value
 	}
@@ -327,7 +327,7 @@ bool liveChatInput()
 			break;
 		case 'm':
 		{
-			clslegacy();
+			cls();
 			std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nENTER - Zgoda | Inny klawisz - anuluj\n";
 			if (getch() != 13)
 			{
@@ -346,7 +346,7 @@ bool liveChatInput()
 		}
 		case 13: //enter start autoJoin
 		{
-			clslegacy();
+			cls();
 			std::cout << "CZY NA PEWNO CHCESZ WŁĄCZYĆ AUTO RECONNECT?\nENTER - Zgoda | Inny klawisz - anuluj\n";
 			if (getch() != 13)
 			{
@@ -415,7 +415,7 @@ bool liveChat() //lc
 	Stopwatch initshow;
 	size = std::filesystem::file_size(consoleLogPath);
 	mainTimer.update();
-	clslegacy();
+	cls();
 	showChat();
 	initshow.stop();
 

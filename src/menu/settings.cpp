@@ -121,13 +121,13 @@ void settings()
 		{
 		case 27:
 		{
-			clslegacy();
+			cls();
 			saveConfig();
 			return;
 		}
 		case 'r':
 		{
-			clslegacy();
+			cls();
 			engLang ? std::cout << "ARE YOU SURE? Enter - Accept | Any other key - Cancel\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? Enter - Akceptuj | Inny klawisz - Anuluj\n";
 			if (getch() != 13)
 				break;
@@ -137,37 +137,37 @@ void settings()
 		break;
 		case 'p':
 		{
-			clslegacy();
+			cls();
 			fLockPW = (fLockPW) ? 0 : 1;
 			break;
 		}
 		case 't':
 		{
-			clslegacy();
+			cls();
 			fLockTeam = (fLockTeam) ? 0 : 1;
 			break;
 		}
 		case 's':
 		{
-			clslegacy();
+			cls();
 			fLockReport = (fLockReport) ? 0 : 1;
 			break;
 		}
 		case 'k':
 		{
-			clslegacy();
+			cls();
 			fLockNick = (fLockNick) ? 0 : 1;
 			break;
 		}
 		case 'c':
 		{
-			clslegacy();
+			cls();
 			chatSound = (chatSound) ? 0 : 1;
 			break;
 		}
 		case 'a':
 		{
-			clslegacy();
+			cls();
 			if (updateChannel == "release")
 				updateChannel = "experimental";
 			else if (updateChannel == "experimental")
@@ -182,19 +182,19 @@ void settings()
 		{
 			wyswietlaneWiersze = (engLang ? cfgInput(0, 1, "Enter amount of displayed lines", "Enter amount:", "Error. Entered wrong value", "Min 10, Max 50", 0, 50) :
 			cfgInput(0, 1, "Podaj ilość wyświetlanych wierszy", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 10, Max 50", 10, 50));
-			clslegacy();
+			cls();
 			break;
 		}
 		case '2':
 		{
 			refresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 1000", 0, 1000) :
 			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 1000", 0, 1000));
-			clslegacy();
+			cls();
 			break;
 		}
 		case '3':
 		{
-			clslegacy();
+			cls();
 			dynamicRefresh = (dynamicRefresh) ? 0 : 1;
 			break;
 		}
@@ -202,39 +202,39 @@ void settings()
 		{
 			dzwiekGlowny = (engLang ? cfgInput(0, 1, "Enter new sound frequency", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 10000", 0, 10000) :
 			cfgInput(0, 1, "Podaj nową częstotliwość dźwięku", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 10000", 0, 10000));
-			clslegacy();
+			cls();
 			break;
 		}
 		case '5':
 		{
 			interval = (engLang ? cfgInput(0, 1, "Enter new delay between sounds", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 1000", 0, 1000) :
 			cfgInput(0, 1, "Podaj nowy odstęp między dźwiękami", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 1000", 0, 1000));
-			clslegacy();
+			cls();
 			break;
 		}
 		case 'u':
 		{
 			minRefresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 2000", 0, 2000) :
 			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 2000", 0, 2000));
-			clslegacy();
+			cls();
 			break;
 		}
 		case 'o':
 		{
 			maxRefresh = (engLang ? cfgInput(0, 1, "Enter new refresh rate", "Enter amount:", "Error. Entered wrong value", "Min 0, Max 2000", 0, 2000) :
 			cfgInput(0, 1, "Podaj nową częstotliwość odświeżania", "Podaj liczbę:", "Błąd. Podano błędną wartość", "Min 0, Max 2000", 0, 2000));
-			clslegacy();
+			cls();
 			break;
 		}
 		case 'm':
 		{
-			clslegacy();
+			cls();
 			autoMoveLogs = autoMoveLogs ? 0 : 1;
 			break;
 		}
 		case 'd':
 		{
-			clslegacy();
+			cls();
 			autoOpenGate = autoOpenGate ? 0 : 1;
 			break;
 		}
@@ -245,12 +245,12 @@ void settings()
 			int temp = (engLang ? cfgInput(0, 1, "", "Enter seconds:", "Error. Entered wrong value", "Min 0, Max 59", 0, 59) :
 			cfgInput(0, 1, "", "Podaj sekundy:", "Błąd. Podano błędną wartość", "Min 0, Max 59", 0, 59));
 			czas = (temp2 * 60) + temp;
-			clslegacy();
+			cls();
 			break;
 		}
 		case '7':
 		{
-			clslegacy();
+			cls();
 			random = (random) ? 0 : 1;
 			break;
 		}
@@ -258,14 +258,14 @@ void settings()
 		{
 			money = (engLang ? cfgInput(0, 1, "Enter new amount of money (without $ etc)", "Enter a number:", "Error. Entered wrong value", "It has to be a number", 0, INT_MAX) :
 			cfgInput(0, 1, "Podaj nową ilość $ (sama liczba)", "Podaj liczbę:", "Błąd. Podano błędną wartość", "To musi być liczba", 0, INT_MAX));
-			clslegacy();
+			cls();
 			break;
 		}
 		case '9':
 		{
 			courses = (engLang ? cfgInput(0, 1, "Enter new amount of courses", "Enter amount:", "Error. Entered wrong value", "It has to be a number", 0, INT_MAX) :
 			cfgInput(0, 1, "Podaj nową ilość kursów", "Podaj ilość:", "Błąd. Podano błędną wartość", "To musi być liczba", 0, INT_MAX));
-			clslegacy();
+			cls();
 			break;
 		}
 		case '0':
@@ -273,12 +273,12 @@ void settings()
 			grade = (engLang ? cfgInput(0, 1, "Enter new pay wage", "Enter amount:", "Error. Entered wrong value", "Min 50, Max 100", 50, 100) :
 			cfgInput(0, 1, "Podaj nowy procent wypłaty", "Podaj ilość:", "Błąd. Podano błędną wartość", "Min 50, Max 100", 50, 100));
 			grade /= 100;
-			clslegacy();
+			cls();
 			break;
 		}
 		case 'x':
 		{
-			clslegacy();
+			cls();
 			engLang ? std::cout << "ARE YOU SURE? Enter - Accept | Any other key - Cancel\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? Enter - Akceptuj | Inny klawisz - Anuluj\n";
 			if (getch() != 13)
 				break;
@@ -286,13 +286,13 @@ void settings()
 			courses = 0;
 			minsalary = 0;
 			maxsalary = 0;
-			clslegacy();
+			cls();
 			engLang ? std::cout << "(INFO) Money and courses has been cleared.\n" : std::cout << "(INFO) Wyzerowano.\n";
 			break;
 		}
 		case 'v':
 		{
-			clslegacy();
+			cls();
 			while (true)
 			{
 				SetConsoleTextAttribute(h, 10);
@@ -334,13 +334,13 @@ void settings()
 				{
 				case 27:
 				{
-					clslegacy();
+					cls();
 					saveConfig();
 					break;
 				}
 				case '1': //set2 SETTINGS two
 				{
-					clslegacy();
+					cls();
 					while (true)
 					{
 						engLang ? std::cout << " Enter exact phrase: " : std::cout << " Podaj dokładną frazę: ";
@@ -350,7 +350,7 @@ void settings()
 							engLang ? std::cout << " Phrase has to be at least 2 characters long!\n" : std::cout << " Minimum 2 znaki!\n";
 						else
 						{
-							clslegacy();
+							cls();
 							phrases.push_back(s_temp);
 							engLang ? std::cout << " Added phrase " << s_temp << "\n" : std::cout << " Dodano frazę " << s_temp << "\n";
 							break;
@@ -360,7 +360,7 @@ void settings()
 				}
 				case '2':
 				{
-					clslegacy();
+					cls();
 					if (phrases.empty())
 						engLang ? std::cout << " (INFO) Phrase list is empty\n" : std::cout << " (INFO) Lista fraz jest pusta\n";
 					else
@@ -372,7 +372,7 @@ void settings()
 				}
 				case '3':
 				{
-					clslegacy();
+					cls();
 					if (phrases.empty())
 						engLang ? std::cout << " (INFO) Phrase list is empty\n" : std::cout << " (INFO) Lista fraz jest pusta\n";
 					else
@@ -386,12 +386,12 @@ void settings()
 				}
 				case '4':
 				{
-					clslegacy();
+					cls();
 					if (phrases.empty())
 						engLang ? std::cout << " (INFO) Phrase list is empty\n" : std::cout << " (INFO) Lista fraz jest pusta\n";
 					else
 					{
-						clslegacy();
+						cls();
 						for (int i = 0; i < phrases.size(); i++)
 						{
 							std::cout << " " << i + 1 << ". " << phrases.at(i) << "\n";
@@ -399,7 +399,7 @@ void settings()
 						int result;
 						engLang ? result = cfgInput(0, 0, "Enter phrase's ID that you want to remove", "Enter ID:", "Error. Entered wrong value", "It has to be a number", 0, phrases.size()) :
 						result = cfgInput(0, 0, "Podaj ID frazy którą chcesz usunąć", "Podaj ID:", "Błąd. Podaną błędną wartość", "To musi być liczba", 0, phrases.size());
-						clslegacy();
+						cls();
 						engLang ? std::cout << " Removed phrase " << phrases.at(result - 1) << "\n" : std::cout << " Usunieto frazę " << phrases.at(result - 1) << "\n";
 						phrases.erase(phrases.begin() + result - 1);
 					}
@@ -407,14 +407,14 @@ void settings()
 				}
 				case 'r':
 				{
-					clslegacy();
+					cls();
 					readDefault();
 					saveConfig();
 					break;
 				}
 				case 'x':
 				{
-					clslegacy();
+					cls();
 					engLang ? std::cout << "ARE YOU SURE? Enter - Accept | Any other key - Cancel\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? Enter - Akceptuj | Inny klawisz - Anuluj\n";
 					if (getch() != 13)
 						break;
@@ -432,7 +432,7 @@ void settings()
 		}
 		case 'b':
 		{
-			clslegacy();
+			cls();
 			while (true)
 			{
 				SetConsoleTextAttribute(h, 10);
@@ -474,13 +474,13 @@ void settings()
 				{
 				case 27:
 				{
-					clslegacy();
+					cls();
 					saveConfig();
 					break;
 				}
 				case '1': //set2 SETTINGS two
 				{
-					clslegacy();
+					cls();
 					while (true)
 					{
 						engLang ? std::cout << " Enter exact player name: " : std::cout << " Podaj dokładną nazwę gracza: ";
@@ -490,7 +490,7 @@ void settings()
 							engLang ? std::cout << " Nickname has to be at least 3 characters long!\n" : std::cout << " Minimum 3 znaki!\n";
 						else
 						{
-							clslegacy();
+							cls();
 							nicknames.push_back(s_temp);
 							engLang ? std::cout << " Added player " << s_temp << "\n" : std::cout << " Dodano gracza " << s_temp << "\n";
 							break;
@@ -500,7 +500,7 @@ void settings()
 				}
 				case '2':
 				{
-					clslegacy();
+					cls();
 					if (nicknames.empty())
 						engLang ? std::cout << " (INFO) Player list is empty\n" : std::cout << " (INFO) Lista graczy jest pusta\n";
 					else
@@ -512,7 +512,7 @@ void settings()
 				}
 				case '3':
 				{
-					clslegacy();
+					cls();
 					if (nicknames.empty())
 						engLang ? std::cout << " (INFO) Player list is empty\n" : std::cout << " (INFO) Lista graczy jest pusta\n";
 					else
@@ -526,12 +526,12 @@ void settings()
 				}
 				case '4':
 				{
-					clslegacy();
+					cls();
 					if (nicknames.empty())
 						engLang ? std::cout << " (INFO) Player list is empty\n" : std::cout << " (INFO) Lista graczy jest pusta\n";
 					else
 					{
-						clslegacy();
+						cls();
 						for (int i = 0; i < nicknames.size(); i++)
 						{
 							std::cout << " " << i + 1 << ". " << nicknames.at(i) << "\n";
@@ -539,7 +539,7 @@ void settings()
 						int result;
 						engLang ? result = cfgInput(0, 0, "Enter player's ID that you want to remove", "Enter ID:", "Error. Entered wrong value", "It has to be a number", 0, nicknames.size()) :
 						result = cfgInput(0, 0, "Podaj ID gracza którego chcesz usunąć", "Podaj ID:", "Błąd. Podaną błędną wartość", "To musi być liczba", 0, nicknames.size());
-						clslegacy();
+						cls();
 						engLang ? std::cout << " Removed player " << nicknames.at(result - 1) << "\n" : std::cout << " Usunieto gracza " << nicknames.at(result - 1) << "\n";
 						nicknames.erase(nicknames.begin() + result - 1);
 					}
@@ -547,14 +547,14 @@ void settings()
 				}
 				case 'r':
 				{
-					clslegacy();
+					cls();
 					readDefault();
 					saveConfig();
 					break;
 				}
 				case 'x':
 				{
-					clslegacy();
+					cls();
 					engLang ? std::cout << "ARE YOU SURE? Enter - Accept | Any other key - Cancel\n" : std::cout << "CZY NA PEWNO CHCESZ TO ZROBIĆ? Enter - Akceptuj | Inny klawisz - Anuluj\n";
 					if (getch() != 13)
 						break;
@@ -572,7 +572,7 @@ void settings()
 		}
 		case 'n':
 		{
-			clslegacy();
+			cls();
 			engLang ? std::cout << "Nickname is required to proper work of LiveChat\n" : std::cout << "Nazwa nicku potrzebna jest do poprawnego dzialania LiveChat\n";
 			while (true)
 			{
@@ -585,7 +585,7 @@ void settings()
 				else
 					break;
 			}
-			clslegacy();
+			cls();
 			break;
 		}
 		default:

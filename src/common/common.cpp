@@ -116,7 +116,7 @@ char wybor()
 
 void def()
 {
-	clslegacy();
+	cls();
 	engLang ? std::cout << "\a (INFO) Option not found!\n" : std::cout << "\a (INFO) Nie ma takiej opcji!\n";
 }
 

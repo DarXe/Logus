@@ -64,7 +64,7 @@ bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesiz
 {
 	if (foundLines.empty())
 	{
-		clslegacy();
+		cls();
 		std::cout << ((engLang) ? " (INFO) Nothing has been found\n" : " (INFO) Nic nie znaleziono\n");
 		return 1;
 	}
@@ -73,7 +73,7 @@ bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesiz
 	{
 		std::string b;
 		SetConsoleTextAttribute(h, 10);
-		clslegacy();
+		cls();
 		int a = 0;
 		for (int i = page*20; i < foundLines.size(); i++)
 		{
@@ -92,7 +92,7 @@ bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesiz
 		std::cout << "<<< ESC - Wyjdź | Każdy inny klawisz - Kontynuuj | Strona: " << ++page << " >>>\n";
 		if (getch() == 27)
 		{
-			clslegacy();
+			cls();
 			break;
 		}
 	}
@@ -120,7 +120,7 @@ bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &fil
 {
 	if (foundLines.size() == 0)
 	{
-		clslegacy();
+		cls();
 		std::cout << ((engLang) ? " (INFO) Nothing has been found\n" : " (INFO) Nic nie znaleziono\n");
 		return 1;
 	}
@@ -134,7 +134,7 @@ bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &fil
 	LDebug::DebugOutput("showLogContentInDefEditor: plik: %s, wielkość pliku: %sKB, czas zapisu: %s (%s)", {filename, std::to_string(filesize / 1000),
 	showf.pre(ns), showf.pre(ms, 2)});
 	showFile.close();
-	clslegacy();
+	cls();
 	std::cout << ((engLang) ? "Current file: " : "Aktualny plik: ") << filename <<
 	((engLang) ? "\nFound content will be shown in default program associated with .txt extension\nPress ESC to return to menu or any other key to continue" :
 	"\nZnaleziona zawartość pokaże się w edytorze domyślnie ustalonym dla rozszerzenia .txt\nWciśnij klawisz ESC aby powrócić do MENU lub inny żeby kontynuować");
@@ -142,10 +142,10 @@ bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &fil
 	ShellExecute(0, 0, "content.txt", 0, 0, SW_SHOW);
 	if (getch() == 27)
 	{;
-		clslegacy();
+		cls();
 		return 0;
 	}
-	clslegacy();
+	cls();
 	return 1;
 }
 
@@ -380,15 +380,15 @@ bool CheckLogContentDateFromTo(const std::string &filename, const std::string &d
 void dateSelectionMenu()
 {
 	std::string date, dateEnd, filename;
-	clslegacy();
+	cls();
 	filename = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") :
 	cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
 	if (filename == "WYJŚCIE")
 	{
-		clslegacy();
+		cls();
 		return;
 	}
-	clslegacy();
+	cls();
 	if (engLang)
 	{
 		if (cfgSelection(0, "Do you want to also include the time in the search?", "Yes", "No") == 1)

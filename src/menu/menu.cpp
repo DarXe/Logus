@@ -136,10 +136,10 @@ int menu() //con
 		{
 			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") :
 			cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
-			clslegacy();
+			cls();
 			if (filen == "WYJŚCIE")
 			{
-				clslegacy();
+				cls();
 				break;
 			}
 			checkLogTeam(filen);
@@ -149,10 +149,10 @@ int menu() //con
 		{
 			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") :
 			cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
-			clslegacy();
+			cls();
 			if (filen == "WYJŚCIE")
 			{
-				clslegacy();
+				cls();
 				break;
 			}
 			checkLogPM(filen);
@@ -204,10 +204,10 @@ int menu() //con
 		{
 			std::string filen = ((engLang) ? cfgSelectionStr("Choose file to lookup.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log") :
 			cfgSelectionStr("Wybierz nazwę pliku do przeszukania.", consoleLogPath, consoleLog1Path, consoleLog2Path, consoleLog3Path, consoleLog4Path, consoleLog5Path, "logus.log"));
-			clslegacy();
+			cls();
 			if (filen == "WYJŚCIE")
 			{
-				clslegacy();
+				cls();
 				break;
 			}
 			checkLogTransfers(filen);
@@ -220,26 +220,26 @@ int menu() //con
 		}
 		case 't':
 		{
-			clslegacy();
+			cls();
 			liveChat(); //run LiveChat
 			break;
 		}
 		case 'l':
 		case 'L':
 		{
-			clslegacy();
+			cls();
 			lottoLogus(); //run Lotto Logus
 			break;
 		}
 		case '5': //set1    SETTINGS one
 		{
-			clslegacy();
+			cls();
 			settings();
 			break;
 		}
 		case '0':
 		{
-			clslegacy();
+			cls();
 			if (codePage852)
 			{
 				codePage852 = 0;
@@ -258,7 +258,7 @@ int menu() //con
 		}
 		case 'u':
 		{
-			clslegacy();
+			cls();
 			std::cout << "👌 🤞 🧠 🦷 🦴 ∅ ∈ ∉ ⊂ ⊃ ⊆ ⊇ ⊄ ⋂ ⋃ ≠ ☮😎  𝓌𝐞𝕣ｓנＯη 𝐆έ𝓙  ☞⛵ ≤ ≥ ≈ ≡ ⌈ ⌉ ⌊ ⌋ ∑ ∫ × ⊗ ⊕ ⊙ × ∂ √ ≔ ± ² ℵ ∞ ∎ ′ ° ℓ ∡ ∀ ¬ ∧ ∨ ∃ ∵ ∴  ↖ ↗ ↘ ↙ ☮😎  𝓌𝐞𝕣ｓנＯη 𝐆έ𝓙  ☞⛵  🚃 🚇 🚈 🚊 🚋 🚞 🛤 \n";
 			std::cout << ((engLang) ? "END. PRESS ESC TO RETURN TO THE MENU\n" : "KONIEC. WCIŚNIJ ESC ABY WRÓCIĆ DO MENU\n");
 			getch();
@@ -266,7 +266,7 @@ int menu() //con
 		}
 		case 'j':
 		{
-			clslegacy();
+			cls();
 			if (engLang)
 			{
 				engLang = 0;
@@ -282,7 +282,7 @@ int menu() //con
 		}
 		case '9':
 		{
-			clslegacy();
+			cls();
 			dzwiekGlowny = randomize(50, 10000);
 			std::cout << dzwiekGlowny << std::endl;
 			break;
@@ -290,7 +290,7 @@ int menu() //con
 
 		case 'w':
 		{
-			clslegacy();
+			cls();
 			std::string host = "";
 			std::cout << "Choose host: \n";
 			std::cout << "1. localhost\n";
@@ -319,7 +319,7 @@ int menu() //con
 				host = "ping google.pl";
 				break;
 			}
-			clslegacy();
+			cls();
 			while (true)
 			{
 				if (host == "")
@@ -337,24 +337,24 @@ int menu() //con
 					break;
 				}
 			}
-			clslegacy();
+			cls();
 			break;
 		}
 		case 'k':
 		{
-			clslegacy();
+			cls();
 			dealer();
 			break;
 		}
 		case 'i':
 		{
-			clslegacy();
+			cls();
 			wersja();
 			break;
 		}
 		case 's':
 		{
-			clslegacy();
+			cls();
 			switch (fastStart)
 			{
 			case 0:
@@ -371,7 +371,7 @@ int menu() //con
 		}
 		case 13:
 		{
-			clslegacy();
+			cls();
 			runLiveChat();
 			break;
 		}

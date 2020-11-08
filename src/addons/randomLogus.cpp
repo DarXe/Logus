@@ -28,7 +28,7 @@ int lottoLogus()
 	while (true)
 	{
 		SetConsoleTextAttribute(h, 112);
-		clslegacy();
+		cls();
 		std::cout << " ________________________$ Lotto Logus $________________________" << std::endl;
 		std::cout << " [1] Dodaj graczy" << std::endl;
 		std::cout << " [L] Losowanie" << std::endl;
@@ -42,7 +42,7 @@ int lottoLogus()
 		switch (wyb)
 		{
 		case 27:
-			clslegacy();
+			cls();
 			return 0;
 		case 's':
 		case 'S':
@@ -51,10 +51,10 @@ int lottoLogus()
 
 		case '1':
 		{
-			clslegacy();
+			cls();
 			while (true)
 			{
-				clslegacy();
+				cls();
 				playerList(nicknames);
 				std::cout << " [1] Dodawanie..." << std::endl;
 				std::cout << " [x] Usuń ostatniego gracza" << std::endl;
@@ -71,7 +71,7 @@ int lottoLogus()
 				{
 					while (true)
 					{
-						clslegacy();
+						cls();
 						playerList(nicknames);
 
 						std::cout << " Podaj nick: ";
@@ -89,7 +89,7 @@ int lottoLogus()
 						else
 							nicknames.push_back(nick);
 
-						clslegacy();
+						cls();
 						playerList(nicknames);
 						std::cout << " [Esc] Zakończ | [Inny klawisz] Następny gracz" << std::endl;
 						if (getch() == 27)
@@ -119,7 +119,7 @@ int lottoLogus()
 					}
 					else
 					{
-						clslegacy();
+						cls();
 						std::cout << " Jesteś tego pewien?\n [Esc] Anuluj | [Inny klawisz] Tak\n";
 						if (getch() == 27)
 							break;
@@ -157,7 +157,7 @@ int lottoLogus()
 			}
 			else
 			{
-				clslegacy();
+				cls();
 				playerList(nicknames);
 				if (winners.empty())
 				{
@@ -340,7 +340,7 @@ void lottoLogusReplay(std::vector<std::string> &nicknames, std::vector<short> &p
 	} //fix crash program
 	else
 	{
-		clslegacy();
+		cls();
 		playerList(nicknames);
 
 		int temp = 0;
@@ -445,7 +445,7 @@ void lottoLogusStats(std::vector<std::string> &nicknames)
 		std::fstream log;
 		std::string nick = "";
 		int temp = 0;
-		clslegacy();
+		cls();
 		log.open("lottoLogus.log", std::ios::out);
 
 		int licznik = 1;
@@ -600,7 +600,7 @@ void lottoLogusStats(std::vector<std::string> &nicknames)
 void testLos()
 {
 	int b5 = 0, b6 = 0, b7 = 0, b8 = 0, b9 = 0;
-	clslegacy();
+	cls();
 	while (true)
 	{
 		int temp;

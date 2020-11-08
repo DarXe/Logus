@@ -28,13 +28,13 @@ void updateDependencies()
 			if (!std::filesystem::exists("bin\\curl.exe"))
 				engLang ? std::cout << " Couldn't find curl, auto-update will be limited.\n" : std::cout << " Nie udało się znaleźć curl. Możliwości auto-update będą ograniczone.\n";
 			else
-				clslegacy();
+				cls();
 		}
 		if (!std::filesystem::exists("bin\\pasteCmd.exe"))
 		{
 			if (system("bin\\curl --progress-bar --fail https://raw.githubusercontent.com/DarXe/Logus/experimental/bin/pasteCmd.exe -o bin\\pasteCmd.exe"))
 				remove("bin\\pasteCmd.exe");
-			clslegacy();
+			cls();
 		}
 	}
 }

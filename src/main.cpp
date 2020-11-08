@@ -69,7 +69,7 @@ static bool init(const int &argc)
 			nick = getNickFromMTAConfig();
 		preConfig();
 		saveConfig();
-		clslegacy();
+		cls();
 		wersja();
 	}
 	inifile.close();
@@ -204,7 +204,7 @@ void wersja()
 	Beep(dzwiekGlowny, 150);
 	std::cout << " Wciśnij klawisz, aby wyswietlić nowości" << std::endl;
 	getch();
-	clslegacy();
+	cls();
 
 	////////////////////////////////////////////////////////////////// news goes here ////////////////////////////
 
@@ -226,10 +226,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		clslegacy();
+		cls();
 		return;
 	}
-	clslegacy();
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " PAŹDZIERNIK\n";
 
@@ -247,10 +247,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		clslegacy();
+		cls();
 		return;
 	}
-	clslegacy();
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " WRZESIEŃ\n";
 
@@ -266,10 +266,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		clslegacy();
+		cls();
 		return;
 	}
-	clslegacy();
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " SIERPIEŃ\n";
 
@@ -294,10 +294,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		clslegacy();
+		cls();
 		return;
 	}
-	clslegacy();
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " CZERWIEC-LIPIEC\n";
 
@@ -317,10 +317,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		clslegacy();
+		cls();
 		return;
 	}
-	clslegacy();
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " MAJ\n";
 
@@ -348,10 +348,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		clslegacy();
+		cls();
 		return;
 	}
-	clslegacy();
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " MARZEC\n";
 
@@ -370,10 +370,10 @@ void wersja()
 	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
 	if (getch() == 27)
 	{
-		clslegacy();
+		cls();
 		return;
 	}
-	clslegacy();
+	cls();
 	SetConsoleTextAttribute(h, 4);
 	std::cout << " ZMIANY - początek roku\n";
 	SetConsoleTextAttribute(h, 6);
@@ -386,5 +386,5 @@ void wersja()
 	std::cout << " 201_2 Wylaczono powiadomienia na kazda wiadomosc gracza dodanego do Nicknames\n";
 	std::cout << " Jeszcze w sierpniu zmieniono system sprawdzania nowych linii\n";
 
-	clslegacy();
+	cls();
 }

@@ -178,7 +178,7 @@ void dealerInfo(bool isBuy)
 	int price, vmax;
 	while (true)
 	{
-		clslegacy();
+		cls();
 		std::cout << " Podaj DOKŁADNĄ nazwę pojazdu: ";
 		getline(std::cin, searchedVehicle);
 		for (int i = 0; i < searchedVehicle.length(); i++)
@@ -205,7 +205,7 @@ void dealerInfo(bool isBuy)
 				vehicle[0] = toupper(vehicle[0]);
 				if (isBuy)
 				{
-					clslegacy();
+					cls();
 					std::cout << " Stawka bazowa: " << base_dealerBuy * 100 << "%, " << vehicle << ", $" << price * base_dealerBuy << ", " << vmax << " km/h\n";
 					std::cout << " ESC - wyjście | Inny klawisz, wyszukaj ponownie\n";
 				}
@@ -213,13 +213,13 @@ void dealerInfo(bool isBuy)
 				{
 					if (!isTransport)
 					{
-						clslegacy();
+						cls();
 						std::cout << " Stawka bazowa: " << base_dealerSellCar * 100 << "%, " << vehicle << ", $" << price * base_dealerSellCar << ", " << vmax << " km/h\n";
 						std::cout << " ESC - wyjście | Inny klawisz, wyszukaj ponownie\n";
 					}
 					else
 					{
-						clslegacy();
+						cls();
 						std::cout << " Stawka bazowa: " << base_dealerSellTransport * 100 << "%, " << vehicle << ", $" << price * base_dealerSellTransport << ", " << vmax << " km/h\n";
 						if (vehicle == "Roadtrain" && vehicle == "Tanker" && vehicle == "Linerunner")
 							std::cout << " Z naczepą ($" << base_dealerSellTransport * 150000 << "): $" << (price + 150000) * base_dealerSellTransport << '\n';
@@ -228,7 +228,7 @@ void dealerInfo(bool isBuy)
 				}
 				if (getch() == 27)
 				{
-					clslegacy();
+					cls();
 					return;
 				}
 				else
@@ -278,7 +278,7 @@ void printDatabase(bool showDiff)
 	SetConsoleTextAttribute(h, 7);
 	std::cout << "\nDowolny klawisz - kontynuuj\n";
 	getch();
-	clslegacy();
+	cls();
 }
 
 void dealer()
@@ -307,24 +307,24 @@ void dealer()
 		{
 		case 27:
 		{
-			clslegacy();
+			cls();
 			return;
 		}
 		case '1':
 		{
-			clslegacy();
+			cls();
 			dealerInfo(1);
 			break;
 		}
 		case '2':
 		{
-			clslegacy();
+			cls();
 			dealerInfo(0);
 			break;
 		}
 		case '3':
 		{
-			clslegacy();
+			cls();
 			printDatabase();
 			break;
 		}
@@ -332,7 +332,7 @@ void dealer()
 		{
 			while (true)
 			{
-				clslegacy();
+				cls();
 				SetConsoleTextAttribute(h, 15);
 				std::cout << " _____________________________________CENA_BAZOWA__________________________________\n";
 				SetConsoleTextAttribute(h, 7);
@@ -372,7 +372,7 @@ void dealer()
 				if (wyb == 27)
 				{
 					saveConfig(0);
-					clslegacy();
+					cls();
 					break;
 				}
 			}
@@ -380,28 +380,28 @@ void dealer()
 		case '0':
 		{
 			dealerManual = dealerManual ? 0 : 1;
-			clslegacy();
+			cls();
 			saveConfig(0);
 			break;
 		}
 		case 'f':
 		{
-			clslegacy();
+			cls();
 			printDatabase(1);
 			break;
 		}
 		case 'r':
 		{
-			clslegacy();
+			cls();
 			std::cout << " CZY NA PEWNO CHCESZ ZRESETOWAĆ BAZĘ DANYCH? TEJ AKCJI NIE MOŻNA COFNĄĆ\n ENTER - Reset, INNY KLAWISZ - Anuluj\n";
 			if (getch() != 13)
 				break;
 			genDealerDatabase();
-			clslegacy();
+			cls();
 			break;
 		}
 		default:
-			clslegacy();
+			cls();
 			break;
 		}
 	}

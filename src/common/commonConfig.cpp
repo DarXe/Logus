@@ -19,7 +19,7 @@ int cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view i
 {
 	int temp;
 	if (isCls)
-		clslegacy();
+		cls();
 	if (preHead)
 		std::cout << " _______________________Logus_pre-config_______________________\n";
 	std::cout << " " << text << "\n";
@@ -27,7 +27,7 @@ int cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view i
 	std::cin >> temp;
 	while (std::cin.fail() || temp < min || temp > max)
 	{
-		clslegacy();
+		cls();
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
 		SetConsoleTextAttribute(h, 12);
@@ -46,7 +46,7 @@ std::string cfgInput(bool preHead, bool isCls, std::string_view text, std::strin
 {
 	std::string temp;
 	if (isCls)
-		clslegacy();
+		cls();
 	if (preHead)
 		std::cout << " _______________________Logus_pre-config_______________________\n";
 	if (text != "")
@@ -55,7 +55,7 @@ std::string cfgInput(bool preHead, bool isCls, std::string_view text, std::strin
 	getline(std::cin, temp);
 	while (std::cin.fail())
 	{
-		clslegacy();
+		cls();
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
 		SetConsoleTextAttribute(h, 12);
@@ -79,7 +79,7 @@ int cfgSelection(bool preHead,
 	bool sel = 1;
 	do
 	{
-		clslegacy();
+		cls();
 		SetConsoleTextAttribute(h, 12);
 		if (preHead)
 			std::cout << " _______________________Logus_pre-config_______________________\n";
@@ -165,7 +165,7 @@ std::string cfgSelectionStr(const std::string &Question,
 							const std::string &Answer7)
 {
 	bool sel = 1;
-	clslegacy();
+	cls();
 	do
 	{
 		SetConsoleTextAttribute(h, 12);
