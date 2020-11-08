@@ -69,8 +69,10 @@ void checkLogusUpdate()
 		check.close();
 		remove("version.tmp");
 	}
-	else if (updateChannel == "experimental")
+	else if (updateChannel == "experimental" || updateChannel == "nightly")
 	{
+		if (updateChannel == "nightly")
+			updateChannel = "experimental";
 		engLang? std::cout << " Checking updates, please wait...\n" : std::cout << " Sprawdzanie aktualizacji. Proszę czekać...\n";
 		system("bin\\curl --progress-bar https://raw.githubusercontent.com/DarXe/Logus/experimental/version -o version.tmp");
 		std::fstream check;

@@ -30,19 +30,13 @@ inline void LCFormat::Standard(std::string_view line)
 	// [2020-11-03 19:40:09] [Output] : Niventill: ess 
 	if (LCEvent::NormalMessage(line))
 	{
-		if (isNewLine(line))
-			line.remove_prefix(gt);
+		line.remove_prefix(gt);
 		int textPos = line.find(":");
 
 		LCFormat::SetColor(10);
-		if (textPos != std::string_view::npos)
-		{
-			std::cout << line.substr(0, textPos+1);
-			LCFormat::SetColor(15);
-			std::cout << line.substr(textPos+1, std::string_view::npos);
-		}
-		else
-			std::cout << line;
+		std::cout << line.substr(0, textPos+1);
+		LCFormat::SetColor(15);
+		std::cout << line.substr(textPos+1, std::string_view::npos);
 
 		throw 1;
 	}
@@ -56,14 +50,9 @@ inline void LCFormat::NonStandard(std::string_view line)
 		int textPos = line.find(":");
 
 		LCFormat::SetColor(2);
-		if (textPos != std::string_view::npos)
-		{
-			std::cout << line.substr(0, textPos+1);
-			LCFormat::SetColor(7);
-			std::cout << line.substr(textPos+1, std::string_view::npos);
-		}
-		else
-			std::cout << line;
+		std::cout << line.substr(0, textPos+1);
+		LCFormat::SetColor(7);
+		std::cout << line.substr(textPos+1, std::string_view::npos);
 
 		throw 1;
 	}
@@ -77,8 +66,7 @@ inline void LCFormat::Transfers(std::string_view line)
 	//[2020-08-30 16:34:52] [Output] : You gave $1 to player DarXe.
 	if (LCEvent::TransfersFrom(line) || LCEvent::TransfersTo(line))
 	{
-		if (isNewLine(line))
-			line.remove_prefix(gt);
+		line.remove_prefix(gt);
 
 		LCFormat::SetColor(6);
 		std::cout << line;
@@ -92,8 +80,7 @@ inline void LCFormat::Info(std::string_view line)
 	// [2020-10-28 17:42:08] [Output] : * typical wiadomosc
 	if (line[gt] == '*')
 	{
-		if (isNewLine(line))
-			line.remove_prefix(gt);
+		line.remove_prefix(gt);
 
 		LCFormat::SetColor(14);
 		std::cout << line;
@@ -111,8 +98,7 @@ inline void LCFormat::Input(std::string_view line)
 			LCFormat::SetColor(4);
 		else
 			LCFormat::SetColor(12);
-		if (isNewLine(line))
-			line.remove_prefix(gt);
+		line.remove_prefix(gt);
 		std::cout << line;
 
 		throw 1;
@@ -137,10 +123,9 @@ static size_t findPhrase(std::string_view line, const size_t &pos, size_t &len)
 
 inline void LCFormat::ContainsPhrase(std::string_view line)
 {
-	if (LCEvent::ContainsPhraseFormat(line))
+	if (LCEvent::ContainsPhrase(line, true))
 	{
-		if (isNewLine(line))
-			line.remove_prefix(gt);
+		line.remove_prefix(gt);
 		size_t pos = 0, len = 0;
 		LCFormat::SetColor(2);
 		
@@ -229,7 +214,6 @@ void LCFormat::ParseLines(const std::deque<std::string> &lastLines, std::deque<i
 		}
 		catch(const int& e)
 		{
-			//q(lastLinesSize[i]); getch();
 			int size = GetCursorPosX();
 			int offset = lastLinesSize[i] - size;
 			if (offset > 0)
@@ -239,8 +223,6 @@ void LCFormat::ParseLines(const std::deque<std::string> &lastLines, std::deque<i
 			}
 			std::cout << '\n';
 			lastLinesSize[i] = size;
-			/*COORD pos; pos.X = lastLinesSize[i]; pos.Y = i;
-			SetConsoleCursorPosition(h, pos); std::cout << " << size: " << lastLinesSize[i] << '\n';*/
 		}
 	}
 }

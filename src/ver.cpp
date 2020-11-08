@@ -16,7 +16,7 @@ std::string genVer()
 	// Aug  7 2020
 	// 01234567890
 
-	std::string month, day, year, tempTime, seconds, t1, t2;
+	std::string month, day, rday, year, tempTime, seconds, t1, t2;
 	int tempSeconds;
 	std::string cDate = __DATE__;
 	//std::string cTime = "00:00:00";
@@ -56,7 +56,10 @@ std::string genVer()
 
 	// day
 	if (cDate[4] == ' ')
+	{
 		day = "0" + (t1 = cDate[5]);
+		rday = (t1 = cDate[5]);
+	}
 	else
 		day = (t1 = cDate[4]) + (t2 = cDate[5]);
 
@@ -73,6 +76,6 @@ std::string genVer()
 	tempSeconds /= 60;							  //edit here if needed
 	seconds = std::to_string(tempSeconds);		  //convert int to string
 
-	relVer = year + "." + month + "." + day;
-	return relVer + "-" + seconds;
+	relVer = year + "." + month + "." + rday;
+	return year + "." + month + "." + day + "-" + seconds;
 }

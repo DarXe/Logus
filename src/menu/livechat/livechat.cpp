@@ -443,13 +443,6 @@ bool liveChat() //lc
 				liveChatHead();
 		}
 
-		if (autoMoveLogs)
-		{
-			if (size >= 99000)
-				moveLogs();
-		}
-
-		//darxe's shit
 		if (isAutoJoin)
 		{
 			std::string tempLine;
@@ -475,7 +468,7 @@ bool liveChat() //lc
 		else
 		{
 			serverConnect();
-			for (int i(10); i > 0; i--) //wait 5s
+			for (int i(15); i > 0; i--) //wait 5s
 			{
 				pos.X = 3;
 				pos.Y = 4;
@@ -494,7 +487,11 @@ bool liveChat() //lc
 
 		mainTimer.beep();
 
-		//end of darxe's shit
+		if (autoMoveLogs)
+		{
+			if (size >= 99000)
+				moveLogs();
+		}
 
 		newLines.clear();
 		if (newLines.capacity() > 100000)
