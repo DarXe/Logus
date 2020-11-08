@@ -40,16 +40,16 @@ static bool isAutoJoin;
 static CpuUsage cpu;
 static Status st;
 static int head1 = 0, head2 = 0, head3 = 0;
+static int status = 0;
 static bool forceRedraw = 0;
 
-std::string_view Status::Get()
+std::string Status::get()
 {
-	std::string_view val = stat[pos];
 	if (pos < 7)
 		pos++;
 	else
 		pos = 0;
-	return val;
+	return stat[pos];
 }
 
 void liveChatHead() //head
@@ -69,16 +69,12 @@ void liveChatHead() //head
 	pos.X=0; pos.Y=0; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 12);
 	std::cout<<"##########################################LiveChat##########################################\n";
+	cpuMeter(1);
 
-
-
+	pos.X=0; pos.Y=1; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-	std::cout<<" ["<<st.Get()<<"]Refresh:"<<refresh<<"ms # Wierszy:"<<lcLineCount<< " # CPU:" <<std::setprecision(2)<<cpu.getCpuUsage() << "% # Rozmiar: "<<std::setprecision(3)<<sizei<<sizet<<" # [Esc] Menu ";
-	if (head1-GetCursorPosX() > 0)
-	{
-		std::string h1(head1-GetCursorPosX(), ' '); std::cout << h1;
-	}
-	head1 = GetCursorPosX();
+	std::cout<<" ["<<st.get()<<"]Refresh:"<<refresh<<"ms # Wierszy:"<<lcLineCount<< " # Rozmiar: "<<std::setprecision(3)<<sizei<<sizet<<" # [Esc] Menu ";
+	if (head1-GetCursorPosX() > 0) {std::string h1(head1-GetCursorPosX(), ' '); std::cout << h1;} head1 = GetCursorPosX();
 	if(mainTimer.running)
 	{
 		SetConsoleTextAttribute(h, 170); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
@@ -92,19 +88,11 @@ void liveChatHead() //head
 
 	long long payment = 0; payment = ((money>0)?((money*0.9)-3500)*grade:0);
 	std::cout<<"# Zarobek: $"<<money<<" # Kursy: "<<courses<<" # Wypłata: $"<<payment;
-	if (head2-GetCursorPosX() > 0)
-	{
-		std::string h2(head2-GetCursorPosX(), ' '); std::cout << h2;
-	}
-	head2 = GetCursorPosX();
+	if (head2-GetCursorPosX() > 0){std::string h2(head2-GetCursorPosX(), ' '); std::cout << h2;} head2 = GetCursorPosX();
 
 	SetConsoleTextAttribute(h, 204); std::cout<<"\n "; SetConsoleTextAttribute(h, 12);
 	std::cout<<track[trackId]<<"              # "<<"Średnia: $"<<((courses)?money/courses:0)<<" # Min: $"<<minsalary<<" # Max: $"<<maxsalary;
-	if (head3-GetCursorPosX() > 0)
-	{
-		std::string h3(head3-GetCursorPosX(), ' '); std::cout << h3;
-	}
-	head3 = GetCursorPosX();
+	if (head3-GetCursorPosX() > 0){std::string h3(head3-GetCursorPosX(), ' '); std::cout << h3;} head3 = GetCursorPosX();
 	
 	SetConsoleTextAttribute(h, 204);
 	pos.X=91; pos.Y=1; SetConsoleCursorPosition(h, pos); std::cout<<" ";
@@ -117,11 +105,27 @@ void liveChatHead() //head
 	
 }
 
+void cpuMeter(const bool &bypass)
+{
+	if (cpu.ready() || bypass)
+	{
+		SetConsoleTextAttribute(h, 12);
+		SetConsoleCursorPosition(h, {5, 0});
+		std::cout << std::fixed << std::setprecision(2) << "CPU:" << cpu.getCpuUsage() << "%#AVG:" << cpu.getCpuAvg() << '%';
+		if (status-GetCursorPosX() > 0)
+		{
+			std::string s1(status-GetCursorPosX(), '#'); std::cout << s1;
+		}
+		status = GetCursorPosX();
+	}
+}
+
 void statusMeter()
 {
-	COORD pos = {3, 1};
-	SetConsoleCursorPosition(h, pos); SetConsoleTextAttribute(h, 4);
-	std::cout << st.Get();
+	cpuMeter();
+	SetConsoleTextAttribute(h, 4);
+	SetConsoleCursorPosition(h, {3, 1});
+	std::cout << st.get();
 }
 
 void showChat(const bool &init)
@@ -193,26 +197,15 @@ void getChat(const bool &init) //gc
 
 void moveLogs() //mv clean and move logs from console.log to logus.log
 {
-	std::ifstream from(consoleLogPath, std::ios::binary);
-	if (size > 1073741824)
+	if (size < 1073741824)
 	{
 		//read console.log
 		Stopwatch read;
+		std::ifstream from(consoleLogPath, std::ios::binary);
 		std::string fromContent(size, 0);
 		from.read(&fromContent[0], size);
 		from.close();
 		read.stop();
-
-		//clear console.log
-		Stopwatch clears;
-		std::ofstream clear;
-		clear.open(consoleLogPath, std::ios::out | std::ios::trunc);
-		clear.close();
-		//goto beginning of the console.log
-		filelc.clear();
-		filelc.seekg(0, std::ios::beg);
-		lcLineCount = 0;
-		clears.stop();
 
 		auto f = std::async(std::launch::async, [&read, &fromContent]
 		{
@@ -231,8 +224,9 @@ void moveLogs() //mv clean and move logs from console.log to logus.log
 	}
 	else
 	{
-		std::ofstream to("logus.log", std::ios::binary | std::ios::app);
 		Stopwatch copy;
+		std::ifstream from(consoleLogPath, std::ios::binary);
+		std::ofstream to("logus.log", std::ios::binary | std::ios::app);
 		while(true)
 		{
 			std::string content;
@@ -245,6 +239,15 @@ void moveLogs() //mv clean and move logs from console.log to logus.log
 		//save moveLogs time to filelc liveChatInfoOutput.log
 		LDebug::DebugOutput("moveLogs: wielkość pliku: %sKB, łącznie: %s (%s)", {std::to_string(size), copy.pre(ns), copy.pre(ms, 2)});
 	}
+
+	//clear console.log
+	std::ofstream clear;
+	clear.open(consoleLogPath, std::ios::out | std::ios::trunc);
+	clear.close();
+	//goto beginning of the console.log
+	filelc.clear();
+	filelc.seekg(0, std::ios::beg);
+	lcLineCount = 0;
 
 	size = std::filesystem::file_size(consoleLogPath);
 }
@@ -325,10 +328,10 @@ bool liveChatInput()
 			std::cout << "CZY NA PEWNO CHCESZ PRZENIESC LOGI z console.log DO PLIKU logus.log?\nENTER - Zgoda | Inny klawisz - anuluj\n";
 			if (getch() != 13)
 			{
-				showChat();
+				forceRedraw = true;
 				break;
 			}
-			showChat();
+			forceRedraw = true;
 			moveLogs();
 		}
 		break;
@@ -344,10 +347,10 @@ bool liveChatInput()
 			std::cout << "CZY NA PEWNO CHCESZ WŁĄCZYĆ AUTO RECONNECT?\nENTER - Zgoda | Inny klawisz - anuluj\n";
 			if (getch() != 13)
 			{
-				showChat();
+				forceRedraw = true;
 				break;
 			}
-			showChat();
+			forceRedraw = true;
 			isAutoJoin = true;
 			pos.X = 3;
 			pos.Y = 4;
@@ -397,6 +400,7 @@ bool liveChat() //lc
 	for (int i = 0; i < 50; i++)
 		lastLinesSize[i] = 0;
 	lcLineCount = 0;
+	cpu.clear();
 	isAutoJoin = false;
 	COORD pos;
 	//load logs without checking notifications
@@ -420,10 +424,9 @@ bool liveChat() //lc
 		mainTimer.update();
 
 		getChat();
-		if (isNewLine || forceRedraw)
+		if (isNewLine)
 		{
-			isNewLine = 0;
-			forceRedraw = false;
+			isNewLine = false;
 			if (dynamicRefresh)
 			{
 				for (int i = 0; i < newLines.size(); i++)
@@ -442,6 +445,11 @@ bool liveChat() //lc
 			checkMessages(true);
 			showChat();
 			checkMessages(false);
+		}
+		else if (forceRedraw)
+		{
+			forceRedraw = false;
+			showChat();
 		}
 		else
 		{

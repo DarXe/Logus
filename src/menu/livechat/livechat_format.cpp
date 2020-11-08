@@ -78,7 +78,7 @@ inline void LCFormat::Transfers(std::string_view line)
 inline void LCFormat::Info(std::string_view line)
 {
 	// [2020-10-28 17:42:08] [Output] : * typical wiadomosc
-	if (line[gt] == '*')
+	if ((line[gt] == '*' || line[gt+1] == '*') && isNewLine(line))
 	{
 		line.remove_prefix(gt);
 

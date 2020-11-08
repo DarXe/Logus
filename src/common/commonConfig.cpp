@@ -106,7 +106,6 @@ int cfgSelection(bool preHead,
 			}
 			else
 			{
-				sel = 1;
 				return 1;
 			}
 		}
@@ -119,7 +118,6 @@ int cfgSelection(bool preHead,
 			}
 			else
 			{
-				sel = 1;
 				return 2;
 			}
 		}
@@ -132,7 +130,6 @@ int cfgSelection(bool preHead,
 			}
 			else
 			{
-				sel = 1;
 				return 3;
 			}
 		}
@@ -145,7 +142,6 @@ int cfgSelection(bool preHead,
 			}
 			else
 			{
-				sel = 1;
 				return 4;
 			}
 		}
@@ -202,7 +198,6 @@ std::string cfgSelectionStr(const std::string &Question,
 			}
 			else
 			{
-				sel = 1;
 				return Answer;
 			}
 		}
@@ -215,7 +210,6 @@ std::string cfgSelectionStr(const std::string &Question,
 			}
 			else
 			{
-				sel = 1;
 				return Answer2;
 			}
 		}
@@ -228,7 +222,6 @@ std::string cfgSelectionStr(const std::string &Question,
 			}
 			else
 			{
-				sel = 1;
 				return Answer3;
 			}
 		}
@@ -241,7 +234,6 @@ std::string cfgSelectionStr(const std::string &Question,
 			}
 			else
 			{
-				sel = 1;
 				return Answer4;
 			}
 		}
@@ -254,7 +246,6 @@ std::string cfgSelectionStr(const std::string &Question,
 			}
 			else
 			{
-				sel = 1;
 				return Answer5;
 			}
 		}
@@ -267,7 +258,6 @@ std::string cfgSelectionStr(const std::string &Question,
 			}
 			else
 			{
-				sel = 1;
 				return Answer6;
 			}
 		}
@@ -280,7 +270,6 @@ std::string cfgSelectionStr(const std::string &Question,
 			}
 			else
 			{
-				sel = 1;
 				return Answer7;
 			}
 		}

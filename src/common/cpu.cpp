@@ -7,6 +7,8 @@
 
 
 //header includes
+#include <timer.hpp>
+#include <var.hpp>
 #include "cpu.hpp"
 
 void CpuUsage::init()
@@ -27,9 +29,14 @@ void CpuUsage::init()
 }
 
 CpuUsage::CpuUsage()
-    : avg()
+    : avg(0), t()
 {
 	init();
+}
+
+void CpuUsage::clear()
+{
+    avg = 0; avgcount = 1;
 }
 
 double CpuUsage::getCpuAvg()
@@ -61,4 +68,16 @@ double CpuUsage::getCpuUsage()
     avgcount++;
 
     return percent * 100;
+}
+
+bool CpuUsage::ready()
+{
+    t.update();
+    if (t.timer <= 0)
+    {
+        t.start((refresh), false);
+        return 1;
+    }
+    else
+        return 0;
 }

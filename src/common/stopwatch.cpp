@@ -23,14 +23,13 @@ void Stopwatch::stop()
 
 long double Stopwatch::get(const unit &u)
 {
-	if (u == s)
-		return std::chrono::duration<long double>(m_stop - m_start).count();
-	else if (u == ms)
-		return std::chrono::duration<long double, std::milli>(m_stop - m_start).count();
-	else if (u == ns)
-		return std::chrono::duration<long double, std::nano>(m_stop - m_start).count();
-	else
-		return 0.0;
+	switch(u)
+	{
+		case s:	return std::chrono::duration<long double>(m_stop - m_start).count();
+		case ms:return std::chrono::duration<long double, std::milli>(m_stop - m_start).count();
+		case ns: return std::chrono::duration<long double, std::nano>(m_stop - m_start).count();
+		default: return 0.0;
+	}
 }
 
 std::string Stopwatch::pre(const unit &u, const int &precision) //precision of floating point
@@ -39,24 +38,24 @@ std::string Stopwatch::pre(const unit &u, const int &precision) //precision of f
 	{
 		case s:
 		{
-			if (precision > 100)
-				return std::to_string(get(s)) + "s";
-			else
+			if (precision >= 0)
 				return round(get(s), precision) + "s";
+			else
+				return std::to_string(get(s)) + "s";
 		}
 		case ms:
 		{
-			if (precision > 100)
-				return std::to_string(get(ms)) + "ms";
+			if (precision >= 0)
+				return round(get(ms), precision) + "ms";
 			else
-				return round(get(ns), precision) + "ms";
+				return std::to_string(get(ms)) + "ms";
 		}
 		case ns:
 		{
-			if (precision > 100)
-				return std::to_string(get(ns)) + "ns";
-			else
+			if (precision >= 0)
 				return round(get(ns), precision) + "ns";
+			else
+				return std::to_string(get(ns)) + "ns";
 		}
 		default:
 			return "NULL";

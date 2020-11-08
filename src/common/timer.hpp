@@ -17,11 +17,10 @@ public:
 	int timer;
 	bool running;
 	bool loaded;
-	bool isbeep;
 
 	Timer();
 
-	void start(const clock_t &_timer);
+	void start(const clock_t &_timer, const bool &beep = true);
 	void stop(const bool &beep = true);
 	void startCounter(const short &getSeconds = 0);
 	void stopCounter();

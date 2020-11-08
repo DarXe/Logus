@@ -8,21 +8,27 @@
 
 //standard libraries
 #include <windows.h>
+#include <mutex>
+#include <timer.hpp>
 
 class CpuUsage
 {
 public:
-	int avgcount = 1;
-
 	CpuUsage();
 	void init();
+	void clear();
 	double getCpuUsage();
 	double getCpuAvg();
+	bool ready();
+
 private:
 	ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
-	long double avg;
+	float avg;
+	unsigned long long avgcount;
+	size_t time;
 	int numProcessors;
 	HANDLE self;
+	Timer t;
 };
 
 #endif

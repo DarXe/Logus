@@ -19,10 +19,11 @@ class Status
 	const std::string stat[8] = {"―", "\\", "|", "/", "―", "\\", "|", "/"};
 	short pos = 0;
 public:
-	std::string_view Get();
+	std::string get();
 };
 
 void liveChatHead();
+void cpuMeter(const bool &bypass = false);
 void statusMeter();
 void showChat(const bool &init = false);
 void getChat(const bool &init = false);

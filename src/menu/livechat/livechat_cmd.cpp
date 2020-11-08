@@ -38,8 +38,6 @@ void LCCommand::CheckCommandInput(const std::string &line)
 	DelNickname(line);
 	SetMoney(line);
 	SetCourses(line);
-	Reset(line);
-	HardReset(line);
 	FindTransfers(line);
 	FindWord(line);
 	FindConfig(line);
@@ -48,6 +46,8 @@ void LCCommand::CheckCommandInput(const std::string &line)
 	SetMin(line);
 	SetMax(line);
 	SetRefresh(line);
+	Reset(line);
+	HardReset(line);
 }
 
 void LCCommand::PreCheckCommandInput(const std::string &line)

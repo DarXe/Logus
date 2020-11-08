@@ -12,14 +12,14 @@
 
 
 Timer::Timer()
-	: timer(0), running(0), loaded(0), isbeep(0), m_delay(0) {}
+	: timer(0), running(0), loaded(0), m_delay(0) {}
 
-void Timer::start(const clock_t &_timer) //in ms
+void Timer::start(const clock_t &_timer, const bool &beep) //in ms
 {
 	timer = _timer;
 	m_delay = clock();
 	running = true;
-	Beep(dzwiekGlowny, 100);
+	if (beep) Beep(dzwiekGlowny, 100);
 }
 
 void Timer::stop(const bool &beep)

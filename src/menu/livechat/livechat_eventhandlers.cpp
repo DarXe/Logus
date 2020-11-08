@@ -102,29 +102,9 @@ inline void LCEventHandler::Nicknames(const std::string &line)
 inline void LCEventHandler::Transport(const std::string &line)
 {
 	// beep dostarczenie towaru, raport z frakcji
-	if (!fLockReport && LCEvent::TransportCompany(line))
+	if (!fLockReport && (LCEvent::TransportCompany(line) || LCEvent::TransportTruckerzy(line)))
 	{
-		SalaryForTransport(line, true);
-		if (trackId)
-		{
-			if (trackId == 4)
-				trackId = 1;
-			else
-				trackId++;
-		}
-		Beep(dzwiekGlowny, 150);
-		Beep(0, interval);
-		Beep(dzwiekGlowny, 150);
-		Beep(0, interval);
-		Beep(dzwiekGlowny, 150);
-		Beep(0, interval);
-		saveConfig(0);
-		LDebug::InfoOutput(line);
-		throw 1;
-	}
-	else if (!fLockReport && LCEvent::TransportTruckerzy(line))
-	{
-		SalaryForTransport(line, false);
+		SalaryForTransport(line, LCEvent::TransportCompany(line));
 		if (trackId)
 		{
 			if (trackId == 4)
@@ -264,7 +244,7 @@ inline void LCEventHandler::SalaryForTransport(const std::string &line, const bo
 		else if (line.find(" fo") != std::string::npos) //eng if
 			delim1 = line.find(" fo");
 	}
-	
+
 	tempSalary = line.substr(delim + 3, delim1 - delim - 3);
 	money += stoi(tempSalary);
 	courses++;
