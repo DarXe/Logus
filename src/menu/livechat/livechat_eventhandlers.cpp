@@ -214,36 +214,26 @@ inline void LCEventHandler::NickChange(const std::string &line)
 
 inline void LCEventHandler::SalaryForTransport(const std::string &line, const bool &type)
 {
+	short delim = 0, delim1 = 0;
+	std::string d1s, d1e, d2s, d2e; // 1 = polish, 2 = english, s = start, e = end
+	if (type)
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
-	short delim = 0, delim1 = 0;
-	std::string tempSalary;
-	if (type)
-	{
-		if (line.find("rt ") != std::string::npos) //pol if
-			delim = line.find("rt ");
-		else if (line.find("d $") != std::string::npos) //eng if
-			delim = line.find("d $");
-
-		if (line.find("$ z") != std::string::npos) //pol if
-			delim1 = line.find("$ z");
-		else if (line.find(". I") != std::string::npos) //eng if
-			delim1 = line.find(". I");
-	}
+		d1s = "rt ", d1e = "$ z", d2s = "d $", d2e = ". I";
+	else
 	//[2020-11-07 21:56:04] [Output] : Otrzymałeś 44$ za transport.
 	//[2020-11-07 22:11:45] [Output] : Received $5 for transport.
-	else
-	{
-		if (line.find("eś ") != std::string::npos) //pol if
-			delim = line.find("eś ");
-		else if (line.find("d $") != std::string::npos) //eng if
-			delim = line.find("d $");
+		d1s = "eś ", d1e = "$ z", d2s = "d $", d2e = " fo";
+	std::string tempSalary;
+		if (line.find(d1s) != std::string::npos) //pol if
+			delim = line.find(d1s);
+		else if (line.find(d2s) != std::string::npos) //eng if
+			delim = line.find(d2s);
 
-		if (line.find("$ z") != std::string::npos) //pol if
-			delim1 = line.find("$ z");
-		else if (line.find(" fo") != std::string::npos) //eng if
-			delim1 = line.find(" fo");
-	}
+		if (line.find(d1e) != std::string::npos) //pol if
+			delim1 = line.find(d1e);
+		else if (line.find(d2e) != std::string::npos) //eng if
+			delim1 = line.find(d2e);
 
 	tempSalary = line.substr(delim + 3, delim1 - delim - 3);
 	money += stoi(tempSalary);

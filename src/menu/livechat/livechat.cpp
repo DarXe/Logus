@@ -73,7 +73,7 @@ void liveChatHead() //head
 
 	pos.X=0; pos.Y=1; SetConsoleCursorPosition(h, pos);
 	SetConsoleTextAttribute(h, 204); std::cout<<" "; SetConsoleTextAttribute(h, 12);
-	std::cout<<" ["<<st.get()<<"]Refresh:"<<refresh<<"ms # Wierszy:"<<lcLineCount<< " # Rozmiar: "<<std::setprecision(3)<<sizei<<sizet<<" # [Esc] Menu ";
+	std::cout<<" ["<<st.get()<<"]Refresh:"<<refresh<<"ms # Wierszy:"<<lcLineCount<< " # Rozmiar: "<< std::setprecision(2)<<sizei<<sizet<<" # [Esc] Menu ";
 	if (head1-GetCursorPosX() > 0) {std::string h1(head1-GetCursorPosX(), ' '); std::cout << h1;} head1 = GetCursorPosX();
 	if(mainTimer.running)
 	{
