@@ -42,6 +42,7 @@ static Status st;
 static int head1 = 0, head2 = 0, head3 = 0;
 static int status = 0;
 static bool forceRedraw = 0;
+static bool isWindowTooSmall = 0;
 
 std::string Status::get()
 {
@@ -190,10 +191,17 @@ void getChat(const bool &init) //gc
 		}
 	}
 
-	if((lastLines.size()+5) > GetConsoleRows())
+	if(lastLines.size()+5 > GetConsoleRows())
 	{
 		clslegacy();
 		forceRedraw = true;
+		isWindowTooSmall = true;
+	}
+	else if (lastLines.size()+5 < GetConsoleRows() && isWindowTooSmall)
+	{
+		clslegacy();
+		forceRedraw = true;
+		isWindowTooSmall = false;
 	}
 }
 
@@ -481,7 +489,7 @@ bool liveChat() //lc
 		else
 		{
 			serverConnect();
-			for (int i(10); i > 0; i--) //wait 5s
+			for (int i(10); i > 0; i--) //wait 10s
 			{
 				SetConsoleCursorPosition(h, {4, 4});
 				SetConsoleTextAttribute(h, 12);
