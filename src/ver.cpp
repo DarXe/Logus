@@ -62,7 +62,10 @@ std::string genVer()
 		rday = (t1 = cDate[5]);
 	}
 	else
+	{
 		day = (t1 = cDate[4]) + (t2 = cDate[5]);
+		rday = day;
+	}
 
 	// __TIME__
 	// 22:22:47 // 1320 + 1320 + 2820 = 5460
