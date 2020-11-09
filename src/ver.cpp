@@ -8,6 +8,7 @@
 
 //letting compiler know that this variable exists without actually including var.hpp
 extern std::string relVer;
+extern std::string titleVer;
 
 
 std::string genVer()
@@ -76,6 +77,7 @@ std::string genVer()
 	tempSeconds /= 60;							  //edit here if needed
 	seconds = std::to_string(tempSeconds);		  //convert int to string
 
-	relVer = year + "." + month + "." + rday;
+	titleVer = year + "." + month + "." + rday;
+	relVer = year + "." + month;
 	return year + "." + month + "." + day + "-" + seconds;
 }

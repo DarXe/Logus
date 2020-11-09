@@ -52,13 +52,6 @@ static bool init(const int &argc)
 	}
 	else
 	{
-		// installed OS detection, might be working funky :-)
-		DWORD val;
-		DWORD dataSize = sizeof(val);
-		if (ERROR_SUCCESS == RegGetValueA(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentMajorVersionNumber", RRF_RT_DWORD, nullptr, &val, &dataSize) && val >= 10)
-			codePage852 = 0;
-		else
-			codePage852 = 1;
 
 		mtaLocation = getMTALocation();
 		if (GetUserDefaultUILanguage() != 1045)
@@ -74,16 +67,9 @@ static bool init(const int &argc)
 	}
 	inifile.close();
 
-	if (codePage852)
-	{
-		SetConsoleOutputCP(852); //code page 852
-		SetConsoleCP(852);
-	}
-	else
-	{
-		SetConsoleOutputCP(65001); //code page utf-8
-		SetConsoleCP(65001);
-	}
+	SetConsoleOutputCP(65001); //code page utf-8
+	SetConsoleCP(65001);
+
 	std::ifstream test;
 	while (true)
 	{
@@ -128,6 +114,11 @@ int main(int argc, char **argv) //maa main
 	if (!init(argc))
 		return 0;
 
+#ifndef SHOWCURSOR
+	std::thread con(hideConsoleCursor);
+	con.detach();
+#endif
+
 	//q(mtaLocation); q(consoleLogPath); q(consoleLog1Path); q(consoleLog2Path); q(consoleLog3Path); q(consoleLog4Path); q(consoleLog5Path); getch(); return 0;
 	std::fstream fileInit;
 	fileInit.open(consoleLogPath, std::ios::app);
@@ -148,11 +139,7 @@ int main(int argc, char **argv) //maa main
 	fileInit.close();
 	updateDependencies();
 
-#ifndef SHOWCURSOR
-	std::thread con(hideConsoleCursor);
-	con.detach();
-#endif
-	std::string _versionName_ = "Logus " + relVer;
+	std::string _versionName_ = "Logus " + titleVer;
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
 	color(kolorGlowny);

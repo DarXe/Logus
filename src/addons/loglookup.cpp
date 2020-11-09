@@ -391,10 +391,10 @@ void dateSelectionMenu()
 	cls();
 	if (engLang)
 	{
-		if (cfgSelection(0, "Do you want to also include the time in the search?", "Yes", "No") == 1)
+		if (cfgSelection("Do you want to also include the time in the search?", "Yes", "No") == 1)
 		{
-			date = cfgInput(0, 1, "Enter the starting date (for example 2020-08-28 21:37)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
-			dateEnd = cfgInput(0, 1, "Enter the ending date (for example 2020-08-28 21:37)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			date = cfgInput(1, "Enter the starting date (for example 2020-08-28 21:37)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			dateEnd = cfgInput(1, "Enter the ending date (for example 2020-08-28 21:37)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
 			if (date.size() > 16 || dateEnd.size() > 16)
 				return;
 			CheckLogContentDateFromTo(filename, date, dateEnd, 1);
@@ -402,8 +402,8 @@ void dateSelectionMenu()
 		}
 		else
 		{
-			date = cfgInput(0, 1, "Enter the starting date (for example 2020-08-28)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
-			dateEnd = cfgInput(0, 1, "Enter the ending date (for example 2020-08-28)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			date = cfgInput(1, "Enter the starting date (for example 2020-08-28)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
+			dateEnd = cfgInput(1, "Enter the ending date (for example 2020-08-28)", "Enter date: (must be format RRRR-MM-DD HH:MM):", "You did something wrong");
 			if (date.size() > 10 || dateEnd.size() > 10)
 				return;
 			CheckLogContentDateFromTo(filename, date, dateEnd, 0);
@@ -412,10 +412,10 @@ void dateSelectionMenu()
 	}
 	else
 	{
-		if (cfgSelection(0, "Czy chcesz uwzględnić w wyszukiwaniu także godzinę?", "Tak", "Nie") == 1)
+		if (cfgSelection("Czy chcesz uwzględnić w wyszukiwaniu także godzinę?", "Tak", "Nie") == 1)
 		{
-			date = cfgInput(0, 1, "Podaj datę początkową (przykładowo 2020-08-28 21:37)", "Podaj datę (obowiązkowo format RRRR-MM-DD HH:MM):", "Nie wiem jak, ale coś podałeś źle");
-			dateEnd = cfgInput(0, 1, "Podaj datę końcową (przykładowo 2020-08-29 21:37)", "Podaj datę (obowiązkowo format RRRR-MM-DD HH:MM):", "Nie wiem jak, ale coś podałeś źle");
+			date = cfgInput(1, "Podaj datę początkową (przykładowo 2020-08-28 21:37)", "Podaj datę (obowiązkowo format RRRR-MM-DD HH:MM):", "Nie wiem jak, ale coś podałeś źle");
+			dateEnd = cfgInput(1, "Podaj datę końcową (przykładowo 2020-08-29 21:37)", "Podaj datę (obowiązkowo format RRRR-MM-DD HH:MM):", "Nie wiem jak, ale coś podałeś źle");
 			if (date.size() > 16 || dateEnd.size() > 16)
 				return;
 			CheckLogContentDateFromTo(filename, date, dateEnd, 1);
@@ -423,8 +423,8 @@ void dateSelectionMenu()
 		}
 		else
 		{
-			date = cfgInput(0, 1, "Podaj datę początkową (przykładowo 2020-08-28)", "Podaj datę (obowiązkowo format RRRR-MM-DD):", "Nie wiem jak, ale coś podałeś źle");
-			dateEnd = cfgInput(0, 1, "Podaj datę końcową (przykładowo 2020-08-29)", "Podaj datę (obowiązkowo format RRRR-MM-DD):", "Nie wiem jak, ale coś podałeś źle");
+			date = cfgInput(1, "Podaj datę początkową (przykładowo 2020-08-28)", "Podaj datę (obowiązkowo format RRRR-MM-DD):", "Nie wiem jak, ale coś podałeś źle");
+			dateEnd = cfgInput(1, "Podaj datę końcową (przykładowo 2020-08-29)", "Podaj datę (obowiązkowo format RRRR-MM-DD):", "Nie wiem jak, ale coś podałeś źle");
 			if (date.size() > 10 || dateEnd.size() > 10)
 				return;
 			CheckLogContentDateFromTo(filename, date, dateEnd, 0);

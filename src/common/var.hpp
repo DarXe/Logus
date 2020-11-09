@@ -20,6 +20,7 @@
 //var (ZMIENNE)
 //logus.ini
 extern std::string relVer;
+extern std::string titleVer;
 extern std::string serverIP; //ip server
 extern std::string ver; //version variable, not editable //zmienna wersji, nie wolno edytować
 extern std::string updateChannel;
@@ -46,7 +47,6 @@ extern long long courses; //courses calculator - number of courses //ilość kur
 extern int maxsalary;
 extern int minsalary;
 extern short fastStart; //start Logus + LiveChat with MTA or skipping the version info
-extern bool codePage852; //false:UTF-8 lub true:852 (jesli wystepuja krytyczne bugi)
 extern short trackId; //ap-ls ls-ap itp itd
 extern bool autoMoveLogs; //amount of logs to move
 extern float grade; //pay grade

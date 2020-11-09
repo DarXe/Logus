@@ -11,12 +11,11 @@
 #include <string_view>
 
 
-int cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText, std::string_view minMaxText, int min = 0, int max = 0);
+int cfgInput(bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText, std::string_view minMaxText, int min = 0, int max = 0);
 
-std::string cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText);
+std::string cfgInput(bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText);
 
-int cfgSelection(bool preHead,
-				const std::string &Question = "",
+int cfgSelection(const std::string &Question = "",
 				const std::string &Answer = "",
 				const std::string &Answer2 = "",
 				const std::string &Answer3 = "",

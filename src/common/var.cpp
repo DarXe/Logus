@@ -13,6 +13,7 @@ std::string genVer(); //from config.hpp
 //var (ZMIENNE)
 //logus.ini
 std::string relVer;
+std::string titleVer;
 std::string serverIP = "185.62.189.174:22003"; //ip server
 std::string ver = genVer(); //version variable, not editable //zmienna wersji, nie wolno edytować
 std::string updateChannel = "experimental";
@@ -39,7 +40,6 @@ long long courses = 0; //courses calculator - number of courses //ilość kursó
 int maxsalary = 0;
 int minsalary = 0;
 short fastStart = 0; //start Logus + LiveChat with MTA or skipping the version info
-bool codePage852 = 0; //false:UTF-8 lub true:852 (jesli wystepuja krytyczne bugi)
 short trackId = 0; //ap-ls ls-ap itp itd
 bool autoMoveLogs = 0; //amount of logs to move
 float grade = 0; //pay grade

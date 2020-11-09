@@ -296,7 +296,6 @@ int lottoLogus()
 
 void playerList(std::vector<std::string> &nicknames)
 {
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	std::cout << " _________________________________________PTS TOTOLOTEK - lista zapisanych_________________________________________" << std::endl;
 	if (nicknames.empty())
 		std::cout << " Brak graczy";
@@ -443,8 +442,8 @@ void lottoLogusStats(std::vector<std::string> &nicknames)
 		std::vector<short> randoms;
 		std::vector<float> randomsC(5, 0); //randoms count {nazwa, nazwa, nazwa, nazwa, pusty}0-4
 		std::fstream log;
-		std::string nick = "";
-		int temp = 0;
+		std::string nick;
+		int temp;
 		cls();
 		log.open("lottoLogus.log", std::ios::out);
 

@@ -15,13 +15,11 @@
 #include "commonConfig.hpp"
 
 
-int cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText, std::string_view minMaxText, int min, int max)
+int cfgInput(bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText, std::string_view minMaxText, int min, int max)
 {
 	int temp;
 	if (isCls)
 		cls();
-	if (preHead)
-		std::cout << " _______________________Logus_pre-config_______________________\n";
 	std::cout << " " << text << "\n";
 	std::cout << " " << inputText << " ";
 	std::cin >> temp;
@@ -31,8 +29,6 @@ int cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view i
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
 		SetConsoleTextAttribute(h, 12);
-		if (preHead)
-			std::cout << " _______________________Logus_pre-config_______________________\n";
 		SetConsoleTextAttribute(h, 10);
 		std::cout << " " << errorText << "\n";
 		std::cout << " " << minMaxText << "\n";
@@ -42,13 +38,11 @@ int cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view i
 	return temp;
 }
 
-std::string cfgInput(bool preHead, bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText)
+std::string cfgInput(bool isCls, std::string_view text, std::string_view inputText, std::string_view errorText)
 {
 	std::string temp;
 	if (isCls)
 		cls();
-	if (preHead)
-		std::cout << " _______________________Logus_pre-config_______________________\n";
 	if (text != "")
 		std::cout << " " << text << "\n";
 	std::cout << " " << inputText << " ";
@@ -59,8 +53,6 @@ std::string cfgInput(bool preHead, bool isCls, std::string_view text, std::strin
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
 		SetConsoleTextAttribute(h, 12);
-		if (preHead)
-			std::cout << " _______________________Logus_pre-config_______________________\n";
 		SetConsoleTextAttribute(h, 10);
 		std::cout << " " << errorText << "\n";
 		std::cout << " " << inputText << " ";
@@ -69,8 +61,7 @@ std::string cfgInput(bool preHead, bool isCls, std::string_view text, std::strin
 	return temp;
 }
 
-int cfgSelection(bool preHead,
-				 const std::string &Question,
+int cfgSelection(const std::string &Question,
 				 const std::string &Answer,
 				 const std::string &Answer2,
 				 const std::string &Answer3,
@@ -81,8 +72,6 @@ int cfgSelection(bool preHead,
 	{
 		cls();
 		SetConsoleTextAttribute(h, 12);
-		if (preHead)
-			std::cout << " _______________________Logus_pre-config_______________________\n";
 		SetConsoleTextAttribute(h, 10);
 		if (Question != "")
 			std::cout << " " << Question << "\n";

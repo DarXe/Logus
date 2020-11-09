@@ -138,9 +138,6 @@ void readConfig(bool showInfo)
 		else if (templine.find("i_Autostart:") != std::string::npos)
 			fastStart = stoi(clearConfigValue(templine, "i_Autostart:"));
 
-		else if (templine.find("b_Codepage 852:") != std::string::npos)
-			codePage852 = stoi(clearConfigValue(templine, "b_Codepage 852:"));
-
 		else if (templine.find("i_Route:") != std::string::npos)
 			trackId = stoi(clearConfigValue(templine, "i_Route:"));
 		else if (templine.find("i_Trasa:") != std::string::npos)
@@ -296,7 +293,6 @@ void saveConfig(bool showInfo)
 		file << "i_Lowest salary: " << minsalary << "\n";
 		file << "i_Highest salary: " << maxsalary << "\n";
 		file << "i_Fast start mode: " << fastStart << "\n";
-		file << "b_Codepage 852: " << codePage852 << "\n";
 		file << "i_Route: " << trackId << "\n";
 		file << "b_Automatic log mover: " << autoMoveLogs << "\n";
 		file << "f_Grade: " << grade << "\n";
@@ -349,7 +345,6 @@ void saveConfig(bool showInfo)
 		file << "i_Najniższy zarobek: " << minsalary << "\n";
 		file << "i_Najwyższy zarobek: " << maxsalary << "\n";
 		file << "i_Autostart: " << fastStart << "\n";
-		file << "b_Codepage 852: " << codePage852 << "\n";
 		file << "i_Trasa: " << trackId << "\n";
 		file << "b_Automatyczne przenoszenie logów: " << autoMoveLogs << "\n";
 		file << "f_Płaca w firmie: " << grade << "\n";
@@ -395,7 +390,6 @@ void readDefault()
 	money = 0;
 	courses = 0;
 	fastStart = 0;
-	codePage852 = 0;
 	trackId = 0;
 	autoMoveLogs = 0;
 	grade = 0.5;

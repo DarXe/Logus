@@ -197,7 +197,7 @@ void getChat(const bool &init) //gc
 		forceRedraw = true;
 		isWindowTooSmall = true;
 	}
-	else if (lastLines.size()+5 < GetConsoleRows() && isWindowTooSmall)
+	else if (isWindowTooSmall)
 	{
 		clslegacy();
 		forceRedraw = true;

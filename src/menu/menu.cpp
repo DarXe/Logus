@@ -69,7 +69,6 @@ int menu() //con
 			std::cout << " [k] Car Dealer - purchase and selling prices\n";
 			std::cout << " [j] Language - change to Polski\n";
 			std::cout << " [9] Change sound (beep) to random\n";
-			std::cout << " [0] Codepage (legacy): " << ((codePage852) ? "852\n" : "UTF-8\n");
 			std::cout << " [u] TEST UTF8 - EMOJI\n";
 			std::cout << " [i] INFO\n";
 			SetConsoleTextAttribute(h, 10);
@@ -114,7 +113,6 @@ int menu() //con
 			std::cout << " [k] Komis - ceny skupu i sprzedaży\n";
 			std::cout << " [j] Język - zmień na English\n";
 			std::cout << " [9] Zmiana dźwięku na losowy\n";
-			std::cout << " [0] Kodowanie (legacy): " << ((codePage852) ? "852\n" : "UTF-8\n");
 			std::cout << " [u] TEST UTF8 - EMOJI\n";
 			std::cout << " [i] INFO\n";
 			SetConsoleTextAttribute(h, 10);
@@ -235,25 +233,6 @@ int menu() //con
 		{
 			cls();
 			settings();
-			break;
-		}
-		case '0':
-		{
-			cls();
-			if (codePage852)
-			{
-				codePage852 = 0;
-				SetConsoleOutputCP(65001);
-				SetConsoleCP(65001);
-				engLang ? std::cout << "Codepage UTF-8\n" : std::cout << "Kodowanie UTF-8\n";
-			}
-			else
-			{
-				codePage852 = 1;
-				SetConsoleOutputCP(852);
-				SetConsoleCP(852);
-				engLang ? std::cout << "Codepage 852\n" : std::cout << "Kodowanie 852\n";
-			}
 			break;
 		}
 		case 'u':

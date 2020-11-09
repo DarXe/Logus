@@ -350,19 +350,19 @@ void dealer()
 					break;
 				case '1':
 				{
-					base_dealerBuy = cfgInput(0, 1, "Podaj nową cenę skupu do komisu", "Podaj stawkę w procentach:", "Dupa, coś zrobiłeś źle", "Min 25% max 100%", 25, 100);
+					base_dealerBuy = cfgInput(1, "Podaj nową cenę skupu do komisu", "Podaj stawkę w procentach:", "Dupa, coś zrobiłeś źle", "Min 25% max 100%", 25, 100);
 					base_dealerBuy /= 100;
 					break;
 				}
 				case '2':
 				{
-					base_dealerSellCar = cfgInput(0, 1, "Podaj nową cenę sprzedaży osobówki z komisu", "Podaj stawkę w procentach:", "Dupa, coś zrobiłeś źle", "Min 25% max 100%", 25, 100);
+					base_dealerSellCar = cfgInput(1, "Podaj nową cenę sprzedaży osobówki z komisu", "Podaj stawkę w procentach:", "Dupa, coś zrobiłeś źle", "Min 25% max 100%", 25, 100);
 					base_dealerSellCar /= 100;
 					break;
 				}
 				case '3':
 				{
-					base_dealerSellTransport = cfgInput(0, 1, "Podaj nową cenę sprzedaży dostawczego z komisu", "Podaj stawkę w procentach:", "Dupa, coś zrobiłeś źle", "Min 25% max 100%", 25, 100);
+					base_dealerSellTransport = cfgInput(1, "Podaj nową cenę sprzedaży dostawczego z komisu", "Podaj stawkę w procentach:", "Dupa, coś zrobiłeś źle", "Min 25% max 100%", 25, 100);
 					base_dealerSellTransport /= 100;
 					break;
 				}
