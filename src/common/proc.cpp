@@ -47,7 +47,7 @@ bool closeLogus(std::string_view text)
 	cls();
 	saveConfig();
 	Beep(dzwiekGlowny - 100, 250);
-	std::cout << "\n"
+	std::cout << "\n "
 			  << text;
 	for (int i = 0; i < 4; i++)
 	{

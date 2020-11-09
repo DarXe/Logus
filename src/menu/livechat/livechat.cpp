@@ -349,19 +349,19 @@ bool liveChatInput()
 		}
 		case 'v': //save
 		{
-			SetConsoleCursorPosition(h, {20, 4});
+			SetConsoleCursorPosition(h, {25, 4});
 			Beep(dzwiekGlowny, 100);
+			SetConsoleTextAttribute(h, 12);
 			std::cout << "ZAPISANO!";
-			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			saveConfig(0);
 		}
 		break;
 		case 'r': //read
 		{
-			SetConsoleCursorPosition(h, {20, 4});
+			SetConsoleCursorPosition(h, {25, 4});
 			Beep(dzwiekGlowny, 100);
+			SetConsoleTextAttribute(h, 12);
 			std::cout << "WCZYTANO!";
-			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			readConfig(0);
 		}
 		break;

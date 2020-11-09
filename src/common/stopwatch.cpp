@@ -25,8 +25,8 @@ long double Stopwatch::get(const unit &u)
 {
 	switch(u)
 	{
-		case s:	return std::chrono::duration<long double>(m_stop - m_start).count();
-		case ms:return std::chrono::duration<long double, std::milli>(m_stop - m_start).count();
+		case s:	 return std::chrono::duration<long double>(m_stop - m_start).count();
+		case ms: return std::chrono::duration<long double, std::milli>(m_stop - m_start).count();
 		case ns: return std::chrono::duration<long double, std::nano>(m_stop - m_start).count();
 		default: return 0.0;
 	}
@@ -36,7 +36,7 @@ std::string Stopwatch::pre(const unit &u, const int &precision) //precision of f
 {
 	switch (u)
 	{
-		case s: return round(get(s), precision) + "s";
+		case s:  return round(get(s), precision) + "s";
 		case ms: return round(get(ms), precision) + "ms";
 		case ns: return round(get(ns), precision) + "ns";
 		default: return "NULL";
