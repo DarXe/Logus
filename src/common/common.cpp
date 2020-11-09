@@ -176,9 +176,10 @@ std::string utf8_substr(const std::string &str, int start, int length)
 		else if (c>=240 && c<=247) i+=3;
 		else if (c>=248 && c<=255) throw 1;//invalid utf8
 	};
-	int ix, j, realstart, reallength;
+	int realstart, reallength;
 	try
 	{
+		int ix, j;
 		if (length==0) return "";
 		if (start<0 || length <0)
 		{

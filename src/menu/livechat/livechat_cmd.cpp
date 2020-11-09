@@ -27,6 +27,7 @@ void LCCommand::CheckCommandInput(const std::string &line)
 	RenderEngineBeep(line);
 	ClearChatBeep(line);
 	SetDynamicRefreshBeep(line);
+	AutoReconnectBeep(line);
 
 	Reconnect(line);
 	Quit(line);
@@ -50,7 +51,7 @@ void LCCommand::CheckCommandInput(const std::string &line)
 	HardReset(line);
 }
 
-void LCCommand::PreCheckCommandInput(const std::string &line)
+void LCCommand::PreCheckCommandInput(const std::string &line, bool &isAutoJoin)
 {
 	try
 	{
@@ -58,6 +59,7 @@ void LCCommand::PreCheckCommandInput(const std::string &line)
 		RenderEngine(line);
 		ClearChat(line);
 		SetDynamicRefresh(line);
+		AutoReconnect(line, isAutoJoin);
 	}
 	catch (const int &e)
 	{}
@@ -585,6 +587,37 @@ inline bool LCCmdEvent::SetDynamicRefresh(const std::string_view line)
 	return (line.find("[Input]  : set dyn") != std::string::npos);
 }
 
+///////////////////* AUTO RECONNECT */////////////////////////
+inline void LCCommand::AutoReconnect(const std::string_view line, bool &isAutoJoin)
+{
+	if (LCCmdEvent::AutoReconnect(line)) //reset kursow /set re
+	{
+		if (!isAutoJoin)
+		{
+			isAutoJoin = true;
+			serverConnect();
+		}
+		else
+			isAutoJoin = false;
+		
+		throw 1;
+	}
+}
+
+inline void LCCommand::AutoReconnectBeep(const std::string_view line)
+{
+	if (LCCmdEvent::AutoReconnect(line)) //reset kursow /set re
+	{
+		Beep(dzwiekGlowny, 150);
+		throw 1;
+	}
+}
+
+inline bool LCCmdEvent::AutoReconnect(const std::string_view line)
+{
+	return (line.find("[Input]  : autorr") != std::string::npos);
+}
+
 bool LCCmdEvent::CheckCommandEvents(const std::string_view line)
 {
 	if (Reconnect(line))
@@ -634,6 +667,8 @@ bool LCCmdEvent::CheckCommandEvents(const std::string_view line)
 	else if (SetRefresh(line))
 		return 1;
 	else if (SetDynamicRefresh(line))
+		return 1;
+	else if (AutoReconnect(line))
 		return 1;
 	else
 		return 0;

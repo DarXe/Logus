@@ -13,7 +13,7 @@
 namespace LCCommand
 {
 	void CheckCommandInput(const std::string &line);
-	void PreCheckCommandInput(const std::string &line);
+	void PreCheckCommandInput(const std::string &line, bool &isAutoJoin);
 
 	void Reconnect(const std::string_view line);
 	void Quit(const std::string_view line);
@@ -43,6 +43,8 @@ namespace LCCommand
 	void SetRefresh(const std::string &line);
 	void SetDynamicRefresh(const std::string_view line);
 	void SetDynamicRefreshBeep(const std::string_view line);
+	void AutoReconnect(const std::string_view line, bool &isAutoJoin);
+	void AutoReconnectBeep(const std::string_view line);
 } // namespace LCCommand
 
 namespace LCCmdEvent
@@ -71,6 +73,7 @@ namespace LCCmdEvent
 	bool SetMin(const std::string_view line);
 	bool SetRefresh(const std::string_view line);
 	bool SetDynamicRefresh(const std::string_view line);
+	bool AutoReconnect(const std::string_view line);
 
 	bool CheckCommandEvents(const std::string_view line);
 } // namespace LCCommand

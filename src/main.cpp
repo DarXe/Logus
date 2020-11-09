@@ -212,6 +212,8 @@ void wersja()
 	std::cout << " LISTOPAD\n";
 
 	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2011_09 Nowa komenda - ""autorr"", która włącza autoJoin - tj. próbuje połączyć się z serwerem co 10 sekund\n";
+	std::cout << " * Komenda zastapiła klawisz Enter, który wcześniej robił to samo co teraz robi autorr\n";
 	std::cout << " 2011_07 Nowa komenda - ""set minr <liczba>"" i ""set maxr <liczba>"", które ustawiają min i max dynamicznego odświeżania\n";
 	std::cout << " 2011_07 Nowa komenda - ""set dyn"", która przełącza dynamiczne odświeżanie\n";
 	std::cout << " 2011_07 Nowa komenda - ""set refr <liczba>"", która ustawia odświeżanie liveChat\n";

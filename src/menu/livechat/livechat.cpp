@@ -262,22 +262,18 @@ void checkMessages(const bool &pre)
 		if (newLines.size() > 1000)
 			for (int i = newLines.size() - 1000; i < newLines.size(); i++)
 			{
-				LCCommand::PreCheckCommandInput(newLines[i]);
+				LCCommand::PreCheckCommandInput(newLines[i], isAutoJoin);
 				if (kbhit())
-				{
 					if (getch() == 27)
 						break;
-				}
 			}
 		else
 			for (int i = 0; i < newLines.size(); i++)
 			{
-				LCCommand::PreCheckCommandInput(newLines[i]);
+				LCCommand::PreCheckCommandInput(newLines[i], isAutoJoin);
 				if (kbhit())
-				{
 					if (getch() == 27)
 						break;
-				}
 			}
 	}
 	else
@@ -309,7 +305,6 @@ bool liveChatInput()
 {
 	if (kbhit())
 	{
-		COORD pos;
 		switch (getch())
 		{
 		case 27:
@@ -344,30 +339,9 @@ bool liveChatInput()
 			liveChatHead();
 			break;
 		}
-		case 13: //enter start autoJoin
-		{
-			cls();
-			std::cout << "CZY NA PEWNO CHCESZ WŁĄCZYĆ AUTO RECONNECT?\nENTER - Zgoda | Inny klawisz - anuluj\n";
-			if (getch() != 13)
-			{
-				forceRedraw = true;
-				break;
-			}
-			forceRedraw = true;
-			isAutoJoin = true;
-			pos.X = 3;
-			pos.Y = 4;
-			SetConsoleCursorPosition(h, pos);
-			SetConsoleTextAttribute(h, 12);
-			std::cout << "####START autoJoin####";
-			Beep(dzwiekGlowny, 750);
-		}
-		break;
 		case 'v': //save
 		{
-			pos.X = 10;
-			pos.Y = 0;
-			SetConsoleCursorPosition(h, pos);
+			SetConsoleCursorPosition(h, {20, 4});
 			Beep(dzwiekGlowny, 100);
 			std::cout << "ZAPISANO!";
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -376,9 +350,7 @@ bool liveChatInput()
 		break;
 		case 'r': //read
 		{
-			pos.X = 10;
-			pos.Y = 0;
-			SetConsoleCursorPosition(h, pos);
+			SetConsoleCursorPosition(h, {20, 4});
 			Beep(dzwiekGlowny, 100);
 			std::cout << "WCZYTANO!";
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -488,11 +460,9 @@ bool liveChat() //lc
 
 		if (isAutoJoin)
 		{
-			std::string tempLine;
 			for (int i = 0; i < newLines.size(); i++)
 			{
-				tempLine = newLines.at(i);
-				if (tempLine[gt] != 'c')
+				if (newLines[i].find("[Output] : * Connected! [MTA:SA ") != std::string::npos)
 				{
 					stopAutoJoin(isAutoJoin);
 				}
@@ -511,9 +481,9 @@ bool liveChat() //lc
 		else
 		{
 			serverConnect();
-			for (int i(15); i > 0; i--) //wait 5s
+			for (int i(10); i > 0; i--) //wait 5s
 			{
-				SetConsoleCursorPosition(h, {0, 0});
+				SetConsoleCursorPosition(h, {4, 4});
 				SetConsoleTextAttribute(h, 12);
 				std::cout << "#autoJoin: trying to connect in " << i << "s#";
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
