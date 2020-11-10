@@ -78,7 +78,7 @@ inline void LCCommand::Reconnect(const std::string_view line)
 
 inline bool LCCmdEvent::Reconnect(const std::string_view line)
 {
-	return (line.find("[Input]  : rr") != std::string::npos);
+	return lcompare(line, "[Input]  : rr");
 }
 
 ///////////////////* QUIT *////////////////////////////////////////
@@ -93,13 +93,13 @@ inline void LCCommand::Quit(const std::string_view line)
 
 inline bool LCCmdEvent::Quit(const std::string_view line)
 {
-	return (line.find("[Input]  : quit") != std::string::npos);
+	return lcompare(line, "[Input]  : rr");
 }
 
 ///////////////////* START TIMER */////////////////////////////////
 inline void LCCommand::StartTimer(const std::string_view line)
 {
-	if (line.find("[Input]  : tt") != std::string::npos)
+	if (lcompare(line, "[Input]  : tt"))
 	{
 		mainTimer.startCounter();
 		int temp;
@@ -107,13 +107,13 @@ inline void LCCommand::StartTimer(const std::string_view line)
 		temp = czas * 1000 - temp;
 		mainTimer.timer -= temp;
 	}
-	else if (line.find("[Input]  : t\'") != std::string::npos)
+	else if (lcompare(line, "[Input]  : t\'"))
 		mainTimer.startCounter();
 }
 
 inline bool LCCmdEvent::StartTimer(const std::string_view line)
 {
-	return (line.find("[Input]  : tt") != std::string::npos || line.find("[Input]  : t\'") != std::string::npos);
+	return lcompare(line, "[Input]  : tt") || lcompare(line, "[Input]  : t\'");
 }
 
 ///////////////////* SET NICK *////////////////////////////////////
@@ -132,7 +132,7 @@ inline void LCCommand::SetNick(const std::string &line)
 
 inline bool LCCmdEvent::SetNick(const std::string_view line)
 {
-	return (line.find("[Input]  : nick ") != std::string::npos);
+	return lcompare(line, "[Input]  : nick ");
 }
 
 ///////////////////* SET TRACK *///////////////////////////////////
@@ -169,7 +169,7 @@ inline void LCCommand::SetTrack(const std::string_view line)
 
 inline bool LCCmdEvent::SetTrack(const std::string_view line)
 {
-	return (line.find("[Input]  : set tr ") != std::string::npos);
+	return lcompare(line, "[Input]  : set tr ");
 }
 
 ///////////////////* SET TIMER *///////////////////////////////////
@@ -192,7 +192,7 @@ inline void LCCommand::SetTimer(const std::string_view line)
 
 inline bool LCCmdEvent::SetTimer(const std::string_view line)
 {
-	return (line.find("[Input]  : set t ") != std::string::npos);
+	return lcompare(line, "[Input]  : set t ");
 }
 
 ///////////////////* ADD NICKNAME *////////////////////////////////
@@ -214,7 +214,7 @@ inline void LCCommand::AddNickname(const std::string_view line)
 
 inline bool LCCmdEvent::AddNickname(const std::string_view line)
 {
-	return (line.find("[Input]  : nickdb add ") != std::string::npos);
+	return lcompare(line, "[Input]  : nickdb add ");
 }
 
 ///////////////////* DEL NICKNAME *////////////////////////////////
@@ -240,7 +240,7 @@ inline void LCCommand::DelNickname(const std::string_view line)
 
 inline bool LCCmdEvent::DelNickname(const std::string_view line)
 {
-	return (line.find("[Input]  : nickdb del ") != std::string::npos);
+	return lcompare(line, "[Input]  : nickdb del ");
 }
 
 ///////////////////* SET MONEY *///////////////////////////////////
@@ -262,7 +262,7 @@ inline void LCCommand::SetMoney(const std::string &line)
 
 inline bool LCCmdEvent::SetMoney(const std::string_view line)
 {
-	return (line.find("[Input]  : set m ") != std::string::npos);
+	return lcompare(line, "[Input]  : set m ");
 }
 
 ///////////////////* SET COURSES */////////////////////////////////
@@ -286,7 +286,7 @@ inline void LCCommand::SetCourses(const std::string &line)
 
 inline bool LCCmdEvent::SetCourses(const std::string_view line)
 {
-	return (line.find("[Input]  : set c ") != std::string::npos);
+	return lcompare(line, "[Input]  : set c ");
 }
 
 ///////////////////* HARD RESET *//////////////////////////////////
@@ -306,7 +306,7 @@ inline void LCCommand::HardReset(const std::string_view line)
 
 inline bool LCCmdEvent::HardReset(const std::string_view line)
 {
-	return (line.find("[Input]  : set hre") != std::string::npos);
+	return lcompare(line, "[Input]  : set hre");
 }
 
 ///////////////////* SOFT RESET *//////////////////////////////////
@@ -324,7 +324,7 @@ inline void LCCommand::Reset(const std::string_view line)
 
 inline bool LCCmdEvent::Reset(const std::string_view line)
 {
-	return (line.find("[Input]  : set re") != std::string::npos);
+	return lcompare(line, "[Input]  : set re");
 }
 
 ///////////////////* FIND TRANSFERS *//////////////////////////////
@@ -340,7 +340,7 @@ inline void LCCommand::FindTransfers(const std::string_view line)
 
 inline bool LCCmdEvent::FindTransfers(const std::string_view line)
 {
-	return (line.find("[Input]  : find tf") != std::string::npos);
+	return lcompare(line, "[Input]  : find tf");
 }
 
 ///////////////////* FIND WORD *///////////////////////////////////
@@ -368,7 +368,7 @@ inline void LCCommand::FindWord(const std::string &line)
 
 inline bool LCCmdEvent::FindWord(const std::string_view line)
 {
-	return (line.find("[Input]  : find Word ") != std::string::npos || line.find("[Input]  : find word ") != std::string::npos);
+	return lcompare(line, "[Input]  : find Word ") || lcompare(line, "[Input]  : find word ");
 }
 
 ///////////////////* FIND CONFIG */////////////////////////////////
@@ -385,7 +385,7 @@ inline void LCCommand::FindConfig(const std::string_view line)
 
 inline bool LCCmdEvent::FindConfig(const std::string_view line)
 {
-	return (line.find("[Input]  : find cfg") != std::string::npos);
+	return lcompare(line, "[Input]  : open cfg");
 }
 
 ///////////////////* FIND CONSOLE LOG *////////////////////////////
@@ -402,7 +402,7 @@ inline void LCCommand::FindConsoleLog(const std::string_view line)
 
 inline bool LCCmdEvent::FindConsoleLog(const std::string_view line)
 {
-	return (line.find("[Input]  : find console.log") != std::string::npos);
+	return lcompare(line, "[Input]  : open console.log");
 }
 
 ///////////////////* FIND LOGUS LOG *//////////////////////////////
@@ -419,7 +419,7 @@ inline void LCCommand::FindLogusLog(const std::string_view line)
 
 inline bool LCCmdEvent::FindLogusLog(const std::string_view line)
 {
-	return (line.find("[Input]  : find logus.log") != std::string::npos);
+	return lcompare(line, "[Input]  : open logus.log");
 }
 
 ///////////////////* TIMESTAMP *///////////////////////////////////
@@ -444,7 +444,7 @@ inline void LCCommand::TimestampBeep(const std::string_view line)
 
 inline bool LCCmdEvent::Timestamp(const std::string_view line)
 {
-	return (line.find("[Input]  : set ts") != std::string::npos);
+	return lcompare(line, "[Input]  : set ts");
 }
 
 ///////////////////* RENDER ENGINE *///////////////////////////////
@@ -469,7 +469,7 @@ inline void LCCommand::RenderEngineBeep(const std::string_view line)
 
 inline bool LCCmdEvent::RenderEngine(const std::string_view line)
 {
-	return (line.find("[Input]  : set engine") != std::string::npos);
+	return lcompare(line, "[Input]  : set engine");
 }
 
 ///////////////////* CLEAR CHAT *//////////////////////////////////
@@ -493,7 +493,7 @@ inline void LCCommand::ClearChatBeep(const std::string_view line)
 
 inline bool LCCmdEvent::ClearChat(const std::string_view line)
 {
-	return (line.find("[Input]  : cls") != std::string::npos);
+	return lcompare(line, "[Input]  : cls");
 }
 
 ///////////////////* SET REFRESH */////////////////////////////////
@@ -515,7 +515,7 @@ inline void LCCommand::SetRefresh(const std::string &line)
 
 inline bool LCCmdEvent::SetRefresh(const std::string_view line)
 {
-	return (line.find("[Input]  : set refr ") != std::string::npos);
+	return lcompare(line, "[Input]  : set refr ");
 }
 
 ///////////////////* SET MIN */////////////////////////////////////
@@ -537,7 +537,7 @@ inline void LCCommand::SetMin(const std::string &line)
 
 inline bool LCCmdEvent::SetMin(const std::string_view line)
 {
-	return (line.find("[Input]  : set minr ") != std::string::npos);
+	return lcompare(line, "[Input]  : set minr ");
 }
 
 ///////////////////* SET MAX */////////////////////////////////////
@@ -559,7 +559,7 @@ inline void LCCommand::SetMax(const std::string &line)
 
 inline bool LCCmdEvent::SetMax(const std::string_view line)
 {
-	return (line.find("[Input]  : set maxr ") != std::string::npos);
+	return lcompare(line, "[Input]  : set maxr ");
 }
 
 ///////////////////* SET DYNAMIC REFRESH */////////////////////////
@@ -584,7 +584,7 @@ inline void LCCommand::SetDynamicRefreshBeep(const std::string_view line)
 
 inline bool LCCmdEvent::SetDynamicRefresh(const std::string_view line)
 {
-	return (line.find("[Input]  : set dyn") != std::string::npos);
+	return lcompare(line, "[Input]  : set dyn");
 }
 
 ///////////////////* AUTO RECONNECT */////////////////////////
@@ -615,7 +615,7 @@ inline void LCCommand::AutoReconnectBeep(const std::string_view line)
 
 inline bool LCCmdEvent::AutoReconnect(const std::string_view line)
 {
-	return (line.find("[Input]  : autorr") != std::string::npos);
+	return lcompare(line, "[Input]  : autorr");
 }
 
 bool LCCmdEvent::CheckCommandEvents(const std::string_view line)

@@ -30,7 +30,6 @@ int menu() //con
 {
 	while (true)
 	{
-		color(kolorGlowny);
 		if (engLang)
 		{
 			SetConsoleTextAttribute(h, 10);

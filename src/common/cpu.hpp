@@ -23,12 +23,12 @@ public:
 
 private:
 	float avg;
-	ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 	unsigned long long avgcount;
-	size_t time;
+	ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 	int numProcessors;
 	HANDLE self;
 	Timer t;
+	size_t time;
 };
 
 #endif

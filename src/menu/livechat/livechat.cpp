@@ -10,6 +10,7 @@
 #include <thread>
 #include <string_view>
 #include <future>
+#include <cmath>
 
 
 //header includes
@@ -142,21 +143,21 @@ void showChat()
 
 void getChat(const bool &init) //gc
 {
-	if (lastLines.size() > wyswietlaneWiersze) //checks if user bruteforced lower "wyswietlaneWiersze" than is saved in deque
+	if (lastLines.size() > lcLines) //checks if user bruteforced lower "lcLines" than is saved in deque
 	{
 		cls(); //do a full console clean
 		forceRedraw = true; //tell livechat to redraw
 	}
-	else if (wyswietlaneWiersze > 50) //check if user bruteforced higher "wyswietlaneWiersze" than is supported
+	else if (lcLines > 50) //check if user bruteforced higher "lcLines" than is supported
 	{
 		cls(); //do a full console clean
 		forceRedraw = true; //tell livechat to redraw
-		wyswietlaneWiersze = 50; //set "wyswietlaneWiersze" to max supported value
+		lcLines = 50; //set "lcLines" to max supported value
 	}
-	else if (wyswietlaneWiersze < 10) //check if user bruteforced lower "wyswietlaneWiersze" than is supported
+	else if (lcLines < 10) //check if user bruteforced lower "lcLines" than is supported
 	{
 		forceRedraw = true; //tell livechat to redraw
-		wyswietlaneWiersze = 10; //set "wyswietlaneWiersze" to max supported value
+		lcLines = 10; //set "lcLines" to max supported value
 	}
 
 	while (!filelc.eof())
@@ -166,20 +167,27 @@ void getChat(const bool &init) //gc
 			break;				 //if above getline returns eof, do a break
 
 		std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv; 
-		int utfsize = linelc.size()-conv.from_bytes(linelc).size(); //get real string size (utf8)
-		if (linelc.size() > 92 + gt + utfsize) //split string to next line if it's too long
+		int utfsize = linelc.size()-conv.from_bytes(linelc).size()+1; //get real string size (utf8)
+		int lcsize = gt + 92;
+		if (linelc.size() > lcsize + utfsize) //split string to next line if it's too long
 		{
 			int notif = 0;
 			if (notifCheck(linelc)) //offset if "beepable" message is present (as it occupies 2 chars)
 				notif = 2;
-			lastLines.emplace_back(utf8_substr(linelc, 0, 92 + gt - notif)); 
-			lastLines.emplace_back(utf8_substr(linelc, 92 + gt - notif));
+			lastLines.emplace_back(utf8_substr(linelc, 0, lcsize - notif));
+			int loops = linelc.size() / lcsize;
+			int len = lcsize - notif;
+			for (int i = 0; i < loops; i++)
+			{
+				lastLines.emplace_back(utf8_substr(linelc, len, lcsize - 33 - notif));
+				len += lcsize - 33 - notif;
+			}
 		}
 		else if (linelc.size() > gt) //if line is fine and isn't too long, just emplace it all
 		{
 			lastLines.emplace_back(linelc); //add element to the end of array
 		}
-		while (lastLines.size() > wyswietlaneWiersze)
+		while (lastLines.size() > lcLines)
 		{
 			lastLines.pop_front();
 			++lcLineCount;
@@ -267,45 +275,23 @@ void checkMessages(const bool &pre)
 {
 	if (pre)
 	{
-		if (newLines.size() > 1000)
-			for (int i = newLines.size() - 1000; i < newLines.size(); i++)
-			{
-				LCCommand::PreCheckCommandInput(newLines[i], isAutoJoin);
-				if (kbhit())
-					if (getch() == 27)
-						break;
-			}
-		else
-			for (int i = 0; i < newLines.size(); i++)
-			{
-				LCCommand::PreCheckCommandInput(newLines[i], isAutoJoin);
-				if (kbhit())
-					if (getch() == 27)
-						break;
-			}
+		for (int i = ((newLines.size() > 1000) ? newLines.size() - 1000 : 0); i < newLines.size(); i++)
+		{
+			LCCommand::PreCheckCommandInput(newLines[i], isAutoJoin);
+			if (kbhit())
+				if (getch() == 27)
+					break;
+		}
 	}
 	else
 	{
-		if (newLines.size() > 1000)
-			for (int i = newLines.size() - 1000; i < newLines.size(); i++)
-			{
-				LCEventHandler::CheckEventHandlers(newLines[i]);
-				if (kbhit())
-				{
-					if (getch() == 27)
-						break;
-				}
-			}
-		else
-			for (int i = 0; i < newLines.size(); i++)
-			{
-				LCEventHandler::CheckEventHandlers(newLines[i]);
-				if (kbhit())
-				{
-					if (getch() == 27)
-						break;
-				}
-			}
+		for (int i = ((newLines.size() > 1000) ? newLines.size() - 1000 : 0); i < newLines.size(); i++)
+		{
+			LCEventHandler::CheckEventHandlers(newLines[i]);
+			if (kbhit())
+				if (getch() == 27)
+					break;
+		}
 	}
 }
 

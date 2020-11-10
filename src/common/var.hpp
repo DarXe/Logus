@@ -32,8 +32,7 @@ extern bool fLockReport; //lock beep for transport
 extern bool fLockNick; //lock beep nick 'nick: message'
 extern bool engLang; // Logus in English
 extern bool chatSound; //the sound of any chat message //dźwięk każdej wiadomości na czacie
-extern std::string kolorGlowny; //main color //kolor główny(przy wyszukiwaniu logów)
-extern int wyswietlaneWiersze; //displayed rows in LiveChat
+extern int lcLines; //displayed rows in LiveChat
 extern int refresh; //refresh<ms> in LiveChat
 extern int interval; //time interval between sounds //odstęp czasowy(ms) między kolejnymi dźwiękami
 extern std::string nick; //nickname on MTA

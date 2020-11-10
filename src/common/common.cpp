@@ -165,7 +165,7 @@ std::string round(const long double x, const int dec)
 	return ss.str();
 }
 
-std::string utf8_substr(const std::string &str, int start, int length)
+std::string_view utf8_substr(const std::string_view str, int start, int length)
 {
 	int i;
 	auto testlength = [&i, &str]()
@@ -222,6 +222,26 @@ short GetConsoleRows()
 	CONSOLE_SCREEN_BUFFER_INFO cbsi;
     GetConsoleScreenBufferInfo(h, &cbsi);
     return cbsi.srWindow.Bottom;
+}
+
+int utf8_size(const std::string &line)
+{
+	std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv; 
+	return conv.from_bytes(line).size(); //get real string size (utf8)
+}
+
+int utf8_size(const std::string_view line)
+{
+	std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv; 
+	return conv.from_bytes(std::string(line)).size(); //get real string size (utf8)
+}
+
+bool lcompare(std::string_view line, std::string_view value)
+{
+	if (line.size() < 22 + value.size())
+		return 0;
+	
+	return line.substr(22, value.size()) == value;
 }
 
 /*

@@ -48,20 +48,15 @@ void readConfig(bool showInfo)
 		else if (templine.find("i_Dźwięk główny:") != std::string::npos)
 			dzwiekGlowny = stoi(clearConfigValue(templine, "i_Dźwięk główny:"));
 
-		else if (templine.find("s_Main color:") != std::string::npos)
-			kolorGlowny = clearConfigValue(templine, "s_Main color:");
-		else if (templine.find("s_Kolor główny:") != std::string::npos)
-			kolorGlowny = clearConfigValue(templine, "s_Kolor główny:");
-
 		else if (templine.find("b_Language (0 = POL, 1 = ENG):") != std::string::npos)
 			engLang = stoi(clearConfigValue(templine, "b_Language (0 = POL, 1 = ENG):"));
 		else if (templine.find("b_Język (0 = POL, 1 = ENG):") != std::string::npos)
 			engLang = stoi(clearConfigValue(templine, "b_Język (0 = POL, 1 = ENG):"));
 
 		else if (templine.find("i_Amount of lines displayed:") != std::string::npos)
-			wyswietlaneWiersze = stoi(clearConfigValue(templine, "i_Amount of lines displayed:"));
+			lcLines = stoi(clearConfigValue(templine, "i_Amount of lines displayed:"));
 		else if (templine.find("i_Liczba wyświetlanych linii:") != std::string::npos)
-			wyswietlaneWiersze = stoi(clearConfigValue(templine, "i_Liczba wyświetlanych linii:"));
+			lcLines = stoi(clearConfigValue(templine, "i_Liczba wyświetlanych linii:"));
 
 		else if (templine.find("i_Refresh:") != std::string::npos)
 			refresh = stoi(clearConfigValue(templine, "i_Refresh:"));
@@ -270,9 +265,8 @@ void saveConfig(bool showInfo)
 		file << "s_MTA Path: " << mtaLocation << "\n";
 		file << "s_Nickname: " << nick << "\n";
 		file << "i_Main sound: " << dzwiekGlowny << "\n";
-		file << "s_Main color: " << kolorGlowny << "\n";
 		file << "b_Language (0 = POL, 1 = ENG): " << engLang << "\n";
-		file << "i_Amount of lines displayed: " << wyswietlaneWiersze << "\n";
+		file << "i_Amount of lines displayed: " << lcLines << "\n";
 		file << "i_Refresh: " << refresh << "\n";
 		file << "i_Delay between sounds: " << interval << "\n";
 		file << "b_Mute team notifications: " << fLockTeam << "\n";
@@ -322,9 +316,8 @@ void saveConfig(bool showInfo)
 		file << "s_Ścieżka MTA: " << mtaLocation << "\n";
 		file << "s_Nickname: " << nick << "\n";
 		file << "i_Dźwięk główny: " << dzwiekGlowny << "\n";
-		file << "s_Kolor główny: " << kolorGlowny << "\n";
 		file << "b_Język (0 = POL, 1 = ENG): " << engLang << "\n";
-		file << "i_Liczba wyświetlanych linii: " << wyswietlaneWiersze << "\n";
+		file << "i_Liczba wyświetlanych linii: " << lcLines << "\n";
 		file << "i_Odświeżanie: " << refresh << "\n";
 		file << "i_Odstep między dźwiękami: " << interval << "\n";
 		file << "b_Blokada powiadomienia Team: " << fLockTeam << "\n";
@@ -378,11 +371,10 @@ void readDefault()
 	fLockNick = 0;
 	engLang = 0;
 	chatSound = 0;
-	kolorGlowny = "A";
-	wyswietlaneWiersze = 15;
+	lcLines = 15;
 	refresh = 300;
 	interval = 50;
-	nick = "PodajSwojNick";
+	nick = getNickFromMTAConfig();
 	dynamicRefresh = 0;
 	czas = 90;
 	random = 0;

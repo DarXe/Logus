@@ -114,6 +114,7 @@ void checkLogusUpdate()
 
 void checkUpdates()
 {
+	SetConsoleTextAttribute(h, 10);
 	if (getVer() != ver)
 	{
 		saveConfig(0);

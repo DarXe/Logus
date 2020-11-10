@@ -13,7 +13,7 @@
 namespace LDebug
 {
 	void DebugOutput(std::string text, const std::vector <std::string> &content);
-	void InfoOutput(const std::string &line);
+	void InfoOutput(const std::string_view line);
 }
 
 #endif

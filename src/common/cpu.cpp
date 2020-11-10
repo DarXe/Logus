@@ -26,11 +26,10 @@ void CpuUsage::init()
     GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
     memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
     memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
-    
-    avg = 0; avgcount = 1;
 }
 
 CpuUsage::CpuUsage()
+    : avg(0), avgcount(1)
 {
 	init();
 }

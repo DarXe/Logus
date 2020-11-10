@@ -10,6 +10,7 @@
 #include <string>
 #include <deque>
 #include <iosfwd>
+#include <string_view>
 #define q(var) std::cout << #var << " = " << var << '\n'
 
 
@@ -28,8 +29,11 @@ char wybor();
 void def();
 void toClipboard(const std::string &s);
 int power(int x, int y);
-std::string utf8_substr(const std::string &str, int start, int length = INT_MAX);
+std::string_view utf8_substr(const std::string_view str, int start, int length = INT_MAX);
 int GetCursorPosX();
 short GetConsoleRows();
+int utf8_size(const std::string &line);
+int utf8_size(const std::string_view line);
+bool lcompare(std::string_view line, std::string_view value);
 
 #endif

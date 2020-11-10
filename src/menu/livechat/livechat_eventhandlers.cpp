@@ -40,7 +40,7 @@ void LCEventHandler::CheckEventHandlers(const std::string &line)
 	{}
 }
 
-inline void LCEventHandler::PmFrom(const std::string &line)
+inline void LCEventHandler::PmFrom(const std::string_view line)
 {
 	// beep na PW od gracza
 	if (!fLockPW)
@@ -70,7 +70,7 @@ inline void LCEventHandler::PmFrom(const std::string &line)
 	}
 }
 
-inline void LCEventHandler::Team(const std::string &line)
+inline void LCEventHandler::Team(const std::string_view line)
 {
 	// beep na wiadomość teamową (ignoruje nick obecny w configu Logusia)
 	if (!fLockTeam)
@@ -88,7 +88,7 @@ inline void LCEventHandler::Team(const std::string &line)
 	}
 }
 
-inline void LCEventHandler::Nicknames(const std::string &line)
+inline void LCEventHandler::Nicknames(const std::string_view line)
 {
 	// beep na nick z czatu dodany do ulubionych (join, afk, killmessage)
 	if (!fLockNick && LCEvent::Nicknames(line))
@@ -99,7 +99,7 @@ inline void LCEventHandler::Nicknames(const std::string &line)
 	}
 }
 
-inline void LCEventHandler::Transport(const std::string &line)
+inline void LCEventHandler::Transport(const std::string_view line)
 {
 	// beep dostarczenie towaru, raport z frakcji
 	if (!fLockReport && (LCEvent::TransportCompany(line) || LCEvent::TransportTruckerzy(line)))
@@ -124,7 +124,7 @@ inline void LCEventHandler::Transport(const std::string &line)
 	}
 }
 
-inline void LCEventHandler::Report(const std::string &line)
+inline void LCEventHandler::Report(const std::string_view line)
 {
 	// komunikat na raport frakcyjny
 	if (!fLockReport && LCEvent::Report(line))
@@ -141,7 +141,7 @@ inline void LCEventHandler::Report(const std::string &line)
 	}
 }
 
-inline void LCEventHandler::TransfersFrom(const std::string &line)
+inline void LCEventHandler::TransfersFrom(const std::string_view line)
 {
 	// beep na przelew
 	if (LCEvent::TransfersFrom(line))
@@ -154,7 +154,7 @@ inline void LCEventHandler::TransfersFrom(const std::string &line)
 	}
 }
 
-inline void LCEventHandler::BindKey(const std::string &line)
+inline void LCEventHandler::BindKey(const std::string_view line)
 {
 	if (LCEvent::BindKey(line))
 	{
@@ -197,7 +197,7 @@ inline void LCEventHandler::Freeze(const std::string &line)
 	}
 }
 
-inline void LCEventHandler::NickChange(const std::string &line)
+inline void LCEventHandler::NickChange(const std::string_view line)
 {
 	//[2020-08-30 04:03:19] [Output] : * Niventill is now known as test
 	std::string tempnick = "[Output] : * " + nick + " is now known as ";
@@ -212,7 +212,7 @@ inline void LCEventHandler::NickChange(const std::string &line)
 	}
 }
 
-inline void LCEventHandler::SalaryForTransport(const std::string &line, const bool &type)
+inline void LCEventHandler::SalaryForTransport(const std::string_view line, const bool &type)
 {
 	short delim = 0, delim1 = 0;
 	std::string d1s, d1e, d2s, d2e; // 1 = polish, 2 = english, s = start, e = end
@@ -225,15 +225,15 @@ inline void LCEventHandler::SalaryForTransport(const std::string &line, const bo
 	//[2020-11-07 22:11:45] [Output] : Received $5 for transport.
 		d1s = "eś ", d1e = "$ z", d2s = "d $", d2e = " fo";
 	std::string tempSalary;
-		if (line.find(d1s) != std::string::npos) //pol if
-			delim = line.find(d1s);
-		else if (line.find(d2s) != std::string::npos) //eng if
-			delim = line.find(d2s);
+	if (line.find(d1s) != std::string::npos) //pol if
+		delim = line.find(d1s);
+	else if (line.find(d2s) != std::string::npos) //eng if
+		delim = line.find(d2s);
 
-		if (line.find(d1e) != std::string::npos) //pol if
-			delim1 = line.find(d1e);
-		else if (line.find(d2e) != std::string::npos) //eng if
-			delim1 = line.find(d2e);
+	if (line.find(d1e) != std::string::npos) //pol if
+		delim1 = line.find(d1e);
+	else if (line.find(d2e) != std::string::npos) //eng if
+		delim1 = line.find(d2e);
 
 	tempSalary = line.substr(delim + 3, delim1 - delim - 3);
 	money += stoi(tempSalary);
@@ -245,7 +245,7 @@ inline void LCEventHandler::SalaryForTransport(const std::string &line, const bo
 		maxsalary = stoi(tempSalary);
 }
 
-inline void LCEventHandler::ContainsPhrase(const std::string &line)
+inline void LCEventHandler::ContainsPhrase(const std::string_view line)
 {
 	if(LCEvent::ContainsPhrase(line))
 	{

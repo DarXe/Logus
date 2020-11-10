@@ -39,20 +39,23 @@ bool LCEvent::Team(const std::string_view line, const bool &includePlayer)
 
 bool LCEvent::PmFrom(const std::string_view line)
 {
-	return (line.find("[Output] : * PW od ") != std::string::npos || line.find("[Output] : * PM from ") != std::string::npos);
+	//[2020-11-08 19:29:09] [Output] : * PW od PanZer:
+	//[2020-11-08 19:29:09] [Output] : * PW from PanZer:
+	return lcompare(line, "[Output] : * PW od ") || lcompare(line, "[Output] : * PW from ");
 }
 
 bool LCEvent::PmTo(const std::string_view line)
 {
-	return (line.find("[Output] : -> ") != std::string::npos);
+	//[2020-11-08 19:28:56] [Output] : -> PanZer:
+	return lcompare(line, "[Output] : -> ");
 }
 
 bool LCEvent::TransfersFrom(const std::string_view line)
 {
 	//[2020-08-09 21:06:56] [Output] : Gracz SpookyTank przelał tobie 1500$.
 	//[2020-08-30 16:35:09] [Output] : Player DarXe transferred to you $1.
-	if ((line.find("[Output] : Gracz ") != std::string::npos) || (line.find("[Output] : Player ") != std::string::npos))
-		return ((line.find(" przelał tobie ") != std::string::npos) || (line.find(" transferred to you") != std::string::npos));
+	if (lcompare(line, "[Output] : Gracz ") || lcompare(line, "[Output] : Player "))
+		return (line.find(" przelał tobie ") != std::string::npos) || (line.find(" transferred to you") != std::string::npos);
 	return 0;
 }
 
@@ -60,8 +63,8 @@ bool LCEvent::TransfersTo(const std::string_view line)
 {
 	//[2020-08-29 15:34:28] [Output] : Przelałeś 1000000$ graczowi DarXe.
 	//[2020-08-30 16:34:52] [Output] : You gave $1 to player DarXe.
-	if ((line.find("[Output] : Przelałeś ") != std::string::npos) || (line.find("[Output] : You gave $") != std::string::npos))
-		return ((line.find(" to player ") != std::string::npos) || (line.find(" graczowi ") != std::string::npos));
+	if (lcompare(line, "[Output] : Przelałeś ") || lcompare(line, "[Output] : You gave $"))
+		return (line.find(" to player ") != std::string::npos) || (line.find(" graczowi ") != std::string::npos);
 	return 0;
 }
 
@@ -69,21 +72,21 @@ bool LCEvent::Report(const std::string_view line)
 {
 	// [Output] : Nowy raport - autor: Niventill, kategoria: Naprawa
 	// [Output] : author: Niventill, category: Repair
-	return (line.find("[Output] : Nowy raport - ") != std::string::npos || line.find("[Output] : New report - ") != std::string::npos);
+	return lcompare(line, "[Output] : Nowy raport - ") || lcompare(line, "[Output] : New report - ");
 }
 
 bool LCEvent::TransportCompany(const std::string_view line)
 {
 	//[2019-05-24 17:02:41] [Output] : You've earned $2792. It has been transfered to your company's account.
 	//[2019-05-24 17:02:41] [Output] : Pieniądze za transport 3191$ zostały przelane na konto firmy.
-	return (line.find("[Output] : Pieniądze za ") != std::string::npos || line.find("[Output] : You've ") != std::string::npos);
+	return lcompare(line, "[Output] : Pieniądze za ") || lcompare(line, "[Output] : You've ");
 }
 
 bool LCEvent::TransportTruckerzy(const std::string_view line)
 {
 	//[2020-11-07 21:56:04] [Output] : Otrzymałeś 44$ za transport.
 	//[2020-11-07 22:11:45] [Output] : Received $5 for transport.
-	return (line.find("[Output] : Otrzymałeś ") != std::string::npos || line.find("[Output] : Received $") != std::string::npos);
+	return lcompare(line, "[Output] : Otrzymałeś ") || lcompare(line, "[Output] : Received $");
 }
 
 bool LCEvent::Nicknames(const std::string_view line)
@@ -99,12 +102,12 @@ bool LCEvent::Nicknames(const std::string_view line)
 		//if(line[gt+leng]==s_temp[leng]&&line[gt+leng-1]==s_temp[leng-1]&&line[gt+leng-2]==s_temp[leng-2])
 		//	return 0;
 		//join
-		if (line.find("[Output] : * " + nicknames.at(i)) != std::string::npos)
+		if (lcompare(line, "[Output] : * " + nicknames[i]))
 			return 1;
 		//afk
-		if (line.find("[Output] : Gracz " + nicknames.at(i) + " zaraz ") != std::string::npos || line.find("[Output] : Player " + nicknames.at(i) + " is away ") != std::string::npos)
+		if (lcompare(line, "[Output] : Gracz " + nicknames[i] + " zaraz ") || lcompare(line, "[Output] : Player " + nicknames[i] + " is away "))
 			return 1;
-		if (line.find("[Output] : Gracz " + nicknames.at(i) + " wrócił ") != std::string::npos || line.find("[Output] : Player " + nicknames.at(i) + " returned ") != std::string::npos)
+		if (lcompare(line, "[Output] : Gracz " + nicknames[i] + " wrócił ") || lcompare(line, "[Output] : Player " + nicknames[i] + " returned "))
 			return 1;
 	}
 	return 0;
@@ -113,7 +116,7 @@ bool LCEvent::Nicknames(const std::string_view line)
 bool LCEvent::BindKey(const std::string_view line)
 {
 	//[2020-06-12 00:11:39] [Output] : msg: Player not found
-	return (line.find("[Output] : msg: Player not ") != std::string::npos);
+	return lcompare(line, "[Output] : msg: Player not ");
 }
 
 bool LCEvent::Open(const std::string_view line)
@@ -135,24 +138,24 @@ bool LCEvent::Open(const std::string_view line)
 
 bool LCEvent::Freeze(const std::string_view line)
 {
-	return (line.find("[Output] : Nie ma lekarzy na serwerze. Za ") != std::string::npos || line.find("[Output] : There's no medics right here on the serwer. Wait ") != std::string::npos);
+	return lcompare(line, "[Output] : Nie ma lekarzy na serwerze. Za ") || lcompare(line, "[Output] : There's no medics right here on the serwer. Wait ");
 }
 
 bool LCEvent::NickChange(const std::string_view line)
 {
 	//[2020-08-30 04:03:19] [Output] : * Niventill is now known as test
-	return (line.find("[Output] : * " + nick + " is now known as ") != std::string::npos);
+	return lcompare(line, "[Output] : * " + nick + " is now known as ");
 }
 
 bool LCEvent::ContainsPhrase(const std::string_view line, const bool &format)
 {
 	// [2020-10-29 15:54:05] [Output] : Gracz: DarXe Team: 15, 3152$, Tytul: Gracz DarXe rozładował towar Pucolana, waga: 1.1, wynagrodzenie: 3152$.
 	// i sporo innych rzeczy, co sprawia, że if niżej jest nieczytelny
-	if (format && (line.find("[Output] : Gracz: " + nick + " Team: ") != std::string::npos || line.find("[Output] : Name: " + nick + ", ") != std::string::npos))
+	if (format && (lcompare(line, "[Output] : Gracz: " + nick + " Team: ") || lcompare(line, "[Output] : Name: " + nick + ", ")))
 		return 0;
 	else
-		if (LCEvent::PmFrom(line) || LCEvent::Team(line, 1) || LCEvent::PmTo(line) || LCEvent::Input(line) || line.find("[Output] : " + nick) != std::string::npos ||
-		line.find("[Output] : Gracz: " + nick + " Team: ") != std::string::npos || line.find("[Output] : Name: " + nick + ", ") != std::string::npos)
+		if (LCEvent::PmFrom(line) || LCEvent::Team(line, 1) || LCEvent::PmTo(line) || LCEvent::Input(line) || lcompare(line, "[Output] : " + nick) ||
+		lcompare(line, "[Output] : Gracz: " + nick + " Team: ") || lcompare(line, "[Output] : Name: " + nick + ", "))
 			return 0;
 	for (int i = 0; i < phrases.size(); i++)
 	{
@@ -177,9 +180,9 @@ bool LCEvent::NormalMessage(const std::string_view line)
 bool LCEvent::Admin(const std::string_view line, const bool &includePlayer)
 {
 	// [2020-10-28 17:42:08] [Output] : (ADMIN) Niventill: ess
-	if (line.find("[Output] : (ADMIN) ") != std::string::npos)
+	if (lcompare(line, "[Output] : (ADMIN) "))
 	{
-		if (line.find("[Output] : (ADMIN) " + nick) != std::string::npos)
+		if (lcompare(line, "[Output] : (ADMIN) " + nick))
 		{
 			if (includePlayer)
 				return 1;
@@ -203,7 +206,7 @@ bool LCEvent::Input(const std::string_view line)
 bool LCEvent::CB(const std::string_view line)
 {
 	// [2020-10-28 17:42:08] [Output] : (CB 19): ess
-	return (line.find("[Output] : (CB ") != std::string::npos);
+	return lcompare(line, "[Output] : (CB ");
 }
 
 bool notifCheck(std::string_view line)

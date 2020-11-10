@@ -35,7 +35,7 @@ void LDebug::DebugOutput(std::string text, const std::vector <std::string> &cont
 	});
 }
 
-void LDebug::InfoOutput(const std::string &line)
+void LDebug::InfoOutput(const std::string_view line)
 {
 	auto future = std::async(std::launch::async, [&line]
 	{

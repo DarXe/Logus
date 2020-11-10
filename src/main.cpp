@@ -142,7 +142,6 @@ int main(int argc, char **argv) //maa main
 	std::string _versionName_ = "Logus " + titleVer;
 	SetConsoleTitleA(_versionName_.c_str()); //verr
 	std::srand(time(NULL));
-	color(kolorGlowny);
 
 	checkUpdates();
 
@@ -199,6 +198,8 @@ void wersja()
 	std::cout << " LISTOPAD\n";
 
 	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2011_11 Komendy ""find cfg"", ""find console.log"" i ""find logus.log"" zmieniły nazwę na:\n";
+	std::cout << " * ""open cfg"", ""open console.log"" oraz ""open logus.log"", aby lepiej wskazać zastosowanie komendy\n";
 	std::cout << " 2011_09 Nowa komenda - ""autorr"", która włącza autoJoin - tj. próbuje połączyć się z serwerem co 10 sekund\n";
 	std::cout << " * Komenda zastapiła klawisz Enter, który wcześniej robił to samo co teraz robi autorr\n";
 	std::cout << " 2011_07 Nowa komenda - ""set minr <liczba>"" i ""set maxr <liczba>"", które ustawiają min i max dynamicznego odświeżania\n";
