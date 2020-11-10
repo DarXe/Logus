@@ -45,29 +45,32 @@ void checkLogusUpdate()
 	std::fstream check;
 	std::string versc;
 	engLang? std::cout << " Checking updates, please wait...\n" : std::cout << " Sprawdzanie aktualizacji. Proszę czekać...\n";
-	if (system("bin\\curl --progress-bar --fail https://raw.githubusercontent.com/DarXe/Logus/master/version -o version.tmp"))
+	if (updateChannel == "release")
+		fail = system("bin\\curl --progress-bar --fail https://raw.githubusercontent.com/DarXe/Logus/master/version -o version.tmp");
+	else if (updateChannel == "experimental" || updateChannel == "nightly")
+		fail = system("bin\\curl --progress-bar --fail https://raw.githubusercontent.com/DarXe/Logus/experimental/version -o version.tmp");
+
+	if (fail)
 	{
 		remove("version.tmp");
 		return;
 	}
-	else
+
+	cls();
+	check.open("version.tmp");
+	if (check.good())
 	{
-		cls();
-		check.open("version.tmp");
-		if (check.good())
+		getline(check, versc);
+		if (versc == ver)
 		{
-			getline(check, versc);
-			if (versc == ver)
-			{
-				engLang ? std::cout << " Checking successful! Logus is up to date.\n" : std::cout << " Sprawdzanie powiodło się! Posiadasz najnowszą wersję.\n";
-				return;
-			}
-		}
-		else
-		{
-			engLang ? std::cout << " Couldn't find curl, auto update will not be possible.\n" : std::cout << " Nie udało się znaleźć curl. Aktualizacja nie będzie możliwa.\n";
+			engLang ? std::cout << " Checking successful! Logus is up to date.\n" : std::cout << " Sprawdzanie powiodło się! Posiadasz najnowszą wersję.\n";
 			return;
 		}
+	}
+	else
+	{
+		engLang ? std::cout << " Couldn't find curl, auto update will not be possible.\n" : std::cout << " Nie udało się znaleźć curl. Aktualizacja nie będzie możliwa.\n";
+		return;
 	}
 
 	if (updateChannel == "release" && versc != ver)
