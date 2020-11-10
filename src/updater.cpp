@@ -12,6 +12,8 @@
 #include <config.hpp>
 #include <var.hpp>
 #include <common.hpp>
+#include <debug.hpp>
+#include <stopwatch.hpp>
 #include "ver.hpp"
 #include "updater.hpp"
 
@@ -77,7 +79,10 @@ void checkLogusUpdate()
 	{
 		engLang ? std::cout << " Updating Logus, please wait...\n" : std::cout << " Aktualizowanie Logusia. Proszę czekać...\n";
 		rename("Logus.exe", "Logusold.exe");
+		Stopwatch rele;
 		fail = system("bin\\curl --progress-bar --fail --location https://github.com/DarXe/Logus/releases/latest/download/Logus.exe -o Logus.exe");
+		rele.stop();
+		LDebug::DebugOutput("Pobieranie Logus (release): wersja: %s, czas: %s", {versc, rele.pre(ms)});
 	}
 	else if ((updateChannel == "experimental" || updateChannel == "nightly") && versc != ver)
 	{
@@ -85,7 +90,10 @@ void checkLogusUpdate()
 			updateChannel = "experimental";
 		engLang ? std::cout << " Updating Logus, please wait...\n" : std::cout << " Aktualizowanie Logusia. Proszę czekać...\n";
 		rename("Logus.exe", "Logusold.exe");
+		Stopwatch exp;
 		fail = system("bin\\curl --progress-bar --fail --location https://raw.githubusercontent.com/DarXe/Logus/experimental/Logus.exe -o Logus.exe");
+		exp.stop();
+		LDebug::DebugOutput("Pobieranie Logus (experimental): wersja: %s, czas: %s", {versc, exp.pre(ms)});
 
 	}
 	if (fail)
