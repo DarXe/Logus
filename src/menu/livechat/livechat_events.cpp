@@ -158,7 +158,7 @@ bool LCEvent::ContainsPhrase(const std::string_view line, const bool &format)
 	}
 	else
 	{
-		if (LCEvent::PmFrom(line) || LCEvent::Team(line, 1) || LCEvent::PmTo(line) || LCEvent::Input(line) || lcompare(line, "[Output] : " + nick) ||
+		if ((LCEvent::PmFrom(line) && !fLockPW) || (LCEvent::Team(line, 1) && !fLockTeam) || LCEvent::PmTo(line) || LCEvent::Input(line) || lcompare(line, "[Output] : " + nick) ||
 		lcompare(line, "[Output] : Gracz: " + nick + " Team: ") || lcompare(line, "[Output] : Name: " + nick + ", "))
 			return 0;
 	}
