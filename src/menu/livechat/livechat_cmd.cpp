@@ -39,6 +39,7 @@ void LCCommand::CheckCommandInput(const std::string &line)
 	DelNickname(line);
 	SetMoney(line);
 	SetCourses(line);
+	SetLoadingTime(line);
 	FindTransfers(line);
 	FindWord(line);
 	FindConfig(line);
@@ -287,6 +288,31 @@ inline void LCCommand::SetCourses(const std::string &line)
 inline bool LCCmdEvent::SetCourses(const std::string_view line)
 {
 	return lcompare(line, "[Input]  : set c ");
+}
+
+///////////////////* SET LOADING TIME *///////////////////////////////////
+inline void LCCommand::SetLoadingTime(const std::string_view line)
+{
+	if (LCCmdEvent::SetLoadingTime(line)) //[Input]  : set t 00:00
+	{
+		std::string temptimer;
+		int minutes, seconds, delim;
+		delim = line.find("[Input]  : set l ");
+		temptimer = line.substr(delim + 17, std::string::npos);
+		sscanf_s(temptimer.c_str(), "%2d:%2d", &minutes, &seconds);
+		minutes *= 60;
+		minutes += seconds;
+		czas = minutes;
+
+		saveConfig(0);
+		Beep(dzwiekGlowny, 150);
+		throw 1;
+	}
+}
+
+inline bool LCCmdEvent::SetLoadingTime(const std::string_view line)
+{
+	return lcompare(line, "[Input]  : set l ");
 }
 
 ///////////////////* HARD RESET *//////////////////////////////////
@@ -639,6 +665,8 @@ bool LCCmdEvent::CheckCommandEvents(const std::string_view line)
 	else if (SetMoney(line))
 		return 1;
 	else if (SetCourses(line))
+		return 1;
+	else if (SetLoadingTime(line))
 		return 1;
 	else if (Reset(line))
 		return 1;

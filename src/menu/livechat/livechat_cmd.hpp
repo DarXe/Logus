@@ -25,6 +25,7 @@ namespace LCCommand
 	void DelNickname(const std::string_view line);
 	void SetMoney(const std::string &line);
 	void SetCourses(const std::string &line);
+	void SetLoadingTime(const std::string_view line);
 	void Reset(const std::string_view line);
 	void HardReset(const std::string_view line);
 	void FindTransfers(const std::string_view line);
@@ -59,6 +60,7 @@ namespace LCCmdEvent
 	bool DelNickname(const std::string_view line);
 	bool SetMoney(const std::string_view line);
 	bool SetCourses(const std::string_view line);
+	bool SetLoadingTime(const std::string_view line);
 	bool Reset(const std::string_view line);
 	bool HardReset(const std::string_view line);
 	bool FindTransfers(const std::string_view line);

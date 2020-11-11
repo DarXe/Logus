@@ -198,6 +198,7 @@ void wersja()
 	std::cout << " LISTOPAD\n";
 
 	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2011_11 Nowa komenda ""set l <0:00>"" - ustawianie czasu załadunku\n";
 	std::cout << " 2011_11 Komendy ""find cfg"", ""find console.log"" i ""find logus.log"" zmieniły nazwę na:\n";
 	std::cout << " * ""open cfg"", ""open console.log"" oraz ""open logus.log"", aby lepiej wskazać zastosowanie komendy\n";
 	std::cout << " 2011_09 Nowa komenda - ""autorr"", która włącza autoJoin - tj. próbuje połączyć się z serwerem co 10 sekund\n";
