@@ -151,12 +151,17 @@ bool LCEvent::ContainsPhrase(const std::string_view line, const bool &format)
 {
 	// [2020-10-29 15:54:05] [Output] : Gracz: DarXe Team: 15, 3152$, Tytul: Gracz DarXe rozładował towar Pucolana, waga: 1.1, wynagrodzenie: 3152$.
 	// i sporo innych rzeczy, co sprawia, że if niżej jest nieczytelny
-	if (format && (lcompare(line, "[Output] : Gracz: " + nick + " Team: ") || lcompare(line, "[Output] : Name: " + nick + ", ")))
-		return 0;
+	if (format)
+	{
+		if (lcompare(line, "[Output] : Gracz: " + nick + " Team: ") || lcompare(line, "[Output] : Name: " + nick + ", "))
+			return 0;
+	}
 	else
+	{
 		if (LCEvent::PmFrom(line) || LCEvent::Team(line, 1) || LCEvent::PmTo(line) || LCEvent::Input(line) || lcompare(line, "[Output] : " + nick) ||
 		lcompare(line, "[Output] : Gracz: " + nick + " Team: ") || lcompare(line, "[Output] : Name: " + nick + ", "))
 			return 0;
+	}
 	for (int i = 0; i < phrases.size(); i++)
 	{
 		if (line.find(phrases[i], line.find(":", gt)) != std::string::npos)
