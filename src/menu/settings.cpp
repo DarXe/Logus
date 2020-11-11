@@ -34,7 +34,7 @@ void settings()
 			std::cout << " [a] Update channel: " << updateChannel << "\n";
 			SetConsoleTextAttribute(h, 7);
 			std::cout << " [1] Amount of lines displayed: " << lcLines << "\n";
-			std::cout << " [2] Refresh rate (100-5000): " << refresh << "\n";
+			std::cout << " [2] Refresh rate (0-1000): " << refresh << "\n";
 			std::cout << " [3] Dynamic refresh: " << ((dynamicRefresh) ? "YES" : "NO") << "\n";
 			std::cout << " [4] Notify' beep length(50-10000): " << dzwiekGlowny << "\n";
 			std::cout << " [5] Notify' beep delay(50-1000): " << interval << "\n";
@@ -82,7 +82,7 @@ void settings()
 			std::cout << " [a] Kanał aktualizacji: " << updateChannel << "\n";
 			SetConsoleTextAttribute(h, 7);
 			std::cout << " [1] Liczba wyświetlanych wierszy: " << lcLines << "\n";
-			std::cout << " [2] Częstotliwość odświeżania(100-5000): " << refresh << "\n";
+			std::cout << " [2] Częstotliwość odświeżania(0-1000): " << refresh << "\n";
 			std::cout << " [3] Dynamiczne odświeżanie: " << ((dynamicRefresh) ? "TAK" : "NIE") << "\n";
 			std::cout << " [4] Częstotliwość dźwięku(50-10000): " << dzwiekGlowny << "\n";
 			std::cout << " [5] Przerwa między dźwiękami(50-1000): " << interval << "\n";

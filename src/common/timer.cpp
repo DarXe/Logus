@@ -117,7 +117,7 @@ void Timer::beep()
 			pos.X = 1;
 			pos.Y = 2;
 			SetConsoleCursorPosition(h, pos);
-			std::cout << " [t]Timer                     ";
+			std::cout << " [t]Timer                  ";
 		}
 	}
 }

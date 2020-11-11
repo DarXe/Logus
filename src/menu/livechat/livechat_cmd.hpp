@@ -30,9 +30,9 @@ namespace LCCommand
 	void HardReset(const std::string_view line);
 	void FindTransfers(const std::string_view line);
 	void FindWord(const std::string &line);
-	void FindConfig(const std::string_view line);
-	void FindConsoleLog(const std::string_view line);
-	void FindLogusLog(const std::string_view line);
+	void OpenConfig(const std::string_view line);
+	void OpenConsoleLog(const std::string_view line);
+	void OpenLogusLog(const std::string_view line);
 	void Timestamp(const std::string_view line);
 	void TimestampBeep(const std::string_view line);
 	void RenderEngine(const std::string_view line);
@@ -65,9 +65,9 @@ namespace LCCmdEvent
 	bool HardReset(const std::string_view line);
 	bool FindTransfers(const std::string_view line);
 	bool FindWord(const std::string_view line);
-	bool FindConfig(const std::string_view line);
-	bool FindConsoleLog(const std::string_view line);
-	bool FindLogusLog(const std::string_view line);
+	bool OpenConfig(const std::string_view line);
+	bool OpenConsoleLog(const std::string_view line);
+	bool OpenLogusLog(const std::string_view line);
 	bool Timestamp(const std::string_view line);
 	bool RenderEngine(const std::string_view line);
 	bool ClearChat(const std::string_view line);

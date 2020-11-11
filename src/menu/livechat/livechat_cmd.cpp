@@ -42,9 +42,9 @@ void LCCommand::CheckCommandInput(const std::string &line)
 	SetLoadingTime(line);
 	FindTransfers(line);
 	FindWord(line);
-	FindConfig(line);
-	FindConsoleLog(line);
-	FindLogusLog(line);
+	OpenConfig(line);
+	OpenConsoleLog(line);
+	OpenLogusLog(line);
 	SetMin(line);
 	SetMax(line);
 	SetRefresh(line);
@@ -398,9 +398,9 @@ inline bool LCCmdEvent::FindWord(const std::string_view line)
 }
 
 ///////////////////* FIND CONFIG */////////////////////////////////
-inline void LCCommand::FindConfig(const std::string_view line)
+inline void LCCommand::OpenConfig(const std::string_view line)
 {
-	if (LCCmdEvent::FindConfig(line))
+	if (LCCmdEvent::OpenConfig(line))
 	{
 		saveConfig(0);
 		ShellExecute(0, 0, "logus.ini", 0, 0, SW_SHOW);
@@ -409,15 +409,15 @@ inline void LCCommand::FindConfig(const std::string_view line)
 	}
 }
 
-inline bool LCCmdEvent::FindConfig(const std::string_view line)
+inline bool LCCmdEvent::OpenConfig(const std::string_view line)
 {
 	return lcompare(line, "[Input]  : open cfg");
 }
 
 ///////////////////* FIND CONSOLE LOG *////////////////////////////
-inline void LCCommand::FindConsoleLog(const std::string_view line)
+inline void LCCommand::OpenConsoleLog(const std::string_view line)
 {
-	if (LCCmdEvent::FindConsoleLog(line))
+	if (LCCmdEvent::OpenConsoleLog(line))
 	{
 		saveConfig(0);
 		ShellExecute(0, 0, consoleLogPath.c_str(), 0, 0, SW_SHOW);
@@ -426,15 +426,15 @@ inline void LCCommand::FindConsoleLog(const std::string_view line)
 	}
 }
 
-inline bool LCCmdEvent::FindConsoleLog(const std::string_view line)
+inline bool LCCmdEvent::OpenConsoleLog(const std::string_view line)
 {
 	return lcompare(line, "[Input]  : open console.log");
 }
 
 ///////////////////* FIND LOGUS LOG *//////////////////////////////
-inline void LCCommand::FindLogusLog(const std::string_view line)
+inline void LCCommand::OpenLogusLog(const std::string_view line)
 {
-	if (LCCmdEvent::FindLogusLog(line))
+	if (LCCmdEvent::OpenLogusLog(line))
 	{
 		saveConfig(0);
 		ShellExecute(0, 0, "logus.log", 0, 0, SW_SHOW);
@@ -443,7 +443,7 @@ inline void LCCommand::FindLogusLog(const std::string_view line)
 	}
 }
 
-inline bool LCCmdEvent::FindLogusLog(const std::string_view line)
+inline bool LCCmdEvent::OpenLogusLog(const std::string_view line)
 {
 	return lcompare(line, "[Input]  : open logus.log");
 }
@@ -676,11 +676,11 @@ bool LCCmdEvent::CheckCommandEvents(const std::string_view line)
 		return 1;
 	else if (FindWord(line))
 		return 1;
-	else if (FindConfig(line))
+	else if (OpenConfig(line))
 		return 1;
-	else if (FindConsoleLog(line))
+	else if (OpenConsoleLog(line))
 		return 1;
-	else if (FindLogusLog(line))
+	else if (OpenLogusLog(line))
 		return 1;
 	else if (Timestamp(line))
 		return 1;
