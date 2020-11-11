@@ -383,7 +383,7 @@ void readDefault()
 	courses = 0;
 	fastStart = 0;
 	trackId = 0;
-	autoMoveLogs = 0;
+	autoMoveLogs = 1;
 	grade = 0.5;
 	base_dealerBuy = 0.4;
 	base_dealerSellCar = 0.65;

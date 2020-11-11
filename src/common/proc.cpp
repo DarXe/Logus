@@ -303,7 +303,7 @@ void preConfig()
 	{
 
 		cls();
-		std::cout << " Configuration ukończona pomyślnie.";
+		std::cout << " Konfiguracja ukończona pomyślnie.";
 		dots(100, 3);
 		std::cout << "\n Ustawienia możesz w każdej chwili zmienić w menu głównym!\n";
 		std::cout << " Wciśnij dowolny klawisz aby kontynuować.\n";

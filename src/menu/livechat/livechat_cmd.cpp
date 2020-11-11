@@ -94,7 +94,7 @@ inline void LCCommand::Quit(const std::string_view line)
 
 inline bool LCCmdEvent::Quit(const std::string_view line)
 {
-	return lcompare(line, "[Input]  : rr");
+	return lcompare(line, "[Input]  : quit");
 }
 
 ///////////////////* START TIMER */////////////////////////////////
