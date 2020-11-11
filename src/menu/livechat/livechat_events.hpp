@@ -12,7 +12,7 @@
 
 namespace LCEvent
 {
-	bool Team(const std::string_view line, const bool &includePlayer);
+	bool Team(const std::string_view line, const bool &includePlayer = false, const bool &onlyPlayer = false);
 	bool PmFrom(const std::string_view line);
 	bool PmTo(const std::string_view line);
 	bool TransfersFrom(const std::string_view line);

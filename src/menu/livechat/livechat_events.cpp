@@ -19,22 +19,22 @@
 //foward declarations
 void serverConnect(); //from proc.hpp
 
-bool LCEvent::Team(const std::string_view line, const bool &includePlayer)
+bool LCEvent::Team(const std::string_view line, const bool &includePlayer, const bool &onlyPlayer)
 {
 	// [2020-10-28 17:42:08] [Output] : (TEAM) Niventill: ess
-	if (line.find("[Output] : (TEAM) ") != std::string::npos)
+	if (lcompare(line, "[Output] : (TEAM) "))
 	{
-		if (line.find("[Output] : (TEAM) " + nick) != std::string::npos)
+		if (lcompare(line, "[Output] : (TEAM) " + nick))
 		{
 			if (includePlayer)
 				return 1;
 			else
 				return 0;
 		}
-		return 1;
+		if (!onlyPlayer)
+			return 1;
 	}
-	else
-		return 0;
+	return 0;
 }
 
 bool LCEvent::PmFrom(const std::string_view line)
@@ -158,7 +158,7 @@ bool LCEvent::ContainsPhrase(const std::string_view line, const bool &format)
 	}
 	else
 	{
-		if ((LCEvent::PmFrom(line) && !fLockPW) || (LCEvent::Team(line, 1) && !fLockTeam) || LCEvent::PmTo(line) || LCEvent::Input(line) || lcompare(line, "[Output] : " + nick) ||
+		if (LCEvent::PmTo(line) || (fLockTeam && LCEvent::Team(line, 1, 1)) || (!fLockTeam && LCEvent::Team(line, 0)) || (!fLockPW && LCEvent::PmFrom(line)) || LCEvent::Input(line) || lcompare(line, "[Output] : " + nick) ||
 		lcompare(line, "[Output] : Gracz: " + nick + " Team: ") || lcompare(line, "[Output] : Name: " + nick + ", "))
 			return 0;
 	}
