@@ -76,6 +76,7 @@ static bool init(const int &argc)
 		test.open(mtaLocation + "\\MTA\\logs\\console.log");
 		if (!test.good() && mtaLocation != "ERROR")
 		{
+			cls();
 			std::string temploc;
 			std::cout << ((engLang) ? " Found MTA Path: " : " Znaleziona ścieżka MTA: ");
 			std::cout << mtaLocation << '\n';
@@ -87,6 +88,7 @@ static bool init(const int &argc)
 		}
 		else if (!test.good() && mtaLocation == "ERROR")
 		{
+			cls();
 			std::string temploc;
 			std::cout << ((engLang) ? " MTA directory not found. Please enter path manually\n" : " Nie udało się znaleźć lokalizacji MTA. Proszę podaj lokalizację manualnie\n");
 			std::cout << ((engLang) ? " It has to be the main directory, eg. C:\\Program Files (x86)\\MTA San Andreas 1.5\n" : " Ścieżka musi być ścieżką główną, np. C:\\Program Files (x86)\\MTA San Andreas 1.5\n");
@@ -95,6 +97,7 @@ static bool init(const int &argc)
 		}
 		else
 		{
+			cls();
 			test.close();
 			consoleLogPath = mtaLocation + "\\MTA\\logs\\console.log";
 			consoleLog1Path = mtaLocation + "\\MTA\\logs\\console.log.1";
@@ -110,14 +113,13 @@ static bool init(const int &argc)
 
 int main(int argc, char **argv) //maa main
 {
+
 	//init check if config exists, search for mta path etc
 	if (!init(argc))
 		return 0;
 
-#ifndef SHOWCURSOR
 	std::thread con(hideConsoleCursor);
 	con.detach();
-#endif
 
 	//q(mtaLocation); q(consoleLogPath); q(consoleLog1Path); q(consoleLog2Path); q(consoleLog3Path); q(consoleLog4Path); q(consoleLog5Path); getch(); return 0;
 	std::fstream fileInit;
