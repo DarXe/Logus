@@ -32,9 +32,6 @@ void LCEventHandler::CheckEventHandlers(const std::string &line)
 		BindKey(line);
 		Freeze(line);
 		NickChange(line);
-
-		if (chatSound)
-			Beep(750, 50);
 	}
 	catch(const int &e)
 	{}
@@ -247,14 +244,17 @@ inline void LCEventHandler::SalaryForTransport(const std::string_view line, cons
 
 inline void LCEventHandler::ContainsPhrase(const std::string_view line)
 {
-	if(LCEvent::ContainsPhrase(line))
+	if (!fLockPhrase)
 	{
-		Beep(dzwiekGlowny, 300);
-		Beep(0, interval);
-		Beep(dzwiekGlowny, 300);
-		Beep(0, interval);
+		if(LCEvent::ContainsPhrase(line))
+		{
+			Beep(dzwiekGlowny, 300);
+			Beep(0, interval);
+			Beep(dzwiekGlowny, 300);
+			Beep(0, interval);
 
-		LDebug::InfoOutput(line);
-		throw 1;
+			LDebug::InfoOutput(line);
+			throw 1;
+		}
 	}
 }

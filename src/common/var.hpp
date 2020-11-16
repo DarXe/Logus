@@ -30,8 +30,8 @@ extern bool fLockTeam; //lock beep(TEAM)
 extern bool fLockPW; //lock beep priv message
 extern bool fLockReport; //lock beep for transport
 extern bool fLockNick; //lock beep nick 'nick: message'
+extern bool fLockPhrase; //lock beep on phrase in player's message text
 extern bool engLang; // Logus in English
-extern bool chatSound; //the sound of any chat message //dźwięk każdej wiadomości na czacie
 extern int lcLines; //displayed rows in LiveChat
 extern int refresh; //refresh<ms> in LiveChat
 extern int interval; //time interval between sounds //odstęp czasowy(ms) między kolejnymi dźwiękami

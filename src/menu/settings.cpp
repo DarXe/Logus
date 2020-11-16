@@ -30,7 +30,7 @@ void settings()
 			std::cout << " [t] Notify on team message: " << ((!fLockTeam) ? "YES" : "NO") << "\n";
 			std::cout << " [s] Notify on report or transport message: " << ((!fLockReport) ? "YES" : "NO") << "\n";
 			std::cout << " [k] Chat notifications - choosen nicknames: " << ((!fLockNick) ? "YES" : "NO") << "\n";
-			std::cout << " [c] Notify on any message: " << ((chatSound) ? "YES" : "NO") << "\n";
+			std::cout << " [c] 	Chat notifications - choosen phrases " << ((!fLockPhrase) ? "YES" : "NO") << "\n";
 			std::cout << " [a] Update channel: " << updateChannel << "\n";
 			SetConsoleTextAttribute(h, 7);
 			std::cout << " [1] Amount of lines displayed: " << lcLines << "\n";
@@ -78,7 +78,7 @@ void settings()
 			std::cout << " [t] Dźwięk wiadomości teamowych: " << ((!fLockTeam) ? "TAK" : "NIE") << "\n";
 			std::cout << " [s] Dźwięk komunikatów(raport, transport): " << ((!fLockReport) ? "TAK" : "NIE") << "\n";
 			std::cout << " [k] Powiadomienia na czacie - wybrane nicki: " << ((!fLockNick) ? "TAK" : "NIE") << "\n";
-			std::cout << " [c] Dźwięk każdej wiadomości na czacie: " << ((chatSound) ? "TAK" : "NIE") << "\n";
+			std::cout << " [c] Powiadomienia na czacie - wybrane frazy: " << ((!fLockPhrase) ? "TAK" : "NIE") << "\n";
 			std::cout << " [a] Kanał aktualizacji: " << updateChannel << "\n";
 			SetConsoleTextAttribute(h, 7);
 			std::cout << " [1] Liczba wyświetlanych wierszy: " << lcLines << "\n";
@@ -162,7 +162,7 @@ void settings()
 		case 'c':
 		{
 			cls();
-			chatSound = (chatSound) ? 0 : 1;
+			fLockPhrase = (fLockPhrase) ? 0 : 1;
 			break;
 		}
 		case 'a':

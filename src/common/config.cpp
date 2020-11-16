@@ -88,10 +88,10 @@ void readConfig(bool showInfo)
 		else if (templine.find("b_Blokada powiadomienia na wybrane nicki:") != std::string::npos)
 			fLockNick = stoi(clearConfigValue(templine, "b_Blokada powiadomienia na wybrane nicki:"));
 
-		else if (templine.find("b_Notify on any message:") != std::string::npos)
-			chatSound = stoi(clearConfigValue(templine, "b_Notify on any message:"));
-		else if (templine.find("b_Powiadomienia na każdą wiadomość:") != std::string::npos)
-			chatSound = stoi(clearConfigValue(templine, "b_Powiadomienia na każdą wiadomość:"));
+		else if (templine.find("b_Mute phrase notifications:") != std::string::npos)
+			fLockPhrase = stoi(clearConfigValue(templine, "b_Mute phrase notifications:"));
+		else if (templine.find("b_Blokada powiadomienia na wybrane frazy:") != std::string::npos)
+			fLockPhrase = stoi(clearConfigValue(templine, "b_Blokada powiadomienia na wybrane frazy:"));
 
 		else if (templine.find("b_Dynamic refresh:") != std::string::npos)
 			dynamicRefresh = stoi(clearConfigValue(templine, "b_Dynamic refresh:"));
@@ -273,10 +273,10 @@ void saveConfig(bool showInfo)
 		file << "b_Mute PM notifications: " << fLockPW << "\n";
 		file << "b_Mute fraction/cargo notifications: " << fLockReport << "\n";
 		file << "b_Mute nicknames notifications: " << fLockNick << "\n";
+		file << "b_Mute phrase notifications: " << fLockPhrase << '\n';
 		file << "b_Toggle auto gate opening (open at the end of PM): " << autoOpenGate << "\n";
 		file << "b_Timestamp: " << timestamp << '\n';
 		file << "b_Render engine: " << renderEngine << '\n';
-		file << "b_Notify on any message: " << chatSound << "\n";
 		file << "b_Dynamic refresh: " << dynamicRefresh << "\n";
 		file << "i_Min dynamic refresh: " << minRefresh << "\n";
 		file << "i_Max dynamic refresh: " << maxRefresh << "\n";
@@ -324,10 +324,10 @@ void saveConfig(bool showInfo)
 		file << "b_Blokada powiadomienia PM: " << fLockPW << "\n";
 		file << "b_Blokada powiadomienia towaru/frakcji: " << fLockReport << "\n";
 		file << "b_Blokada powiadomienia na wybrane nicki: " << fLockNick << "\n";
+		file << "b_Blokada powiadomienia na wybrane frazy: " << fLockPhrase << '\n';
 		file << "b_Włącz automatyczne otwieranie bramy (open na końcu PW): " << autoOpenGate << "\n";
 		file << "b_Timestamp: " << timestamp << '\n';
 		file << "b_Silnik renderowania: " << renderEngine << '\n';
-		file << "b_Powiadomienia na każdą wiadomość: " << chatSound << "\n";
 		file << "b_Odświeżanie dynamiczne: " << dynamicRefresh << "\n";
 		file << "i_Min dynamiczne odświeżanie: " << minRefresh << "\n";
 		file << "i_Max dynamiczne odświeżanie: " << maxRefresh << "\n";
@@ -369,8 +369,8 @@ void readDefault()
 	fLockPW = 0;
 	fLockReport = 0;
 	fLockNick = 0;
+	fLockPhrase = 0;
 	engLang = 0;
-	chatSound = 0;
 	lcLines = 15;
 	refresh = 300;
 	interval = 50;

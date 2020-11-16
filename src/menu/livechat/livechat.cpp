@@ -339,6 +339,7 @@ bool liveChatInput()
 			Beep(dzwiekGlowny, 100);
 			SetConsoleTextAttribute(h, 12);
 			std::cout << "ZAPISANO!";
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 			saveConfig(0);
 		}
 		break;
@@ -348,6 +349,7 @@ bool liveChatInput()
 			Beep(dzwiekGlowny, 100);
 			SetConsoleTextAttribute(h, 12);
 			std::cout << "WCZYTANO!";
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 			readConfig(0);
 		}
 		break;
