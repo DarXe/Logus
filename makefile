@@ -16,7 +16,7 @@ default: release
 release: $(CFILES) res.res
 	$(CC) $(CFLAGS) -c src/ver.cpp -o src/ver.o
 	$(CC) $(EXEFLAGS) $(SRCFILES) res.res -o $(PROGRAM_NAME)
-	@Logus "placeholder"
+	@./Logus.exe "placeholder"
 
 debug: $(SRCFILES) res.res
 	$(CC) $(CFLAGS) $^ -o $(PROGRAM_NAME) 

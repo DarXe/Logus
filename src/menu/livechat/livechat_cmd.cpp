@@ -14,6 +14,7 @@
 #include <common.hpp>
 #include "../addons/loglookup.hpp"
 #include <proc.hpp>
+#include <debug.hpp>
 #include "livechat_eventhandlers.hpp"
 #include "livechat_cmd.hpp"
 
@@ -73,6 +74,8 @@ inline void LCCommand::Reconnect(const std::string_view line)
 	{
 		serverConnect();
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -127,6 +130,8 @@ inline void LCCommand::SetNick(const std::string &line)
 		ss >> tempnick >> tempnick;
 		nick = tempnick;
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -145,6 +150,8 @@ inline void LCCommand::SetTrack(const std::string_view line)
 		{
 			trackId = 0;
 			Beep(dzwiekGlowny, 150);
+
+			LDebug::InfoOutput(line);
 			throw 1;
 		}
 		else if (line[gt + 7] == 'a')
@@ -154,6 +161,8 @@ inline void LCCommand::SetTrack(const std::string_view line)
 			else
 				trackId = 3;
 			Beep(dzwiekGlowny, 150);
+
+			LDebug::InfoOutput(line);
 			throw 1;
 		}
 		else
@@ -163,6 +172,8 @@ inline void LCCommand::SetTrack(const std::string_view line)
 			else
 				trackId = 2;
 			Beep(dzwiekGlowny, 150);
+
+			LDebug::InfoOutput(line);
 			throw 1;
 		}
 	}
@@ -209,6 +220,8 @@ inline void LCCommand::AddNickname(const std::string_view line)
 		nicknames.push_back(tempn);
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -235,6 +248,8 @@ inline void LCCommand::DelNickname(const std::string_view line)
 		}
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -257,6 +272,8 @@ inline void LCCommand::SetMoney(const std::string &line)
 		catch (const std::invalid_argument& arg) {}
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -281,6 +298,8 @@ inline void LCCommand::SetCourses(const std::string &line)
 		}
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -306,6 +325,8 @@ inline void LCCommand::SetLoadingTime(const std::string_view line)
 
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -326,6 +347,8 @@ inline void LCCommand::HardReset(const std::string_view line)
 		maxsalary = 0;
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -344,6 +367,8 @@ inline void LCCommand::Reset(const std::string_view line)
 		courses = 0;
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -360,6 +385,8 @@ inline void LCCommand::FindTransfers(const std::string_view line)
 	{
 		checkLogTransfersAll(LiveChat);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -379,6 +406,8 @@ inline void LCCommand::FindWord(const std::string &line)
 		removeSpaces(phrase);
 		findWordAll_CaseSensitive(phrase);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 	else if (line.find("[Input]  : find word ") != std::string::npos)
@@ -388,6 +417,8 @@ inline void LCCommand::FindWord(const std::string &line)
 		removeSpaces(phrase);
 		findWordAll_NonCaseSensitive(phrase);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -405,6 +436,8 @@ inline void LCCommand::OpenConfig(const std::string_view line)
 		saveConfig(0);
 		ShellExecute(0, 0, "logus.ini", 0, 0, SW_SHOW);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -422,6 +455,8 @@ inline void LCCommand::OpenConsoleLog(const std::string_view line)
 		saveConfig(0);
 		ShellExecute(0, 0, consoleLogPath.c_str(), 0, 0, SW_SHOW);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -439,6 +474,8 @@ inline void LCCommand::OpenLogusLog(const std::string_view line)
 		saveConfig(0);
 		ShellExecute(0, 0, "logus.log", 0, 0, SW_SHOW);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -464,6 +501,8 @@ inline void LCCommand::TimestampBeep(const std::string_view line)
 	if (LCCmdEvent::Timestamp(line)) //reset kursow /set re
 	{
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -489,6 +528,8 @@ inline void LCCommand::RenderEngineBeep(const std::string_view line)
 	if (LCCmdEvent::RenderEngine(line)) //reset kursow /set re
 	{
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -513,6 +554,8 @@ inline void LCCommand::ClearChatBeep(const std::string_view line)
 	if (LCCmdEvent::ClearChat(line)) //reset kursow /set re
 	{
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -535,6 +578,8 @@ inline void LCCommand::SetRefresh(const std::string &line)
 		catch (const std::invalid_argument& arg) {}
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -557,6 +602,8 @@ inline void LCCommand::SetMin(const std::string &line)
 		catch (const std::invalid_argument& arg) {}
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -579,6 +626,8 @@ inline void LCCommand::SetMax(const std::string &line)
 		catch (const std::invalid_argument& arg) {}
 		saveConfig(0);
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -604,6 +653,8 @@ inline void LCCommand::SetDynamicRefreshBeep(const std::string_view line)
 	if (LCCmdEvent::SetDynamicRefresh(line)) //reset kursow /set re
 	{
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -635,6 +686,8 @@ inline void LCCommand::AutoReconnectBeep(const std::string_view line)
 	if (LCCmdEvent::AutoReconnect(line)) //reset kursow /set re
 	{
 		Beep(dzwiekGlowny, 150);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }

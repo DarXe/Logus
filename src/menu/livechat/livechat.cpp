@@ -377,7 +377,7 @@ bool liveChat() //lc
 	filelc.open(consoleLogPath, std::ios::in | std::ios::binary);
 	//load logs without checking notifications
 	Stopwatch init;
-	getChat(1);
+	getChat(true);
 	init.stop();
 
 	Stopwatch initshow;

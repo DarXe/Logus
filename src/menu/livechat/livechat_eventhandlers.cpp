@@ -52,8 +52,6 @@ inline void LCEventHandler::PmFrom(const std::string_view line)
 
 				Beep(dzwiekGlowny, 400);
 				Beep(0, interval);
-
-				LDebug::InfoOutput(line);
 			}
 			//other PM
 			Beep(dzwiekGlowny, 300);
@@ -92,6 +90,8 @@ inline void LCEventHandler::Nicknames(const std::string_view line)
 	{
 		Beep(dzwiekGlowny, 300);
 		Beep(0, interval);
+
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
@@ -205,6 +205,7 @@ inline void LCEventHandler::NickChange(const std::string_view line)
 		std::istringstream ss(tempnick);
 		ss >> tempn >> tempn >> tempn >> tempn >> tempn >> tempn >> newnick;
 		nick = newnick;
+		LDebug::InfoOutput(line);
 		throw 1;
 	}
 }
