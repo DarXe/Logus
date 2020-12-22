@@ -33,17 +33,16 @@ static std::deque <std::string> lastLines;
 static std::deque <int> lastLinesSize;
 static std::vector <std::string> newLines;
 static int lcLineCount;
-static bool isNewLine = 0;
+static bool isNewLine = false;
 static std::ifstream filelc;
-static std::string linelc;
 static std::uintmax_t size;
 static bool isAutoJoin;
 static CpuUsage cpu;
 static Status st;
 static int head1 = 0, head2 = 0, head3 = 0;
 static int status = 0;
-static bool forceRedraw = 0;
-static bool isWindowTooSmall = 0;
+static bool forceRedraw = false;
+static bool isWindowTooSmall = false;
 
 std::string Status::get()
 {
@@ -141,8 +140,21 @@ void showChat()
 	});
 }
 
-void getChat(const bool &init) //gc
+void forceLiveChatReload()
 {
+	getChat(true, true);
+}
+
+void getChat(const bool &init, const bool &reload) //gc
+{
+	if (reload)
+	{
+		lastLines.clear();
+		lastLines.shrink_to_fit();
+		filelc.close();
+		filelc.open(consoleLogPath, std::ios::in | std::ios::binary);
+		forceRedraw = true;
+	}
 	if (lastLines.size() > lcLines) //checks if user bruteforced lower "lcLines" than is saved in deque
 	{
 		cls(); //do a full console clean
@@ -162,25 +174,26 @@ void getChat(const bool &init) //gc
 
 	while (!filelc.eof())
 	{
+		std::string linelc;
 		getline(filelc, linelc); //get linelc
 		if (filelc.eof())
 			break;				 //if above getline returns eof, do a break
 
-		std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv; 
-		int utfsize = linelc.size()-conv.from_bytes(linelc).size()+1; //get real string size (utf8)
-		int lcsize = gt + 92;
+		const int utfsize = linelc.size() - utf8_size(linelc) + 1; // get real string size (utf8)
+		const int timestampOffset = timestamp ? 11 : 0;
+		const int lcsize = gt + 92 - timestampOffset; // length of livechat hud, works as a limiter (wraps line if it's too long)
 		if (linelc.size() > lcsize + utfsize) //split string to next line if it's too long
 		{
 			int notif = 0;
 			if (notifCheck(linelc)) //offset if "beepable" message is present (as it occupies 2 chars)
 				notif = 2;
 			lastLines.emplace_back(utf8_substr(linelc, 0, lcsize - notif));
-			int loops = linelc.size() / lcsize;
+			int loops = linelc.size() / (lcsize + timestampOffset);
 			int len = lcsize - notif;
 			for (int i = 0; i < loops; i++)
 			{
-				lastLines.emplace_back(utf8_substr(linelc, len, lcsize - 33 - notif));
-				len += lcsize - 33 - notif;
+				lastLines.emplace_back(utf8_substr(linelc, len, lcsize - gt - notif));
+				len += lcsize - gt - notif;
 			}
 		}
 		else if (linelc.size() > gt) //if line is fine and isn't too long, just emplace it all
@@ -199,7 +212,7 @@ void getChat(const bool &init) //gc
 		}
 	}
 
-	if(lastLines.size()+5 > GetConsoleRows())
+	if(lastLines.size() + 5 > GetConsoleRows())
 	{
 		clslegacy();
 		forceRedraw = true;

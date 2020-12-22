@@ -15,6 +15,7 @@
 #include "../addons/loglookup.hpp"
 #include <proc.hpp>
 #include <debug.hpp>
+#include "livechat.hpp"
 #include "livechat_eventhandlers.hpp"
 #include "livechat_cmd.hpp"
 
@@ -490,7 +491,8 @@ inline void LCCommand::Timestamp(const std::string_view line)
 {
 	if (LCCmdEvent::Timestamp(line)) //reset kursow /set re
 	{
-		timestamp ? timestamp = 0 : timestamp = 1;
+		timestamp = !timestamp;
+		forceLiveChatReload();
 		saveConfig(0);
 		throw 1;
 	}
