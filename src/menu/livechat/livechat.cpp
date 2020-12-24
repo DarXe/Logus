@@ -186,7 +186,7 @@ void getChat(const bool &init) //gc
 				notif = 2;
 			lastLines.emplace_back(utf8_substr(linelc, 0, lcsize - notif));
 			int loops = lineLength / (lcsize + timestampOffset);
-			int len = lcsize - notif;
+			int len = lcsize - notif + timestampOffset;
 			for (int i = 0; i < loops; i++)
 			{
 				lastLines.emplace_back(utf8_substr(linelc, len, lcsize - gt - notif + timestampOffset));
