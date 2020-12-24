@@ -27,7 +27,7 @@ void cpuMeter(const bool &bypass = false);
 void statusMeter();
 void showChat();
 void forceLiveChatReload();
-void getChat(const bool &init = false, const bool &reload = false);
+void getChat(const bool &init = false);
 void moveLogs();
 void checkMessages(const bool &pre);
 bool liveChatInput();
