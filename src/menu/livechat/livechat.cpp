@@ -185,7 +185,7 @@ void getChat(const bool &init) //gc
 			if (notifCheck(linelc)) //offset if "beepable" message is present (as it occupies 2 chars)
 				notif = 2;
 			lastLines.emplace_back(utf8_substr(linelc, 0, lcsize - notif));
-			int loops = ceil((float)lineLength / (float)(lcsize + timestampOffset));
+			int loops = lineLength / (lcsize + timestampOffset);
 			int len = lcsize - notif;
 			for (int i = 0; i < loops; i++)
 			{
