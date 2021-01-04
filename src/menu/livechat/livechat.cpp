@@ -101,8 +101,8 @@ void liveChatHead() //head
 	pos.X=91; pos.Y=3; SetConsoleCursorPosition(h, pos); std::cout<<" ";
 	SetConsoleTextAttribute(h, 12);
 	if (renderEngine)
-		 std::cout<<"\n####engine:experimental###################################################[m]moveLogs#######\n";
-	else std::cout<<"\n####engine:stable#########################################################[m]moveLogs#######\n";
+		 std::cout<<"\n####engine:stable#########################################################[m]moveLogs#######\n";
+	else std::cout<<"\n####engine:legacy#########################################################[m]moveLogs#######\n";
 	
 }
 

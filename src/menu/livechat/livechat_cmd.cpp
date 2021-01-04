@@ -701,57 +701,32 @@ inline bool LCCmdEvent::AutoReconnect(const std::string_view line)
 
 bool LCCmdEvent::CheckCommandEvents(const std::string_view line)
 {
-	if (Reconnect(line))
-		return 1;
-	else if (Quit(line))
-		return 1;
-	else if (StartTimer(line))
-		return 1;
-	else if (SetNick(line))
-		return 1;
-	else if (SetTrack(line))
-		return 1;
-	else if (SetTimer(line))
-		return 1;
-	else if (AddNickname(line))
-		return 1;
-	else if (DelNickname(line))
-		return 1;
-	else if (SetMoney(line))
-		return 1;
-	else if (SetCourses(line))
-		return 1;
-	else if (SetLoadingTime(line))
-		return 1;
-	else if (Reset(line))
-		return 1;
-	else if (HardReset(line))
-		return 1;
-	else if (FindTransfers(line))
-		return 1;
-	else if (FindWord(line))
-		return 1;
-	else if (OpenConfig(line))
-		return 1;
-	else if (OpenConsoleLog(line))
-		return 1;
-	else if (OpenLogusLog(line))
-		return 1;
-	else if (Timestamp(line))
-		return 1;
-	else if (RenderEngine(line))
-		return 1;
-	else if (ClearChat(line))
-		return 1;
-	else if (SetMax(line))
-		return 1;
-	else if (SetMin(line))
-		return 1;
-	else if (SetRefresh(line))
-		return 1;
-	else if (SetDynamicRefresh(line))
-		return 1;
-	else if (AutoReconnect(line))
+	if (Reconnect(line)
+	|| Quit(line)
+	|| StartTimer(line)
+	|| SetNick(line)
+	|| SetTrack(line)
+	|| SetTimer(line)
+	|| AddNickname(line)
+	|| DelNickname(line)
+	|| SetMoney(line)
+	|| SetCourses(line)
+	|| SetLoadingTime(line)
+	|| Reset(line)
+	|| HardReset(line)
+	|| FindTransfers(line)
+	|| FindWord(line)
+	|| OpenConfig(line)
+	|| OpenConsoleLog(line)
+	|| OpenLogusLog(line)
+	|| Timestamp(line)
+	|| RenderEngine(line)
+	|| ClearChat(line)
+	|| SetMax(line)
+	|| SetMin(line)
+	|| SetRefresh(line)
+	|| SetDynamicRefresh(line)
+	|| AutoReconnect(line))
 		return 1;
 	else
 		return 0;

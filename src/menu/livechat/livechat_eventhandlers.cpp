@@ -101,7 +101,7 @@ inline void LCEventHandler::Transport(const std::string_view line)
 	// beep dostarczenie towaru, raport z frakcji
 	if (!fLockReport && (LCEvent::TransportCompany(line) || LCEvent::TransportTruckerzy(line)))
 	{
-		SalaryForTransport(line, LCEvent::TransportCompany(line));
+		salaryForTransport(line, LCEvent::TransportCompany(line));
 		if (trackId)
 		{
 			if (trackId == 4)
@@ -210,7 +210,7 @@ inline void LCEventHandler::NickChange(const std::string_view line)
 	}
 }
 
-inline void LCEventHandler::SalaryForTransport(const std::string_view line, const bool &type)
+void salaryForTransport(const std::string_view line, const bool &type)
 {
 	short delim = 0, delim1 = 0;
 	std::string d1s, d1e, d2s, d2e; // 1 = polish, 2 = english, s = start, e = end
