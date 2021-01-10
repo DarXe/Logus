@@ -218,7 +218,7 @@ int menu() //con
 		case 't':
 		{
 			cls();
-			liveChat(); //run LiveChat
+			LCCore::MainLoop(); //run LiveChat
 			break;
 		}
 		case 'l':

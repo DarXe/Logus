@@ -14,11 +14,8 @@
 #include "commonConfig.hpp"
 #include "var.hpp"
 #include "config.hpp"
+#include "../menu/livechat/livechat.hpp"
 #include "proc.hpp"
-
-
-//forward declarations
-bool liveChat();
 
 
 void color(const std::string &value)
@@ -38,7 +35,7 @@ bool runLiveChat() //flc
 	serverConnect();
 	cls();
 	Beep(dzwiekGlowny, 100);
-	liveChat();
+	LCCore::MainLoop();
 	return 1;
 }
 

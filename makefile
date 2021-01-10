@@ -10,6 +10,7 @@ SRCFILES		+= $(patsubst %.cpp,%.o,$(wildcard src/menu/livechat/*.cpp))
 CFILES			:= $(subst src/ver.o,,${SRCFILES})
 DEPS			:= $(SRCFILES:.o=.d)
 PREH			:= $(SRCFILES:.o=.hpp.gch)
+SHELL=cmd
 
 default: release
 

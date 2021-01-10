@@ -22,16 +22,21 @@ public:
 	std::string get();
 };
 
-void liveChatHead();
 void cpuMeter(const bool &bypass = false);
 void statusMeter();
-void showChat();
-void forceLiveChatReload();
-void getChat(const bool &init = false);
-void moveLogs();
-void checkMessages(const bool &pre);
-bool liveChatInput();
-bool liveChat();
+
+// LCCore == LiveChat Core
+namespace LCCore
+{
+	void DrawHUD();
+	void ShowChat();
+	void ForceReload();
+	void GetChat(const bool &init = false);
+	void MoveLogs();
+	void CheckMessages(const bool &pre);
+	bool CheckInput();
+	bool MainLoop();
+} // namespace LCCore
 
 
 #endif

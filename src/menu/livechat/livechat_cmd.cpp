@@ -492,7 +492,7 @@ inline void LCCommand::Timestamp(const std::string_view line)
 	if (LCCmdEvent::Timestamp(line)) //reset kursow /set re
 	{
 		timestamp = !timestamp;
-		forceLiveChatReload();
+		LCCore::ForceReload();
 		saveConfig(0);
 		throw 1;
 	}

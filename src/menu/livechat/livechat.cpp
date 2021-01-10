@@ -43,6 +43,7 @@ static int head1 = 0, head2 = 0, head3 = 0;
 static int status = 0;
 static bool forceRedraw = false;
 static bool isWindowTooSmall = false;
+static const short HUD_LENGTH = 92;
 
 std::string Status::get()
 {
@@ -53,7 +54,31 @@ std::string Status::get()
 	return stat[pos];
 }
 
-void liveChatHead() //head
+
+void cpuMeter(const bool &bypass)
+{
+	if (cpu.ready() || bypass)
+	{
+		SetConsoleTextAttribute(h, 12);
+		SetConsoleCursorPosition(h, {5, 0});
+		std::cout << std::fixed << std::setprecision(2) << "CPU:" << cpu.getCpuUsage() << "%#AVG:" << cpu.getCpuAvg() << '%';
+		if (status-GetCursorPosX() > 0)
+		{
+			std::string s1(status-GetCursorPosX(), '#'); std::cout << s1;
+		}
+		status = GetCursorPosX();
+	}
+}
+
+void statusMeter()
+{
+	cpuMeter();
+	SetConsoleTextAttribute(h, 4);
+	SetConsoleCursorPosition(h, {3, 1});
+	std::cout << st.get();
+}
+
+void LCCore::DrawHUD() //head
 {
 	std::string sizet; float sizei = size; COORD pos;
 	if (size > 1000000)
@@ -106,51 +131,28 @@ void liveChatHead() //head
 	
 }
 
-void cpuMeter(const bool &bypass)
-{
-	if (cpu.ready() || bypass)
-	{
-		SetConsoleTextAttribute(h, 12);
-		SetConsoleCursorPosition(h, {5, 0});
-		std::cout << std::fixed << std::setprecision(2) << "CPU:" << cpu.getCpuUsage() << "%#AVG:" << cpu.getCpuAvg() << '%';
-		if (status-GetCursorPosX() > 0)
-		{
-			std::string s1(status-GetCursorPosX(), '#'); std::cout << s1;
-		}
-		status = GetCursorPosX();
-	}
-}
-
-void statusMeter()
-{
-	cpuMeter();
-	SetConsoleTextAttribute(h, 4);
-	SetConsoleCursorPosition(h, {3, 1});
-	std::cout << st.get();
-}
-
-void showChat()
+void LCCore::ShowChat()
 {
 	auto f = std::async(std::launch::async, []()
 	{
 		if (!renderEngine)
 			cls();
-		liveChatHead();
+		LCCore::DrawHUD();
 		LCFormat::ParseLines(lastLines, lastLinesSize, timestamp);
 	});
 }
 
-void forceLiveChatReload()
+void LCCore::ForceReload()
 {
 	filelc.clear();
 	filelc.seekg(0, std::ios::beg);
 	lastLines.clear();
 	lastLines.shrink_to_fit();
 	forceRedraw = true;
-	getChat(true);
+	LCCore::GetChat(true);
 }
 
-void getChat(const bool &init) //gc
+void LCCore::GetChat(const bool &init) //gc
 {
 	if (lastLines.size() > lcLines) //checks if user bruteforced lower "lcLines" than is saved in deque
 	{
@@ -165,7 +167,7 @@ void getChat(const bool &init) //gc
 	}
 	else if (lcLines < 10) //check if user bruteforced lower "lcLines" than is supported
 	{
-		forceRedraw = true; //tell livechat to redraw
+		forceRedraw = true; //tell LCCore::MainLoop to redraw
 		lcLines = 10; //set "lcLines" to max supported value
 	}
 
@@ -178,7 +180,7 @@ void getChat(const bool &init) //gc
 
 		const int lineLength = utf8_size(linelc);
 		const int timestampOffset = timestamp ? 11 : 0;
-		const int lcsize = gt + 92; // length of livechat hud, works as a limiter (wraps line if it's too long)
+		const int lcsize = gt + HUD_LENGTH; // length of LCCore::MainLoop hud, works as a limiter (wraps line if it's too long)
 		int notif = 0;
 		if (notifCheck(linelc)) //offset if "beepable" message is present (as it occupies 2 chars)
 			notif = 2;
@@ -223,7 +225,7 @@ void getChat(const bool &init) //gc
 	}
 }
 
-void moveLogs() //mv clean and move logs from console.log to logus.log
+void LCCore::MoveLogs() //mv clean and move logs from console.log to logus.log
 {
 	if (size < 1073741824)
 	{
@@ -244,8 +246,8 @@ void moveLogs() //mv clean and move logs from console.log to logus.log
 			to.close();
 			write.stop();
 
-			//save moveLogs time to filelc liveChatInfoOutput.log
-			LDebug::DebugOutput("moveLogs: wielkość pliku: %sKB, odczyt: %s (%s), zapis: %s (%s), łącznie: %sns (%sms)", 
+			//save LCCore::MoveLogs time to filelc LCCore::MainLoopInfoOutput.log
+			LDebug::DebugOutput("LCCore::MoveLogs: wielkość pliku: %sKB, odczyt: %s (%s), zapis: %s (%s), łącznie: %sns (%sms)", 
 			{std::to_string(size/1000), read.pre(ns), read.pre(ms, 2), write.pre(ns), write.pre(ms, 2),
 			round(read.get(ns) + + write.get(ns), 0), round(read.get(ms) + write.get(ms), 2)});
 		});
@@ -281,7 +283,7 @@ void moveLogs() //mv clean and move logs from console.log to logus.log
 	size = std::filesystem::file_size(consoleLogPath);
 }
 
-void checkMessages(const bool &pre)
+void LCCore::CheckMessages(const bool &pre)
 {
 	if (pre)
 	{
@@ -305,7 +307,7 @@ void checkMessages(const bool &pre)
 	}
 }
 
-bool liveChatInput()
+bool LCCore::CheckInput()
 {
 	if (kbhit())
 	{
@@ -322,7 +324,7 @@ bool liveChatInput()
 			break;
 		case 's':
 			mainTimer.stopCounter();
-			liveChatHead();
+			LCCore::DrawHUD();
 			break;
 		case 'm':
 		{
@@ -334,13 +336,13 @@ bool liveChatInput()
 				break;
 			}
 			forceRedraw = true;
-			moveLogs();
+			LCCore::MoveLogs();
 		}
 		break;
 		case 48: //48? it's funny, because it's 0 :D //clear track
 		{
 			trackId = trackId ? 0 : 1;
-			liveChatHead();
+			LCCore::DrawHUD();
 			break;
 		}
 		case 'v': //save
@@ -373,7 +375,7 @@ bool liveChatInput()
 	return 0;
 }
 
-bool liveChat() //lc
+static void initializeLiveChat()
 {
 	//reset some things
 	lastLines.clear();
@@ -387,26 +389,31 @@ bool liveChat() //lc
 	filelc.open(consoleLogPath, std::ios::in | std::ios::binary);
 	//load logs without checking notifications
 	Stopwatch init;
-	getChat(true);
+	LCCore::GetChat(true);
 	init.stop();
 
 	Stopwatch initshow;
 	size = std::filesystem::file_size(consoleLogPath);
 	mainTimer.update();
 	cls();
-	showChat();
+	LCCore::ShowChat();
 	initshow.stop();
 
 	LDebug::DebugOutput("initLiveChat: wielkość pliku: %sKB, linie: %s, odczyt: %s (%s), wyświetlanie: %s (%s), łącznie: %sns (%sms)", 
 	{std::to_string(size/1000), std::to_string(lcLineCount), init.pre(ns), init.pre(ms, 2), initshow.pre(ns), initshow.pre(ms, 2),
 	round(init.get(ns) + initshow.get(ns), 0), round(init.get(ms) + initshow.get(ms), 2)});
-	//end
+//end
+}
 
-	while (true) //actual livechat infinite loop
+bool LCCore::MainLoop() //lc
+{
+	initializeLiveChat();
+
+	while (true) //actual LCCore::MainLoop infinite loop
 	{
 		mainTimer.update();
 
-		getChat();
+		LCCore::GetChat();
 		if (isNewLine)
 		{
 			isNewLine = false;
@@ -426,14 +433,14 @@ bool liveChat() //lc
 			std::ifstream refreshf(consoleLogPath, std::ios::in | std::ios::binary);
 			refreshf.close();
 			size = std::filesystem::file_size(consoleLogPath);
-			checkMessages(true);
-			showChat();
-			checkMessages(false);
+			LCCore::CheckMessages(true);
+			LCCore::ShowChat();
+			LCCore::CheckMessages(false);
 		}
 		else if (forceRedraw)
 		{
 			forceRedraw = false;
-			showChat();
+			LCCore::ShowChat();
 		}
 		else
 		{
@@ -442,26 +449,26 @@ bool liveChat() //lc
 				if (refresh < maxRefresh)
 				{
 					refresh += 25;
-					liveChatHead();
+					LCCore::DrawHUD();
 				}
 				else if (refresh != maxRefresh)
 				{
 					refresh = maxRefresh;
-					liveChatHead();
+					LCCore::DrawHUD();
 				}
 				else if ((refresh == maxRefresh) && mainTimer.running)
-					liveChatHead();
+					LCCore::DrawHUD();
 				else
 					statusMeter();
 			}
 			else
-				liveChatHead();
+				LCCore::DrawHUD();
 		}
 
 		if (autoMoveLogs)
 		{
 			if (size >= 99000)
-				moveLogs();
+				LCCore::MoveLogs();
 		}
 
 		if (isAutoJoin)
@@ -499,7 +506,7 @@ bool liveChat() //lc
 		}
 
 		//if key pressed
-		if (liveChatInput())
+		if (LCCore::CheckInput())
 			return 1;
 
 		mainTimer.beep();
@@ -516,4 +523,4 @@ bool liveChat() //lc
 	}
 	filelc.close();
 	return 1;
-} //liveChat()
+} //LCCore::MainLoop()
