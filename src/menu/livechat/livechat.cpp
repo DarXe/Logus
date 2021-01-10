@@ -178,22 +178,22 @@ void getChat(const bool &init) //gc
 
 		const int lineLength = utf8_size(linelc);
 		const int timestampOffset = timestamp ? 11 : 0;
-		const int lcsize = gt + 92 - timestampOffset; // length of livechat hud, works as a limiter (wraps line if it's too long)
-		if (lineLength > lcsize) //split string to next line if it's too long
+		const int lcsize = gt + 92; // length of livechat hud, works as a limiter (wraps line if it's too long)
+		int notif = 0;
+		if (notifCheck(linelc)) //offset if "beepable" message is present (as it occupies 2 chars)
+			notif = 2;
+		if (lineLength > lcsize - timestampOffset - notif + 1) //split string to next line if it's too long
 		{
-			int notif = 0;
-			if (notifCheck(linelc)) //offset if "beepable" message is present (as it occupies 2 chars)
-				notif = 2;
-			lastLines.emplace_back(utf8_substr(linelc, 0, lcsize - notif));
-			int loops = lineLength / (lcsize + timestampOffset);
-			int len = lcsize - notif + timestampOffset;
+			lastLines.emplace_back(utf8_substr(linelc, 0, lcsize - notif - timestampOffset));
+			int loops = floor(float(lineLength) / float(lcsize));
+			int len = lcsize - notif - timestampOffset;
 			for (int i = 0; i < loops; i++)
 			{
-				lastLines.emplace_back(utf8_substr(linelc, len, lcsize - gt - notif + timestampOffset));
-				len += lcsize - gt - notif + timestampOffset;
+				lastLines.emplace_back(utf8_substr(linelc, len, lcsize - gt));
+				len += lcsize - gt;
 			}
 		}
-		else if (linelc.size() > gt) //if line is fine and isn't too long, just emplace it all
+		else if (lineLength > gt) //if line is fine and isn't too long, just emplace it all
 		{
 			lastLines.emplace_back(linelc); //add element to the end of array
 		}
