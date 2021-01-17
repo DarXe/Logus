@@ -83,8 +83,8 @@ void readConfig(bool showInfo)
 		else if (templine.find("b_Blokada powiadomienia towaru/frakcji:") != std::string::npos)
 			fLockReport = stoi(clearConfigValue(templine, "b_Blokada powiadomienia towaru/frakcji:"));
 
-		else if (templine.find("b_Mute fraction/cargo notifications:") != std::string::npos)
-			fLockNick = stoi(clearConfigValue(templine, "b_Mute fraction/cargo notifications:"));
+		else if (templine.find("b_Mute nicknames notifications:") != std::string::npos)
+			fLockNick = stoi(clearConfigValue(templine, "b_Mute nicknames notifications:"));
 		else if (templine.find("b_Blokada powiadomienia na wybrane nicki:") != std::string::npos)
 			fLockNick = stoi(clearConfigValue(templine, "b_Blokada powiadomienia na wybrane nicki:"));
 
