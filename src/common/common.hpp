@@ -1,10 +1,8 @@
 // Copyright © 2018-2020  DarXe
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-
 #ifndef _COMMON_HPP
 #define _COMMON_HPP
-
 
 //standard libraries
 #include <string>
@@ -12,7 +10,6 @@
 #include <iosfwd>
 #include <string_view>
 #define q(var) std::cout << #var << " = " << var << '\n'
-
 
 //foward declarations
 std::string getCurrentTime();

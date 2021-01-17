@@ -1,21 +1,18 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-
 #ifndef LL_HPP_INCLUDED
 #define LL_HPP_INCLUDED
-
 
 //standard libraries
 #include <deque>
 #include <string>
 
-
 enum Editor
 {
-	DefEditor,
-	Logus,
-	LiveChat
+  DefEditor,
+  Logus,
+  LiveChat
 };
 
 bool checkDate(std::string line, const std::string &date, const bool &checkHour = 0);
@@ -24,7 +21,7 @@ void showLogContentInLiveChat(const std::deque<std::string> &foundLines);
 
 bool showLogContentInLogus(const std::string &filename, const uintmax_t &filesize, std::deque<std::string> &foundLines);
 
-bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &filesize, const std::deque <std::string> &foundLines);
+bool showLogContentInDefEditor(const std::string &filename, const uintmax_t &filesize, const std::deque<std::string> &foundLines);
 
 bool checkLogNicknames(const std::string &filename);
 

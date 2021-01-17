@@ -1,15 +1,12 @@
 // Copyright © 2020  Niventill
 // This file is licensed under ISC License. See "LICENSE" in the top level directory for more info.
 
-
 #ifndef PROC_HPP_INCLUDED
 #define PROC_HPP_INCLUDED
-
 
 //standard libraries
 #include <string>
 #include <string_view>
-
 
 //forward declarations
 void color(const std::string &value);
@@ -25,6 +22,5 @@ void stopAutoJoin(bool &isAutoJoin);
 void dots(short duration, short amount);
 
 void preConfig();
-
 
 #endif
