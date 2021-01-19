@@ -223,7 +223,7 @@ void LCCore::GetChat(const bool &init) //gc
     if (lineLength > lcsize - timestampOffset - notif + 1) //split string to next line if it's too long
     {
       lastLines.emplace_back(utf8_substr(linelc, 0, lcsize - notif - timestampOffset));
-      int loops = floor(float(lineLength) / float(lcsize));
+      int loops = floor(float(lineLength) / float(lcsize - notif - timestampOffset));
       int len = lcsize - notif - timestampOffset;
       for (int i = 0; i < loops; i++)
       {
