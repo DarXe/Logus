@@ -69,7 +69,7 @@ bool LCEvent::Report(const std::string_view line)
 {
   // [Output] : Nowy raport - autor: Niventill, kategoria: Naprawa
   // [Output] : author: Niventill, category: Repair
-  return lcompare(line, "[Output] : Nowy raport - ") || lcompare(line, "[Output] : New report - ");
+  return lcompare(line, "[Output] : * Nowy raport: ") || lcompare(line, "[Output] : * New report: ");
 }
 
 bool LCEvent::TransportCompany(const std::string_view line)
