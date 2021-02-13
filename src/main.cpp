@@ -192,7 +192,19 @@ void wersja()
   cls();
 
   ////////////////////////////////////////////////////////////////// news goes here ////////////////////////////
+  SetConsoleTextAttribute(h, 4);
+  std::cout << " ROK 2021\n";
 
+  SetConsoleTextAttribute(h, 6);
+  std::cout << " 2102_13 Bug fix "
+               "Zmiana wyglądu raportów na czacie\n";
+  std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
+  if (getch() == 27)
+  {
+    cls();
+    return;
+  }
+  cls();
   SetConsoleTextAttribute(h, 4);
   std::cout << " LISTOPAD\n";
 
