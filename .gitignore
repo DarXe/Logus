@@ -1,16 +1,12 @@
 logus.ini
-logus.ini
 m.cpp
 a.exe
 *.log
 console.log*
-.vscode
 .VSCodeCounter
 cars.t*
 Logusold.exe
 res.res
-*.o
-*.d
 *.hpp.gch
 content.txt
 Logus1.exe

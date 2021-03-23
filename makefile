@@ -1,46 +1,54 @@
-CC				 = g++
-CFLAGS			 = -g -Os -std=c++17 -I src/common -Wall -Wno-sign-compare -Wno-type-limits -Wno-maybe-uninitialized -Wno-comment
-EXEFLAGS		 = $(CFLAGS) -s
-PROGRAM_NAME	 = Logus
-SRCFILES		:= $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
-SRCFILES		+= $(patsubst %.cpp,%.o,$(wildcard src/common/*.cpp))
-SRCFILES		+= $(patsubst %.cpp,%.o,$(wildcard src/menu/*.cpp))
-SRCFILES		+= $(patsubst %.cpp,%.o,$(wildcard src/addons/*.cpp))
-SRCFILES		+= $(patsubst %.cpp,%.o,$(wildcard src/menu/livechat/*.cpp))
-CFILES			:= $(subst src/ver.o,,${SRCFILES})
-DEPS			:= $(SRCFILES:.o=.d)
-PREH			:= $(SRCFILES:.o=.hpp.gch)
+CC						 = g++
+TIMESTAMP				:= $(shell get_timestamp)
+COMPILE_FLAGS			 = -g -Os -std=c++17 -I src/common -Wall -Wno-sign-compare -Wno-type-limits -Wno-maybe-uninitialized -Wno-comment -D __LOGUS_BUILD_TIMESTAMP__=$(TIMESTAMP)
+PROGRAM_NAME			 = Logus
+SOURCE_FILES			:= $(patsubst %.cpp,%.o,$(wildcard src/*.cpp src/*/*.cpp src/*/*/*.cpp src/*/*/*/*.cpp))
+RELEASE_BUILD_FILES		 = $(addprefix build/release/,$(SOURCE_FILES))
+EXPERIMENTAL_BUILD_FILES = $(addprefix build/experimental/,$(SOURCE_FILES))
+DEBUG_BUILD_FILES		 = $(addprefix build/debug/,$(SOURCE_FILES))
+DEPENDENCIES			:= $(subst src/,build/release/,$(SOURCE_FILES:.o=.d))
+DEPENDENCIES			+= $(subst src/,build/experimental/,$(SOURCE_FILES:.o=.d))
 SHELL=cmd
 
 default: release
 
-release: $(CFILES) res.res
-	$(CC) $(CFLAGS) -c src/ver.cpp -o src/ver.o
-	$(CC) $(EXEFLAGS) $(SRCFILES) res.res -o $(PROGRAM_NAME)
-	@./Logus.exe "placeholder"
+all: release experimental debug
 
-debug: $(SRCFILES) res.res
-	$(CC) $(CFLAGS) $^ -o $(PROGRAM_NAME) 
+release: $(RELEASE_BUILD_FILES) res.res
+	$(CC) $(COMPILE_FLAGS) -s -D __LOGUS_UPDATE_CHANNEL__=release $^ -o build/$@/$(PROGRAM_NAME)
+	@@echo $(TIMESTAMP) > version
 
-headertest: $(PREH)
+experimental: $(EXPERIMENTAL_BUILD_FILES) res.res
+	$(CC) $(COMPILE_FLAGS) -s -D __LOGUS_UPDATE_CHANNEL__=experimental $^ -o build/$@/$(PROGRAM_NAME)
+	@@echo $(TIMESTAMP) > version_experimental
+
+debug: $(DEBUG_BUILD_FILES)
+	$(CC) $(COMPILE_FLAGS) -D __LOGUS_UPDATE_CHANNEL__=debug $^ -o build/$@/$(PROGRAM_NAME)
 
 res.res: res.rc
 	windres $< -O coff -o $@
 
-%.o: %.cpp
-	$(CC) -MMD $(CFLAGS) -c $< -o $@
+build/release/%.o: $(subst build/release/,,%.cpp)
+	@mkdir $(subst /,\,$(@D)) ||:
+	$(CC) -MMD $(COMPILE_FLAGS) -D __LOGUS_UPDATE_CHANNEL__=release -c $< -o $@
 
-%.hpp.gch: %.hpp
-	$(CC) -fsyntax-only $(CFLAGS) -x c++-header $<
+build/experimental/%.o: $(subst build/experimental/,,%.cpp)
+	@mkdir $(subst /,\,$(@D)) ||:
+	$(CC) -MMD $(COMPILE_FLAGS) -D __LOGUS_UPDATE_CHANNEL__=experimental -c $< -o $@
 
-clean:
-	del /s *.o *.d *.hpp.gch
+build/debug/%.o: $(subst build/debug/,,%.cpp)
+	@mkdir $(subst /,\,$(@D)) ||:
+	$(CC) -MMD $(COMPILE_FLAGS) -D __LOGUS_UPDATE_CHANNEL__=debug -c $< -o $@
 
-cleanall:
-	del /s *.o *.d *.hpp.gch Logus.exe
+cleanall: cleanrelease cleanexperimental cleandebug
 
-rebuild:
-	del /s *.o *.d *.hpp.gch
-	$(MAKE) --no-print-directory release
+cleanrelease:
+	-rmdir /s /q build\release ||:
 
--include $(DEPS)
+cleanexperimental:
+	-rmdir /s /q build\experimental ||:
+
+cleandebug:
+	-rmdir /s /q build\debug ||:
+
+-include $(DEPENDENCIES)
