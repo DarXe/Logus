@@ -30,12 +30,6 @@ void updateDependencies()
       else
         cls();
     }
-    if (!std::filesystem::exists("bin\\pasteCmd.exe"))
-    {
-      if (system("bin\\curl --progress-bar --fail https://raw.githubusercontent.com/DarXe/Logus/experimental/bin/pasteCmd.exe -o bin\\pasteCmd.exe"))
-        remove("bin\\pasteCmd.exe");
-      cls();
-    }
   }
 }
 

@@ -116,11 +116,6 @@ bool LCEvent::BindKey(const std::string_view line)
   return lcompare(line, "[Output] : msg: Player not ");
 }
 
-bool LCEvent::Open(const std::string_view line)
-{
-  return (line[line.length() - 2] == 'n' && line[line.length() - 3] == 'e' && line[line.length() - 4] == 'p' && line[line.length() - 5] == 'o');
-}
-
 /*bool LCEvent::Player(const std::string_view line)
 {
 	return (line[gt] == '*' && line[gt] == '*');

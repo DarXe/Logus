@@ -20,7 +20,6 @@ namespace LCEvent
   bool TransportTruckerzy(const std::string_view line);
   bool Nicknames(const std::string_view line);
   bool BindKey(const std::string_view line);
-  bool Open(const std::string_view line);
   //bool Player(const std::string_view line);
   //bool PlayerCount(const std::string_view line);
   bool Freeze(const std::string_view line);

@@ -43,15 +43,6 @@ inline void LCEventHandler::PmFrom(const std::string_view line)
   {
     if (LCEvent::PmFrom(line))
     {
-      //open the gate
-      if (LCEvent::Open(line))
-      {
-        system("start bin\\pasteCmd.exe");
-        toClipboard("open");
-
-        Beep(dzwiekGlowny, 400);
-        Beep(0, interval);
-      }
       //other PM
       Beep(dzwiekGlowny, 300);
       Beep(0, interval);
