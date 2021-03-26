@@ -52,10 +52,9 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "thread": "cpp",
-        "typeinfo": "cpp"
-    },
-    "C_Cpp.default.defines": [
-        "__LOGUS_BUILD_TIMESTAMP__",
-        "__LOGUS_UPDATE_CHANNEL__"
-    ]
+        "typeinfo": "cpp",
+        "cstring": "cpp",
+        "list": "cpp",
+        "map": "cpp"
+    }
 }

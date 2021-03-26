@@ -19,10 +19,7 @@
 
 //var (ZMIENNE)
 //logus.ini
-extern std::string relVer;
-extern std::string titleVer;
 extern std::string serverIP; //ip server
-extern std::string ver; //version variable, not editable //zmienna wersji, nie wolno edytować
 extern std::string updateChannel;
 extern std::string mtaLocation;
 extern int dzwiekGlowny; //sound message //dźwięk komunikatów

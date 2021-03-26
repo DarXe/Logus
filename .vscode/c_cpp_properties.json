@@ -8,7 +8,9 @@
             "defines": [
                 "_DEBUG",
                 "UTF-8",
-                "_UTF-8"
+                "_UTF-8",
+                "__LOGUS_BUILD_TIMESTAMP__",
+                "__LOGUS_BUILD_TYPE__ = \"\""
             ],
             "windowsSdkVersion": "10.0.18362.0",
             "compilerPath": "C:/MinGW/bin/g++",

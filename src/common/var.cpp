@@ -5,17 +5,9 @@
 //header includes
 #include "var.hpp"
 
-
-//forward declarations
-std::string genVer(); //from config.hpp
-
-
 //var (ZMIENNE)
 //logus.ini
-std::string relVer;
-std::string titleVer;
 std::string serverIP = "185.62.189.174:22003"; //ip server
-std::string ver = genVer(); //version variable, not editable //zmienna wersji, nie wolno edytować
 std::string updateChannel = "experimental";
 std::string mtaLocation = "";
 int dzwiekGlowny = 1777; //sound message //dźwięk komunikatów

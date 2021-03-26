@@ -13,7 +13,7 @@
 //header includes
 #include <common.hpp>
 #include <var.hpp>
-#include "ver.hpp"
+#include <ver.hpp>
 #include "updater.hpp"
 #include <config.hpp>
 #include <proc.hpp>
@@ -34,14 +34,6 @@ static void hideConsoleCursor()
 
 static bool init(const int &argc)
 {
-  if (argc != 1)
-  {
-    std::fstream file;
-    file.open("version", std::ios::out);
-    file << genVer();
-    file.close();
-    return 0;
-  }
   std::fstream inifile;
   inifile.open("logus.ini");
   if (inifile.good())
@@ -110,7 +102,6 @@ static bool init(const int &argc)
 
 int main(int argc, char **argv) //maa main
 {
-
   //init check if config exists, search for mta path etc
   if (!init(argc))
     return 0;
@@ -138,7 +129,7 @@ int main(int argc, char **argv) //maa main
   fileInit.close();
   updateDependencies();
 
-  std::string _versionName_ = "Logus " + titleVer;
+  std::string _versionName_ = "Logus " + getHumanReadableVersion(1);
   SetConsoleTitleA(_versionName_.c_str()); //verr
   std::srand(time(NULL));
 
@@ -172,7 +163,7 @@ void wersja()
   std::cout << " |       DarXe       |" << std::endl;
   std::cout << " |     Niventill     |" << std::endl;
   std::cout << " |___________________|" << std::endl;
-  std::cout << " |   Wersja " << relVer << "    |" << std::endl; //verr
+  std::cout << " |   Wersja " << getHumanReadableVersion(2) << "    |" << std::endl; //verr
   /*Sleep(300); std::cout<<std::endl;
 	std::cout<<" PLANY: "<<std::endl;
 	std::cout<<" Kreator wlasnych powiadomien"<<std::endl;

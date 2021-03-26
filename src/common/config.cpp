@@ -9,6 +9,7 @@
 //header includes
 #include "common.hpp"
 #include "var.hpp"
+#include <ver.hpp>
 #include "config.hpp"
 
 std::string clearConfigValue(std::string &line, std::string cfgname)
@@ -218,7 +219,7 @@ void readConfig(bool showInfo)
   }
 }
 
-std::string getVer()
+long long getVer()
 {
   std::fstream file;
   std::string templine;
@@ -229,20 +230,20 @@ std::string getVer()
     if (templine.find("s_version:") != std::string::npos)
     {
       clearConfigValue(templine, "s_version:");
-      return removeSpaces(templine);
+      return stoll(templine);
     }
     else if (templine.find("s_wersja:") != std::string::npos)
     {
       clearConfigValue(templine, "s_wersja:");
-      return removeSpaces(templine);
+      return stoll(templine);
     }
   }
-  return "ERROR";
+  return -1;
 }
 
 void showUpdateInfo()
 {
-  engLang ? std::cout << " (INFO) Settings loaded. Succesfully updated do " << ver << '\n' : std::cout << " (INFO) Wczytano ustawienia. Wykonano aktualizację do wersji " << ver << '\n';
+  engLang ? std::cout << " (INFO) Settings loaded. Succesfully updated from " << getHumanReadableVersion(0, getVer() / 1000) << " to " << getHumanReadableVersion(0) << '\n' : std::cout << " (INFO) Wczytano ustawienia. Wykonano aktualizację z " << getHumanReadableVersion(0, getVer() / 1000) << " do " << getHumanReadableVersion(0) << '\n';
 }
 
 void saveConfig(bool showInfo)
@@ -257,7 +258,7 @@ void saveConfig(bool showInfo)
       file << "//Setting prefixes: s = text variable, i = integer variable, f = float, b = 0/1 variable (bool)\n";
       file << "//Colors: 1-9, A-F" << std::endl;
       file << "////////////////////////////////////////////////////////////////////////////////////////////////\n";
-      file << "s_version: " << ver << "\n";
+      file << "s_version: " << getLogusBuildVersion() << "\n";
       file << "s_Update channel: " << updateChannel << '\n';
       file << "s_MTA server IP: " << serverIP << "\n";
       file << "s_MTA Path: " << mtaLocation << "\n";
@@ -308,7 +309,7 @@ void saveConfig(bool showInfo)
       file << "//Typy wartości: s = tekst, i = liczba, f = liczba zmiennoprzecinkowa, b = 0/1 (bool)\n";
       file << "//Kolory: 1-9, A-F" << std::endl;
       file << "////////////////////////////////////////////////////////////////////////////////////////////////\n";
-      file << "s_wersja: " << ver << "\n";
+      file << "s_wersja: " << getLogusBuildVersion() << "\n";
       file << "s_IP serwera MTA: " << serverIP << "\n";
       file << "s_Kanał aktualizacji: " << updateChannel << '\n';
       file << "s_Ścieżka MTA: " << mtaLocation << "\n";

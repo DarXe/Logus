@@ -12,7 +12,7 @@ std::string clearConfigValue(std::string &line, std::string cfgname);
 
 void readConfig(bool showInfo = true);
 
-std::string getVer();
+long long getVer();
 
 void showUpdateInfo();
 

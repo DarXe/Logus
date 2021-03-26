@@ -12,7 +12,7 @@
 #include <common.hpp>
 #include <debug.hpp>
 #include <stopwatch.hpp>
-#include "ver.hpp"
+#include <ver.hpp>
 #include "updater.hpp"
 
 void updateDependencies()
@@ -43,12 +43,12 @@ void checkLogusUpdate()
 {
   int fail = 0;
   std::fstream check;
-  std::string versc;
+  std::string repoVersion;
   engLang ? std::cout << " Checking updates, please wait...\n" : std::cout << " Sprawdzanie aktualizacji. Proszę czekać...\n";
   if (updateChannel == "release")
     fail = system("bin\\curl --progress-bar --fail https://raw.githubusercontent.com/DarXe/Logus/master/version -o version.tmp");
   else if (updateChannel == "experimental" || updateChannel == "nightly")
-    fail = system("bin\\curl --progress-bar --fail https://raw.githubusercontent.com/DarXe/Logus/experimental/version -o version.tmp");
+    fail = system("bin\\curl --progress-bar --fail https://raw.githubusercontent.com/DarXe/Logus/experimental/version_experimental -o version.tmp");
 
   if (fail)
   {
@@ -58,12 +58,28 @@ void checkLogusUpdate()
 
   cls();
   check.open("version.tmp");
+
+  long long repoVersionNumber = 0;
   if (check.good())
   {
-    getline(check, versc);
-    if (versc == ver)
+    getline(check, repoVersion);
+    try
+    {
+      repoVersionNumber = stoll(repoVersion);
+    }
+    catch (...)
+    {
+      engLang ? std::cout << " Error while checking version \"" << repoVersion << "\".\n" : std::cout << " Błąd podczas sprawdzania wersji \"" << repoVersion << "\".\n";
+      return;
+    }
+    if (repoVersionNumber == getLogusBuildVersion())
     {
       engLang ? std::cout << " Checking successful! Logus is up to date.\n" : std::cout << " Sprawdzanie powiodło się! Posiadasz najnowszą wersję.\n";
+      return;
+    }
+    else if (repoVersionNumber < getLogusBuildVersion())
+    {
+      engLang ? std::cout << " Checking successful! Logus is newer than the version in the repository.\n" : std::cout << " Sprawdzanie powiodło się! Posiadasz wersją nowszą niż ta obecna w repozytorium.\n";
       return;
     }
   }
@@ -73,16 +89,16 @@ void checkLogusUpdate()
     return;
   }
 
-  if (updateChannel == "release" && versc != ver)
+  if (updateChannel == "release" && repoVersionNumber > getLogusBuildVersion())
   {
     engLang ? std::cout << " Updating Logus, please wait...\n" : std::cout << " Aktualizowanie Logusia. Proszę czekać...\n";
     rename("Logus.exe", "Logusold.exe");
     Stopwatch rele;
     fail = system("bin\\curl --progress-bar --fail --location https://github.com/DarXe/Logus/releases/latest/download/Logus.exe -o Logus.exe");
     rele.stop();
-    LDebug::DebugOutput("Pobieranie Logus (release): wersja: %s, czas: %s", {versc, rele.pre(ms)});
+    LDebug::DebugOutput("Pobieranie Logus (release): wersja: %s, czas: %s", {repoVersion, rele.pre(ms)});
   }
-  else if ((updateChannel == "experimental" || updateChannel == "nightly") && versc != ver)
+  else if ((updateChannel == "experimental" || updateChannel == "nightly") && repoVersionNumber > getLogusBuildVersion())
   {
     if (updateChannel == "nightly")
       updateChannel = "experimental";
@@ -91,7 +107,7 @@ void checkLogusUpdate()
     Stopwatch exp;
     fail = system("bin\\curl --progress-bar --fail --location https://raw.githubusercontent.com/DarXe/Logus/experimental/Logus.exe -o Logus.exe");
     exp.stop();
-    LDebug::DebugOutput("Pobieranie Logus (experimental): wersja: %s, czas: %s", {versc, exp.pre(ms)});
+    LDebug::DebugOutput("Pobieranie Logus (experimental): wersja: %s, czas: %s", {repoVersion, exp.pre(ms)});
   }
   if (fail)
   {
@@ -111,7 +127,7 @@ void checkLogusUpdate()
 void checkUpdates()
 {
   SetConsoleTextAttribute(h, 10);
-  if (getVer() != ver)
+  if (getVer() != getLogusBuildVersion())
   {
     saveConfig(0);
     showUpdateInfo();
