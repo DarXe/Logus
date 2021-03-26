@@ -16,12 +16,12 @@ all: release experimental debug
 
 release: $(RELEASE_BUILD_FILES) res.res
 	$(CC) $(COMPILE_FLAGS) -D __LOGUS_BUILD_TYPE__=\"$@\" -D __LOGUS_BUILD_TIMESTAMP__=$(TIMESTAMP) -c src/common/ver.cpp -o build/$@/src/common/ver.o
-	$(CC) $(COMPILE_FLAGS) -s $^ build/$@/src/common/ver.o -o build/$@/$(PROGRAM_NAME)
+	$(CC) $(COMPILE_FLAGS) -s $^ build/$@/src/common/ver.o -o $(PROGRAM_NAME)
 	@@echo $(TIMESTAMP) > version
 
 experimental: $(EXPERIMENTAL_BUILD_FILES) res.res
 	$(CC) $(COMPILE_FLAGS) -D __LOGUS_BUILD_TYPE__=\"$@\" -D __LOGUS_BUILD_TIMESTAMP__=$(TIMESTAMP) -c src/common/ver.cpp -o build/$@/src/common/ver.o
-	$(CC) $(COMPILE_FLAGS) -s $^ build/$@/src/common/ver.o -o build/$@/$(PROGRAM_NAME)
+	$(CC) $(COMPILE_FLAGS) -s $^ build/$@/src/common/ver.o -o $(PROGRAM_NAME)
 	@@echo $(TIMESTAMP) > version_experimental
 
 debug: $(EXPERIMENTAL_BUILD_FILES)

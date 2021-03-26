@@ -129,7 +129,7 @@ int main(int argc, char **argv) //maa main
   fileInit.close();
   updateDependencies();
 
-  std::string _versionName_ = "Logus " + getHumanReadableVersion(1);
+  std::string _versionName_ = "Logus " + getHumanReadableVersion(1) + " " + getLogusBuildType();
   SetConsoleTitleA(_versionName_.c_str()); //verr
   std::srand(time(NULL));
 
@@ -196,88 +196,49 @@ void wersja()
     return;
   }
   cls();
-  SetConsoleTextAttribute(h, 4);
-  std::cout << " LISTOPAD\n";
 
-  SetConsoleTextAttribute(h, 6);
-  std::cout << " 2011_11 Nowa komenda "
-               "set l <0:00>"
-               " - ustawianie czasu załadunku\n";
-  std::cout << " 2011_11 Komendy "
-               "find cfg"
-               ", "
-               "find console.log"
-               " i "
-               "find logus.log"
-               " zmieniły nazwę na:\n";
-  std::cout << " * "
-               "open cfg"
-               ", "
-               "open console.log"
-               " oraz "
-               "open logus.log"
-               ", aby lepiej wskazać zastosowanie komendy\n";
-  std::cout << " 2011_09 Nowa komenda - "
-               "autorr"
-               ", która włącza autoJoin - tj. próbuje połączyć się z serwerem co 10 sekund\n";
-  std::cout << " * Komenda zastapiła klawisz Enter, który wcześniej robił to samo co teraz robi autorr\n";
-  std::cout << " 2011_07 Nowa komenda - "
-               "set minr <liczba>"
-               " i "
-               "set maxr <liczba>"
-               ", które ustawiają min i max dynamicznego odświeżania\n";
-  std::cout << " 2011_07 Nowa komenda - "
-               "set dyn"
-               ", która przełącza dynamiczne odświeżanie\n";
-  std::cout << " 2011_07 Nowa komenda - "
-               "set refr <liczba>"
-               ", która ustawia odświeżanie liveChat\n";
-  std::cout << " 2011_06 Nowa komenda - "
-               "cls"
-               ", czyli czyszczenie "
-               "buforu"
-               " czatu\n";
-  std::cout << " 2011_06 Od teraz LiveChat zawija zbyt długie wiersze\n";
-  std::cout << " 2011_06 Nowa komenda - "
-               "set engine"
-               ", która zmienia tryb renderowania czatu\n";
-  std::cout << " 2011_04 Udoskonalono moduł automatycznej aktualizacji\n";
-  std::cout << " 2011_04 Dodano komendę "
-               "set ts"
-               ", która przełącza widoczność timestampów\n";
-  std::cout << " 2011_04 Przebudowano system wyświetlania w liveChat, czego rezultatem jest przyśpieszenie programu o 3,5 raza!\n";
-  std::cout << " * Oprócz przyśpieszenia Logusia, po krótkim czasie nieobecności do Logusia wracają timestampy\n";
-  std::cout << " * Parser LCFormat z biegiem czasu będzie uzupełniany o nowe formatowanie\n";
-  std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
-  if (getch() == 27)
-  {
-    cls();
-    return;
-  }
-  cls();
-  SetConsoleTextAttribute(h, 4);
-  std::cout << " PAŹDZIERNIK\n";
+ 	SetConsoleTextAttribute(h, 4);
+	std::cout << " LISTOPAD\n";
 
-  SetConsoleTextAttribute(h, 6);
-  std::cout << " 2010_29 Dodano komendę "
-               "find console.log"
-               " oraz "
-               "find logus.log"
-               ", które otwierają plik z logami\n";
-  std::cout << " 2010_29 Dodano komendę "
-               "find cfg"
-               ", która otwiera plik konfiguracyjny\n";
-  std::cout << " 2010_29 Dodano komendę "
-               "find tf"
-               ", która otwiera domyślny edytor z wszystkimi przelewami\n";
-  std::cout << " 2010_29 Dodano (a raczej przywrócono) opcję sprawdzenia ostatnich 20 przelewów\n";
-  std::cout << " 2010_28 Dodano bazę fraz - tj. listę wyrazów do szukania w wiadomości gracza\n";
-  std::cout << " * Główne zastosowanie to zapis wariantów nicku użytkownika Logusia\n";
-  std::cout << " * Np.: Dar, dar, darXe, Darks itp. itd.\n";
-  std::cout << " 2010_18 Dodano komendę set hre (hard reset), która poza resetowaniem kursów i gotówki resetuje także min i max zarobek\n";
-  std::cout << " 2010_18 Komendy set n add i set n del zmieniły nazwę na nickdb add i nickdb del\n";
-  std::cout << " 209_06 Przebudowa kodu... (znowu)\n";
-  std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
+	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2011_11 Nowa komenda ""set l <0:00>"" - ustawianie czasu załadunku\n";
+	std::cout << " 2011_11 Komendy ""find cfg"", ""find console.log"" i ""find logus.log"" zmieniły nazwę na:\n";
+	std::cout << " * ""open cfg"", ""open console.log"" oraz ""open logus.log"", aby lepiej wskazać zastosowanie komendy\n";
+	std::cout << " 2011_09 Nowa komenda - ""autorr"", która włącza autoJoin - tj. próbuje połączyć się z serwerem co 10 sekund\n";
+	std::cout << " * Komenda zastapiła klawisz Enter, który wcześniej robił to samo co teraz robi autorr\n";
+	std::cout << " 2011_07 Nowa komenda - ""set minr <liczba>"" i ""set maxr <liczba>"", które ustawiają min i max dynamicznego odświeżania\n";
+	std::cout << " 2011_07 Nowa komenda - ""set dyn"", która przełącza dynamiczne odświeżanie\n";
+	std::cout << " 2011_07 Nowa komenda - ""set refr <liczba>"", która ustawia odświeżanie liveChat\n";
+	std::cout << " 2011_06 Nowa komenda - ""cls"", czyli czyszczenie ""buforu"" czatu\n";
+	std::cout << " 2011_06 Od teraz LiveChat zawija zbyt długie wiersze\n";
+	std::cout << " 2011_06 Nowa komenda - ""set engine"", która zmienia tryb renderowania czatu\n";
+	std::cout << " 2011_04 Udoskonalono moduł automatycznej aktualizacji\n";
+	std::cout << " 2011_04 Dodano komendę ""set ts"", która przełącza widoczność timestampów\n";
+	std::cout << " 2011_04 Przebudowano system wyświetlania w liveChat, czego rezultatem jest przyśpieszenie programu o 3,5 raza!\n";
+	std::cout << " * Oprócz przyśpieszenia Logusia, po krótkim czasie nieobecności do Logusia wracają timestampy\n";
+	std::cout << " * Parser LCFormat z biegiem czasu będzie uzupełniany o nowe formatowanie\n";
+	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
+	if (getch() == 27)
+	{
+		cls();
+		return;
+	}
+	cls();
+	SetConsoleTextAttribute(h, 4);
+	std::cout << " PAŹDZIERNIK\n";
+
+	SetConsoleTextAttribute(h, 6);
+	std::cout << " 2010_29 Dodano komendę ""find console.log"" oraz ""find logus.log"", które otwierają plik z logami\n";
+	std::cout << " 2010_29 Dodano komendę ""find cfg"", która otwiera plik konfiguracyjny\n";
+	std::cout << " 2010_29 Dodano komendę ""find tf"", która otwiera domyślny edytor z wszystkimi przelewami\n";
+	std::cout << " 2010_29 Dodano (a raczej przywrócono) opcję sprawdzenia ostatnich 20 przelewów\n";
+	std::cout << " 2010_28 Dodano bazę fraz - tj. listę wyrazów do szukania w wiadomości gracza\n";
+	std::cout << " * Główne zastosowanie to zapis wariantów nicku użytkownika Logusia\n";
+	std::cout << " * Np.: Dar, dar, darXe, Darks itp. itd.\n";
+	std::cout << " 2010_18 Dodano komendę set hre (hard reset), która poza resetowaniem kursów i gotówki resetuje także min i max zarobek\n";
+	std::cout << " 2010_18 Komendy set n add i set n del zmieniły nazwę na nickdb add i nickdb del\n";
+	std::cout << " 209_06 Przebudowa kodu... (znowu)\n";
+	std::cout << "\n Wciśnij klawisz, aby kontynuować (ESC, aby pominąć INFO)\n";
   if (getch() == 27)
   {
     cls();
