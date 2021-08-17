@@ -25,7 +25,7 @@ inline bool LCFormat::isNewLine(std::string_view line)
 inline void LCFormat::Standard(std::string_view line)
 {
   // [2020-11-03 19:40:09] [Output] : Niventill: ess
-  if (LCEvent::NormalMessage(line))
+  if (LCEvent::GlobalMessage(line, true))
   {
     line.remove_prefix(gt);
     int textPos = line.find(":");

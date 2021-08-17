@@ -25,7 +25,7 @@ namespace LCEvent
   bool Freeze(const std::string_view line);
   bool NickChange(const std::string_view line);
   bool ContainsPhrase(const std::string_view line, const bool &format = false);
-  bool NormalMessage(const std::string_view line);
+  bool GlobalMessage(const std::string_view line, const bool &includePlayer);
   bool Admin(const std::string_view line, const bool &includePlayer);
   bool Input(const std::string_view line);
   bool CB(const std::string_view line);

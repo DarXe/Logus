@@ -150,7 +150,7 @@ bool LCEvent::ContainsPhrase(const std::string_view line, const bool &format)
   }
   else
   {
-    if (LCEvent::PmTo(line) || (fLockTeam && LCEvent::Team(line, 1, 1)) || (!fLockTeam && LCEvent::Team(line, 0)) || (!fLockPW && LCEvent::PmFrom(line)) || LCEvent::Input(line) || lcompare(line, "[Output] : " + nick) ||
+    if (LCEvent::PmTo(line) || (fLockTeam && LCEvent::Team(line, 1, 1)) || (!fLockTeam && LCEvent::Team(line, 0)) || (!fLockPW && LCEvent::PmFrom(line)) || LCEvent::Input(line) || lcompare(line, "[Output] : (GLOBAL) " + nick) ||
         lcompare(line, "[Output] : Gracz: " + nick + " Team: ") || lcompare(line, "[Output] : Name: " + nick + ", "))
       return 0;
   }
@@ -162,16 +162,22 @@ bool LCEvent::ContainsPhrase(const std::string_view line, const bool &format)
   return 0;
 }
 
-bool LCEvent::NormalMessage(const std::string_view line)
+bool LCEvent::GlobalMessage(const std::string_view line, const bool &includePlayer)
 {
-  for (int i = gt; i < line.size(); i++)
+  // [2020-10-28 17:42:08] [Output] : (GLOBAL) Niventill: ess
+  if (lcompare(line, "[Output] : (GLOBAL) "))
   {
-    if (line[i] == ' ')
-      return 0;
-    else if (line[i] == ':')
-      return 1;
+    if (lcompare(line, "[Output] : (GLOBAL) " + nick))
+    {
+      if (includePlayer)
+        return 1;
+      else
+        return 0;
+    }
+    return 1;
   }
-  return 0;
+  else
+    return 0;
 }
 
 bool LCEvent::Admin(const std::string_view line, const bool &includePlayer)
