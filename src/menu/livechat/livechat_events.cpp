@@ -43,7 +43,7 @@ bool LCEvent::PmFrom(const std::string_view line)
 bool LCEvent::PmTo(const std::string_view line)
 {
   //[2021-08-29 17:52:51] [Output] : (PM xvr) Niventill: .
-  return !PmFrom(line) && lcompare(line, "[Output] : * (PM ");
+  return !PmFrom(line) && lcompare(line, "[Output] : (PM ");
 }
 
 bool LCEvent::TransfersFrom(const std::string_view line)
