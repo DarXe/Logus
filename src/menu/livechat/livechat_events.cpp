@@ -36,15 +36,14 @@ bool LCEvent::Team(const std::string_view line, const bool &includePlayer, const
 
 bool LCEvent::PmFrom(const std::string_view line)
 {
-  //[2020-11-08 19:29:09] [Output] : * PW od PanZer:
-  //[2020-11-08 19:29:09] [Output] : * PW from PanZer:
-  return lcompare(line, "[Output] : * PW od ") || lcompare(line, "[Output] : * PW from ");
+  //[2021-08-29 17:53:22] [Output] : (PM Niventill) xvr: /
+  return lcompare(line, "[Output] : (PM " + nick + ") ");
 }
 
 bool LCEvent::PmTo(const std::string_view line)
 {
-  //[2020-11-08 19:28:56] [Output] : -> PanZer:
-  return lcompare(line, "[Output] : -> ");
+  //[2021-08-29 17:52:51] [Output] : (PM xvr) Niventill: .
+  return !PmFrom(line) && lcompare(line, "[Output] : * (PM ");
 }
 
 bool LCEvent::TransfersFrom(const std::string_view line)
