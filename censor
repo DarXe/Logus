@@ -1,0 +1,111 @@
+function normalizeMessage(message) {
+    // Przekształć wiadomość na małe litery
+    message = message.toLowerCase();
+
+    // Dla każdego słowa na liście badWords
+    badWords.forEach(word => {
+        // Zastąp litery, które mogą być zamieniane na cyfry odpowiednimi wyrażeniami regularnymi
+        const wordPattern = word
+            .replace(/o/g, '[o0]') // o lub 0
+            .replace(/e/g, '[e3]') // e lub 3
+            .replace(/a/g, '[a@v]') // a lub @ lub v
+            .replace(/i/g, '[i!j]') // i lub !
+            .replace(/l/g, '[lł]')
+            .replace(/u/g, '[uóv]')
+            .replace(/z/g, '[zh]')
+            .replace(/w/g, '[wv]')
+            // Dodaj więcej zamian w razie potrzeby
+
+        // Buduj wyrażenie regularne, które dopasowuje słowo z uwzględnieniem opcjonalnych znaków specjalnych między literami
+        const pattern = new RegExp(wordPattern.split('').map(letter => `${letter}+`).join('(\\W)*'), 'g');
+
+        // Zastąp wszystkie wystąpienia tego wzorca w wiadomości jednolitą formą słowa
+        message = message.replace(pattern, word);
+    });
+
+    return message;
+}
+
+function capitalizeFirstLetter(sentence) {
+    // Zwraca zdanie, w którym pierwsza litera jest duża
+    return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+}
+
+function randomPrefixExpression() {
+    const expressions = ['Uważaj na słowa', 'Wyrażaj się', 'Proszę o spokój', 'Ogarnij się'];
+    const rNumber = Math.floor(Math.random() * 4) //random
+
+    return expressions[rNumber];
+}
+
+function randomExpression() {
+    const expressions = [
+        'gamoniu', 'nie przeklinamy', 'ciulu', 'zachowaj kulturę', 'żulu',
+        'to nie podwórko', 'mongole', 'widzę co piszesz', 'ochłoń', 'nie przeklinaj',
+        'daj se siana', 'nie jesteś u siebie', 'co ty sobie myślisz?'
+    ];
+    const rNumber = Math.floor(Math.random() * expressions.length) //random
+
+    return expressions[rNumber];
+}
+
+const badWords = [ //bad
+    'fiucie', 'fiut', 'spierdala', 'kurw', 'jeba', 'suka', 'suko', 'suki', 'dziwka', 'dziwki', 'dziwko', 'gej',
+    'pizda', 'pizdy', 'pizdo', 'szmat', 'pedal', 'pedał', 'zjeb', 'idiota', 'idioci', 'idioto', 'cipa', 'cipy', 'ryj',
+    'szonie', 'pierdol', 'plebs', 'morda', 'japa', 'stara', 'matka', 'matke', 'starą', 'psie', 'chuj', 'huj', 'cwel', 'cvvel',
+    'kutas', 'gówno', 'gowno', 'pieklo', 'szatan', 'diabeł', 'diabel', 'zapraszam na',
+    'jebie', 'wibrator', 'cyce', 'cyck', 'cycuszki', 'nigger', 'niger', 'urwo', 'jeb', 'stary', 'żyd', 'ciapak', 'czarnuch',
+    'transwestyta', 'transem', 'penis', 'debil', 'dildo', 'masturb', 'guwnie',
+    'rozpierd', 'ciot',
+    'fuck', 'shit', 'dick', 'bitch', 'bastard', 'asshole', 'idiot', 'whore', 'devil' //eng
+];
+const chars = ['*', '^', '@', '#', '%', '$'];
+
+function censorMessage(player, message, badWords) {
+    let censoredMessage = message;
+    censoredMessage = normalizeMessage(censoredMessage); //normalize
+    const originalMessage = censoredMessage;
+
+    badWords.forEach(badWord => {
+        // ignore charss
+        const wordPattern = badWord.split('').join('[\\s\\.]*');
+        const regex = new RegExp(wordPattern, 'gi');
+
+        censoredMessage = censoredMessage.replace(regex, match => {
+            // only letters
+            const cleanMatch = match.replace(/\W/g, '');
+            if (cleanMatch.length <= 1) {
+                return match; 
+            }
+            // censor mask
+            let mask = '';
+            for (let index = 0; index < cleanMatch.length - 2; index++) {
+                const rNumber = Math.floor(Math.random() * 6) //random
+                mask += chars[rNumber];
+            }
+            return match[0] + mask + match[match.length - 1];
+        });
+    });
+
+    if (censoredMessage !== originalMessage) {
+        setTimeout(() => {
+            room.sendAnnouncement(
+                `⭐️ ${randomPrefixExpression()} ${player.name}, ${randomExpression()}!`,
+                player.id,
+                redColor,
+                'bold',
+                HaxNotification.CHAT
+            );
+        }, 200);
+    }
+
+    // Sprawdzenie i dodanie kropki
+    if (!['.', '?', '!'].includes(censoredMessage.at(-1))) {
+        censoredMessage += '.';
+    }
+
+    // capitalize
+    censoredMessage = capitalizeFirstLetter(censoredMessage);
+
+    return censoredMessage;
+}
