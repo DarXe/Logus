@@ -384,3 +384,4 @@ void wersja()
 
   cls();
 }
+//Measure-Command {mingw32-make -j  experimental}
